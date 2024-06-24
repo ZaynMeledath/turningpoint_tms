@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/view/tasks/assign_task_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 
 void main() {
   runApp(const MyApp());
