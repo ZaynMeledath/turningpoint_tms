@@ -5,6 +5,7 @@ import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/date_and_time_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/description_text_field.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/priority_tab_bar.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/swipe_to_add.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/title_text_field.dart';
 
 class AssignTaskScreen extends StatefulWidget {
@@ -78,6 +79,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 priorityTabBar(tabController: tabController),
                 Gap(screenHeight * .05),
                 dateAndTimeSegment(),
+                Gap(screenHeight * .05),
+                swipeToAdd(),
               ],
             ),
           ),
