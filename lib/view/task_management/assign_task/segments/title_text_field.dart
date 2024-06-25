@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 
-Widget titleTextField(TextEditingController titleController) {
+Widget titleTextField({required TextEditingController titleController}) {
   return TextField(
     controller: titleController,
     maxLines: null,
