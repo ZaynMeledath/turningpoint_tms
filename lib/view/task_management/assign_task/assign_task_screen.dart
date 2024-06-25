@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/date_and_time_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/description_text_field.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/priority_tab_bar.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/title_text_field.dart';
@@ -74,7 +75,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 Gap(screenHeight * .05),
                 descriptionTextField(descriptionController),
                 Gap(screenHeight * .05),
-                priorityTabBar(tabController: tabController)
+                priorityTabBar(tabController: tabController),
+                Gap(screenHeight * .05),
+                dateAndTimeSegment(),
               ],
             ),
           ),

@@ -8,6 +8,11 @@ Widget priorityTabBar({required TabController tabController}) {
       Row(
         children: [
           Gap(screenWidth * .025),
+          Icon(
+            Icons.flag,
+            color: Colors.white.withOpacity(.9),
+          ),
+          Gap(screenWidth * .005),
           Text(
             'Priority',
             style: TextStyle(
