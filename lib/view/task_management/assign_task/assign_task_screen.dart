@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:slide_to_act/slide_to_act.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/date_and_time_segment.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/description_text_field.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/priority_tab_bar.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/swipe_to_add.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/segments/title_text_field.dart';
+
+part 'segments/title_text_field.dart';
+part 'segments/description_text_field.dart';
+part 'segments/priority_tab_bar.dart';
+part 'segments/date_and_time_segment.dart';
+part 'segments/swipe_to_add.dart';
 
 class AssignTaskScreen extends StatefulWidget {
   const AssignTaskScreen({super.key});

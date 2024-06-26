@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:turning_point_tasks_app/utils/screen_size.dart';
+part of '../assign_task_screen.dart';
 
 Widget priorityTabBar({required TabController tabController}) {
   return Column(
