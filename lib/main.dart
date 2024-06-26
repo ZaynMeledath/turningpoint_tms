@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/test.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
       ),
-      home: const AssignTaskScreen(),
+      home: const Test(),
     );
   }
 }

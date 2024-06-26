@@ -12,6 +12,7 @@ part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
 part 'segments/priority_tab_bar.dart';
 part 'segments/date_and_time_segment.dart';
+part 'segments/repeat_frequency_section.dart';
 part 'segments/swipe_to_add.dart';
 
 class AssignTaskScreen extends StatefulWidget {
@@ -76,16 +77,18 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     ),
                   ),
                 ),
-                Gap(screenHeight * .05),
+                Gap(screenHeight * .035),
                 titleTextField(titleController: titleController),
-                Gap(screenHeight * .05),
+                Gap(screenHeight * .035),
                 descriptionTextField(
                     descriptionController: descriptionController),
-                Gap(screenHeight * .05),
+                Gap(screenHeight * .035),
                 priorityTabBar(tabController: tabController),
-                Gap(screenHeight * .05),
+                Gap(screenHeight * .035),
                 dateAndTimeSegment(context: context),
-                Gap(screenHeight * .05),
+                Gap(screenHeight * .03),
+                repeatFrequencySection(),
+                Gap(screenHeight * .06),
                 swipeToAdd(),
               ],
             ),

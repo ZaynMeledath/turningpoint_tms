@@ -3,6 +3,7 @@ part of '../assign_task_screen.dart';
 Widget titleTextField({required TextEditingController titleController}) {
   return TextField(
     controller: titleController,
+    enabled: tasksController.isTitleAndDescriptionEnabled.value,
     maxLines: null,
     keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,

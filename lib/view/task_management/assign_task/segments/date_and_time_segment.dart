@@ -8,21 +8,27 @@ Widget dateAndTimeSegment({required BuildContext context}) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+//====================Date Picker Section====================//
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () async {
-            tasksController.date.value = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2030),
-                ) ??
-                DateTime.now();
-
-            tasksController.time.value = await showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.now(),
-                ) ??
-                TimeOfDay.now();
+            tasksController.isTitleAndDescriptionEnabled.value = false;
+            final date = await showDatePicker(
+              context: context,
+              firstDate: DateTime.now(),
+              lastDate: DateTime(2030),
+            );
+            if (date != null) {
+              tasksController.taskDate.value = date;
+              tasksController.taskTime.value = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  ) ??
+                  TimeOfDay.now();
+            }
+            Future.delayed(Duration.zero, () {
+              tasksController.isTitleAndDescriptionEnabled.value = true;
+            });
           },
           child: Padding(
             padding: const EdgeInsets.all(5),
@@ -44,7 +50,7 @@ Widget dateAndTimeSegment({required BuildContext context}) {
                 Gap(screenWidth * .02),
                 Obx(
                   () => Text(
-                    '${tasksController.date.value.day} ${DateFormat.MMMM().format(tasksController.date.value)}',
+                    '${tasksController.taskDate.value.day} ${DateFormat.MMMM().format(tasksController.taskDate.value)}',
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: screenWidth * .036,
@@ -58,17 +64,19 @@ Widget dateAndTimeSegment({required BuildContext context}) {
         const Expanded(
           child: SizedBox(),
         ),
+
+//====================Time Picker Section====================//
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () async {
-            tasksController.time.value = await showTimePicker(
+            tasksController.isTitleAndDescriptionEnabled.value = false;
+            tasksController.taskTime.value = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.now(),
                 ) ??
                 TimeOfDay.now();
             Future.delayed(Duration.zero, () {
-              FocusScopeNode currentFocus = FocusScope.of(context);
-              currentFocus.unfocus();
+              tasksController.isTitleAndDescriptionEnabled.value = true;
             });
           },
           child: Padding(
@@ -91,7 +99,7 @@ Widget dateAndTimeSegment({required BuildContext context}) {
                 Gap(screenWidth * .02),
                 Obx(
                   () => Text(
-                    tasksController.time.value.format(context),
+                    tasksController.taskTime.value.format(context),
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: screenWidth * .036,
