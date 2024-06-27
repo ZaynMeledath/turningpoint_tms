@@ -15,7 +15,7 @@ class Test extends StatelessWidget {
             size: 100,
           ),
           onPressed: () {
-            Get.to(const AssignTaskScreen());
+            Get.to(() => const AssignTaskScreen());
           },
         ),
       ),

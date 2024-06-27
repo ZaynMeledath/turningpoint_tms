@@ -12,6 +12,12 @@ Widget dateAndTimeSegment({required BuildContext context}) {
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () async {
+            //To prevent the keyboard popping glitch
+            final currentFocus = FocusScope.of(context);
+            if (currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+
             tasksController.isTitleAndDescriptionEnabled.value = false;
             final date = await showDatePicker(
               context: context,
@@ -69,6 +75,12 @@ Widget dateAndTimeSegment({required BuildContext context}) {
         InkWell(
           borderRadius: BorderRadius.circular(20),
           onTap: () async {
+            //To prevent the keyboard popping glitch
+            final currentFocus = FocusScope.of(context);
+            if (currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+
             tasksController.isTitleAndDescriptionEnabled.value = false;
             tasksController.taskTime.value = await showTimePicker(
                   context: context,

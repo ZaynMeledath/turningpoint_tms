@@ -8,6 +8,10 @@ class TasksController extends GetxController {
 
   Rx<TaskPriority> taskPriority = TaskPriority.low.obs;
 
+  Rx<bool> shouldRepeatTask = false.obs;
+
+  Rx<RepeatFrequency?> taskRepeatFrequency = null.obs;
+
   //To block the keyboard from popping up on dismissing the selectDate or selectTime dialog
   Rx<bool> isTitleAndDescriptionEnabled = true.obs;
 }
