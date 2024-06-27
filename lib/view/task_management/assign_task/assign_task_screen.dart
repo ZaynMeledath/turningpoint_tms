@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
@@ -14,7 +15,7 @@ part 'segments/description_text_field.dart';
 part 'segments/priority_tab_bar.dart';
 part 'segments/date_and_time_segment.dart';
 part 'segments/repeat_frequency_section.dart';
-part 'segments/day_frequency_segment.dart';
+part 'segments/weekly_frequency_segment.dart';
 part 'segments/swipe_to_add.dart';
 
 class AssignTaskScreen extends StatefulWidget {
@@ -35,6 +36,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     tabController = TabController(length: 3, vsync: this);
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+
     super.initState();
   }
 
@@ -84,18 +86,19 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 Gap(screenHeight * .035),
                 descriptionTextField(
                     descriptionController: descriptionController),
-                Gap(screenHeight * .035),
+                Gap(screenHeight * .03),
                 priorityTabBar(tabController: tabController),
-                Gap(screenHeight * .035),
+                Gap(screenHeight * .03),
                 dateAndTimeSegment(context: context),
                 Gap(screenHeight * .02),
                 repeatFrequencySection(),
                 Gap(screenHeight * .03),
-                swipeToAdd(),
+                // swipeToAdd(),
               ],
             ),
           ),
         ),
+        bottomNavigationBar: swipeToAdd(),
       ),
     );
   }

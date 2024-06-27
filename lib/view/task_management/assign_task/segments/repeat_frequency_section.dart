@@ -92,7 +92,7 @@ Widget repeatFrequencySection() {
                               ],
                               onChanged: (repeatFrequency) {
                                 tasksController.taskRepeatFrequency.value =
-                                    repeatFrequency;
+                                    repeatFrequency!;
                               },
                             ),
                           ),
@@ -105,7 +105,19 @@ Widget repeatFrequencySection() {
         ),
         Gap(screenHeight * .015),
 //====================Day Frequency Segment====================//
-        dayFrequencySegment(),
+        Obx(() {
+          log('Repeat Frequency: ${tasksController.taskRepeatFrequency.value}');
+          switch (tasksController.taskRepeatFrequency.value) {
+            case RepeatFrequency.daily:
+              return const SizedBox();
+            case RepeatFrequency.weekly:
+              return weeklyFrequencySegment();
+            case RepeatFrequency.monthly:
+              return SizedBox();
+            default:
+              return const SizedBox();
+          }
+        }),
       ],
     ),
   );
