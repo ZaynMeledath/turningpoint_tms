@@ -24,7 +24,7 @@ Widget weeklyFrequencySegment() {
             Column(
               children: [
                 Checkbox(
-                  value: tasksController.days[i],
+                  value: tasksController.daysMap[i],
                   fillColor: WidgetStateProperty.resolveWith<Color?>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
@@ -38,7 +38,8 @@ Widget weeklyFrequencySegment() {
                   ),
                   visualDensity: VisualDensity.compact,
                   onChanged: (value) {
-                    tasksController.days[i] = value ?? tasksController.days[i]!;
+                    tasksController.daysMap[i] =
+                        value ?? tasksController.daysMap[i]!;
                   },
                 ),
                 Text(i),

@@ -1,10 +1,10 @@
 part of '../assign_task_screen.dart';
 
 Widget repeatFrequencySection() {
-  return Obx(
-    () => Column(
-      children: [
-        Container(
+  return Column(
+    children: [
+      Obx(
+        () => Container(
           height: screenHeight * .075,
           padding: EdgeInsets.symmetric(horizontal: screenWidth * .03),
           child: Center(
@@ -39,6 +39,8 @@ Widget repeatFrequencySection() {
                     tasksController.shouldRepeatTask.value =
                         value ?? tasksController.shouldRepeatTask.value;
                     tasksController.taskRepeatFrequency.value = null;
+                    tasksController.resetDaysMap();
+                    tasksController.resetDatesMap();
                   },
                 ),
                 tasksController.shouldRepeatTask.value
@@ -92,7 +94,9 @@ Widget repeatFrequencySection() {
                               ],
                               onChanged: (repeatFrequency) {
                                 tasksController.taskRepeatFrequency.value =
-                                    repeatFrequency!;
+                                    repeatFrequency;
+                                tasksController.resetDaysMap();
+                                tasksController.resetDatesMap();
                               },
                             ),
                           ),
@@ -103,23 +107,22 @@ Widget repeatFrequencySection() {
             ),
           ),
         ),
-        Gap(screenHeight * .015),
+      ),
+      Gap(screenHeight * .015),
 //====================Day Frequency Segment====================//
-        Obx(() {
-          log('Repeat Frequency: ${tasksController.taskRepeatFrequency.value}');
-          switch (tasksController.taskRepeatFrequency.value) {
-            case RepeatFrequency.daily:
-              return const SizedBox();
-            case RepeatFrequency.weekly:
-              return weeklyFrequencySegment();
-            case RepeatFrequency.monthly:
-              return SizedBox();
-            default:
-              return const SizedBox();
-          }
-        }),
-      ],
-    ),
+      Obx(() {
+        switch (tasksController.taskRepeatFrequency.value) {
+          case RepeatFrequency.daily:
+            return const SizedBox();
+          case RepeatFrequency.weekly:
+            return weeklyFrequencySegment();
+          case RepeatFrequency.monthly:
+            return monthlyFrequencySegment();
+          default:
+            return const SizedBox();
+        }
+      }),
+    ],
   );
 }
 

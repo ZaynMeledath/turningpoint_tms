@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -16,6 +14,7 @@ part 'segments/priority_tab_bar.dart';
 part 'segments/date_and_time_segment.dart';
 part 'segments/repeat_frequency_section.dart';
 part 'segments/weekly_frequency_segment.dart';
+part 'segments/monthly_frequency_segment.dart';
 part 'segments/swipe_to_add.dart';
 
 class AssignTaskScreen extends StatefulWidget {
@@ -93,7 +92,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 Gap(screenHeight * .02),
                 repeatFrequencySection(),
                 Gap(screenHeight * .03),
-                // swipeToAdd(),
               ],
             ),
           ),
