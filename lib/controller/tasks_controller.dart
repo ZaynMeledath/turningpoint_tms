@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 
 class TasksController extends GetxController {
   Rx<DateTime> taskDate = DateTime.now().obs;
@@ -33,7 +34,7 @@ class TasksController extends GetxController {
   }
 
   void resetDatesMap() {
-    for (int i = 1; i <= 31; i++) {
+    for (int i = 1; i <= totalDays; i++) {
       datesMap[i] = false;
     }
   }
@@ -55,7 +56,7 @@ enum TaskPriority {
 Map<int, bool> createDateMap() {
   Map<int, bool> datesMap = {};
 
-  for (int i = 1; i <= 31; i++) {
+  for (int i = 1; i <= totalDays; i++) {
     datesMap[i] = false;
   }
 

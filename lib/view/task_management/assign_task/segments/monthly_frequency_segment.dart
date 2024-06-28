@@ -2,7 +2,6 @@ part of '../assign_task_screen.dart';
 
 Widget monthlyFrequencySegment() {
   const rowElementsCount = 8;
-  const totalDays = 31;
   return Container(
     padding: const EdgeInsets.only(bottom: 8),
     decoration: BoxDecoration(
@@ -14,7 +13,7 @@ Widget monthlyFrequencySegment() {
         children: [
           for (int i = 0; i < 4; i++)
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 for (int j = i * rowElementsCount + 1;
                     j <= (i + 1) * rowElementsCount && j <= totalDays;

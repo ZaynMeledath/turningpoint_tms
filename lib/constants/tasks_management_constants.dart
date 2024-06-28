@@ -1,1 +1,1 @@
-
+const totalDays = 31;
