@@ -1,7 +1,9 @@
 part of '../assign_task_screen.dart';
 
-Widget descriptionTextField(
-    {required TextEditingController descriptionController}) {
+Widget descriptionTextField({
+  required TextEditingController descriptionController,
+  required TasksController tasksController,
+}) {
   return TextField(
     controller: descriptionController,
     enabled: tasksController.isTitleAndDescriptionEnabled.value,

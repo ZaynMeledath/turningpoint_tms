@@ -2,6 +2,7 @@ part of '../assign_task_screen.dart';
 
 Widget monthlyFrequencySegment({required TasksController tasksController}) {
   const rowElementsCount = 8;
+  log(Get.currentRoute);
   return Container(
     padding: const EdgeInsets.only(bottom: 8),
     decoration: BoxDecoration(
