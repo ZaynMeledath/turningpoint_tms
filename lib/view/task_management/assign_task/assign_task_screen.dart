@@ -30,6 +30,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TabController tabController;
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
+  final tasksController = Get.put(TasksController());
 
   @override
   void initState() {
@@ -82,16 +83,29 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                   ),
                 ),
                 Gap(screenHeight * .035),
-                titleTextField(titleController: titleController),
+                titleTextField(
+                  titleController: titleController,
+                  tasksController: tasksController,
+                ),
                 Gap(screenHeight * .035),
                 descriptionTextField(
-                    descriptionController: descriptionController),
+                  descriptionController: descriptionController,
+                  tasksController: tasksController,
+                ),
                 Gap(screenHeight * .03),
-                priorityTabBar(tabController: tabController),
+                priorityTabBar(
+                  tabController: tabController,
+                  tasksController: tasksController,
+                ),
                 Gap(screenHeight * .03),
-                dateAndTimeSegment(context: context),
+                dateAndTimeSegment(
+                  context: context,
+                  tasksController: tasksController,
+                ),
                 Gap(screenHeight * .02),
-                repeatFrequencySection(),
+                repeatFrequencySection(
+                  tasksController: tasksController,
+                ),
                 Gap(screenHeight * .03),
               ],
             ),

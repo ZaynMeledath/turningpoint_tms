@@ -2,7 +2,10 @@
 
 part of '../assign_task_screen.dart';
 
-Widget dateAndTimeSegment({required BuildContext context}) {
+Widget dateAndTimeSegment({
+  required BuildContext context,
+  required TasksController tasksController,
+}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: screenWidth * .015),
     child: Row(

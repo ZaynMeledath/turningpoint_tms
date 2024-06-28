@@ -1,6 +1,6 @@
 part of '../assign_task_screen.dart';
 
-Widget monthlyFrequencySegment() {
+Widget monthlyFrequencySegment({required TasksController tasksController}) {
   const rowElementsCount = 8;
   return Container(
     padding: const EdgeInsets.only(bottom: 8),
@@ -11,6 +11,15 @@ Widget monthlyFrequencySegment() {
     child: Center(
       child: Column(
         children: [
+          Gap(screenHeight * .007),
+          Text(
+            'Select Dates',
+            style: TextStyle(
+              fontSize: screenWidth * .038,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const Gap(2),
           for (int i = 0; i < 4; i++)
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

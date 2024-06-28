@@ -1,6 +1,9 @@
 part of '../assign_task_screen.dart';
 
-Widget priorityTabBar({required TabController tabController}) {
+Widget priorityTabBar({
+  required TabController tabController,
+  required TasksController tasksController,
+}) {
   return Column(
     children: [
       Row(

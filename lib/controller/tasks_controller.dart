@@ -62,5 +62,3 @@ Map<int, bool> createDateMap() {
 
   return datesMap;
 }
-
-final tasksController = Get.put(TasksController());

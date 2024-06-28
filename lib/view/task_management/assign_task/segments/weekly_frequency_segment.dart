@@ -1,6 +1,6 @@
 part of '../assign_task_screen.dart';
 
-Widget weeklyFrequencySegment() {
+Widget weeklyFrequencySegment({required TasksController tasksController}) {
   final days = [
     'Sun',
     'Mon',
@@ -17,34 +17,47 @@ Widget weeklyFrequencySegment() {
       color: Colors.grey.withOpacity(.1),
     ),
     child: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
         children: [
-          for (String i in days)
-            Column(
-              children: [
-                Checkbox(
-                  value: tasksController.daysMap[i],
-                  fillColor: WidgetStateProperty.resolveWith<Color?>(
-                    (Set<WidgetState> states) {
-                      if (states.contains(WidgetState.selected)) {
-                        return const Color.fromRGBO(36, 196, 123, 1);
-                      }
-                      return Colors.transparent;
-                    },
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  visualDensity: VisualDensity.compact,
-                  onChanged: (value) {
-                    tasksController.daysMap[i] =
-                        value ?? tasksController.daysMap[i]!;
-                  },
-                ),
-                Text(i),
-              ],
+          Gap(screenHeight * .007),
+          Text(
+            'Select Days',
+            style: TextStyle(
+              fontSize: screenWidth * .038,
+              fontWeight: FontWeight.w600,
             ),
+          ),
+          const Gap(2),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              for (String i in days)
+                Column(
+                  children: [
+                    Checkbox(
+                      value: tasksController.daysMap[i],
+                      fillColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return const Color.fromRGBO(36, 196, 123, 1);
+                          }
+                          return Colors.transparent;
+                        },
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      visualDensity: VisualDensity.compact,
+                      onChanged: (value) {
+                        tasksController.daysMap[i] =
+                            value ?? tasksController.daysMap[i]!;
+                      },
+                    ),
+                    Text(i),
+                  ],
+                ),
+            ],
+          ),
         ],
       ),
     ),

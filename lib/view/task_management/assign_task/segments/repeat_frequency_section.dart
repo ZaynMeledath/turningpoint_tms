@@ -1,6 +1,6 @@
 part of '../assign_task_screen.dart';
 
-Widget repeatFrequencySection() {
+Widget repeatFrequencySection({required TasksController tasksController}) {
   return Column(
     children: [
       Obx(
@@ -115,9 +115,9 @@ Widget repeatFrequencySection() {
           case RepeatFrequency.daily:
             return const SizedBox();
           case RepeatFrequency.weekly:
-            return weeklyFrequencySegment();
+            return weeklyFrequencySegment(tasksController: tasksController);
           case RepeatFrequency.monthly:
-            return monthlyFrequencySegment();
+            return monthlyFrequencySegment(tasksController: tasksController);
           default:
             return const SizedBox();
         }

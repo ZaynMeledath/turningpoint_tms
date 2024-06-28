@@ -1,6 +1,9 @@
 part of '../assign_task_screen.dart';
 
-Widget titleTextField({required TextEditingController titleController}) {
+Widget titleTextField({
+  required TextEditingController titleController,
+  required TasksController tasksController,
+}) {
   return TextField(
     controller: titleController,
     enabled: tasksController.isTitleAndDescriptionEnabled.value,
