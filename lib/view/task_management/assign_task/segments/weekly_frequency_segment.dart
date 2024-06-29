@@ -1,15 +1,6 @@
 part of '../assign_task_screen.dart';
 
 Widget weeklyFrequencySegment({required TasksController tasksController}) {
-  final days = [
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-  ];
   return AnimatedOpacity(
     opacity: tasksController.scaleWeekly.value ? 1 : 0,
     duration: const Duration(milliseconds: 300),
@@ -40,7 +31,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  for (String i in days)
+                  for (String i in tasksController.daysMap.keys)
                     Column(
                       children: [
                         Checkbox(

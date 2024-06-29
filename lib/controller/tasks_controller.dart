@@ -3,13 +3,15 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 
 class TasksController extends GetxController {
+//====================Date and Time====================//
   Rx<DateTime> taskDate = DateTime.now().obs;
   Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
 
+//====================Priority====================//
   Rx<TaskPriority> taskPriority = TaskPriority.low.obs;
 
+//====================Repeat Frequency Segment====================//
   RxBool shouldRepeatTask = false.obs;
-
   Rxn<RepeatFrequency?> taskRepeatFrequency = Rxn<RepeatFrequency>();
 
   RxMap<String, bool> daysMap = {
@@ -21,27 +23,30 @@ class TasksController extends GetxController {
     'Fri': false,
     'Sat': false,
   }.obs;
-
   RxMap<int, bool> datesMap = createDateMap().obs;
 
   //To block the keyboard from popping up on dismissing the selectDate or selectTime dialog
   Rx<bool> isTitleAndDescriptionEnabled = true.obs;
 
+  //To animate the entry of the Weekly and Monthly frequencies segments
   Rx<bool> scaleWeekly = false.obs;
   Rx<bool> scaleMonthly = false.obs;
 
+//====================Reset Days Map====================//
   void resetDaysMap() {
     for (String i in daysMap.keys) {
       daysMap[i] = false;
     }
   }
 
+//====================Reset Dates Map====================//
   void resetDatesMap() {
     for (int i = 1; i <= totalDays; i++) {
       datesMap[i] = false;
     }
   }
 
+//====================Repeat Check Box OnChanged Method====================//
   void repeatCheckBoxOnChanged(bool? value) {
     shouldRepeatTask.value = value ?? shouldRepeatTask.value;
     taskRepeatFrequency.value = null;
@@ -50,6 +55,7 @@ class TasksController extends GetxController {
     resetDatesMap();
   }
 
+//====================Repeat Frequency DropDown onChanged Method====================//
   void repeatFrequencyOnChanged(RepeatFrequency? repeatFrequency) {
     taskRepeatFrequency.value = repeatFrequency;
     if (repeatFrequency == RepeatFrequency.weekly) {
@@ -71,6 +77,7 @@ class TasksController extends GetxController {
   }
 }
 
+//====================ENUMS====================//
 enum RepeatFrequency {
   once,
   daily,
@@ -84,6 +91,7 @@ enum TaskPriority {
   high,
 }
 
+//====================create Date Map====================//
 Map<int, bool> createDateMap() {
   Map<int, bool> datesMap = {};
 

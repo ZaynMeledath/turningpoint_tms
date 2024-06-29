@@ -17,7 +17,9 @@ Widget dialog() {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
-          children: [],
+          children: [
+            Text('Add Links for your Tasks'),
+          ],
         ),
       ),
     ],
