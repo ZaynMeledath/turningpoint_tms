@@ -4,7 +4,9 @@ Widget attatchmentSegment() {
   return Row(
     children: [
       IconButton(
-        onPressed: () {},
+        onPressed: () async {
+          await showLinkDialog();
+        },
         icon: Icon(
           Icons.link,
           color: Colors.white,
