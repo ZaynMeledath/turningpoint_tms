@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -18,6 +16,7 @@ part 'segments/date_and_time_segment.dart';
 part 'segments/repeat_frequency_section.dart';
 part 'segments/weekly_frequency_segment.dart';
 part 'segments/monthly_frequency_segment.dart';
+part 'segments/attatchment_segment.dart';
 part 'segments/swipe_to_add.dart';
 
 class AssignTaskScreen extends StatefulWidget {
@@ -108,7 +107,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 repeatFrequencySection(
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .03),
+                Gap(screenHeight * .005),
+                attatchmentSegment(),
+                Gap(screenHeight * .02),
               ],
             ),
           ),

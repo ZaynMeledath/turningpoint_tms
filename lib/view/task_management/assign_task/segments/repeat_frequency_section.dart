@@ -35,13 +35,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   visualDensity: VisualDensity.compact,
-                  onChanged: (value) {
-                    tasksController.shouldRepeatTask.value =
-                        value ?? tasksController.shouldRepeatTask.value;
-                    tasksController.taskRepeatFrequency.value = null;
-                    tasksController.resetDaysMap();
-                    tasksController.resetDatesMap();
-                  },
+                  onChanged: tasksController.repeatCheckBoxOnChanged,
                 ),
                 tasksController.shouldRepeatTask.value
                     ? Expanded(
@@ -92,12 +86,8 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                                   child: Text('Monthly'),
                                 ),
                               ],
-                              onChanged: (repeatFrequency) {
-                                tasksController.taskRepeatFrequency.value =
-                                    repeatFrequency;
-                                tasksController.resetDaysMap();
-                                tasksController.resetDatesMap();
-                              },
+                              onChanged:
+                                  tasksController.repeatFrequencyOnChanged,
                             ),
                           ),
                         ),

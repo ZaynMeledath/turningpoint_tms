@@ -27,6 +27,9 @@ class TasksController extends GetxController {
   //To block the keyboard from popping up on dismissing the selectDate or selectTime dialog
   Rx<bool> isTitleAndDescriptionEnabled = true.obs;
 
+  Rx<bool> scaleWeekly = false.obs;
+  Rx<bool> scaleMonthly = false.obs;
+
   void resetDaysMap() {
     for (String i in daysMap.keys) {
       daysMap[i] = false;
@@ -37,6 +40,34 @@ class TasksController extends GetxController {
     for (int i = 1; i <= totalDays; i++) {
       datesMap[i] = false;
     }
+  }
+
+  void repeatCheckBoxOnChanged(bool? value) {
+    shouldRepeatTask.value = value ?? shouldRepeatTask.value;
+    taskRepeatFrequency.value = null;
+    scaleWeekly.value = false;
+    resetDaysMap();
+    resetDatesMap();
+  }
+
+  void repeatFrequencyOnChanged(RepeatFrequency? repeatFrequency) {
+    taskRepeatFrequency.value = repeatFrequency;
+    if (repeatFrequency == RepeatFrequency.weekly) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        scaleWeekly.value = true;
+        scaleMonthly.value = false;
+      });
+    } else if (repeatFrequency == RepeatFrequency.monthly) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        scaleMonthly.value = true;
+        scaleWeekly.value = false;
+      });
+    } else {
+      scaleMonthly.value = false;
+      scaleWeekly.value = false;
+    }
+    resetDaysMap();
+    resetDatesMap();
   }
 }
 
