@@ -47,7 +47,7 @@ Widget dateAndTimeSegment({
                   width: screenWidth * .15,
                   height: screenWidth * .15,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.1),
+                    color: Colors.grey.withOpacity(.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -61,7 +61,7 @@ Widget dateAndTimeSegment({
                   () => Text(
                     '${tasksController.taskDate.value.day} ${DateFormat.MMMM().format(tasksController.taskDate.value)}',
                     style: TextStyle(
-                      color: Colors.white60,
+                      color: Colors.black87,
                       fontSize: screenWidth * .036,
                     ),
                   ),
@@ -102,7 +102,7 @@ Widget dateAndTimeSegment({
                   width: screenWidth * .15,
                   height: screenWidth * .15,
                   decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.1),
+                    color: Colors.grey.withOpacity(.2),
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -116,7 +116,7 @@ Widget dateAndTimeSegment({
                   () => Text(
                     tasksController.taskTime.value.format(context),
                     style: TextStyle(
-                      color: Colors.white60,
+                      color: Colors.black87,
                       fontSize: screenWidth * .036,
                     ),
                   ),

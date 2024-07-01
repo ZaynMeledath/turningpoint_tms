@@ -69,7 +69,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       style: TextStyle(
                         fontFamily: 'Lufga',
                         fontSize: screenWidth * .08,
-                        color: Colors.white,
+                        color: Colors.black87,
                         height: 1.2,
                       ),
                       children: [
@@ -78,7 +78,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                           style: TextStyle(
                             fontFamily: 'Lufga',
                             fontSize: screenWidth * .08,
-                            color: Colors.grey,
+                            color: const Color(0xff5d87ff),
                           ),
                         ),
                       ],

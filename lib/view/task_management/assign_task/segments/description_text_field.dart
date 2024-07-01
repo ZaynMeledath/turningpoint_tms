@@ -9,7 +9,6 @@ Widget descriptionTextField({
     enabled: tasksController.isTitleAndDescriptionEnabled.value,
     style: GoogleFonts.roboto(),
     maxLines: null,
-    keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
       hintText: 'Description',
@@ -17,7 +16,7 @@ Widget descriptionTextField({
         horizontal: screenWidth * .034,
         vertical: screenHeight * .015,
       ),
-      fillColor: Colors.grey.withOpacity(.1),
+      fillColor: Colors.grey.withOpacity(.25),
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),

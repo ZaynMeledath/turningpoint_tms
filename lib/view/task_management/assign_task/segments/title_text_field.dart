@@ -8,7 +8,6 @@ Widget titleTextField({
     controller: titleController,
     enabled: tasksController.isTitleAndDescriptionEnabled.value,
     maxLines: null,
-    keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
       hintText: 'Title',
@@ -16,7 +15,7 @@ Widget titleTextField({
         horizontal: screenWidth * .034,
         vertical: screenHeight * .015,
       ),
-      fillColor: Colors.grey.withOpacity(.1),
+      fillColor: Colors.grey.withOpacity(.25),
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),

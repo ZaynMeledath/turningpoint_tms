@@ -17,12 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Lufga',
         colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
-          seedColor: Colors.green,
+          brightness: Brightness.light,
+          seedColor: const Color(0xff5d87ff),
         ),
         useMaterial3: true,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
+        brightness: Brightness.light,
+        // scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: const Test(),
     );

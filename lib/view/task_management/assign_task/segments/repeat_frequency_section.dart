@@ -26,7 +26,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                   fillColor: WidgetStateProperty.resolveWith<Color?>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return const Color.fromRGBO(36, 196, 123, 1);
+                        return const Color(0xff5d87ff);
                       }
                       return Colors.transparent;
                     },
@@ -48,14 +48,14 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                               hint: const Text(
                                 'Frequency',
                                 style: TextStyle(
-                                  color: Colors.white70,
+                                  color: Colors.black87,
                                 ),
                               ),
                               value: tasksController.taskRepeatFrequency.value,
                               borderRadius: BorderRadius.circular(20),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.grey.withOpacity(.1),
+                                fillColor: Colors.grey.withOpacity(.25),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),

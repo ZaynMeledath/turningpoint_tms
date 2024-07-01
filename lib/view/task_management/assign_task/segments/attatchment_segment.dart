@@ -9,7 +9,7 @@ Widget attatchmentSegment() {
         },
         icon: Icon(
           Icons.link,
-          color: Colors.white,
+          color: Colors.black87,
           size: screenWidth * .06,
         ),
       ),
@@ -17,7 +17,7 @@ Widget attatchmentSegment() {
         onPressed: () {},
         icon: Icon(
           Icons.upload_file,
-          color: Colors.white,
+          color: Colors.black87,
           size: screenWidth * .06,
         ),
       ),
@@ -25,7 +25,7 @@ Widget attatchmentSegment() {
         onPressed: () {},
         icon: Icon(
           Icons.mic,
-          color: Colors.white,
+          color: Colors.black87,
           size: screenWidth * .06,
         ),
       ),

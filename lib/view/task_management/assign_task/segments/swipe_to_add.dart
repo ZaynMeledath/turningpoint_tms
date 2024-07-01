@@ -14,11 +14,11 @@ Widget swipeToAdd() {
       textStyle: TextStyle(
         fontSize: screenWidth * .041,
       ),
-      innerColor: const Color.fromRGBO(36, 196, 123, 1),
-      outerColor: const Color.fromRGBO(32, 32, 32, 1),
+      innerColor: const Color(0xff5d87ff),
+      outerColor: Colors.grey.shade200,
       sliderButtonIcon: const Icon(
         Icons.arrow_forward,
-        color: Color.fromRGBO(50, 50, 50, 1),
+        color: Colors.white,
       ),
       elevation: 2,
       onSubmit: () async {

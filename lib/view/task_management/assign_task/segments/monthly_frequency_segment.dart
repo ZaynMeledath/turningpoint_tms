@@ -47,8 +47,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                                   WidgetStateProperty.resolveWith<Color?>(
                                 (Set<WidgetState> states) {
                                   if (states.contains(WidgetState.selected)) {
-                                    return const Color.fromRGBO(
-                                        36, 196, 123, 1);
+                                    return const Color(0xff5d87ff);
                                   }
                                   return Colors.transparent;
                                 },
