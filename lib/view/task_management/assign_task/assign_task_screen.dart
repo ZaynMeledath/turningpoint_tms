@@ -11,6 +11,7 @@ import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 
 part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
+part 'segments/assign_to_and_category_segment.dart';
 part 'segments/priority_tab_bar.dart';
 part 'segments/date_and_time_segment.dart';
 part 'segments/repeat_frequency_section.dart';
@@ -93,6 +94,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 Gap(screenHeight * .035),
                 descriptionTextField(
                   descriptionController: descriptionController,
+                  tasksController: tasksController,
+                ),
+                Gap(screenHeight * .03),
+                assignToAndCategorySegment(
                   tasksController: tasksController,
                 ),
                 Gap(screenHeight * .03),

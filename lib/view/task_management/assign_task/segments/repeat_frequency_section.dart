@@ -45,9 +45,10 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                             width: screenWidth * .36,
                             child: DropdownButtonFormField(
                               elevation: 2,
-                              hint: const Text(
+                              hint: Text(
                                 'Frequency',
                                 style: TextStyle(
+                                  fontSize: screenWidth * .039,
                                   color: Colors.white70,
                                 ),
                               ),
