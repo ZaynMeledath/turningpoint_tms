@@ -11,6 +11,7 @@ Widget assignToAndCategorySegment({
         width: screenWidth * .38,
         child: DropdownButtonFormField(
           elevation: 2,
+          isExpanded: true,
           hint: Text(
             'Assign to',
             style: TextStyle(
@@ -62,6 +63,7 @@ Widget assignToAndCategorySegment({
         width: screenWidth * .38,
         child: DropdownButtonFormField(
           elevation: 2,
+          isExpanded: true,
           hint: Text(
             'Category',
             style: TextStyle(

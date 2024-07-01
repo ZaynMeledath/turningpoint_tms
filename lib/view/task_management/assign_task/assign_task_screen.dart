@@ -40,7 +40,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     tabController = TabController(length: 3, vsync: this);
     titleController = TextEditingController();
     descriptionController = TextEditingController();
-
     super.initState();
   }
 
