@@ -53,6 +53,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         }
       },
       child: Scaffold(
+        extendBody: true,
         appBar: myAppBar(context: context, title: ''),
         body: SingleChildScrollView(
           child: Padding(
@@ -110,7 +111,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 ),
                 Gap(screenHeight * .005),
                 attatchmentSegment(),
-                Gap(screenHeight * .02),
+                const Gap(85),
               ],
             ),
           ),
