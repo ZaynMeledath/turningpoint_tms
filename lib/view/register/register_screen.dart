@@ -93,8 +93,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
                     ),
-                    const Gap(35),
+                    const Gap(32),
                     customButton(buttonTitle: 'Register'),
+                    const Gap(16),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Already have an account? '),
+                        Text(
+                          'Login here',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromRGBO(36, 196, 123, 1),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Gap(15),
                   ],
                 ),
               ),

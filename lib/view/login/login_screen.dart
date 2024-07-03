@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           GestureDetector(
                             onTap: () {
                               Get.to(
-                                RegisterScreen(),
+                                const RegisterScreen(),
                                 transition: Transition.downToUp,
                               );
                             },
@@ -97,7 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      const Gap(15),
                     ],
                   ),
                 ),
