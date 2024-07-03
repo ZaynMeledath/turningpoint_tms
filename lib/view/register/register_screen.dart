@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
@@ -49,6 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
+            reverse: true,
             child: Transform.scale(
               scale: scaleFactor,
               child: Padding(
@@ -87,24 +89,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
+                      suffixIcon: Icons.visibility_off,
                     ),
                     const Gap(25),
                     customTextField(
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
+                      suffixIcon: Icons.visibility_off,
                     ),
                     const Gap(32),
                     customButton(buttonTitle: 'Register'),
                     const Gap(16),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account? '),
-                        Text(
-                          'Login here',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromRGBO(36, 196, 123, 1),
+                        const Text('Already have an account?'),
+                        InkWell(
+                          onTap: () {
+                            Get.off(
+                              () => const LoginScreen(),
+                              transition: Transition.downToUp,
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: const Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                              'Login here',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromRGBO(36, 196, 123, 1),
+                              ),
+                            ),
                           ),
                         ),
                       ],

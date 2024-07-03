@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
+            reverse: true,
             child: Transform.scale(
               scale: scaleFactor,
               child: Center(
@@ -66,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
+                        suffixIcon: Icons.visibility_off,
                       ),
                       const Gap(10),
                       Align(
@@ -80,19 +82,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Dont have an Account? '),
-                          GestureDetector(
+                          const Text('Dont have an Account?'),
+                          InkWell(
                             onTap: () {
-                              Get.to(
-                                const RegisterScreen(),
+                              Get.off(
+                                () => const RegisterScreen(),
                                 transition: Transition.downToUp,
                               );
                             },
-                            child: const Text(
-                              'Sign Up here',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromRGBO(36, 196, 123, 1),
+                            borderRadius: BorderRadius.circular(16),
+                            child: const Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Text(
+                                'Sign Up here',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromRGBO(36, 196, 123, 1),
+                                ),
                               ),
                             ),
                           ),

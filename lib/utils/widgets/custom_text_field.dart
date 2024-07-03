@@ -3,14 +3,18 @@ part of '../../view/login/login_screen.dart';
 Widget customTextField({
   required TextEditingController controller,
   required String hintText,
+  IconData? suffixIcon,
+  bool? obscureText,
 }) {
   return TextFormField(
     controller: controller,
     style: GoogleFonts.roboto(),
     maxLines: 1,
+    obscureText: obscureText ?? false,
     keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
+      suffixIcon: Icon(suffixIcon),
       label: Text(hintText),
       contentPadding: EdgeInsets.symmetric(
         horizontal: screenWidth * .034,
