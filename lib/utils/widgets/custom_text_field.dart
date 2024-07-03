@@ -1,17 +1,17 @@
-part of '../assign_task_screen.dart';
+part of '../../view/login/login_screen.dart';
 
-Widget titleTextField({
-  required TextEditingController titleController,
-  required TasksController tasksController,
+Widget customTextField({
+  required TextEditingController controller,
+  required String hintText,
 }) {
   return TextFormField(
-    controller: titleController,
-    enabled: tasksController.isTitleAndDescriptionEnabled.value,
-    maxLines: null,
+    controller: controller,
+    style: GoogleFonts.roboto(),
+    maxLines: 1,
     keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
-      hintText: 'Title',
+      label: Text(hintText),
       contentPadding: EdgeInsets.symmetric(
         horizontal: screenWidth * .034,
         vertical: screenHeight * .015,

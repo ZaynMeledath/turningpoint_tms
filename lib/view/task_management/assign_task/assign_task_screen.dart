@@ -44,13 +44,19 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   }
 
   @override
+  void dispose() {
+    tabController.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
+    tasksController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus) {
-          currentFocus.unfocus();
-        }
+        FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         extendBody: true,

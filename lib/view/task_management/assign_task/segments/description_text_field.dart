@@ -4,7 +4,7 @@ Widget descriptionTextField({
   required TextEditingController descriptionController,
   required TasksController tasksController,
 }) {
-  return TextField(
+  return TextFormField(
     controller: descriptionController,
     enabled: tasksController.isTitleAndDescriptionEnabled.value,
     style: GoogleFonts.roboto(),

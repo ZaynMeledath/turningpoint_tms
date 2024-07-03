@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/test.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
       ),
-      home: const Test(),
+      home: const LoginScreen(),
     );
   }
 }
