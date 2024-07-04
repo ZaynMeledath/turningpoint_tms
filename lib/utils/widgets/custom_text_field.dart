@@ -7,7 +7,8 @@ Widget customTextField({
   required String hintText,
   required UserController userController,
   bool? isPassword,
-  IconData? prefixIcon,
+  bool? isNum,
+  bool? isEmail,
 }) {
   return Obx(
     () => TextFormField(
@@ -17,6 +18,11 @@ Widget customTextField({
       obscureText: userController.isObScure.value,
       keyboardAppearance: Brightness.dark,
       cursorOpacityAnimates: true,
+      keyboardType: isEmail == true
+          ? TextInputType.emailAddress
+          : isNum == true
+              ? TextInputType.phone
+              : null,
       decoration: InputDecoration(
         suffixIcon: IconButton(
           icon: Icon(

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/test.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks_home.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -130,6 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             controller: phoneController,
                             hintText: 'WhatsApp Number',
                             userController: userController,
+                            isNum: true,
                           ),
                         ),
                       ],
@@ -139,6 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: emailController,
                       hintText: 'Email',
                       userController: userController,
+                      isEmail: true,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
