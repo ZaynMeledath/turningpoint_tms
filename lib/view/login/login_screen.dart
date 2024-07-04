@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const SizedBox(height: 150),
+                      const SizedBox(height: 135),
                       Hero(
                         tag: 'turning_point_logo',
                         child: Image.asset(
@@ -61,7 +61,32 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 100,
                         ),
                       ),
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 25),
+                      const Row(
+                        children: [
+                          SizedBox(width: 7),
+                          Text(
+                            'Welcome Back Amigo!',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      const Row(
+                        children: [
+                          SizedBox(width: 7),
+                          Text(
+                            'Login to your account',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
                       customTextField(
                         controller: emailController,
                         hintText: 'Email',

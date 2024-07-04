@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    const SizedBox(height: 70),
+                    const SizedBox(height: 45),
                     Hero(
                       tag: 'turning_point_logo',
                       child: Image.asset(
@@ -68,7 +68,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 100,
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 12),
+                    const Row(
+                      children: [
+                        SizedBox(width: 7),
+                        Text(
+                          'Get Started!',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    const Row(
+                      children: [
+                        SizedBox(width: 7),
+                        Text(
+                          'Let\'s get started by filling out the details',
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
                     customTextField(
                       controller: firstNameController,
                       hintText: 'First Name',
