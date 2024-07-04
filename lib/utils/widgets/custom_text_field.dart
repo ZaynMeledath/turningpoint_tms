@@ -40,7 +40,7 @@ Widget customTextField({
         fillColor: Colors.grey.withOpacity(.1),
         filled: true,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           borderSide: const BorderSide(
             color: Colors.transparent,
           ),

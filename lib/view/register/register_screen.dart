@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
@@ -60,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    const SizedBox(height: 45),
+                    const SizedBox(height: 48),
                     Hero(
                       tag: 'turning_point_logo',
                       child: Image.asset(
@@ -106,10 +107,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       userController: userController,
                     ),
                     const SizedBox(height: 25),
-                    customTextField(
-                      controller: phoneController,
-                      hintText: 'WhatsApp Number',
-                      userController: userController,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.1),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '+91',
+                              style: GoogleFonts.roboto(),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: customTextField(
+                            controller: phoneController,
+                            hintText: 'WhatsApp Number',
+                            userController: userController,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 25),
                     customTextField(
