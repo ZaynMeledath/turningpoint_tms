@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +65,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
             padding: EdgeInsets.symmetric(horizontal: screenWidth * .04),
             child: Column(
               children: [
-                Gap(screenHeight * .005),
+                SizedBox(height: screenHeight * .005),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text.rich(
@@ -91,37 +90,37 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     ),
                   ),
                 ),
-                Gap(screenHeight * .035),
+                SizedBox(height: screenHeight * .035),
                 titleTextField(
                   titleController: titleController,
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .035),
+                SizedBox(height: screenHeight * .035),
                 descriptionTextField(
                   descriptionController: descriptionController,
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .03),
+                SizedBox(height: screenHeight * .03),
                 assignToAndCategorySegment(
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .03),
+                SizedBox(height: screenHeight * .03),
                 priorityTabBar(
                   tabController: tabController,
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .03),
+                SizedBox(height: screenHeight * .03),
                 dateAndTimeSegment(
                   context: context,
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .02),
+                SizedBox(height: screenHeight * .02),
                 repeatFrequencySection(
                   tasksController: tasksController,
                 ),
-                Gap(screenHeight * .005),
+                SizedBox(height: screenHeight * .005),
                 attatchmentSegment(),
-                const Gap(85),
+                const SizedBox(height: 85),
               ],
             ),
           ),

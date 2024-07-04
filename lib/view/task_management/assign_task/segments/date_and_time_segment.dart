@@ -56,7 +56,7 @@ Widget dateAndTimeSegment({
                     ),
                   ),
                 ),
-                Gap(screenWidth * .02),
+                SizedBox(width: screenWidth * .02),
                 Obx(
                   () => Text(
                     '${tasksController.taskDate.value.day} ${DateFormat.MMMM().format(tasksController.taskDate.value)}',
@@ -111,7 +111,7 @@ Widget dateAndTimeSegment({
                     ),
                   ),
                 ),
-                Gap(screenWidth * .02),
+                SizedBox(width: screenWidth * .02),
                 Obx(
                   () => Text(
                     tasksController.taskTime.value.format(context),

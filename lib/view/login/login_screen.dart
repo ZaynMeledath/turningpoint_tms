@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
@@ -50,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      const Gap(150),
+                      const SizedBox(height: 150),
                       Hero(
                         tag: 'turning_point_logo',
                         child: Image.asset(
@@ -58,27 +57,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 100,
                         ),
                       ),
-                      const Gap(45),
+                      const SizedBox(height: 45),
                       customTextField(
                         controller: emailController,
                         hintText: 'Email',
                       ),
-                      const Gap(35),
+                      const SizedBox(height: 35),
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
                         suffixIcon: Icons.visibility_off,
                       ),
-                      const Gap(10),
+                      const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
                         child: GestureDetector(
                           child: const Text('Forgot Password'),
                         ),
                       ),
-                      const Gap(20),
+                      const SizedBox(height: 20),
                       customButton(buttonTitle: 'Login'),
-                      const Gap(16),
+                      const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-                      const Gap(15),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),

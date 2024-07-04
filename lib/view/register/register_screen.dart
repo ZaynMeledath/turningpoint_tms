@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
@@ -57,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    const Gap(70),
+                    const SizedBox(height: 70),
                     Hero(
                       tag: 'turning_point_logo',
                       child: Image.asset(
@@ -65,41 +64,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 100,
                       ),
                     ),
-                    const Gap(30),
+                    const SizedBox(height: 30),
                     customTextField(
                       controller: firstNameController,
                       hintText: 'First Name',
                     ),
-                    const Gap(25),
+                    const SizedBox(height: 25),
                     customTextField(
                       controller: lastNameController,
                       hintText: 'Last Name',
                     ),
-                    const Gap(25),
+                    const SizedBox(height: 25),
                     customTextField(
                       controller: phoneController,
                       hintText: 'WhatsApp Number',
                     ),
-                    const Gap(25),
+                    const SizedBox(height: 25),
                     customTextField(
                       controller: emailController,
                       hintText: 'Email',
                     ),
-                    const Gap(25),
+                    const SizedBox(height: 25),
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
                       suffixIcon: Icons.visibility_off,
                     ),
-                    const Gap(25),
+                    const SizedBox(height: 25),
                     customTextField(
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
                       suffixIcon: Icons.visibility_off,
                     ),
-                    const Gap(32),
+                    const SizedBox(height: 34),
                     customButton(buttonTitle: 'Register'),
-                    const Gap(16),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -125,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ],
                     ),
-                    const Gap(15),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),

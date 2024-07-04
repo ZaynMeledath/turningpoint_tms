@@ -20,7 +20,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
         child: Center(
           child: Column(
             children: [
-              Gap(screenHeight * .007),
+              SizedBox(height: screenHeight * .007),
               Text(
                 'Select Dates',
                 style: TextStyle(
@@ -28,7 +28,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Gap(2),
+              const SizedBox(height: 2),
               for (int i = 0; i < 4; i++)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

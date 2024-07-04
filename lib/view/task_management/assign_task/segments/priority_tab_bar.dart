@@ -8,12 +8,12 @@ Widget priorityTabBar({
     children: [
       Row(
         children: [
-          Gap(screenWidth * .025),
+          SizedBox(height: screenWidth * .025),
           Icon(
             Icons.flag,
             color: Colors.white.withOpacity(.9),
           ),
-          Gap(screenWidth * .005),
+          SizedBox(height: screenWidth * .005),
           Text(
             'Priority',
             style: TextStyle(
@@ -22,7 +22,7 @@ Widget priorityTabBar({
           ),
         ],
       ),
-      Gap(screenHeight * .015),
+      SizedBox(height: screenHeight * .015),
       Container(
         height: screenHeight * .068,
         decoration: BoxDecoration(

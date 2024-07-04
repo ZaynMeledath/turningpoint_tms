@@ -19,7 +19,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
         child: Center(
           child: Column(
             children: [
-              Gap(screenHeight * .007),
+              SizedBox(height: screenHeight * .007),
               Text(
                 'Select Days',
                 style: TextStyle(
@@ -27,7 +27,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Gap(2),
+              const SizedBox(height: 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

@@ -14,7 +14,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                   Icons.repeat,
                   size: screenWidth * .05,
                 ),
-                const Gap(4),
+                const SizedBox(width: 4),
                 Text(
                   'Repeat',
                   style: TextStyle(
@@ -99,7 +99,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
           ),
         ),
       ),
-      Gap(screenHeight * .015),
+      SizedBox(height: screenHeight * .015),
 //====================Day Frequency Segment====================//
       Obx(() {
         switch (tasksController.taskRepeatFrequency.value) {
