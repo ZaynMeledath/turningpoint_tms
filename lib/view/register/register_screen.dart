@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/test.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
+  final userController = UserController();
 
   @override
   void initState() {
@@ -37,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    userController.dispose();
     super.dispose();
   }
 
@@ -68,36 +72,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     customTextField(
                       controller: firstNameController,
                       hintText: 'First Name',
+                      userController: userController,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: lastNameController,
                       hintText: 'Last Name',
+                      userController: userController,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: phoneController,
                       hintText: 'WhatsApp Number',
+                      userController: userController,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: emailController,
                       hintText: 'Email',
+                      userController: userController,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
                       isPassword: true,
+                      userController: userController,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
                       isPassword: true,
+                      userController: userController,
                     ),
                     const SizedBox(height: 34),
-                    customButton(buttonTitle: 'Register'),
+                    GestureDetector(
+                      onTap: () {
+                        Get.offAll(
+                          () => const Test(),
+                        );
+                      },
+                      child: customButton(buttonTitle: 'Register'),
+                    ),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

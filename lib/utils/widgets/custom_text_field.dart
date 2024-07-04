@@ -5,6 +5,7 @@ typedef SuffixFunction = void Function();
 Widget customTextField({
   required TextEditingController controller,
   required String hintText,
+  required UserController userController,
   bool? isPassword,
   IconData? prefixIcon,
 }) {
@@ -18,11 +19,13 @@ Widget customTextField({
       cursorOpacityAnimates: true,
       decoration: InputDecoration(
         suffixIcon: IconButton(
-          icon: Icon(isPassword == true
-              ? userController.isObScure.value
-                  ? Icons.visibility_off
-                  : Icons.visibility
-              : null),
+          icon: Icon(
+            isPassword == true
+                ? userController.isObScure.value == true
+                    ? Icons.visibility_off
+                    : Icons.visibility
+                : null,
+          ),
           onPressed: () {
             if (isPassword == true) {
               userController.isObScure.value = !userController.isObScure.value;

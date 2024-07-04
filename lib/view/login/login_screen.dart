@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/test.dart';
 
 part '../../utils/widgets/custom_text_field.dart';
 part '../../utils/widgets/custom_button.dart';
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
+  final userController = UserController();
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    userController.dispose();
     super.dispose();
   }
 
@@ -62,12 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       customTextField(
                         controller: emailController,
                         hintText: 'Email',
+                        userController: userController,
                       ),
                       const SizedBox(height: 35),
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
                         isPassword: true,
+                        userController: userController,
                       ),
                       const SizedBox(height: 10),
                       Align(
@@ -77,7 +82,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                      customButton(buttonTitle: 'Login'),
+                      GestureDetector(
+                        onTap: () {
+                          Get.offAll(
+                            () => const Test(),
+                          );
+                        },
+                        child: customButton(buttonTitle: 'Login'),
+                      ),
                       const SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

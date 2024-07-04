@@ -4,4 +4,4 @@ class UserController extends GetxController {
   RxBool isObScure = true.obs;
 }
 
-final userController = Get.put(UserController());
+// final userController = Get.put(UserController());
