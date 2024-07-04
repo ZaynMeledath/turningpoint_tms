@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
 
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
-                        suffixIcon: Icons.visibility_off,
+                        isPassword: true,
                       ),
                       const SizedBox(height: 10),
                       Align(
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Text('Dont have an Account?'),
                           InkWell(
                             onTap: () {
-                              Get.off(
+                              Get.to(
                                 () => const RegisterScreen(),
                                 transition: Transition.downToUp,
                               );

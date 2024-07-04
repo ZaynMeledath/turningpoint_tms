@@ -88,13 +88,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
-                      suffixIcon: Icons.visibility_off,
+                      isPassword: true,
                     ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
-                      suffixIcon: Icons.visibility_off,
+                      isPassword: true,
                     ),
                     const SizedBox(height: 34),
                     customButton(buttonTitle: 'Register'),
@@ -105,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const Text('Already have an account?'),
                         InkWell(
                           onTap: () {
-                            Get.off(
+                            Get.offAll(
                               () => const LoginScreen(),
                               transition: Transition.downToUp,
                             );
