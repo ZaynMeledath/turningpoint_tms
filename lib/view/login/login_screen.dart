@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -62,28 +63,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 25),
-                      const Row(
+                      Row(
                         children: [
-                          SizedBox(width: 7),
-                          Text(
+                          const SizedBox(width: 7),
+                          const Text(
                             'Welcome Back Amigo!',
                             style: TextStyle(
                               fontSize: 26,
                               fontWeight: FontWeight.w600,
                             ),
-                          ),
+                          ).animate().slideX(
+                                delay: const Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 100),
+                              ),
                         ],
                       ),
                       const SizedBox(height: 2),
-                      const Row(
+                      Row(
                         children: [
-                          SizedBox(width: 7),
-                          Text(
+                          const SizedBox(width: 7),
+                          const Text(
                             'Login to your account',
                             style: TextStyle(
                               fontSize: 16,
                             ),
-                          ),
+                          ).animate().slideX(
+                                delay: const Duration(milliseconds: 300),
+                                duration: const Duration(milliseconds: 100),
+                              ),
                         ],
                       ),
                       const SizedBox(height: 16),

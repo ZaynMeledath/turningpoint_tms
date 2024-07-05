@@ -1,7 +1,5 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 
 class Test extends StatelessWidget {
   const Test({super.key});
@@ -13,22 +11,46 @@ class Test extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(
-                Icons.code,
-                size: 100,
+            SizedBox(
+              height: 400,
+              child: BarChart(
+                BarChartData(
+                  gridData: const FlGridData(
+                    drawHorizontalLine: false,
+                    drawVerticalLine: false,
+                  ),
+                  maxY: 16,
+                  borderData: FlBorderData(
+                      border: Border.all(
+                    color: Colors.transparent,
+                  )),
+                  barGroups: [
+                    BarChartGroupData(
+                      x: 1,
+                      barRods: [
+                        BarChartRodData(
+                          toY: 9,
+                          fromY: 0,
+                          width: 15,
+                          color: Colors.blue,
+                        ),
+                        BarChartRodData(
+                          toY: 8,
+                          fromY: 0,
+                          width: 15,
+                          color: Colors.orange,
+                        ),
+                        BarChartRodData(
+                          toY: 6,
+                          fromY: 0,
+                          width: 15,
+                          color: Colors.green,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              onPressed: () {
-                Get.to(
-                  () => const AssignTaskScreen(),
-                  transition: Transition.downToUp,
-                );
-              },
-            ),
-            nameLetterAvatar(
-              firstName: 'Zayn',
-              lastName: 'Meledath',
-              circleDiameter: 40,
             ),
           ],
         ),
