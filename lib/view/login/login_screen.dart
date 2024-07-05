@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         tag: 'turning_point_logo',
                         child: Image.asset(
                           'assets/images/turning_point_logo.png',
-                          width: 100,
+                          width: 110,
                         ),
                       ),
                       const SizedBox(height: 25),
@@ -73,8 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.w600,
                             ),
                           ).animate().slideX(
-                                delay: const Duration(milliseconds: 300),
-                                duration: const Duration(milliseconds: 100),
+                                delay: const Duration(milliseconds: 150),
+                                curve: Curves.fastLinearToSlowEaseIn,
                               ),
                         ],
                       ),
@@ -88,8 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 16,
                             ),
                           ).animate().slideX(
-                                delay: const Duration(milliseconds: 300),
-                                duration: const Duration(milliseconds: 100),
+                                delay: const Duration(milliseconds: 150),
+                                curve: Curves.fastLinearToSlowEaseIn,
                               ),
                         ],
                       ),
@@ -99,14 +99,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: 'Email',
                         userController: userController,
                         isEmail: true,
-                      ),
+                      ).animate().slideX(
+                            begin: 1,
+                            delay: const Duration(milliseconds: 150),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                          ),
                       const SizedBox(height: 35),
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
                         isPassword: true,
                         userController: userController,
-                      ),
+                      ).animate().slideX(
+                            begin: 1,
+                            delay: const Duration(milliseconds: 150),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                          ),
                       const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerRight,
@@ -121,7 +129,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             () => const Test(),
                           );
                         },
-                        child: customButton(buttonTitle: 'Login'),
+                        child:
+                            customButton(buttonTitle: 'Login').animate().scale(
+                                  delay: const Duration(milliseconds: 150),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                ),
                       ),
                       const SizedBox(height: 16),
                       Row(

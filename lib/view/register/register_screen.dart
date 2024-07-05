@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -99,13 +100,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: firstNameController,
                       hintText: 'First Name',
                       userController: userController,
-                    ),
+                    ).animate().slideX(
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: lastNameController,
                       hintText: 'Last Name',
                       userController: userController,
-                    ),
+                    ).animate().slideX(
+                          begin: 1,
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -134,28 +142,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ],
-                    ),
+                    ).animate().slideX(
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: emailController,
                       hintText: 'Email',
                       userController: userController,
                       isEmail: true,
-                    ),
+                    ).animate().slideX(
+                          begin: 1,
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
                       isPassword: true,
                       userController: userController,
-                    ),
+                    ).animate().slideX(
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 25),
                     customTextField(
                       controller: confirmPasswordController,
                       hintText: 'Confirm Password',
                       isPassword: true,
                       userController: userController,
-                    ),
+                    ).animate().slideX(
+                          begin: 1,
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                     const SizedBox(height: 34),
                     GestureDetector(
                       onTap: () {
@@ -163,7 +185,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           () => const Test(),
                         );
                       },
-                      child: customButton(buttonTitle: 'Register'),
+                      child:
+                          customButton(buttonTitle: 'Register').animate().scale(
+                                delay: const Duration(milliseconds: 100),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                              ),
                     ),
                     const SizedBox(height: 16),
                     Row(
