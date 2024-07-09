@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks_home.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks_dashboard.dart';
 
 part '../../utils/widgets/custom_text_field.dart';
 part '../../utils/widgets/custom_button.dart';
@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       GestureDetector(
                         onTap: () {
                           Get.offAll(
-                            () => const Test(),
+                            () => const TasksDashboard(),
                           );
                         },
                         child:
