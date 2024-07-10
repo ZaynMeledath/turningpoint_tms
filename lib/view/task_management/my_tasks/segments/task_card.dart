@@ -102,7 +102,7 @@ Widget taskCard() {
                       Text(
                         'Fri, Jun 2 5:00 PM',
                         style: TextStyle(
-                          color: Colors.red,
+                          color: Colors.green,
                           fontSize: 12,
                         ),
                       ),
@@ -110,12 +110,12 @@ Widget taskCard() {
                   ),
                   const SizedBox(height: 10),
                   Lottie.asset(
-                    'assets/lotties/pending_animation.json',
+                    'assets/lotties/completed_animation.json',
                     width: 30,
                   ),
                   const SizedBox(width: 3),
                   const Text(
-                    'Pending',
+                    'Completed',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
