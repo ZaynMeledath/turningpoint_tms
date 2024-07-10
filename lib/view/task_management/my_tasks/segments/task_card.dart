@@ -85,9 +85,14 @@ Widget taskCard() {
                   ),
                 ],
               ),
-              const Column(
+              const Expanded(
+                child: SizedBox(),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Icon(
                         Icons.alarm,
@@ -97,23 +102,20 @@ Widget taskCard() {
                       Text(
                         'Fri, Jun 2 5:00 PM',
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.red,
                           fontSize: 12,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Center(
-                    child: Icon(
-                      Icons.check_circle,
-                      size: 20,
-                      color: Colors.green,
-                    ),
+                  const SizedBox(height: 10),
+                  Lottie.asset(
+                    'assets/lotties/pending_animation.json',
+                    width: 30,
                   ),
-                  SizedBox(width: 3),
-                  Text(
-                    'Completed',
+                  const SizedBox(width: 3),
+                  const Text(
+                    'Pending',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

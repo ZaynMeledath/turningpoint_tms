@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 
 part 'segments/task_card.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
 
 void main() {
