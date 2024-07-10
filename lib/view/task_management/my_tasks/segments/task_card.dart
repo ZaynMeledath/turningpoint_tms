@@ -8,56 +8,115 @@ Widget taskCard() {
     ),
     child: Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 14,
-        vertical: 12,
+        horizontal: 12,
+        vertical: 10,
       ),
-      child: Row(
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              const Text(
-                'Task Title',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const Text('Assigned By Zayn Meledath'),
-              const SizedBox(height: 8),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.alarm,
-                    size: 18,
-                  ),
-                  const SizedBox(width: 2),
                   const Text(
-                    'Fri, Jun 2 5:00 PM',
+                    'Task Title',
                     style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 15,
-                    height: 15,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.green,
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.done,
-                        size: 11,
+                  const SizedBox(height: 2),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Assigned By ',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(.6),
                       ),
+                      children: const [
+                        TextSpan(
+                          text: 'Zayn Meledath',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 2),
-                  const Text(
+                  const SizedBox(height: 8),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.person,
+                        size: 18,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        'Ajay',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.sell,
+                        size: 14,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        'Marketing',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.flag,
+                        size: 14,
+                        color: Colors.red,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        'High',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.alarm,
+                        size: 18,
+                      ),
+                      SizedBox(width: 2),
+                      Text(
+                        'Fri, Jun 2 5:00 PM',
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Center(
+                    child: Icon(
+                      Icons.check_circle,
+                      size: 20,
+                      color: Colors.green,
+                    ),
+                  ),
+                  SizedBox(width: 3),
+                  Text(
                     'Completed',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -69,3 +128,55 @@ Widget taskCard() {
     ),
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Expanded(
+//             child: Column(
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   children: [
+//                     cardActionButton(
+//                       title: 'In Progress',
+//                       icon: Icons.timelapse_rounded,
+//                       iconColor: Colors.orange,
+//                     ),
+//                     const SizedBox(width: 4),
+//                     cardActionButton(
+//                       title: 'Complete',
+//                       icon: Icons.check_circle,
+//                       iconColor: Colors.green,
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 14),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.end,
+//                   children: [
+//                     cardActionButton(
+//                       title: 'Edit',
+//                       icon: Icons.edit,
+//                       iconColor: Colors.blue,
+//                     ),
+//                     const SizedBox(width: 4),
+//                     cardActionButton(
+//                       title: 'Delete',
+//                       icon: Icons.delete,
+//                       iconColor: Colors.red,
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             ),
+//           ),
