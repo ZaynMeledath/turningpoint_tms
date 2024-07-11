@@ -1,6 +1,8 @@
 part of '../my_tasks_screen.dart';
 
-Widget taskCard() {
+Widget taskCard({
+  required AnimationController lottieController,
+}) {
   return Card(
     color: const Color.fromRGBO(72, 72, 72, .4),
     shape: RoundedRectangleBorder(
@@ -107,6 +109,7 @@ Widget taskCard() {
                         style: TextStyle(
                           color: Colors.green,
                           fontSize: 13,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -114,8 +117,9 @@ Widget taskCard() {
                   const SizedBox(height: 10),
                   Lottie.asset(
                     'assets/lotties/in_progress_animation.json',
+                    controller: lottieController,
                     width: 30,
-                    repeat: false,
+                    // repeat: false,
                   ),
                   const SizedBox(width: 3),
                   const Text(
@@ -126,6 +130,38 @@ Widget taskCard() {
                     ),
                   ),
                 ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              cardActionButton(
+                title: 'In Progress',
+                icon: Icons.timelapse,
+                iconColor: Colors.blue,
+              ),
+              cardActionButton(
+                title: 'Complete',
+                icon: Icons.check_circle,
+                iconColor: Colors.green,
+              ),
+            ],
+          ),
+          const SizedBox(height: 9),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              cardActionButton(
+                title: 'Edit',
+                icon: Icons.edit,
+                iconColor: Colors.blueGrey,
+              ),
+              cardActionButton(
+                title: 'Delete',
+                icon: Icons.delete,
+                iconColor: Colors.red,
               ),
             ],
           ),

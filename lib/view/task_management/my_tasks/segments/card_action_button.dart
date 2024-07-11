@@ -6,11 +6,11 @@ Widget cardActionButton({
   required Color iconColor,
 }) =>
     Container(
-      width: 70,
-      height: 35,
+      width: 108,
+      height: 38,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.3),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
         child: Row(
@@ -19,12 +19,14 @@ Widget cardActionButton({
             Icon(
               icon,
               color: iconColor,
-              size: 18,
+              size: 20,
             ),
+            const SizedBox(width: 4),
             Text(
               title,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
