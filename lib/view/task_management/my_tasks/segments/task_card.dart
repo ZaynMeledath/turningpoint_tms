@@ -8,7 +8,7 @@ Widget taskCard() {
     ),
     child: Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 12,
+        horizontal: 13,
         vertical: 10,
       ),
       child: Column(
@@ -47,38 +47,40 @@ Widget taskCard() {
                     children: [
                       Icon(
                         Icons.person,
-                        size: 18,
+                        size: 19,
+                        color: Colors.white70,
                       ),
                       SizedBox(width: 2),
                       Text(
                         'Ajay',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 12),
                       Icon(
                         Icons.sell,
-                        size: 14,
+                        size: 15,
+                        color: Colors.white70,
                       ),
                       SizedBox(width: 2),
                       Text(
                         'Marketing',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                         ),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 12),
                       Icon(
                         Icons.flag,
-                        size: 14,
+                        size: 16,
                         color: Colors.red,
                       ),
                       SizedBox(width: 2),
                       Text(
                         'High',
                         style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                         ),
                       ),
                     ],
@@ -97,25 +99,27 @@ Widget taskCard() {
                       Icon(
                         Icons.alarm,
                         size: 18,
+                        color: Colors.white70,
                       ),
-                      SizedBox(width: 2),
+                      SizedBox(width: 3),
                       Text(
                         'Fri, Jun 2 5:00 PM',
                         style: TextStyle(
                           color: Colors.green,
-                          fontSize: 12,
+                          fontSize: 13,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Lottie.asset(
-                    'assets/lotties/completed_animation.json',
+                    'assets/lotties/in_progress_animation.json',
                     width: 30,
+                    repeat: false,
                   ),
                   const SizedBox(width: 3),
                   const Text(
-                    'Completed',
+                    'In Progress',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

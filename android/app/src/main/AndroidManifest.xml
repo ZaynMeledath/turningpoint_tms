@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="turning_point_tasks_app"
+        android:label="TurningPoint TMS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 
@@ -22,10 +23,13 @@ class MyTasksScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 horizontal: 8,
               ),
-              itemCount: 3,
+              itemCount: 8,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.only(bottom: 5),
-                child: taskCard(),
+                child: taskCard().animate().slideY(
+                      begin: index % 2 == 0 ? -1 : 1,
+                      delay: const Duration(milliseconds: 1),
+                    ),
               ),
             ),
           ),
