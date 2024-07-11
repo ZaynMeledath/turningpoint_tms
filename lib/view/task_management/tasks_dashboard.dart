@@ -14,7 +14,10 @@ class TasksDashboard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () => Get.to(const MyTasksScreen()),
+              onPressed: () => Get.to(
+                const MyTasksScreen(),
+                transition: Transition.rightToLeft,
+              ),
               child: const Text('My Tasks'),
             ),
             SizedBox(

@@ -10,7 +10,7 @@ Widget taskCard({
     ),
     child: Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 13,
+        horizontal: 13.5,
         vertical: 10,
       ),
       child: Column(
@@ -20,11 +20,15 @@ Widget taskCard({
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Task Title',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                  const SizedBox(
+                    width: 215,
+                    child: Text(
+                      'Demo Task Title',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -39,6 +43,7 @@ Widget taskCard({
                           text: 'Zayn Meledath',
                           style: TextStyle(
                             color: Colors.white,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -56,7 +61,8 @@ Widget taskCard({
                       Text(
                         'Ajay',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(width: 12),
@@ -69,7 +75,8 @@ Widget taskCard({
                       Text(
                         'Marketing',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(width: 12),
@@ -82,7 +89,8 @@ Widget taskCard({
                       Text(
                         'High',
                         style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -108,7 +116,7 @@ Widget taskCard({
                         'Fri, Jun 2 5:00 PM',
                         style: TextStyle(
                           color: Colors.green,
-                          fontSize: 13,
+                          fontSize: 13.5,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -125,7 +133,7 @@ Widget taskCard({
                   const Text(
                     'In Progress',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 13.5,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -202,7 +210,7 @@ Widget taskCard({
 //                     ),
 //                   ],
 //                 ),
-//                 const SizedBox(height: 14),
+//                 const SizedBox(height: 13.5),
 //                 Row(
 //                   mainAxisAlignment: MainAxisAlignment.end,
 //                   children: [
