@@ -61,13 +61,16 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         appBar: myAppBar(
           context: context,
           title: 'My Tasks',
+          implyLeading: false,
         ),
         body: Column(
           children: [
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 8,
+                  bottom: 65,
                 ),
                 itemCount: 20,
                 itemBuilder: (context, index) => Padding(
@@ -77,6 +80,8 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                       .slideX(
                         begin: index % 2 == 0 ? -1 : 1,
                         delay: const Duration(milliseconds: 1),
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.elasticOut,
                       ),
                 ),
               ),

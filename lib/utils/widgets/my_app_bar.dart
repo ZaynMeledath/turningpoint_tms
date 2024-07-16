@@ -27,7 +27,7 @@ AppBar myAppBar({
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                size: screenWidth * .061,
+                size: 24,
                 color: foregroundColor,
               ),
               onPressed: () {
@@ -48,7 +48,7 @@ AppBar myAppBar({
             title,
             style: GoogleFonts.inter(
               color: foregroundColor,
-              fontSize: screenWidth * .041,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
           ),
