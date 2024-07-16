@@ -34,7 +34,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     lottieController
       ..reset()
       ..forward();
-    if (animationCounter <= 2) {
+    if (animationCounter < 2) {
       await Future.delayed(
         const Duration(milliseconds: 1000),
       );

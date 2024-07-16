@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -88,44 +89,88 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                         ),
                       ],
                     ),
-                  ),
+                  ).animate().slideY(
+                        begin: 1,
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
                 ),
                 SizedBox(height: screenHeight * .035),
                 titleTextField(
                   titleController: titleController,
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 40),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .035),
                 descriptionTextField(
                   descriptionController: descriptionController,
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 80),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .03),
                 assignToAndCategorySegment(
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 120),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .03),
                 priorityTabBar(
                   tabController: tabController,
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 160),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .03),
                 dateAndTimeSegment(
                   context: context,
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .02),
                 repeatFrequencySection(
                   tasksController: tasksController,
-                ),
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 240),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 SizedBox(height: screenHeight * .005),
-                attatchmentSegment(),
+                attatchmentSegment().animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 280),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
                 const SizedBox(height: 85),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: swipeToAdd(),
+        bottomNavigationBar: swipeToAdd().animate().slideY(
+              begin: 1,
+              delay: const Duration(milliseconds: 280),
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.elasticOut,
+            ),
       ),
     );
   }
