@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks_dashboard.dart';
+import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

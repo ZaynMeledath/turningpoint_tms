@@ -3,10 +3,20 @@ part of '../my_tasks_screen.dart';
 Widget taskCard({
   required AnimationController lottieController,
 }) {
-  return Card(
-    color: const Color.fromRGBO(72, 72, 72, .4),
-    shape: RoundedRectangleBorder(
+  return Container(
+    // shape: RoundedRectangleBorder(
+    //   borderRadius: BorderRadius.circular(16),
+    // ),
+    decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(16),
+      gradient: const LinearGradient(
+        colors: [
+          Color.fromRGBO(72, 72, 72, .3),
+          Color.fromRGBO(90, 90, 90, .55),
+        ],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
     ),
     child: Padding(
       padding: const EdgeInsets.symmetric(
@@ -149,11 +159,13 @@ Widget taskCard({
                 title: 'In Progress',
                 icon: Icons.timelapse,
                 iconColor: Colors.blue,
+                onTap: () {},
               ),
               cardActionButton(
                 title: 'Complete',
                 icon: Icons.check_circle,
                 iconColor: Colors.green,
+                onTap: () {},
               ),
             ],
           ),
@@ -165,11 +177,13 @@ Widget taskCard({
                 title: 'Edit',
                 icon: Icons.edit,
                 iconColor: Colors.blueGrey,
+                onTap: () {},
               ),
               cardActionButton(
                 title: 'Delete',
                 icon: Icons.delete,
                 iconColor: Colors.red,
+                onTap: () {},
               ),
             ],
           ),

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks_dashboard.dart';
+import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
 
 class TasksHome extends StatefulWidget {
   const TasksHome({super.key});
