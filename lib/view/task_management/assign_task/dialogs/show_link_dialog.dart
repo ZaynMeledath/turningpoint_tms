@@ -2,12 +2,12 @@ part of '../assign_task_screen.dart';
 
 Future<Object?> showLinkDialog() async {
   return Get.dialog(
-    dialog(),
+    linkDialog(),
     transitionCurve: Curves.easeInOut,
   );
 }
 
-Widget dialog() {
+Widget linkDialog() {
   return Column(
     children: [
       Container(
@@ -16,7 +16,7 @@ Widget dialog() {
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Column(
+        child: const Column(
           children: [
             Text('Add Links for your Tasks'),
           ],

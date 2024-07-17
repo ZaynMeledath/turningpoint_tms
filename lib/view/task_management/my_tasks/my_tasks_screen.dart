@@ -9,6 +9,7 @@ import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 part 'segments/filter_section.dart';
 part 'segments/task_card.dart';
 part 'segments/card_action_button.dart';
+part 'dialogs/show_filter_bottom_sheet.dart';
 
 class MyTasksScreen extends StatefulWidget {
   const MyTasksScreen({super.key});
@@ -70,6 +71,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(

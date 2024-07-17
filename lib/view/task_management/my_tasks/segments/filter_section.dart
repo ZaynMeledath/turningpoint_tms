@@ -9,10 +9,35 @@ Widget filterSection({
     child: Column(
       children: [
         const SizedBox(height: 6),
-        customTextField(
-          controller: searchController,
-          hintText: 'Search Task',
-          userController: userController,
+        Row(
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(100),
+              onTap: () async {
+                await showFilterBottomSheet();
+              },
+              child: Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.filter_list,
+                  color: Color.fromRGBO(36, 196, 123, 1),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: customTextField(
+                controller: searchController,
+                hintText: 'Search Task',
+                userController: userController,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 12),
         Row(
@@ -23,7 +48,7 @@ Widget filterSection({
               height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color.fromRGBO(75, 75, 75, .6),
+                color: Colors.grey.withOpacity(.15),
               ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +68,7 @@ Widget filterSection({
               height: 40,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                color: const Color.fromRGBO(75, 75, 75, .6),
+                color: Colors.grey.withOpacity(.15),
               ),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
