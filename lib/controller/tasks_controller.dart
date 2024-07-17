@@ -32,6 +32,21 @@ class TasksController extends GetxController {
   Rx<bool> scaleWeekly = false.obs;
   Rx<bool> scaleMonthly = false.obs;
 
+//====================Change Task Priority====================//
+  void changeTaskPriority(int index) {
+    switch (index) {
+      case 0:
+        taskPriority.value = TaskPriority.low;
+        break;
+      case 1:
+        taskPriority.value = TaskPriority.medium;
+        break;
+      case 2:
+        taskPriority.value = TaskPriority.high;
+        break;
+    }
+  }
+
 //====================Reset Days Map====================//
   void resetDaysMap() {
     for (String i in daysMap.keys) {
@@ -76,6 +91,8 @@ class TasksController extends GetxController {
     resetDatesMap();
   }
 }
+
+// final tasksController = Get.put(TasksController());
 
 //====================ENUMS====================//
 enum RepeatFrequency {

@@ -9,9 +9,15 @@ Widget priorityTabBar({
       Row(
         children: [
           SizedBox(height: screenWidth * .025),
-          Icon(
-            Icons.flag,
-            color: Colors.white.withOpacity(.9),
+          Obx(
+            () => Icon(
+              Icons.flag,
+              color: tasksController.taskPriority.value == TaskPriority.low
+                  ? Colors.white.withOpacity(.9)
+                  : tasksController.taskPriority.value == TaskPriority.medium
+                      ? Colors.orange
+                      : Colors.red,
+            ),
           ),
           SizedBox(height: screenWidth * .005),
           Text(
@@ -30,6 +36,7 @@ Widget priorityTabBar({
           color: Colors.grey.withOpacity(.1),
         ),
         child: TabBar(
+          onTap: (index) => tasksController.changeTaskPriority(index),
           controller: tabController,
           dividerColor: Colors.transparent,
           enableFeedback: true,

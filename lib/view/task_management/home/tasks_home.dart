@@ -82,7 +82,7 @@ class _TasksHomeState extends State<TasksHome> {
               ],
             );
           },
-          backgroundColor: Colors.black,
+          backgroundColor: const Color.fromARGB(255, 23, 29, 32),
           gapLocation: GapLocation.center,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
           leftCornerRadius: 32,

@@ -73,6 +73,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           SliverAppBar(
             automaticallyImplyLeading: false,
             expandedHeight: 120,
+            backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(
                 searchController: searchController,
@@ -86,7 +87,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
               (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(
-                    bottom: 8,
+                    bottom: 9,
                     left: 10,
                     right: 10,
                   ),

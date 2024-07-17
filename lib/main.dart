@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
+        // scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
+        scaffoldBackgroundColor: const Color.fromRGBO(29, 36, 41, 1),
       ),
       home: const LoginScreen(),
     );
