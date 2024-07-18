@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
@@ -41,7 +42,7 @@ class _TasksHomeState extends State<TasksHome> {
           width: 50,
           height: 50,
           child: FloatingActionButton(
-            backgroundColor: const Color.fromRGBO(36, 196, 123, 1),
+            backgroundColor: AppColor.themeGreen,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
             ),
@@ -66,17 +67,13 @@ class _TasksHomeState extends State<TasksHome> {
               children: [
                 Icon(
                   titleIconMap.values.elementAt(index),
-                  color: isActive
-                      ? const Color.fromRGBO(36, 196, 123, 1)
-                      : Colors.grey,
+                  color: isActive ? AppColor.themeGreen : Colors.grey,
                 ),
                 Text(
                   titleIconMap.keys.elementAt(index),
                   style: TextStyle(
                     fontSize: 12.5,
-                    color: isActive
-                        ? const Color.fromRGBO(36, 196, 123, 1)
-                        : Colors.grey,
+                    color: isActive ? AppColor.themeGreen : Colors.grey,
                   ),
                 )
               ],

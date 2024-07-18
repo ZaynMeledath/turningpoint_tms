@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget nameLetterAvatar({
   required String firstName,
@@ -14,7 +15,7 @@ Widget nameLetterAvatar({
     height: circleDiameter ?? 40,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: backgroundColor ?? const Color.fromRGBO(36, 196, 123, 1),
+      color: backgroundColor ?? AppColor.themeGreen,
     ),
     child: Center(
       child: Text(

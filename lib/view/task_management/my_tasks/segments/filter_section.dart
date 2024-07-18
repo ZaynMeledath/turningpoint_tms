@@ -25,7 +25,7 @@ Widget filterSection({
                 ),
                 child: const Icon(
                   Icons.filter_list,
-                  color: Color.fromRGBO(36, 196, 123, 1),
+                  color: AppColor.themeGreen,
                 ),
               ),
             ),

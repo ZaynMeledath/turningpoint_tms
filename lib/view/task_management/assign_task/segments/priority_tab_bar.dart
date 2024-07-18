@@ -53,10 +53,7 @@ Widget priorityTabBar({
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             gradient: const LinearGradient(
-              colors: [
-                Color.fromRGBO(36, 196, 123, 1),
-                Color.fromRGBO(52, 228, 140, 1)
-              ],
+              colors: [AppColor.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
