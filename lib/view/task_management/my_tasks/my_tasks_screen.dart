@@ -12,6 +12,8 @@ part 'segments/filter_section.dart';
 part 'segments/task_card.dart';
 part 'segments/card_action_button.dart';
 part 'dialogs/show_filter_bottom_sheet.dart';
+part 'dialogs/segments/filter_item.dart';
+part 'dialogs/segments/category_filter_segment.dart';
 
 class MyTasksScreen extends StatefulWidget {
   const MyTasksScreen({super.key});
@@ -23,7 +25,9 @@ class MyTasksScreen extends StatefulWidget {
 class _MyTasksScreenState extends State<MyTasksScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController lottieController;
-  late final TextEditingController searchController;
+  late final TextEditingController taskSearchController;
+  late final TextEditingController categorySearchController;
+  late final TextEditingController assignedSearchController;
   final userController = Get.put(UserController());
   int animationCounter = 0;
 
@@ -33,7 +37,9 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    searchController = TextEditingController();
+    taskSearchController = TextEditingController();
+    categorySearchController = TextEditingController();
+    assignedSearchController = TextEditingController();
     animateLottie();
     super.initState();
   }
@@ -59,6 +65,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   @override
   void dispose() {
     lottieController.dispose();
+    taskSearchController.dispose();
     super.dispose();
   }
 
@@ -78,7 +85,9 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(
-                searchController: searchController,
+                taskSearchController: taskSearchController,
+                categorySearchController: categorySearchController,
+                assignedSearchController: assignedSearchController,
                 userController: userController,
               ),
             ),

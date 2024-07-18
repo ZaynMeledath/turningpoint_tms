@@ -1,7 +1,9 @@
 part of '../my_tasks_screen.dart';
 
 Widget filterSection({
-  required TextEditingController searchController,
+  required TextEditingController taskSearchController,
+  required TextEditingController categorySearchController,
+  required TextEditingController assignedSearchController,
   required UserController userController,
 }) {
   return Padding(
@@ -14,7 +16,10 @@ Widget filterSection({
             InkWell(
               borderRadius: BorderRadius.circular(100),
               onTap: () async {
-                await showFilterBottomSheet();
+                await showFilterBottomSheet(
+                  categorySearchController: categorySearchController,
+                  assignedSearchController: assignedSearchController,
+                );
               },
               child: Container(
                 width: 42,
@@ -32,7 +37,7 @@ Widget filterSection({
             const SizedBox(width: 8),
             Flexible(
               child: customTextField(
-                controller: searchController,
+                controller: taskSearchController,
                 hintText: 'Search Task',
                 userController: userController,
               ),
