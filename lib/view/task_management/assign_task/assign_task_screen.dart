@@ -59,122 +59,119 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Transform.scale(
-        scale: scaleFactor,
-        child: Scaffold(
-          extendBody: true,
-          appBar: myAppBar(context: context, title: ''),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * .04),
-              child: Column(
-                children: [
-                  SizedBox(height: screenHeight * .005),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text.rich(
-                      TextSpan(
-                        text: 'Create\nNew ',
-                        style: TextStyle(
-                          fontFamily: 'Lufga',
-                          fontSize: screenWidth * .08,
-                          color: Colors.white,
-                          height: 1.2,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Task',
-                            style: TextStyle(
-                              fontFamily: 'Lufga',
-                              fontSize: screenWidth * .08,
-                              color: Colors.grey,
-                            ),
+      child: Scaffold(
+        extendBody: true,
+        appBar: myAppBar(context: context, title: ''),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * .04),
+            child: Column(
+              children: [
+                SizedBox(height: screenHeight * .005),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'Create\nNew ',
+                      style: TextStyle(
+                        fontFamily: 'Lufga',
+                        fontSize: screenWidth * .08,
+                        color: Colors.white,
+                        height: 1.2,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Task',
+                          style: TextStyle(
+                            fontFamily: 'Lufga',
+                            fontSize: screenWidth * .08,
+                            color: Colors.grey,
                           ),
-                        ],
-                      ),
-                    ).animate().slideY(
-                          begin: 1,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.elasticOut,
                         ),
-                  ),
-                  SizedBox(height: screenHeight * .035),
-                  titleTextField(
-                    titleController: titleController,
-                    tasksController: tasksController,
+                      ],
+                    ),
                   ).animate().slideY(
                         begin: 1,
-                        delay: const Duration(milliseconds: 40),
                         duration: const Duration(milliseconds: 1000),
                         curve: Curves.elasticOut,
                       ),
-                  SizedBox(height: screenHeight * .035),
-                  descriptionTextField(
-                    descriptionController: descriptionController,
-                    tasksController: tasksController,
-                  ).animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 80),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  SizedBox(height: screenHeight * .03),
-                  assignToAndCategorySegment(
-                    tasksController: tasksController,
-                  ).animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 120),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  SizedBox(height: screenHeight * .03),
-                  priorityTabBar(
-                    tabController: tabController,
-                    tasksController: tasksController,
-                  ).animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 160),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  SizedBox(height: screenHeight * .03),
-                  dateAndTimeSegment(
-                    context: context,
-                    tasksController: tasksController,
-                  ).animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 200),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  SizedBox(height: screenHeight * .02),
-                  repeatFrequencySection(
-                    tasksController: tasksController,
-                  ).animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 240),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  SizedBox(height: screenHeight * .005),
-                  attatchmentSegment().animate().slideY(
-                        begin: 1,
-                        delay: const Duration(milliseconds: 280),
-                        duration: const Duration(milliseconds: 1000),
-                        curve: Curves.elasticOut,
-                      ),
-                  const SizedBox(height: 85),
-                ],
-              ),
+                ),
+                SizedBox(height: screenHeight * .035),
+                titleTextField(
+                  titleController: titleController,
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 40),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .035),
+                descriptionTextField(
+                  descriptionController: descriptionController,
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 80),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .03),
+                assignToAndCategorySegment(
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 120),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .03),
+                priorityTabBar(
+                  tabController: tabController,
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 160),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .03),
+                dateAndTimeSegment(
+                  context: context,
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 200),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .02),
+                repeatFrequencySection(
+                  tasksController: tasksController,
+                ).animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 240),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                SizedBox(height: screenHeight * .005),
+                attatchmentSegment().animate().slideY(
+                      begin: 1,
+                      delay: const Duration(milliseconds: 280),
+                      duration: const Duration(milliseconds: 1000),
+                      curve: Curves.elasticOut,
+                    ),
+                const SizedBox(height: 85),
+              ],
             ),
           ),
-          bottomNavigationBar: swipeToAdd().animate().slideY(
-                begin: 1,
-                delay: const Duration(milliseconds: 280),
-                duration: const Duration(milliseconds: 1000),
-                curve: Curves.elasticOut,
-              ),
         ),
+        bottomNavigationBar: swipeToAdd().animate().slideY(
+              begin: 1,
+              delay: const Duration(milliseconds: 280),
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.elasticOut,
+            ),
       ),
     );
   }

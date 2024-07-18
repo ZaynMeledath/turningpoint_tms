@@ -2,7 +2,6 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
@@ -33,63 +32,60 @@ class _TasksHomeState extends State<TasksHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Transform.scale(
-      scale: scaleFactor,
-      child: Scaffold(
-        extendBody: true,
-        body: widgetList[activeIndex],
-        floatingActionButton: SizedBox(
-          width: 50,
-          height: 50,
-          child: FloatingActionButton(
-            backgroundColor: AppColor.themeGreen,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
-            ),
-            onPressed: () {
-              Get.to(
-                () => const AssignTaskScreen(),
-                transition: Transition.downToUp,
-              );
-            },
-            child: Icon(
-              Icons.add_task,
-              color: Colors.white.withOpacity(.85),
-            ),
+    return Scaffold(
+      extendBody: true,
+      body: widgetList[activeIndex],
+      floatingActionButton: SizedBox(
+        width: 50,
+        height: 50,
+        child: FloatingActionButton(
+          backgroundColor: AppColor.themeGreen,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: AnimatedBottomNavigationBar.builder(
-          itemCount: titleIconMap.length,
-          tabBuilder: (index, isActive) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  titleIconMap.values.elementAt(index),
-                  color: isActive ? AppColor.themeGreen : Colors.grey,
-                ),
-                Text(
-                  titleIconMap.keys.elementAt(index),
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    color: isActive ? AppColor.themeGreen : Colors.grey,
-                  ),
-                )
-              ],
+          onPressed: () {
+            Get.to(
+              () => const AssignTaskScreen(),
+              transition: Transition.downToUp,
             );
           },
-          backgroundColor: const Color.fromARGB(255, 23, 29, 32),
-          gapLocation: GapLocation.center,
-          notchSmoothness: NotchSmoothness.verySmoothEdge,
-          leftCornerRadius: 32,
-          rightCornerRadius: 32,
-          activeIndex: activeIndex,
-          onTap: (index) {
-            activeIndex = index;
-            setState(() {});
-          },
+          child: Icon(
+            Icons.add_task,
+            color: Colors.white.withOpacity(.85),
+          ),
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+        itemCount: titleIconMap.length,
+        tabBuilder: (index, isActive) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                titleIconMap.values.elementAt(index),
+                color: isActive ? AppColor.themeGreen : Colors.grey,
+              ),
+              Text(
+                titleIconMap.keys.elementAt(index),
+                style: TextStyle(
+                  fontSize: 12.5,
+                  color: isActive ? AppColor.themeGreen : Colors.grey,
+                ),
+              )
+            ],
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 23, 29, 32),
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.verySmoothEdge,
+        leftCornerRadius: 32,
+        rightCornerRadius: 32,
+        activeIndex: activeIndex,
+        onTap: (index) {
+          activeIndex = index;
+          setState(() {});
+        },
       ),
     );
   }
