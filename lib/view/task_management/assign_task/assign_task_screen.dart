@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +8,6 @@ import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 
 part 'segments/title_text_field.dart';
@@ -64,10 +64,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         appBar: myAppBar(context: context, title: ''),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * .04),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Column(
               children: [
-                SizedBox(height: screenHeight * .005),
+                SizedBox(height: 4.5.h),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text.rich(
@@ -75,7 +75,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       text: 'Create\nNew ',
                       style: TextStyle(
                         fontFamily: 'Lufga',
-                        fontSize: screenWidth * .08,
+                        fontSize: 32.sp,
                         color: Colors.white,
                         height: 1.2,
                       ),
@@ -84,7 +84,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                           text: 'Task',
                           style: TextStyle(
                             fontFamily: 'Lufga',
-                            fontSize: screenWidth * .08,
+                            fontSize: 32.sp,
                             color: Colors.grey,
                           ),
                         ),
@@ -96,7 +96,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                         curve: Curves.elasticOut,
                       ),
                 ),
-                SizedBox(height: screenHeight * .035),
+                SizedBox(height: 30.h),
                 titleTextField(
                   titleController: titleController,
                   tasksController: tasksController,
@@ -106,7 +106,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .035),
+                SizedBox(height: 32.h),
                 descriptionTextField(
                   descriptionController: descriptionController,
                   tasksController: tasksController,
@@ -116,7 +116,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .03),
+                SizedBox(height: 28.h),
                 assignToAndCategorySegment(
                   tasksController: tasksController,
                 ).animate().slideY(
@@ -125,7 +125,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .03),
+                SizedBox(height: 28.h),
                 priorityTabBar(
                   tabController: tabController,
                   tasksController: tasksController,
@@ -135,7 +135,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .03),
+                SizedBox(height: 28.h),
                 dateAndTimeSegment(
                   context: context,
                   tasksController: tasksController,
@@ -145,7 +145,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .02),
+                SizedBox(height: 18.h),
                 repeatFrequencySection(
                   tasksController: tasksController,
                 ).animate().slideY(
@@ -154,14 +154,14 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: screenHeight * .005),
+                SizedBox(height: 4.5.h),
                 attatchmentSegment().animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 280),
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                const SizedBox(height: 85),
+                SizedBox(height: 85.h),
               ],
             ),
           ),

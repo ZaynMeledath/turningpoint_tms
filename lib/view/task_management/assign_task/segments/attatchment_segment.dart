@@ -10,7 +10,7 @@ Widget attatchmentSegment() {
         icon: Icon(
           Icons.link,
           color: Colors.white,
-          size: screenWidth * .06,
+          size: 24.w,
         ),
       ),
       IconButton(
@@ -18,7 +18,7 @@ Widget attatchmentSegment() {
         icon: Icon(
           Icons.upload_file,
           color: Colors.white,
-          size: screenWidth * .06,
+          size: 24.w,
         ),
       ),
       IconButton(
@@ -26,7 +26,7 @@ Widget attatchmentSegment() {
         icon: Icon(
           Icons.mic,
           color: Colors.white,
-          size: screenWidth * .06,
+          size: 24.w,
         ),
       ),
     ],

@@ -8,14 +8,14 @@ Widget assignToAndCategorySegment({
     children: [
 //====================Assign To Dropdown====================//
       SizedBox(
-        width: screenWidth * .38,
+        width: 156.w,
         child: DropdownButtonFormField(
           elevation: 2,
           isExpanded: true,
           hint: Text(
             'Assign to',
             style: TextStyle(
-              fontSize: screenWidth * .039,
+              fontSize: 16.sp,
               color: Colors.white70,
             ),
           ),
@@ -40,18 +40,33 @@ Widget assignToAndCategorySegment({
               ),
             ),
           ),
-          items: const [
+          items: [
             DropdownMenuItem(
               value: RepeatFrequency.daily,
-              child: Text('Daily'),
+              child: Text(
+                'Daily',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: RepeatFrequency.weekly,
-              child: Text('Weekly'),
+              child: Text(
+                'Weekly',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: RepeatFrequency.monthly,
-              child: Text('Monthly'),
+              child: Text(
+                'Monthly',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
           ],
           onChanged: tasksController.repeatFrequencyOnChanged,
@@ -60,14 +75,14 @@ Widget assignToAndCategorySegment({
 
 //====================Task Category Dropdown====================//
       SizedBox(
-        width: screenWidth * .38,
+        width: 156.w,
         child: DropdownButtonFormField(
           elevation: 2,
           isExpanded: true,
           hint: Text(
             'Category',
             style: TextStyle(
-              fontSize: screenWidth * .039,
+              fontSize: 16.sp,
               color: Colors.white70,
             ),
           ),
@@ -92,18 +107,33 @@ Widget assignToAndCategorySegment({
               ),
             ),
           ),
-          items: const [
+          items: [
             DropdownMenuItem(
               value: RepeatFrequency.daily,
-              child: Text('Daily'),
+              child: Text(
+                'Daily',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: RepeatFrequency.weekly,
-              child: Text('Weekly'),
+              child: Text(
+                'Weekly',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
             DropdownMenuItem(
               value: RepeatFrequency.monthly,
-              child: Text('Monthly'),
+              child: Text(
+                'Monthly',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                ),
+              ),
             ),
           ],
           onChanged: tasksController.repeatFrequencyOnChanged,

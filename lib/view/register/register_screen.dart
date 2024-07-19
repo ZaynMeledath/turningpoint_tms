@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
@@ -57,43 +58,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: SingleChildScrollView(
             reverse: true,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  const SizedBox(height: 48),
+                  SizedBox(height: 48.h),
                   Hero(
                     tag: 'turning_point_logo',
                     child: Image.asset(
                       'assets/images/turning_point_logo.png',
-                      width: 100,
+                      width: 100.w,
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  const Row(
+                  SizedBox(height: 12.h),
+                  Row(
                     children: [
-                      SizedBox(width: 7),
+                      SizedBox(width: 7.w),
                       Text(
                         'Get Started!',
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: 28.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  const Row(
+                  SizedBox(height: 4.h),
+                  Row(
                     children: [
-                      SizedBox(width: 7),
+                      SizedBox(width: 7.w),
                       Text(
                         'Let\'s get started by filling out the details',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 15.sp,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12.h),
                   customTextField(
                     controller: firstNameController,
                     hintText: 'First Name',
@@ -102,7 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   customTextField(
                     controller: lastNameController,
                     hintText: 'Last Name',
@@ -112,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -130,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8.w),
                       Expanded(
                         child: customTextField(
                           controller: phoneController,
@@ -144,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   customTextField(
                     controller: emailController,
                     hintText: 'Email',
@@ -155,7 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   customTextField(
                     controller: passwordController,
                     hintText: 'Password',
@@ -165,7 +166,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: 25.h),
                   customTextField(
                     controller: confirmPasswordController,
                     hintText: 'Confirm Password',
@@ -176,7 +177,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
-                  const SizedBox(height: 34),
+                  SizedBox(height: 34.h),
                   GestureDetector(
                     onTap: () {
                       Get.offAll(
@@ -189,11 +190,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               curve: Curves.fastLinearToSlowEaseIn,
                             ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('Already have an account?'),
+                      Text(
+                        'Already have an account?',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                        ),
+                      ),
                       InkWell(
                         onTap: () {
                           Get.offAll(
@@ -202,11 +208,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         },
                         borderRadius: BorderRadius.circular(16),
-                        child: const Padding(
-                          padding: EdgeInsets.all(5),
+                        child: Padding(
+                          padding: EdgeInsets.all(5.w),
                           child: Text(
                             'Login here',
                             style: TextStyle(
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColor.themeGreen,
                             ),
@@ -215,7 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16.h),
                 ],
               ),
             ),

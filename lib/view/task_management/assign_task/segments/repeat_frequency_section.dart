@@ -5,20 +5,20 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
     children: [
       Obx(
         () => Container(
-          height: screenHeight * .075,
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * .03),
+          height: 68.h,
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Center(
             child: Row(
               children: [
                 Icon(
                   Icons.repeat,
-                  size: screenWidth * .05,
+                  size: 20.sp,
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4.w),
                 Text(
                   'Repeat',
                   style: TextStyle(
-                    fontSize: screenWidth * .041,
+                    fontSize: 20.sp,
                   ),
                 ),
                 Checkbox(
@@ -42,13 +42,13 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: SizedBox(
-                            width: screenWidth * .36,
+                            width: 148.w,
                             child: DropdownButtonFormField(
                               elevation: 2,
                               hint: Text(
                                 'Frequency',
                                 style: TextStyle(
-                                  fontSize: screenWidth * .039,
+                                  fontSize: 16.sp,
                                   color: Colors.white70,
                                 ),
                               ),
@@ -99,7 +99,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
           ),
         ),
       ),
-      SizedBox(height: screenHeight * .015),
+      SizedBox(height: 13.5.h),
 //====================Day Frequency Segment====================//
       Obx(() {
         switch (tasksController.taskRepeatFrequency.value) {

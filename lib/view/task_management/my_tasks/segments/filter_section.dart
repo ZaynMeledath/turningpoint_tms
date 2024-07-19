@@ -22,8 +22,8 @@ Widget filterSection({
                 );
               },
               child: Container(
-                width: 42,
-                height: 42,
+                width: 45.w,
+                height: 42.w,
                 decoration: BoxDecoration(
                   color: Colors.grey.withOpacity(.15),
                   shape: BoxShape.circle,
@@ -34,7 +34,7 @@ Widget filterSection({
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             Flexible(
               child: customTextField(
                 controller: taskSearchController,
@@ -44,47 +44,47 @@ Widget filterSection({
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              width: 110,
-              height: 40,
+              width: 110.w,
+              height: 40.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.grey.withOpacity(.15),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Range',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
-                  Icon(Icons.arrow_drop_down)
+                  const Icon(Icons.arrow_drop_down)
                 ],
               ),
             ),
             Container(
-              width: 110,
-              height: 40,
+              width: 110.w,
+              height: 40.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
                 color: Colors.grey.withOpacity(.15),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Status',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                     ),
                   ),
-                  Icon(Icons.arrow_drop_down)
+                  const Icon(Icons.arrow_drop_down)
                 ],
               ),
             ),

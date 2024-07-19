@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/utils/flight_shuttle_builder.dart';
-import 'package:turning_point_tasks_app/utils/screen_size.dart';
 
 AppBar myAppBar({
   required BuildContext context,
@@ -15,7 +15,7 @@ AppBar myAppBar({
     automaticallyImplyLeading: false,
     elevation: 10,
     titleSpacing: 0,
-    toolbarHeight: screenHeight * .066,
+    toolbarHeight: 60.h,
     surfaceTintColor: Colors.transparent,
     backgroundColor: backgroundColor ?? Colors.transparent,
     title: Row(
@@ -27,7 +27,7 @@ AppBar myAppBar({
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios_new_rounded,
-                size: 24,
+                size: 24.sp,
                 color: foregroundColor,
               ),
               onPressed: () {
@@ -40,7 +40,7 @@ AppBar myAppBar({
             ),
           ),
         ),
-        SizedBox(width: screenWidth * .041),
+        SizedBox(width: 16.5.w),
         Hero(
           tag: title,
           flightShuttleBuilder: flightShuttleBuilder,
@@ -48,7 +48,7 @@ AppBar myAppBar({
             title,
             style: GoogleFonts.inter(
               color: foregroundColor,
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w600,
             ),
           ),

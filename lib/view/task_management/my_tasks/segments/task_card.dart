@@ -21,9 +21,9 @@ Widget taskCard({
       ),
     ),
     child: Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 13.5,
-        vertical: 10,
+      padding: EdgeInsets.symmetric(
+        horizontal: 13.5.w,
+        vertical: 10.h,
       ),
       child: Column(
         children: [
@@ -32,18 +32,18 @@ Widget taskCard({
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    width: 215,
+                  SizedBox(
+                    width: 215.w,
                     child: Text(
                       'Demo Task Title',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 18,
+                        fontSize: 18.sp,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2.w),
                   Text.rich(
                     TextSpan(
                       text: 'Assigned By ',
@@ -61,47 +61,47 @@ Widget taskCard({
                       ],
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Row(
+                  SizedBox(height: 8.h),
+                  Row(
                     children: [
                       Icon(
                         Icons.person,
-                        size: 19,
+                        size: 19.sp,
                         color: Colors.white70,
                       ),
-                      SizedBox(width: 2),
+                      SizedBox(width: 2.w),
                       Text(
                         'Ajay',
                         style: TextStyle(
-                          fontSize: 13.5,
+                          fontSize: 13.5.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       Icon(
                         Icons.sell,
-                        size: 15,
+                        size: 15.sp,
                         color: Colors.white70,
                       ),
-                      SizedBox(width: 2),
+                      SizedBox(width: 2.w),
                       Text(
                         'Marketing',
                         style: TextStyle(
-                          fontSize: 13.5,
+                          fontSize: 13.5.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       Icon(
                         Icons.flag,
-                        size: 16,
+                        size: 16.sp,
                         color: Colors.red,
                       ),
-                      SizedBox(width: 2),
+                      SizedBox(width: 2.w),
                       Text(
                         'High',
                         style: TextStyle(
-                          fontSize: 13.5,
+                          fontSize: 13.5.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -218,7 +218,7 @@ Widget taskCard({
 //                       icon: Icons.timelapse_rounded,
 //                       iconColor: Colors.orange,
 //                     ),
-//                     const SizedBox(width: 4),
+//                      SizedBox(width: 4),
 //                     cardActionButton(
 //                       title: 'Complete',
 //                       icon: Icons.check_circle,
@@ -226,7 +226,7 @@ Widget taskCard({
 //                     ),
 //                   ],
 //                 ),
-//                 const SizedBox(height: 13.5),
+//                  SizedBox(height: 13.5),
 //                 Row(
 //                   mainAxisAlignment: MainAxisAlignment.end,
 //                   children: [
@@ -235,7 +235,7 @@ Widget taskCard({
 //                       icon: Icons.edit,
 //                       iconColor: Colors.blue,
 //                     ),
-//                     const SizedBox(width: 4),
+//                      SizedBox(width: 4),
 //                     cardActionButton(
 //                       title: 'Delete',
 //                       icon: Icons.delete,

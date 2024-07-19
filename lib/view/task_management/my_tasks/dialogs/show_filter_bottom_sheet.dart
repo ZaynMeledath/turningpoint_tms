@@ -6,7 +6,7 @@ Future<Object?> showFilterBottomSheet({
 }) async {
   return Get.bottomSheet(
     Container(
-      height: 480,
+      height: 480.h,
       decoration: const BoxDecoration(
         color: Color.fromRGBO(29, 36, 41, 1),
         borderRadius: BorderRadius.vertical(
@@ -18,14 +18,14 @@ Future<Object?> showFilterBottomSheet({
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 14,
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 14.h,
               ),
               child: Text(
                 'Filter Task',
                 style: GoogleFonts.inter(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -41,8 +41,8 @@ Future<Object?> showFilterBottomSheet({
               children: [
 //--------------------Filter Key Part--------------------//
                 Container(
-                  width: 120,
-                  padding: const EdgeInsets.all(2),
+                  width: 120.w,
+                  padding: EdgeInsets.all(2.w),
                   decoration: BoxDecoration(
                     color: Colors.black.withOpacity(.15),
                   ),
@@ -52,17 +52,17 @@ Future<Object?> showFilterBottomSheet({
                         title: 'Category',
                         isActive: true,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       filterItem(
                         title: 'Assigned By',
                         isActive: false,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       filterItem(
                         title: 'Frequency',
                         isActive: false,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6.h),
                       filterItem(
                         title: 'Priority',
                         isActive: false,

@@ -5,8 +5,8 @@ Widget customButton({
 }) {
   return AnimatedContainer(
     duration: const Duration(milliseconds: 500),
-    width: 130,
-    height: 50,
+    width: 130.w,
+    height: 50.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
       gradient: const LinearGradient(

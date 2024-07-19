@@ -12,7 +12,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
       duration: const Duration(milliseconds: 800),
       curve: Curves.bounceOut,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.grey.withOpacity(.1),
@@ -20,15 +20,15 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: screenHeight * .007),
+              SizedBox(height: 6.5.h),
               Text(
                 'Select Dates',
                 style: TextStyle(
-                  fontSize: screenWidth * .038,
+                  fontSize: 15.5.w,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2.h),
               for (int i = 0; i < 4; i++)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -37,8 +37,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                         j <= (i + 1) * rowElementsCount && j <= totalDays;
                         j++)
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * .0082),
+                        padding: EdgeInsets.symmetric(horizontal: 3.5.w),
                         child: Column(
                           children: [
                             Checkbox(
@@ -62,9 +61,11 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                                     value ?? tasksController.datesMap[j]!;
                               },
                             ),
-                            Text(tasksController.datesMap.keys
-                                .elementAt(j - 1)
-                                .toString()),
+                            Text(
+                              tasksController.datesMap.keys
+                                  .elementAt(j - 1)
+                                  .toString(),
+                            ),
                           ],
                         ),
                       ),

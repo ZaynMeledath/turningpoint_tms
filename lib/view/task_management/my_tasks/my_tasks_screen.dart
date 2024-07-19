@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -81,7 +82,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 120,
+            expandedHeight: 120.h,
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(
@@ -97,10 +98,10 @@ class _MyTasksScreenState extends State<MyTasksScreen>
               childCount: 10,
               (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 9,
-                    left: 10,
-                    right: 10,
+                  padding: EdgeInsets.only(
+                    bottom: 9.h,
+                    left: 10.w,
+                    right: 10.w,
                   ),
                   child: taskCard(lottieController: lottieController)
                       .animate()
@@ -116,7 +117,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           ),
           SliverList(
             delegate: SliverChildListDelegate([
-              const SizedBox(height: 65),
+              SizedBox(height: 65.h),
             ]),
           ),
         ],

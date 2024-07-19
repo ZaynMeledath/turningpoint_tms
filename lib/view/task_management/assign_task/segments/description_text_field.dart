@@ -14,8 +14,8 @@ Widget descriptionTextField({
     decoration: InputDecoration(
       hintText: 'Description',
       contentPadding: EdgeInsets.symmetric(
-        horizontal: screenWidth * .034,
-        vertical: screenHeight * .015,
+        horizontal: 14.w,
+        vertical: 13.5.h,
       ),
       fillColor: Colors.grey.withOpacity(.1),
       filled: true,

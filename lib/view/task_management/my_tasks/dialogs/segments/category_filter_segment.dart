@@ -7,7 +7,7 @@ Widget categoryFilterSegment({
   return Expanded(
     child: Column(
       children: [
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Flexible(
           child: Transform.scale(
             scale: .94,
@@ -20,9 +20,9 @@ Widget categoryFilterSegment({
         Expanded(
           child: ListView.builder(
             itemCount: 3,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 8,
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 8.h,
             ),
             itemBuilder: (context, index) {
               return Row(
@@ -40,7 +40,7 @@ Widget categoryFilterSegment({
                   Text(
                     list[index],
                     style: GoogleFonts.inter(
-                      fontSize: 14,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

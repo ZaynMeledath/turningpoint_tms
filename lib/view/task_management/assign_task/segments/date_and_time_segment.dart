@@ -7,7 +7,7 @@ Widget dateAndTimeSegment({
   required TasksController tasksController,
 }) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: screenWidth * .015),
+    padding: EdgeInsets.symmetric(horizontal: 6.w),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -40,12 +40,12 @@ Widget dateAndTimeSegment({
             });
           },
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: EdgeInsets.all(5.w),
             child: Row(
               children: [
                 Container(
-                  width: screenWidth * .15,
-                  height: screenWidth * .15,
+                  width: 61.w,
+                  height: 61.w,
                   decoration: BoxDecoration(
                     color: Colors.grey.withOpacity(.1),
                     shape: BoxShape.circle,
@@ -56,13 +56,13 @@ Widget dateAndTimeSegment({
                     ),
                   ),
                 ),
-                SizedBox(width: screenWidth * .02),
+                SizedBox(width: 8.w),
                 Obx(
                   () => Text(
                     '${tasksController.taskDate.value.day} ${DateFormat.MMMM().format(tasksController.taskDate.value)}',
                     style: TextStyle(
                       color: Colors.white60,
-                      fontSize: screenWidth * .036,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ),
@@ -95,12 +95,12 @@ Widget dateAndTimeSegment({
             });
           },
           child: Padding(
-            padding: const EdgeInsets.all(5),
+            padding: EdgeInsets.all(5.w),
             child: Row(
               children: [
                 Container(
-                  width: screenWidth * .15,
-                  height: screenWidth * .15,
+                  width: 61.w,
+                  height: 61.w,
                   decoration: BoxDecoration(
                     color: Colors.grey.withOpacity(.1),
                     shape: BoxShape.circle,
@@ -111,13 +111,13 @@ Widget dateAndTimeSegment({
                     ),
                   ),
                 ),
-                SizedBox(width: screenWidth * .02),
+                SizedBox(width: 8.w),
                 Obx(
                   () => Text(
                     tasksController.taskTime.value.format(context),
                     style: TextStyle(
                       color: Colors.white60,
-                      fontSize: screenWidth * .036,
+                      fontSize: 14.sp,
                     ),
                   ),
                 ),

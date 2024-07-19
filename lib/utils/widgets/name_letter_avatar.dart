@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget nameLetterAvatar({
@@ -11,8 +12,8 @@ Widget nameLetterAvatar({
   final secondLetter = lastName.characters.first;
 
   return Container(
-    width: circleDiameter ?? 40,
-    height: circleDiameter ?? 40,
+    width: circleDiameter ?? 40.w,
+    height: circleDiameter ?? 40.w,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: backgroundColor ?? AppColor.themeGreen,

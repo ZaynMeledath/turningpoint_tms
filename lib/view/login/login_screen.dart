@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/utils/screen_size.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
 
@@ -50,10 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
             reverse: true,
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
-                    const SizedBox(height: 135),
+                    SizedBox(height: 135.h),
                     Hero(
                       tag: 'turning_point_logo',
                       child: Image.asset(
@@ -61,14 +61,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: 110,
                       ),
                     ),
-                    const SizedBox(height: 25),
+                    SizedBox(height: 25.h),
                     Row(
                       children: [
-                        const SizedBox(width: 7),
-                        const Text(
+                        SizedBox(width: 7.w),
+                        Text(
                           'Welcome Back Amigo!',
                           style: TextStyle(
-                            fontSize: 26,
+                            fontSize: 26.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ).animate().slideX(
@@ -80,11 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 2),
                     Row(
                       children: [
-                        const SizedBox(width: 7),
-                        const Text(
+                        SizedBox(width: 7.w),
+                        Text(
                           'Login to your account',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ).animate().slideX(
                               delay: const Duration(milliseconds: 150),
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     customTextField(
                       controller: emailController,
                       hintText: 'Email',
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           delay: const Duration(milliseconds: 150),
                           curve: Curves.fastLinearToSlowEaseIn,
                         ),
-                    const SizedBox(height: 35),
+                    SizedBox(height: 35.h),
                     customTextField(
                       controller: passwordController,
                       hintText: 'Password',
@@ -114,14 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           delay: const Duration(milliseconds: 150),
                           curve: Curves.fastLinearToSlowEaseIn,
                         ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
                         child: const Text('Forgot Password'),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () {
                         Get.offAll(
@@ -133,11 +133,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             curve: Curves.fastLinearToSlowEaseIn,
                           ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Dont have an Account?'),
+                        Text(
+                          'Dont have an Account?',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                          ),
+                        ),
                         InkWell(
                           onTap: () {
                             Get.to(
@@ -146,11 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                           borderRadius: BorderRadius.circular(16),
-                          child: const Padding(
-                            padding: EdgeInsets.all(5),
+                          child: Padding(
+                            padding: EdgeInsets.all(5.w),
                             child: Text(
                               'Sign Up here',
                               style: TextStyle(
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColor.themeGreen,
                               ),
@@ -159,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: 15.h),
                   ],
                 ),
               ),

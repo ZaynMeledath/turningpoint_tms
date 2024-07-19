@@ -8,7 +8,7 @@ Widget priorityTabBar({
     children: [
       Row(
         children: [
-          SizedBox(height: screenWidth * .025),
+          SizedBox(height: 10.h),
           Obx(
             () => Icon(
               Icons.flag,
@@ -19,18 +19,18 @@ Widget priorityTabBar({
                       : Colors.red,
             ),
           ),
-          SizedBox(height: screenWidth * .005),
+          SizedBox(height: 2.h),
           Text(
             'Priority',
             style: TextStyle(
-              fontSize: screenWidth * .04,
+              fontSize: 16.sp,
             ),
           ),
         ],
       ),
-      SizedBox(height: screenHeight * .015),
+      SizedBox(height: 14.h),
       Container(
-        height: screenHeight * .068,
+        height: 62.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.grey.withOpacity(.1),
@@ -45,7 +45,7 @@ Widget priorityTabBar({
           indicatorSize: TabBarIndicatorSize.tab,
           labelColor: Colors.black87,
           labelStyle: TextStyle(
-            fontSize: screenWidth * .035,
+            fontSize: 14.sp,
             fontFamily: 'Lufga',
             fontWeight: FontWeight.w500,
           ),

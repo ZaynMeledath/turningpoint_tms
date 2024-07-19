@@ -2,17 +2,17 @@ part of '../assign_task_screen.dart';
 
 Widget swipeToAdd() {
   return Container(
-    height: 85,
+    height: 85.h,
     padding: EdgeInsets.symmetric(
-      horizontal: screenWidth * .03,
+      horizontal: 12.w,
     ),
     child: SlideAction(
-      height: 65,
+      height: 65.h,
       sliderRotate: false,
       borderRadius: 50,
       text: 'Add Task',
       textStyle: TextStyle(
-        fontSize: screenWidth * .041,
+        fontSize: 16.sp,
       ),
       innerColor: AppColor.themeGreen,
       outerColor: const Color.fromRGBO(44, 50, 54, 1),

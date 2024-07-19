@@ -11,7 +11,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
       duration: const Duration(milliseconds: 800),
       curve: Curves.bounceOut,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.grey.withOpacity(.1),
@@ -19,15 +19,15 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
         child: Center(
           child: Column(
             children: [
-              SizedBox(height: screenHeight * .007),
+              SizedBox(height: 6.5.h),
               Text(
                 'Select Days',
                 style: TextStyle(
-                  fontSize: screenWidth * .038,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

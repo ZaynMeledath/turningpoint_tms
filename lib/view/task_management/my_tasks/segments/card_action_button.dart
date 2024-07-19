@@ -10,8 +10,8 @@ Widget cardActionButton({
       borderRadius: BorderRadius.circular(8),
       onTap: onTap,
       child: Container(
-        width: 108,
-        height: 38,
+        width: 108.w,
+        height: 38.h,
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(.3),
           borderRadius: BorderRadius.circular(8),
@@ -23,13 +23,13 @@ Widget cardActionButton({
               Icon(
                 icon,
                 color: iconColor,
-                size: 20,
+                size: 20.sp,
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4.w),
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 13,
+                style: TextStyle(
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),

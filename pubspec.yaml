@@ -17,6 +17,7 @@ dependencies:
   dropdown_search: ^5.0.6
   fl_chart: ^0.68.0
   flutter_animate: ^4.5.0
+  flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
   get: ^4.6.6
   intl: ^0.19.0
@@ -42,7 +43,10 @@ flutter:
   - family: Lufga
     fonts:
       - asset: assets/fonts/LufgaRegular.ttf
-      - asset: assets/fonts/LufgaSemiBold.ttf
+
+  - family: Inter
+    fonts:
+      - asset: assets/fonts/InterRegular.ttf
 
   
   

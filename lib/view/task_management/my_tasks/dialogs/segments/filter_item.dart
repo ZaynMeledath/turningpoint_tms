@@ -6,22 +6,22 @@ Widget filterItem({
 }) {
   return Container(
     width: double.maxFinite,
-    height: 45,
+    height: 45.h,
     color: isActive ? Colors.grey.withOpacity(.15) : Colors.transparent,
     child: Row(
       children: [
         isActive
             ? Container(
-                width: 15,
+                width: 15.w,
                 height: double.maxFinite,
                 color: AppColor.themeGreen,
               )
             : const SizedBox(),
-        const SizedBox(width: 10),
+        SizedBox(width: 10.w),
         Text(
           title,
           style: GoogleFonts.inter(
-            fontSize: 15,
+            fontSize: 15.sp,
             fontWeight: FontWeight.w500,
           ),
         ),
