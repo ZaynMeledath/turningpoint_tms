@@ -31,7 +31,7 @@ Widget assignedFilterSegment({
             ),
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(bottom: 14.h),
+                padding: EdgeInsets.only(bottom: 16.h),
                 child: Row(
                   children: [
                     nameLetterAvatar(
@@ -41,25 +41,24 @@ Widget assignedFilterSegment({
                     ),
                     SizedBox(width: 8.w),
                     SizedBox(
-                      width: 180.w,
+                      width: 170.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             map.keys.elementAt(index),
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
                               fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
+                          SizedBox(height: 2.h),
                           Text(
                             map.values.elementAt(index),
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.inter(
+                            style: TextStyle(
                               color: Colors.white60,
                               fontSize: 13.sp,
-                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],

@@ -5,6 +5,7 @@ Widget filterSection({
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
   required UserController userController,
+  required TasksController tasksController,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -19,6 +20,7 @@ Widget filterSection({
                 await showFilterBottomSheet(
                   categorySearchController: categorySearchController,
                   assignedSearchController: assignedSearchController,
+                  tasksController: tasksController,
                 );
               },
               child: Container(

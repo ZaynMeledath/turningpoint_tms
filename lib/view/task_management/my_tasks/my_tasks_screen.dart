@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
@@ -34,6 +35,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   late final TextEditingController categorySearchController;
   late final TextEditingController assignedSearchController;
   final userController = Get.put(UserController());
+  final tasksController = Get.put(TasksController());
   int animationCounter = 0;
 
   @override
@@ -94,6 +96,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                 categorySearchController: categorySearchController,
                 assignedSearchController: assignedSearchController,
                 userController: userController,
+                tasksController: tasksController,
               ),
             ),
           ),

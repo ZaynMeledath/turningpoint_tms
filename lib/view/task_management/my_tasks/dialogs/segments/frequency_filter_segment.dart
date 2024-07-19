@@ -11,9 +11,9 @@ Widget frequencyFilterSegment() {
           padding: EdgeInsets.only(left: 20.w),
           child: Text(
             'Frequency',
-            style: GoogleFonts.inter(
+            style: TextStyle(
               fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
@@ -39,9 +39,8 @@ Widget frequencyFilterSegment() {
                   ),
                   Text(
                     list[index],
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
+                    style: TextStyle(
+                      fontSize: 15.sp,
                     ),
                   ),
                 ],

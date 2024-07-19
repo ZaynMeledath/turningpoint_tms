@@ -6,15 +6,24 @@ Widget priorityFilterSegment() {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 8.h),
+        SizedBox(height: 12.h),
         Padding(
           padding: EdgeInsets.only(left: 20.w),
-          child: Text(
-            'Frequency',
-            style: GoogleFonts.inter(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w500,
-            ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.flag,
+                size: 22.w,
+              ),
+              SizedBox(width: 2.w),
+              Text(
+                'Priority',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         ),
         Expanded(
@@ -22,7 +31,7 @@ Widget priorityFilterSegment() {
             itemCount: 3,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
-              vertical: 8.h,
+              vertical: 4.h,
             ),
             itemBuilder: (context, index) {
               return Row(
@@ -39,9 +48,8 @@ Widget priorityFilterSegment() {
                   ),
                   Text(
                     list[index],
-                    style: GoogleFonts.inter(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
+                    style: TextStyle(
+                      fontSize: 15.sp,
                     ),
                   ),
                 ],
