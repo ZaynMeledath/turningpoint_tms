@@ -44,10 +44,6 @@ flutter:
     fonts:
       - asset: assets/fonts/LufgaRegular.ttf
 
-  - family: Inter
-    fonts:
-      - asset: assets/fonts/InterRegular.ttf
-
   
   
   
