@@ -3,13 +3,13 @@ part of '../assign_task_screen.dart';
 Widget weeklyFrequencySegment({required TasksController tasksController}) {
   return AnimatedOpacity(
     opacity: tasksController.scaleWeekly.value ? 1 : 0,
-    duration: const Duration(milliseconds: 300),
+    duration: const Duration(milliseconds: 400),
     child: AnimatedSlide(
       offset: tasksController.scaleWeekly.value
           ? const Offset(0, 0)
           : const Offset(0, -.1),
-      duration: const Duration(milliseconds: 800),
-      curve: Curves.bounceOut,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.elasticOut,
       child: Container(
         padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(

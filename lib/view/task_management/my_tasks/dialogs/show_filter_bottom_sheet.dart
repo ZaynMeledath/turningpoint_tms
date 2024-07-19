@@ -71,8 +71,16 @@ Future<Object?> showFilterBottomSheet({
                   ),
                 ),
 //--------------------Filter Value Part--------------------//
-                categoryFilterSegment(
-                    categorySearchController: categorySearchController),
+                // categoryFilterSegment(
+                //   categorySearchController: categorySearchController,
+                // ),
+
+                // assignedFilterSegment(
+                //     assignedSearchController: assignedSearchController,),
+
+                // frequencyFilterSegment(),
+
+                priorityFilterSegment(),
               ],
             ),
           ),

@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
+import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/filter_section.dart';
@@ -15,6 +16,9 @@ part 'segments/card_action_button.dart';
 part 'dialogs/show_filter_bottom_sheet.dart';
 part 'dialogs/segments/filter_item.dart';
 part 'dialogs/segments/category_filter_segment.dart';
+part 'dialogs/segments/assigned_filter_segment.dart';
+part 'dialogs/segments/frequency_filter_segment.dart';
+part 'dialogs/segments/priority_filter_segment.dart';
 
 class MyTasksScreen extends StatefulWidget {
   const MyTasksScreen({super.key});
@@ -52,7 +56,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       ..forward();
     if (animationCounter < 2) {
       await Future.delayed(
-        const Duration(milliseconds: 1000),
+        const Duration(milliseconds: 1500),
       );
     } else {
       await Future.delayed(

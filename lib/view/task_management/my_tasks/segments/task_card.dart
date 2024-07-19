@@ -4,16 +4,12 @@ Widget taskCard({
   required AnimationController lottieController,
 }) {
   return Container(
-    // shape: RoundedRectangleBorder(
-    //   borderRadius: BorderRadius.circular(16),
-    // ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(16),
       gradient: const LinearGradient(
         colors: [
           Color.fromRGBO(36, 58, 63, 1),
           Color.fromRGBO(29, 36, 41, 1),
-          // Color.fromRGBO(72, 72, 72, .3),
           Color.fromRGBO(90, 90, 90, .55),
         ],
         begin: Alignment.topLeft,

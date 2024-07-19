@@ -46,7 +46,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Daily',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
@@ -55,7 +55,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Weekly',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
@@ -64,7 +64,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Monthly',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
@@ -113,7 +113,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Daily',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
@@ -122,7 +122,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Weekly',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
@@ -131,7 +131,7 @@ Widget assignToAndCategorySegment({
               child: Text(
                 'Monthly',
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 16.sp,
                 ),
               ),
             ),

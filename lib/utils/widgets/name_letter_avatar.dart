@@ -9,7 +9,8 @@ Widget nameLetterAvatar({
   double? circleDiameter,
 }) {
   final firstLetter = firstName.characters.first;
-  final secondLetter = lastName.characters.first;
+  final secondLetter =
+      lastName.trim().isNotEmpty ? lastName.characters.first : '';
 
   return Container(
     width: circleDiameter ?? 40.w,

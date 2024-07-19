@@ -73,18 +73,33 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                                   ),
                                 ),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: RepeatFrequency.daily,
-                                  child: Text('Daily'),
+                                  child: Text(
+                                    'Daily',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                                 DropdownMenuItem(
                                   value: RepeatFrequency.weekly,
-                                  child: Text('Weekly'),
+                                  child: Text(
+                                    'Weekly',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                                 DropdownMenuItem(
                                   value: RepeatFrequency.monthly,
-                                  child: Text('Monthly'),
+                                  child: Text(
+                                    'Monthly',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                               ],
                               onChanged:

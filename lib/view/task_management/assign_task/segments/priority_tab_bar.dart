@@ -45,9 +45,8 @@ Widget priorityTabBar({
           indicatorSize: TabBarIndicatorSize.tab,
           labelColor: Colors.black87,
           labelStyle: TextStyle(
-            fontSize: 14.sp,
+            fontSize: 16.sp,
             fontFamily: 'Lufga',
-            fontWeight: FontWeight.w500,
           ),
           unselectedLabelColor: Colors.white54,
           indicator: BoxDecoration(
