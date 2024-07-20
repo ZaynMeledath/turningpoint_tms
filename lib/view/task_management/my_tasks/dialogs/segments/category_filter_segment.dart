@@ -10,17 +10,20 @@ Widget categoryFilterSegment({
         SizedBox(height: 8.h),
         Flexible(
           child: Transform.scale(
-            scale: .94,
-            child: customTextField(
-              controller: categorySearchController,
-              hintText: 'Search Category',
-            ).animate().slideY(
-                  begin: .5,
-                  duration: const Duration(milliseconds: 700),
-                  curve: Curves.elasticOut,
-                ),
-          ),
-        ),
+              scale: .94,
+              child: customTextField(
+                controller: categorySearchController,
+                hintText: 'Search Category',
+              )),
+        )
+            .animate(
+              key: GlobalKey(),
+            )
+            .slideX(
+              begin: -.06,
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.elasticOut,
+            ),
         Expanded(
           child: ListView.builder(
             itemCount: 3,
@@ -48,9 +51,13 @@ Widget categoryFilterSegment({
                     ),
                   ),
                 ],
-              ).animate().slideY(
-                    begin: .5,
-                    delay: Duration(milliseconds: 40 * (index + 1)),
+              )
+                  .animate(
+                    key: GlobalKey(),
+                  )
+                  .slideX(
+                    begin: -.06,
+                    delay: Duration(milliseconds: 30 * (index + 1)),
                     duration: const Duration(milliseconds: 700),
                     curve: Curves.elasticOut,
                   );

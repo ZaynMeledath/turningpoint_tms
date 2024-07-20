@@ -15,8 +15,12 @@ Widget frequencyFilterSegment() {
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
             ),
-          ).animate().slideY(
-                begin: .5,
+          )
+              .animate(
+                key: GlobalKey(),
+              )
+              .slideX(
+                begin: -.06,
                 duration: const Duration(milliseconds: 700),
                 curve: Curves.elasticOut,
               ),
@@ -48,9 +52,13 @@ Widget frequencyFilterSegment() {
                     ),
                   ),
                 ],
-              ).animate().slideY(
-                    begin: .5,
-                    delay: Duration(milliseconds: 40 * (index + 1)),
+              )
+                  .animate(
+                    key: GlobalKey(),
+                  )
+                  .slideX(
+                    begin: -.06,
+                    delay: Duration(milliseconds: 30 * (index + 1)),
                     duration: const Duration(milliseconds: 700),
                     curve: Curves.elasticOut,
                   );

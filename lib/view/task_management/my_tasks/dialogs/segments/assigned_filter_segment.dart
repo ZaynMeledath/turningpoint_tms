@@ -19,13 +19,17 @@ Widget assignedFilterSegment({
             child: customTextField(
               controller: assignedSearchController,
               hintText: 'Search by Name/Email',
-            ).animate().slideY(
-                  begin: .5,
-                  duration: const Duration(milliseconds: 700),
-                  curve: Curves.elasticOut,
-                ),
+            ),
           ),
-        ),
+        )
+            .animate(
+              key: GlobalKey(),
+            )
+            .slideX(
+              begin: -.06,
+              duration: const Duration(milliseconds: 700),
+              curve: Curves.elasticOut,
+            ),
         SizedBox(height: 4.h),
         Expanded(
           child: ListView.builder(
@@ -81,13 +85,13 @@ Widget assignedFilterSegment({
                       onChanged: (value) {},
                     ),
                   ],
-                ),
-              ).animate().slideY(
-                    begin: .5,
-                    delay: Duration(milliseconds: 40 * (index + 1)),
-                    duration: const Duration(milliseconds: 700),
-                    curve: Curves.elasticOut,
-                  );
+                ).animate().slideX(
+                      begin: -.06,
+                      delay: Duration(milliseconds: 30 * (index + 1)),
+                      duration: const Duration(milliseconds: 700),
+                      curve: Curves.elasticOut,
+                    ),
+              );
             },
           ),
         ),
