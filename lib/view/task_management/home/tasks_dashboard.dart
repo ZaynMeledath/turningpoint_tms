@@ -1,7 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
 
 class TasksDashboard extends StatelessWidget {
   const TasksDashboard({super.key});
@@ -13,13 +11,6 @@ class TasksDashboard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => Get.to(
-                const MyTasksScreen(),
-                transition: Transition.rightToLeft,
-              ),
-              child: const Text('My Tasks'),
-            ),
             SizedBox(
               height: 400,
               child: BarChart(

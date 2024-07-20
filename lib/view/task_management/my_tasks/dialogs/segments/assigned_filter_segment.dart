@@ -2,13 +2,8 @@ part of '../../my_tasks_screen.dart';
 
 Widget assignedFilterSegment({
   required TextEditingController assignedSearchController,
+  required FilterController filterController,
 }) {
-  final map = {
-    'Zayn': 'zayn@turningpointvapi.com',
-    'Ajay': 'ajay@turningpointvapi.com',
-    'Tanya': 'tanya@turningpointvapi.com',
-  };
-
   return Expanded(
     child: Column(
       children: [
@@ -39,58 +34,76 @@ Widget assignedFilterSegment({
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: Row(
-                  children: [
-                    nameLetterAvatar(
-                      firstName: map.keys.elementAt(index),
-                      lastName: ' ',
-                      circleDiameter: 32.w,
-                    ),
-                    SizedBox(width: 8.w),
-                    SizedBox(
-                      width: 165.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            map.keys.elementAt(index),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(height: 2.h),
-                          Text(
-                            map.values.elementAt(index),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.white60,
-                              fontSize: 13.sp,
-                            ),
-                          ),
-                        ],
+              final name = assignedMap.keys.elementAt(index);
+              final email = assignedMap.values.elementAt(index);
+              return InkWell(
+                onTap: () => filterController.selectOrUnselectAssignedFilter(
+                    filterKey: email),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: Row(
+                    children: [
+                      nameLetterAvatar(
+                        firstName: name,
+                        lastName: ' ',
+                        circleDiameter: 32.w,
                       ),
-                    ),
-                    Checkbox.adaptive(
-                      value: true,
-                      visualDensity: VisualDensity.compact,
-                      fillColor:
-                          const WidgetStatePropertyAll(AppColor.themeGreen),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
+                      SizedBox(width: 8.w),
+                      SizedBox(
+                        width: 165.w,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Text(
+                              email,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.white60,
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      onChanged: (value) {},
-                    ),
-                  ],
-                ).animate().slideX(
-                      begin: -.06,
-                      delay: Duration(milliseconds: 30 * (index + 1)),
-                      duration: const Duration(milliseconds: 700),
-                      curve: Curves.elasticOut,
-                    ),
+                      Obx(
+                        () => Checkbox.adaptive(
+                          value: filterController.assignedFilterModel[email],
+                          visualDensity: VisualDensity.compact,
+                          fillColor: WidgetStatePropertyAll(
+                              filterController.assignedFilterModel[email] ==
+                                      true
+                                  ? AppColor.themeGreen
+                                  : Colors.transparent),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          onChanged: (value) {
+                            filterController.selectOrUnselectAssignedFilter(
+                                filterKey: email);
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                      .animate(
+                        key: GlobalKey(),
+                      )
+                      .slideX(
+                        begin: -.06,
+                        delay: Duration(milliseconds: 30 * (index + 1)),
+                        duration: const Duration(milliseconds: 700),
+                        curve: Curves.elasticOut,
+                      ),
+                ),
               );
             },
           ),

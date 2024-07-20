@@ -1,7 +1,8 @@
 part of '../../my_tasks_screen.dart';
 
-Widget priorityFilterSegment() {
-  final list = ['High', 'Medium', 'Low'];
+Widget priorityFilterSegment({
+  required FilterController filterController,
+}) {
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,35 +43,47 @@ Widget priorityFilterSegment() {
               vertical: 4.h,
             ),
             itemBuilder: (context, index) {
-              return Row(
-                children: [
-                  Checkbox.adaptive(
-                    value: true,
-                    visualDensity: VisualDensity.compact,
-                    fillColor:
-                        const WidgetStatePropertyAll(AppColor.themeGreen),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+              final priority = priorityList[index];
+              return InkWell(
+                onTap: () => filterController.selectOrUnselectPriorityFilter(
+                    filterKey: priority),
+                child: Row(
+                  children: [
+                    Obx(
+                      () => Checkbox.adaptive(
+                        value: filterController.priorityFilterModel[priority],
+                        visualDensity: VisualDensity.compact,
+                        fillColor: WidgetStatePropertyAll(
+                            filterController.priorityFilterModel[priority] ==
+                                    true
+                                ? AppColor.themeGreen
+                                : Colors.transparent),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        onChanged: (value) =>
+                            filterController.selectOrUnselectPriorityFilter(
+                                filterKey: priority),
+                      ),
                     ),
-                    onChanged: (value) {},
-                  ),
-                  Text(
-                    list[index],
-                    style: TextStyle(
-                      fontSize: 15.sp,
+                    Text(
+                      priority,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                      ),
                     ),
-                  ),
-                ],
-              )
-                  .animate(
-                    key: GlobalKey(),
-                  )
-                  .slideX(
-                    begin: -.06,
-                    delay: Duration(milliseconds: 30 * (index + 1)),
-                    duration: const Duration(milliseconds: 700),
-                    curve: Curves.elasticOut,
-                  );
+                  ],
+                )
+                    .animate(
+                      key: GlobalKey(),
+                    )
+                    .slideX(
+                      begin: -.06,
+                      delay: Duration(milliseconds: 30 * (index + 1)),
+                      duration: const Duration(milliseconds: 700),
+                      curve: Curves.elasticOut,
+                    ),
+              );
             },
           ),
         ),

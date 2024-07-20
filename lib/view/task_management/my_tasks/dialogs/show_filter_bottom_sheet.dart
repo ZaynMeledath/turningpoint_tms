@@ -4,7 +4,9 @@ Future<Object?> showFilterBottomSheet({
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
   required TasksController tasksController,
+  required FilterController filterController,
 }) async {
+  tasksController.selectFilterOption(key: 'category');
   return Get.bottomSheet(
     Obx(
       () => Container(
@@ -100,16 +102,22 @@ Future<Object?> showFilterBottomSheet({
                   tasksController.selectedFilterOptionKey == 'category'
                       ? categoryFilterSegment(
                           categorySearchController: categorySearchController,
+                          filterController: filterController,
                         )
                       : tasksController.selectedFilterOptionKey == 'assigned'
                           ? assignedFilterSegment(
                               assignedSearchController:
                                   assignedSearchController,
+                              filterController: filterController,
                             )
                           : tasksController.selectedFilterOptionKey ==
                                   'frequency'
-                              ? frequencyFilterSegment()
-                              : priorityFilterSegment(),
+                              ? frequencyFilterSegment(
+                                  filterController: filterController,
+                                )
+                              : priorityFilterSegment(
+                                  filterController: filterController,
+                                ),
                 ],
               ),
             ),

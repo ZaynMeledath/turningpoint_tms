@@ -34,7 +34,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TabController tabController;
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
-  late TasksController tasksController;
+  final tasksController = TasksController();
 
   @override
   void initState() {
@@ -42,12 +42,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    tasksController = Get.put(TasksController());
-    super.didChangeDependencies();
   }
 
   @override

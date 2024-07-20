@@ -2,8 +2,8 @@ part of '../../my_tasks_screen.dart';
 
 Widget categoryFilterSegment({
   required TextEditingController categorySearchController,
+  required FilterController filterController,
 }) {
-  final list = ['Marketing', 'Sales', 'HR/Admin'];
   return Expanded(
     child: Column(
       children: [
@@ -32,35 +32,47 @@ Widget categoryFilterSegment({
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              return Row(
-                children: [
-                  Checkbox.adaptive(
-                    value: true,
-                    visualDensity: VisualDensity.compact,
-                    fillColor:
-                        const WidgetStatePropertyAll(AppColor.themeGreen),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
+              final category = categoriesList[index];
+              return InkWell(
+                onTap: () => filterController.selectOrUnselectCategoryFilter(
+                    filterKey: category),
+                child: Row(
+                  children: [
+                    Obx(
+                      () => Checkbox.adaptive(
+                        value: filterController.categoryFilterModel[category],
+                        visualDensity: VisualDensity.compact,
+                        fillColor: WidgetStatePropertyAll(
+                            filterController.categoryFilterModel[category] ==
+                                    true
+                                ? AppColor.themeGreen
+                                : Colors.transparent),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        onChanged: (value) =>
+                            filterController.selectOrUnselectCategoryFilter(
+                                filterKey: category),
+                      ),
                     ),
-                    onChanged: (value) {},
-                  ),
-                  Text(
-                    list[index],
-                    style: TextStyle(
-                      fontSize: 15.sp,
+                    Text(
+                      category,
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                      ),
                     ),
-                  ),
-                ],
-              )
-                  .animate(
-                    key: GlobalKey(),
-                  )
-                  .slideX(
-                    begin: -.06,
-                    delay: Duration(milliseconds: 30 * (index + 1)),
-                    duration: const Duration(milliseconds: 700),
-                    curve: Curves.elasticOut,
-                  );
+                  ],
+                )
+                    .animate(
+                      key: GlobalKey(),
+                    )
+                    .slideX(
+                      begin: -.06,
+                      delay: Duration(milliseconds: 30 * (index + 1)),
+                      duration: const Duration(milliseconds: 700),
+                      curve: Curves.elasticOut,
+                    ),
+              );
             },
           ),
         ),
