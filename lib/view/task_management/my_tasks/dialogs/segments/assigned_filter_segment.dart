@@ -19,7 +19,11 @@ Widget assignedFilterSegment({
             child: customTextField(
               controller: assignedSearchController,
               hintText: 'Search by Name/Email',
-            ),
+            ).animate().slideY(
+                  begin: .5,
+                  duration: const Duration(milliseconds: 700),
+                  curve: Curves.elasticOut,
+                ),
           ),
         ),
         SizedBox(height: 4.h),
@@ -42,7 +46,7 @@ Widget assignedFilterSegment({
                     ),
                     SizedBox(width: 8.w),
                     SizedBox(
-                      width: 170.w,
+                      width: 165.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -78,7 +82,12 @@ Widget assignedFilterSegment({
                     ),
                   ],
                 ),
-              );
+              ).animate().slideY(
+                    begin: .5,
+                    delay: Duration(milliseconds: 40 * (index + 1)),
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.elasticOut,
+                  );
             },
           ),
         ),

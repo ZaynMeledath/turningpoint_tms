@@ -43,7 +43,7 @@ Future<Object?> showFilterBottomSheet({
                 children: [
                   //--------------------Filter Key Part--------------------//
                   Container(
-                    width: 130.w,
+                    width: 140.w,
                     padding: EdgeInsets.all(2.w),
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(.15),

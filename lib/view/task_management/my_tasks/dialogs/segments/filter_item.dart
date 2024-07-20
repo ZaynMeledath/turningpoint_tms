@@ -4,19 +4,21 @@ Widget filterItem({
   required String title,
   required bool isActive,
 }) {
-  return Container(
+  return AnimatedContainer(
     width: double.maxFinite,
     height: 45.h,
+    duration: const Duration(milliseconds: 300),
     color: isActive ? Colors.grey.withOpacity(.15) : Colors.transparent,
     child: Row(
       children: [
-        isActive
-            ? Container(
-                width: 15.w,
-                height: double.maxFinite,
-                color: AppColor.themeGreen,
-              )
-            : const SizedBox(),
+        // isActive ?
+        AnimatedContainer(
+          width: 10.w,
+          height: double.maxFinite,
+          duration: const Duration(milliseconds: 300),
+          color: isActive ? AppColor.themeGreen : Colors.transparent,
+        ),
+        // : const SizedBox(),
         SizedBox(width: 10.w),
         Text(
           title,

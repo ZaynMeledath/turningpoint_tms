@@ -24,7 +24,11 @@ Widget priorityFilterSegment() {
                 ),
               ),
             ],
-          ),
+          ).animate().slideY(
+                begin: .5,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.elasticOut,
+              ),
         ),
         Expanded(
           child: ListView.builder(
@@ -53,7 +57,12 @@ Widget priorityFilterSegment() {
                     ),
                   ),
                 ],
-              );
+              ).animate().slideY(
+                    begin: .5,
+                    delay: Duration(milliseconds: 40 * (index + 1)),
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.elasticOut,
+                  );
             },
           ),
         ),

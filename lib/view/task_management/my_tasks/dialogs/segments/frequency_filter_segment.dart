@@ -15,7 +15,11 @@ Widget frequencyFilterSegment() {
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
             ),
-          ),
+          ).animate().slideY(
+                begin: .5,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.elasticOut,
+              ),
         ),
         Expanded(
           child: ListView.builder(
@@ -44,7 +48,12 @@ Widget frequencyFilterSegment() {
                     ),
                   ),
                 ],
-              );
+              ).animate().slideY(
+                    begin: .5,
+                    delay: Duration(milliseconds: 40 * (index + 1)),
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.elasticOut,
+                  );
             },
           ),
         ),

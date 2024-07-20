@@ -14,7 +14,11 @@ Widget categoryFilterSegment({
             child: customTextField(
               controller: categorySearchController,
               hintText: 'Search Category',
-            ),
+            ).animate().slideY(
+                  begin: .5,
+                  duration: const Duration(milliseconds: 700),
+                  curve: Curves.elasticOut,
+                ),
           ),
         ),
         Expanded(
@@ -44,7 +48,12 @@ Widget categoryFilterSegment({
                     ),
                   ),
                 ],
-              );
+              ).animate().slideY(
+                    begin: .5,
+                    delay: Duration(milliseconds: 40 * (index + 1)),
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.elasticOut,
+                  );
             },
           ),
         ),
