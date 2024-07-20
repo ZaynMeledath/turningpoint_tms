@@ -10,7 +10,7 @@ Future<Object?> showFilterBottomSheet({
   return Get.bottomSheet(
     Obx(
       () => Container(
-        height: 480.h,
+        // height: 480.h,
         decoration: const BoxDecoration(
           color: Color.fromRGBO(29, 36, 41, 1),
           borderRadius: BorderRadius.vertical(
@@ -35,6 +35,30 @@ Future<Object?> showFilterBottomSheet({
                 ),
               ),
             ),
+            filterController.selectedCategoryList.isNotEmpty
+                ? selectedFilter(
+                    title: 'Category',
+                    filterList: filterController.selectedCategoryList,
+                  )
+                : const SizedBox(),
+            filterController.selectedUsersList.isNotEmpty
+                ? selectedFilter(
+                    title: 'Assigned',
+                    filterList: filterController.selectedUsersList,
+                  )
+                : const SizedBox(),
+            filterController.selectedFrequencyList.isNotEmpty
+                ? selectedFilter(
+                    title: 'Frequency',
+                    filterList: filterController.selectedFrequencyList,
+                  )
+                : const SizedBox(),
+            filterController.selectedPriorityList.isNotEmpty
+                ? selectedFilter(
+                    title: 'Priority',
+                    filterList: filterController.selectedPriorityList,
+                  )
+                : const SizedBox(),
             Container(
               width: double.maxFinite,
               height: 1,

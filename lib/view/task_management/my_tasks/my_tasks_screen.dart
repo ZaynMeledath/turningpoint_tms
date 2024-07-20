@@ -21,6 +21,7 @@ part 'dialogs/segments/category_filter_segment.dart';
 part 'dialogs/segments/assigned_filter_segment.dart';
 part 'dialogs/segments/frequency_filter_segment.dart';
 part 'dialogs/segments/priority_filter_segment.dart';
+part 'dialogs/segments/selected_filter.dart';
 
 class MyTasksScreen extends StatefulWidget {
   const MyTasksScreen({super.key});

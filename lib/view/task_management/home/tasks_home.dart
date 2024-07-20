@@ -1,7 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
 
@@ -42,7 +44,12 @@ class _TasksHomeState extends State<TasksHome> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.to(
+              () => const AssignTaskScreen(),
+              transition: Transition.downToUp,
+            );
+          },
           child: Icon(
             Icons.add_task,
             color: Colors.white.withOpacity(.85),

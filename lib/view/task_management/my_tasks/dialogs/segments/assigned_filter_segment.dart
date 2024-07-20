@@ -37,7 +37,7 @@ Widget assignedFilterSegment({
               final name = assignedMap.keys.elementAt(index);
               final email = assignedMap.values.elementAt(index);
               return InkWell(
-                onTap: () => filterController.selectOrUnselectAssignedFilter(
+                onTap: () => filterController.selectOrUnselectUsersFilter(
                     filterKey: email),
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 16.h),
@@ -76,18 +76,17 @@ Widget assignedFilterSegment({
                       ),
                       Obx(
                         () => Checkbox.adaptive(
-                          value: filterController.assignedFilterModel[email],
+                          value: filterController.usersFilterModel[email],
                           visualDensity: VisualDensity.compact,
                           fillColor: WidgetStatePropertyAll(
-                              filterController.assignedFilterModel[email] ==
-                                      true
+                              filterController.usersFilterModel[email] == true
                                   ? AppColor.themeGreen
                                   : Colors.transparent),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
                           ),
                           onChanged: (value) {
-                            filterController.selectOrUnselectAssignedFilter(
+                            filterController.selectOrUnselectUsersFilter(
                                 filterKey: email);
                           },
                         ),
