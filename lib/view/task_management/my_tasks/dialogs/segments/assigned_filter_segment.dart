@@ -22,6 +22,7 @@ Widget assignedFilterSegment({
             ),
           ),
         ),
+        SizedBox(height: 4.h),
         Expanded(
           child: ListView.builder(
             itemCount: 3,
@@ -49,7 +50,8 @@ Widget assignedFilterSegment({
                             map.keys.elementAt(index),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 15.sp,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           SizedBox(height: 2.h),

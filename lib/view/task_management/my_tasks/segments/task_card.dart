@@ -8,9 +8,9 @@ Widget taskCard({
       borderRadius: BorderRadius.circular(16),
       gradient: const LinearGradient(
         colors: [
-          Color.fromRGBO(36, 58, 63, 1),
+          Color.fromRGBO(48, 78, 85, 0.6),
           Color.fromRGBO(29, 36, 41, 1),
-          Color.fromRGBO(90, 90, 90, .55),
+          Color.fromRGBO(90, 90, 90, .5),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
