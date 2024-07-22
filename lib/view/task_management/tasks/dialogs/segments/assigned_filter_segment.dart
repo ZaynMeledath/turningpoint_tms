@@ -1,8 +1,16 @@
-part of '../../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/filter_controller.dart';
+import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 Widget assignedFilterSegment({
   required TextEditingController assignedSearchController,
   required FilterController filterController,
+  required bool isAssignedBy,
 }) {
   return Expanded(
     child: Column(
@@ -37,8 +45,15 @@ Widget assignedFilterSegment({
               final name = assignedMap.keys.elementAt(index);
               final email = assignedMap.values.elementAt(index);
               return InkWell(
-                onTap: () => filterController.selectOrUnselectUsersFilter(
-                    filterKey: email),
+                onTap: () {
+                  if (isAssignedBy) {
+                    filterController.selectOrUnselectAssignedByFilter(
+                        filterKey: email);
+                  } else {
+                    filterController.selectOrUnselectAssignedToFilter(
+                        filterKey: email);
+                  }
+                },
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 16.h),
                   child: Row(
@@ -76,18 +91,26 @@ Widget assignedFilterSegment({
                       ),
                       Obx(
                         () => Checkbox.adaptive(
-                          value: filterController.usersFilterModel[email],
+                          value: isAssignedBy
+                              ? filterController.assignedByFilterModel[email]
+                              : filterController.assignedToFilterModel[email],
                           visualDensity: VisualDensity.compact,
                           fillColor: WidgetStatePropertyAll(
-                              filterController.usersFilterModel[email] == true
+                              filterController.assignedByFilterModel[email] ==
+                                      true
                                   ? AppColor.themeGreen
                                   : Colors.transparent),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
                           ),
                           onChanged: (value) {
-                            filterController.selectOrUnselectUsersFilter(
-                                filterKey: email);
+                            if (isAssignedBy) {
+                              filterController.selectOrUnselectAssignedByFilter(
+                                  filterKey: email);
+                            } else {
+                              filterController.selectOrUnselectAssignedToFilter(
+                                  filterKey: email);
+                            }
                           },
                         ),
                       ),

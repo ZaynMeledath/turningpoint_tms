@@ -4,7 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/my_tasks/my_tasks_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/delegated_tasks_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/my_tasks_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
 
 class TasksHome extends StatefulWidget {
@@ -20,7 +21,7 @@ class _TasksHomeState extends State<TasksHome> {
   final widgetList = [
     const TasksDashboard(),
     const TasksDashboard(),
-    const MyTasksScreen(),
+    const DelegatedTasksScreen(),
     const MyTasksScreen(),
   ];
 

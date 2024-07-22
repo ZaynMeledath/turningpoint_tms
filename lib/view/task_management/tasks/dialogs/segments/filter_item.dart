@@ -1,4 +1,7 @@
-part of '../../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget filterItem({
   required String title,

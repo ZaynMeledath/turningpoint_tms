@@ -2,35 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
-import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
-import 'package:turning_point_tasks_app/view/login/login_screen.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
 
-part 'segments/filter_section.dart';
-part 'segments/task_card.dart';
-part 'segments/card_action_button.dart';
-part 'dialogs/show_filter_bottom_sheet.dart';
-part 'dialogs/segments/filter_item.dart';
-part 'dialogs/segments/category_filter_segment.dart';
-part 'dialogs/segments/assigned_filter_segment.dart';
-part 'dialogs/segments/frequency_filter_segment.dart';
-part 'dialogs/segments/priority_filter_segment.dart';
-part 'dialogs/segments/selected_filter.dart';
-
-class MyTasksScreen extends StatefulWidget {
-  const MyTasksScreen({super.key});
+class DelegatedTasksScreen extends StatefulWidget {
+  const DelegatedTasksScreen({super.key});
 
   @override
-  State<MyTasksScreen> createState() => _MyTasksScreenState();
+  State<DelegatedTasksScreen> createState() => _DelegatedTasksScreenState();
 }
 
-class _MyTasksScreenState extends State<MyTasksScreen>
+class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController lottieController;
   late final TextEditingController taskSearchController;
@@ -89,7 +75,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     return Scaffold(
       appBar: myAppBar(
         context: context,
-        title: 'My Tasks',
+        title: 'Delegated Tasks',
         implyLeading: false,
       ),
       body: CustomScrollView(
@@ -104,7 +90,6 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                 categorySearchController: categorySearchController,
                 assignedSearchController: assignedSearchController,
                 userController: userController,
-                tasksController: tasksController,
                 filterController: filterController,
               ),
             ),

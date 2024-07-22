@@ -17,10 +17,24 @@ final priorityList = ['High', 'Medium', 'Low'];
 final frequencyList = ['Once', 'Daily', 'Weekly', 'Monthly'];
 
 class FilterController extends GetxController {
+  RxMap<String, bool> filterOptionSelectedMap = {
+    'category': true,
+    'assignedBy': false,
+    'assignedTo': false,
+    'frequency': false,
+    'priority': false,
+  }.obs;
+
+  String selectedFilterOptionKey = 'category';
+
   final RxMap<String, bool> categoryFilterModel =
       {for (String element in categoriesList) element.toString(): false}.obs;
 
-  final RxMap<String, bool> usersFilterModel = {
+  final RxMap<String, bool> assignedByFilterModel = {
+    for (String element in assignedMap.values) element.toString(): false
+  }.obs;
+
+  final RxMap<String, bool> assignedToFilterModel = {
     for (String element in assignedMap.values) element.toString(): false
   }.obs;
 
@@ -31,9 +45,17 @@ class FilterController extends GetxController {
       {for (String element in priorityList) element.toString(): false}.obs;
 
   final RxList selectedCategoryList = [].obs;
-  final RxList selectedUsersList = [].obs;
+  final RxList selectedAssignedByList = [].obs;
+  final RxList selectedAssignedToList = [].obs;
   final RxList selectedFrequencyList = [].obs;
   final RxList selectedPriorityList = [].obs;
+
+//====================Select Filter ====================//
+  void selectFilterOption({required String key}) {
+    filterOptionSelectedMap[selectedFilterOptionKey] = false;
+    filterOptionSelectedMap[key] = true;
+    selectedFilterOptionKey = key;
+  }
 
 //====================Select or Unselect Category Filters====================//
   void selectOrUnselectCategoryFilter({
@@ -48,16 +70,29 @@ class FilterController extends GetxController {
     }
   }
 
-//====================Select or Unselect Assigned Filters====================//
-  void selectOrUnselectUsersFilter({
+//====================Select or Unselect Assigned By Filters====================//
+  void selectOrUnselectAssignedByFilter({
     required String filterKey,
   }) {
-    usersFilterModel[filterKey] = !usersFilterModel[filterKey]!;
+    assignedByFilterModel[filterKey] = !assignedByFilterModel[filterKey]!;
 
-    if (usersFilterModel[filterKey] == true) {
-      selectedUsersList.add(filterKey);
+    if (assignedByFilterModel[filterKey] == true) {
+      selectedAssignedByList.add(filterKey);
     } else {
-      selectedUsersList.remove(filterKey);
+      selectedAssignedByList.remove(filterKey);
+    }
+  }
+
+//====================Select or Unselect Assigned To Filters====================//
+  void selectOrUnselectAssignedToFilter({
+    required String filterKey,
+  }) {
+    assignedToFilterModel[filterKey] = !assignedToFilterModel[filterKey]!;
+
+    if (assignedToFilterModel[filterKey] == true) {
+      selectedAssignedToList.add(filterKey);
+    } else {
+      selectedAssignedToList.remove(filterKey);
     }
   }
 

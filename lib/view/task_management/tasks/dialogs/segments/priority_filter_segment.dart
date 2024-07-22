@@ -1,21 +1,35 @@
-part of '../../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 
-Widget frequencyFilterSegment({
+Widget priorityFilterSegment({
   required FilterController filterController,
 }) {
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 8.h),
+        SizedBox(height: 12.h),
         Padding(
           padding: EdgeInsets.only(left: 20.w),
-          child: Text(
-            'Frequency',
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-            ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.flag,
+                size: 22.w,
+              ),
+              SizedBox(width: 2.w),
+              Text(
+                'Priority',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           )
               .animate(
                 key: GlobalKey(),
@@ -31,21 +45,21 @@ Widget frequencyFilterSegment({
             itemCount: 3,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
-              vertical: 8.h,
+              vertical: 4.h,
             ),
             itemBuilder: (context, index) {
-              final frequency = frequencyList[index];
+              final priority = priorityList[index];
               return InkWell(
-                onTap: () => filterController.selectOrUnselectFrequencyFilter(
-                    filterKey: frequency),
+                onTap: () => filterController.selectOrUnselectPriorityFilter(
+                    filterKey: priority),
                 child: Row(
                   children: [
                     Obx(
                       () => Checkbox.adaptive(
-                        value: filterController.frequencyFilterModel[frequency],
+                        value: filterController.priorityFilterModel[priority],
                         visualDensity: VisualDensity.compact,
                         fillColor: WidgetStatePropertyAll(
-                            filterController.frequencyFilterModel[frequency] ==
+                            filterController.priorityFilterModel[priority] ==
                                     true
                                 ? AppColor.themeGreen
                                 : Colors.transparent),
@@ -53,12 +67,12 @@ Widget frequencyFilterSegment({
                           borderRadius: BorderRadius.circular(100),
                         ),
                         onChanged: (value) =>
-                            filterController.selectOrUnselectFrequencyFilter(
-                                filterKey: frequency),
+                            filterController.selectOrUnselectPriorityFilter(
+                                filterKey: priority),
                       ),
                     ),
                     Text(
-                      frequency,
+                      priority,
                       style: TextStyle(
                         fontSize: 15.sp,
                       ),

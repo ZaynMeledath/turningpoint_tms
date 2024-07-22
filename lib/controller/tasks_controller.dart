@@ -32,22 +32,6 @@ class TasksController extends GetxController {
   Rx<bool> scaleWeekly = false.obs;
   Rx<bool> scaleMonthly = false.obs;
 
-  RxMap<String, bool> filterOptionSelectedMap = {
-    'category': true,
-    'assigned': false,
-    'frequency': false,
-    'priority': false,
-  }.obs;
-
-  String selectedFilterOptionKey = 'category';
-
-//====================Select Filter ====================//
-  void selectFilterOption({required String key}) {
-    filterOptionSelectedMap[selectedFilterOptionKey] = false;
-    filterOptionSelectedMap[key] = true;
-    selectedFilterOptionKey = key;
-  }
-
 //====================Change Task Priority====================//
   void changeTaskPriority(int index) {
     switch (index) {

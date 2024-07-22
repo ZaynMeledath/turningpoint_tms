@@ -1,4 +1,7 @@
-part of '../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 
 Widget taskCard({
   required AnimationController lottieController,

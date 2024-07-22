@@ -1,12 +1,23 @@
-part of '../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:turning_point_tasks_app/controller/filter_controller.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/filter_item.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/frequency_filter_segment.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/priority_filter_segment.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/selected_filter.dart';
 
 Future<Object?> showFilterBottomSheet({
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
-  required TasksController tasksController,
   required FilterController filterController,
+  bool? isAllTasks,
+  bool? isDelegated,
 }) async {
-  tasksController.selectFilterOption(key: 'category');
+  filterController.selectFilterOption(key: 'category');
   return Get.bottomSheet(
     Obx(
       () => Container(
@@ -41,10 +52,16 @@ Future<Object?> showFilterBottomSheet({
                     filterList: filterController.selectedCategoryList,
                   )
                 : const SizedBox(),
-            filterController.selectedUsersList.isNotEmpty
+            filterController.selectedAssignedByList.isNotEmpty
                 ? selectedFilter(
-                    title: 'Assigned',
-                    filterList: filterController.selectedUsersList,
+                    title: 'Assigned By',
+                    filterList: filterController.selectedAssignedByList,
+                  )
+                : const SizedBox(),
+            filterController.selectedAssignedToList.isNotEmpty
+                ? selectedFilter(
+                    title: 'Assigned To',
+                    filterList: filterController.selectedAssignedByList,
                   )
                 : const SizedBox(),
             filterController.selectedFrequencyList.isNotEmpty
@@ -77,45 +94,58 @@ Future<Object?> showFilterBottomSheet({
                     child: Column(
                       children: [
                         InkWell(
-                          onTap: () => tasksController.selectFilterOption(
+                          onTap: () => filterController.selectFilterOption(
                             key: 'category',
                           ),
                           child: filterItem(
                             title: 'Category',
-                            isActive: tasksController
+                            isActive: filterController
                                 .filterOptionSelectedMap['category']!,
                           ),
                         ),
                         SizedBox(height: 6.h),
                         InkWell(
-                          onTap: () => tasksController.selectFilterOption(
-                            key: 'assigned',
+                          onTap: () => filterController.selectFilterOption(
+                            key: 'assignedBy',
                           ),
                           child: filterItem(
                             title: 'Assigned By',
-                            isActive: tasksController
-                                .filterOptionSelectedMap['assigned']!,
+                            isActive: filterController
+                                .filterOptionSelectedMap['assignedBy']!,
                           ),
                         ),
+                        isAllTasks == true || isDelegated == true
+                            ? InkWell(
+                                onTap: () =>
+                                    filterController.selectFilterOption(
+                                  key: 'assignedTo',
+                                ),
+                                child: filterItem(
+                                  title: 'Assigned To',
+                                  isActive: filterController
+                                      .filterOptionSelectedMap['assignedTo']!,
+                                ),
+                              )
+                            : const SizedBox(),
                         SizedBox(height: 6.h),
                         InkWell(
-                          onTap: () => tasksController.selectFilterOption(
+                          onTap: () => filterController.selectFilterOption(
                             key: 'frequency',
                           ),
                           child: filterItem(
                             title: 'Frequency',
-                            isActive: tasksController
+                            isActive: filterController
                                 .filterOptionSelectedMap['frequency']!,
                           ),
                         ),
                         SizedBox(height: 6.h),
                         InkWell(
-                          onTap: () => tasksController.selectFilterOption(
+                          onTap: () => filterController.selectFilterOption(
                             key: 'priority',
                           ),
                           child: filterItem(
                             title: 'Priority',
-                            isActive: tasksController
+                            isActive: filterController
                                 .filterOptionSelectedMap['priority']!,
                           ),
                         ),
@@ -123,25 +153,34 @@ Future<Object?> showFilterBottomSheet({
                     ),
                   ),
                   //--------------------Filter Value Part--------------------//
-                  tasksController.selectedFilterOptionKey == 'category'
+                  filterController.selectedFilterOptionKey == 'category'
                       ? categoryFilterSegment(
                           categorySearchController: categorySearchController,
                           filterController: filterController,
                         )
-                      : tasksController.selectedFilterOptionKey == 'assigned'
+                      : filterController.selectedFilterOptionKey == 'assignedBy'
                           ? assignedFilterSegment(
                               assignedSearchController:
                                   assignedSearchController,
                               filterController: filterController,
+                              isAssignedBy: true,
                             )
-                          : tasksController.selectedFilterOptionKey ==
-                                  'frequency'
-                              ? frequencyFilterSegment(
+                          : filterController.selectedFilterOptionKey ==
+                                  'assignedTo'
+                              ? assignedFilterSegment(
+                                  assignedSearchController:
+                                      assignedSearchController,
                                   filterController: filterController,
+                                  isAssignedBy: false,
                                 )
-                              : priorityFilterSegment(
-                                  filterController: filterController,
-                                ),
+                              : filterController.selectedFilterOptionKey ==
+                                      'frequency'
+                                  ? frequencyFilterSegment(
+                                      filterController: filterController,
+                                    )
+                                  : priorityFilterSegment(
+                                      filterController: filterController,
+                                    ),
                 ],
               ),
             ),

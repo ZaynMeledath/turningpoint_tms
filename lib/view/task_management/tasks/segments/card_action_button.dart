@@ -1,4 +1,6 @@
-part of '../my_tasks_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget cardActionButton({
   required String title,
