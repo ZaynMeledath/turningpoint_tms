@@ -17,7 +17,7 @@ Widget filterSection({
     padding: const EdgeInsets.symmetric(horizontal: 12),
     child: Column(
       children: [
-        const SizedBox(height: 2),
+        const SizedBox(height: 6),
         Row(
           children: [
             InkWell(

@@ -11,8 +11,11 @@ Widget tasksTabBar({
     physics: const BouncingScrollPhysics(),
     labelPadding: EdgeInsets.only(
       bottom: 10.h,
-      right: 30.w,
+      right: 15.w,
+      left: 15.w,
+      top: 10.h,
     ),
+    splashBorderRadius: BorderRadius.circular(16),
     indicatorPadding: EdgeInsets.only(bottom: 5.h),
     dividerColor: Colors.transparent,
     indicatorColor: AppColor.themeGreen,

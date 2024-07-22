@@ -89,7 +89,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 112.h,
+            expandedHeight: 106.h,
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(
@@ -103,7 +103,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           ),
           SliverAppBar(
             automaticallyImplyLeading: false,
-            toolbarHeight: 45.h,
+            toolbarHeight: 50.h,
             pinned: true,
             backgroundColor: AppColor.scaffoldBackgroundColor,
             surfaceTintColor: AppColor.scaffoldBackgroundColor,
