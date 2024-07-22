@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 
 Widget taskCard({
@@ -165,7 +166,7 @@ Widget taskCard({
               cardActionButton(
                 title: 'Complete',
                 icon: Icons.check_circle,
-                iconColor: Colors.green,
+                iconColor: AppColor.themeGreen,
                 onTap: () {},
               ),
             ],

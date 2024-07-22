@@ -17,7 +17,7 @@ Widget filterSection({
     padding: const EdgeInsets.symmetric(horizontal: 12),
     child: Column(
       children: [
-        const SizedBox(height: 6),
+        const SizedBox(height: 2),
         Row(
           children: [
             InkWell(
@@ -52,51 +52,26 @@ Widget filterSection({
             ),
           ],
         ),
-        SizedBox(height: 12.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              width: 110.w,
-              height: 40.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.grey.withOpacity(.15),
+        SizedBox(height: 8.h),
+        Container(
+          width: 110.w,
+          height: 40.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: Colors.grey.withOpacity(.15),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Range',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Range',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  const Icon(Icons.arrow_drop_down)
-                ],
-              ),
-            ),
-            Container(
-              width: 110.w,
-              height: 40.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: Colors.grey.withOpacity(.15),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Status',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  const Icon(Icons.arrow_drop_down)
-                ],
-              ),
-            ),
-          ],
+              const Icon(Icons.arrow_drop_down)
+            ],
+          ),
         ),
       ],
     ),

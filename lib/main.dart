@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 void main() {
@@ -21,12 +22,12 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lufga',
           colorScheme: ColorScheme.fromSeed(
             brightness: Brightness.dark,
-            seedColor: Colors.green,
+            seedColor: AppColor.themeGreen,
           ),
           useMaterial3: true,
           brightness: Brightness.dark,
           // scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
-          scaffoldBackgroundColor: const Color.fromRGBO(29, 36, 41, 1),
+          scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
         ),
         home: const LoginScreen(),
       ),

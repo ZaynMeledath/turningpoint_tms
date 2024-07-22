@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
 class MyTasksScreen extends StatefulWidget {
   const MyTasksScreen({super.key});
@@ -17,11 +19,12 @@ class MyTasksScreen extends StatefulWidget {
 }
 
 class _MyTasksScreenState extends State<MyTasksScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController lottieController;
   late final TextEditingController taskSearchController;
   late final TextEditingController categorySearchController;
   late final TextEditingController assignedSearchController;
+  late final TabController tabController;
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
   late FilterController filterController = FilterController();
@@ -32,6 +35,10 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
+    );
+    tabController = TabController(
+      length: 5,
+      vsync: this,
     );
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
@@ -82,7 +89,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         slivers: [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 120.h,
+            expandedHeight: 112.h,
             backgroundColor: Colors.transparent,
             flexibleSpace: FlexibleSpaceBar(
               background: filterSection(
@@ -92,6 +99,16 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                 userController: userController,
                 filterController: filterController,
               ),
+            ),
+          ),
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 45.h,
+            pinned: true,
+            backgroundColor: AppColor.scaffoldBackgroundColor,
+            surfaceTintColor: AppColor.scaffoldBackgroundColor,
+            flexibleSpace: FlexibleSpaceBar(
+              background: tasksTabBar(tabController: tabController),
             ),
           ),
           SliverList(
