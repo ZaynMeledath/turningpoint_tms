@@ -20,6 +20,8 @@ Widget tasksTabBar({
     dividerColor: Colors.transparent,
     indicatorColor: AppColor.themeGreen,
     labelColor: AppColor.themeGreen,
+    splashFactory: NoSplash.splashFactory,
+    overlayColor: WidgetStateColor.transparent,
     tabs: [
       Row(
         children: [

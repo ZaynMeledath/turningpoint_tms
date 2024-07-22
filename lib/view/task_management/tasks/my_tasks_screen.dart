@@ -134,9 +134,11 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              SizedBox(height: 65.h),
-            ]),
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(height: 65.h),
+              ],
+            ),
           ),
         ],
       ),
