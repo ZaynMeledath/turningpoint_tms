@@ -45,13 +45,18 @@ class _MyTeamScreenState extends State<MyTeamScreen>
             backgroundColor: AppColor.scaffoldBackgroundColor,
             surfaceTintColor: AppColor.scaffoldBackgroundColor,
             flexibleSpace: FlexibleSpaceBar(
-              background: teamTabBar(tabController: tabController),
+              background:
+                  teamTabBar(tabController: tabController).animate().slideX(
+                        begin: .4,
+                        curve: Curves.elasticOut,
+                        duration: const Duration(milliseconds: 900),
+                      ),
             ),
           ),
-          const SliverList(
+          SliverList(
             delegate: SliverChildListDelegate.fixed(
               [
-                SizedBox(height: 10),
+                SizedBox(height: 12.h),
               ],
             ),
           ),
@@ -59,13 +64,15 @@ class _MyTeamScreenState extends State<MyTeamScreen>
             delegate: SliverChildBuilderDelegate(
               childCount: 10,
               (context, index) => Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 10.w,
+                padding: EdgeInsets.only(
+                  left: 10.w,
+                  right: 10.w,
+                  bottom: 12.h,
                 ),
                 child: teamCard().animate().slideX(
-                      begin: index % 2 == 0 ? -.5 : .5,
+                      begin: index % 2 == 0 ? -.2 : .2,
                       delay: const Duration(milliseconds: 1),
-                      duration: const Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 900),
                       curve: Curves.elasticOut,
                     ),
               ),

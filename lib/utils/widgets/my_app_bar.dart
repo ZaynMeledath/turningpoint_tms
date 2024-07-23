@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +43,7 @@ AppBar myAppBar({
         ),
         SizedBox(width: 16.5.w),
         Hero(
-          tag: title,
+          tag: 'title',
           flightShuttleBuilder: flightShuttleBuilder,
           child: Text(
             title,
@@ -51,7 +52,11 @@ AppBar myAppBar({
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
             ),
-          ),
+          ).animate().slideX(
+                begin: -.5,
+                duration: const Duration(milliseconds: 800),
+                curve: Curves.elasticOut,
+              ),
         ),
       ],
     ),

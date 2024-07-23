@@ -2,9 +2,6 @@ part of '../my_team_screen.dart';
 
 Widget teamCard() {
   return Container(
-    margin: EdgeInsets.only(
-      bottom: 14.h,
-    ),
     padding: EdgeInsets.symmetric(
       horizontal: 14.w,
       vertical: 12.h,

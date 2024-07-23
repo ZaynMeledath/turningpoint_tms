@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
@@ -75,5 +76,8 @@ Widget filterSection({
         ),
       ],
     ),
-  );
+  ).animate().scaleX(
+        duration: const Duration(milliseconds: 1200),
+        curve: Curves.elasticOut,
+      );
 }

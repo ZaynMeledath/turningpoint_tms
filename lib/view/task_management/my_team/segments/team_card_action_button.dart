@@ -6,8 +6,23 @@ Widget teamCardActionButton({
   required Color iconColor,
   required void Function() onTap,
 }) {
+  Color splashColor = AppColor.themeGreen;
+
+  switch (title) {
+    case 'Edit':
+      splashColor = Colors.blue;
+      break;
+
+    case 'Delete':
+      splashColor = Colors.red;
+      break;
+
+    default:
+      break;
+  }
   return InkWell(
     borderRadius: BorderRadius.circular(8),
+    splashColor: splashColor,
     onTap: onTap,
     child: Container(
       width: 100.w,

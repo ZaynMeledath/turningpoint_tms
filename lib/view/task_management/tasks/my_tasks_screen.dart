@@ -112,21 +112,27 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             ),
           ),
           SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(height: 10.h),
+              ],
+            ),
+          ),
+          SliverList(
             delegate: SliverChildBuilderDelegate(
               childCount: 10,
               (context, index) {
                 return Padding(
                   padding: EdgeInsets.only(
-                    bottom: 9.h,
+                    bottom: 10.h,
                     left: 10.w,
                     right: 10.w,
                   ),
                   child: taskCard(lottieController: lottieController)
                       .animate()
                       .slideX(
-                        begin: index % 2 == 0 ? -.5 : .5,
-                        delay: const Duration(milliseconds: 1),
-                        duration: const Duration(milliseconds: 1000),
+                        begin: index % 2 == 0 ? -.2 : .2,
+                        duration: const Duration(milliseconds: 900),
                         curve: Curves.elasticOut,
                       ),
                 );

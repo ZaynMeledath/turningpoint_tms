@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
@@ -10,14 +11,14 @@ Widget tasksTabBar({
     isScrollable: true,
     physics: const BouncingScrollPhysics(),
     labelPadding: EdgeInsets.only(
-      bottom: 10.h,
+      bottom: 6.h,
       right: 15.w,
       left: 15.w,
       top: 10.h,
     ),
     splashBorderRadius: BorderRadius.circular(16),
-    indicatorPadding: EdgeInsets.only(bottom: 5.h),
-    dividerColor: Colors.transparent,
+    indicatorPadding: EdgeInsets.only(bottom: 2.h),
+    // dividerColor: AppColor.themeGreen.withOpacity(.2),
     indicatorColor: AppColor.themeGreen,
     labelColor: AppColor.themeGreen,
     splashFactory: NoSplash.splashFactory,
@@ -103,5 +104,9 @@ Widget tasksTabBar({
         ],
       ),
     ],
-  );
+  ).animate().slideX(
+        begin: .4,
+        curve: Curves.elasticOut,
+        duration: const Duration(milliseconds: 900),
+      );
 }
