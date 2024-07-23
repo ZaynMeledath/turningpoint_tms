@@ -123,19 +123,19 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
               childCount: 10,
               (context, index) {
                 return Padding(
-                  padding: EdgeInsets.only(
-                    bottom: 10.h,
-                    left: 10.w,
-                    right: 10.w,
-                  ),
-                  child: taskCard(lottieController: lottieController)
-                      .animate()
-                      .slideX(
-                        begin: index % 2 == 0 ? -.2 : .2,
-                        duration: const Duration(milliseconds: 900),
-                        curve: Curves.elasticOut,
-                      ),
-                );
+                    padding: EdgeInsets.only(
+                      bottom: 10.h,
+                      left: 10.w,
+                      right: 10.w,
+                    ),
+                    child: taskCard(lottieController: lottieController)
+                    // .animate()
+                    // .slideX(
+                    //   begin: index % 2 == 0 ? -.2 : .2,
+                    //   duration: const Duration(milliseconds: 900),
+                    //   curve: Curves.elasticOut,
+                    // ),
+                    );
               },
             ),
           ),
@@ -147,7 +147,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             ),
           ),
         ],
-      ),
+      ).animate().slideY(
+            begin: .2,
+            duration: const Duration(milliseconds: 1200),
+            curve: Curves.elasticOut,
+          ),
     );
   }
 }

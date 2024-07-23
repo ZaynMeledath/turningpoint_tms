@@ -69,12 +69,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                   right: 10.w,
                   bottom: 12.h,
                 ),
-                child: teamCard().animate().slideX(
-                      begin: index % 2 == 0 ? -.2 : .2,
-                      delay: const Duration(milliseconds: 1),
-                      duration: const Duration(milliseconds: 900),
-                      curve: Curves.elasticOut,
-                    ),
+                child: teamCard(),
               ),
             ),
           ),
@@ -86,7 +81,11 @@ class _MyTeamScreenState extends State<MyTeamScreen>
             ),
           ),
         ],
-      ),
+      ).animate().slideY(
+            begin: .2,
+            duration: const Duration(milliseconds: 1200),
+            curve: Curves.elasticOut,
+          ),
     );
   }
 }
