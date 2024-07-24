@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/utils/flight_shuttle_builder.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/task_management/profile/profile_screen.dart';
 
 AppBar myAppBar({
   required BuildContext context,
@@ -60,18 +61,26 @@ AppBar myAppBar({
             //       curve: Curves.elasticOut,
             //     ),
             ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: 12.w),
-              child: nameLetterAvatar(
-                firstName: 'Zayn',
-                lastName: 'Meledath',
-              ),
-            ),
-          ),
-        ),
+        profileAvatar
+            ? Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 12.w),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      onTap: () => Get.to(
+                        () => const ProfileScreen(),
+                      ),
+                      child: nameLetterAvatar(
+                        firstName: 'Zayn',
+                        lastName: 'Meledath',
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : const SizedBox(),
       ],
     ),
   );
