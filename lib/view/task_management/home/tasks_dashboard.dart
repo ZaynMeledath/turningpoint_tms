@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 class TasksDashboard extends StatelessWidget {
   const TasksDashboard({super.key});
@@ -50,7 +51,7 @@ class TasksDashboard extends StatelessWidget {
                           toY: 6,
                           fromY: 0,
                           width: 15,
-                          color: Colors.green,
+                          color: AppColor.themeGreen,
                         ),
                       ],
                     ),

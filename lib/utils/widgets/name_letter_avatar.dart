@@ -13,8 +13,8 @@ Widget nameLetterAvatar({
       lastName.trim().isNotEmpty ? lastName.characters.first : '';
 
   return Container(
-    width: circleDiameter ?? 40.w,
-    height: circleDiameter ?? 40.w,
+    width: circleDiameter ?? 38.w,
+    height: circleDiameter ?? 38.w,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: backgroundColor ?? AppColor.themeGreen,
