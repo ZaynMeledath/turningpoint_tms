@@ -84,6 +84,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
         context: context,
         title: 'Delegated Tasks',
         implyLeading: false,
+        profileAvatar: true,
       ),
       body: CustomScrollView(
         slivers: [

@@ -36,6 +36,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
         context: context,
         title: 'My Team',
         implyLeading: false,
+        profileAvatar: true,
       ),
       body: CustomScrollView(
         slivers: [

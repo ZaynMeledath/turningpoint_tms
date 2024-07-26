@@ -71,6 +71,7 @@ AppBar myAppBar({
                       borderRadius: BorderRadius.circular(100),
                       onTap: () => Get.to(
                         () => const ProfileScreen(),
+                        transition: Transition.rightToLeft,
                       ),
                       child: nameLetterAvatar(
                         firstName: 'Zayn',

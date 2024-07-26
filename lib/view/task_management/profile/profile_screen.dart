@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 
+part 'segments/section_title_container.dart';
+part 'segments/profile_option.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -15,7 +18,7 @@ class ProfileScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          padding: EdgeInsets.symmetric(horizontal: 14.w),
           child: Column(
             children: [
               nameLetterAvatar(
@@ -46,6 +49,40 @@ class ProfileScreen extends StatelessWidget {
                   color: Colors.white70,
                 ),
               ),
+              // SizedBox(height: 6.h),
+              sectionTitleContainer(title: 'Account Management'),
+              profileOption(title: 'Edit Profile'),
+              profileOption(title: 'Change Password'),
+              sectionTitleContainer(title: 'Support'),
+              profileOption(title: 'My Tickets'),
+              profileOption(title: 'Raise a Ticket'),
+              SizedBox(height: 40.h),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: 100.w,
+                    height: 55.h,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 14.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.black.withOpacity(.3),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Log Out',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
             ],
           ),
         ),

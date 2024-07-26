@@ -84,6 +84,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         context: context,
         title: 'My Tasks',
         implyLeading: false,
+        profileAvatar: true,
       ),
       body: CustomScrollView(
         slivers: [
