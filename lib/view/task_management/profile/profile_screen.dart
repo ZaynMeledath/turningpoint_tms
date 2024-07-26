@@ -62,14 +62,17 @@ class ProfileScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     width: 100.w,
-                    height: 55.h,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 14.h,
-                    ),
+                    height: 46.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.black.withOpacity(.3),
+                      color: const Color.fromRGBO(21, 25, 28, 1),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.white38,
+                          blurRadius: 1.2,
+                          blurStyle: BlurStyle.outer,
+                        ),
+                      ],
                     ),
                     child: Center(
                       child: Text(

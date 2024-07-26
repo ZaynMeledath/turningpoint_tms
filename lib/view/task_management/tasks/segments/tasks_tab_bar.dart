@@ -74,7 +74,7 @@ Widget tasksTabBar({
       Row(
         children: [
           Icon(
-            Icons.circle,
+            Icons.incomplete_circle,
             size: 20.sp,
             color: Colors.blue,
           ),
@@ -90,7 +90,7 @@ Widget tasksTabBar({
       Row(
         children: [
           Icon(
-            Icons.circle,
+            Icons.check_circle,
             size: 20.sp,
             color: AppColor.themeGreen,
           ),
