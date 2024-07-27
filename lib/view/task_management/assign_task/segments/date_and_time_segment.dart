@@ -46,8 +46,8 @@ Widget dateAndTimeSegment({
                 Container(
                   width: 61.w,
                   height: 61.w,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.1),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(44, 50, 54, 1),
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -101,8 +101,8 @@ Widget dateAndTimeSegment({
                 Container(
                   width: 61.w,
                   height: 61.w,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(.1),
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(44, 50, 54, 1),
                     shape: BoxShape.circle,
                   ),
                   child: const Center(

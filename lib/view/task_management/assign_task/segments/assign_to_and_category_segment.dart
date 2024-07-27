@@ -23,7 +23,7 @@ Widget assignToAndCategorySegment({
           borderRadius: BorderRadius.circular(20),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey.withOpacity(.1),
+            fillColor: const Color.fromRGBO(44, 50, 54, 1),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -90,7 +90,7 @@ Widget assignToAndCategorySegment({
           borderRadius: BorderRadius.circular(20),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey.withOpacity(.1),
+            fillColor: const Color.fromRGBO(44, 50, 54, 1),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
             ),

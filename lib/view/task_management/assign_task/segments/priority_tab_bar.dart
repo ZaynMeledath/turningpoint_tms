@@ -33,7 +33,7 @@ Widget priorityTabBar({
         height: 62.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.grey.withOpacity(.1),
+          color: const Color.fromRGBO(44, 50, 54, 1),
         ),
         child: TabBar(
           onTap: (index) => tasksController.changeTaskPriority(index),

@@ -16,7 +16,7 @@ Widget titleTextField({
         horizontal: 14.w,
         vertical: 13.5.h,
       ),
-      fillColor: Colors.grey.withOpacity(.1),
+      fillColor: const Color.fromRGBO(44, 50, 54, 1),
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),

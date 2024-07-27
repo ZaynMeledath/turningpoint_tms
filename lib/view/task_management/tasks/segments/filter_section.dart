@@ -33,8 +33,8 @@ Widget filterSection({
               child: Container(
                 width: 45.w,
                 height: 42.w,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(.15),
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(44, 50, 54, 1),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -59,7 +59,7 @@ Widget filterSection({
           height: 40.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: Colors.grey.withOpacity(.15),
+            color: const Color.fromRGBO(44, 50, 54, 1),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
