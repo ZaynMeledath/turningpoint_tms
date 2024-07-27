@@ -80,79 +80,81 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(
-        context: context,
-        title: 'Delegated Tasks',
-        implyLeading: false,
-        profileAvatar: true,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 106.h,
-            backgroundColor: Colors.transparent,
-            flexibleSpace: FlexibleSpaceBar(
-              background: filterSection(
-                taskSearchController: taskSearchController,
-                categorySearchController: categorySearchController,
-                assignedSearchController: assignedSearchController,
-                userController: userController,
-                filterController: filterController,
+        appBar: myAppBar(
+          context: context,
+          title: 'Delegated Tasks',
+          implyLeading: false,
+          profileAvatar: true,
+        ),
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              expandedHeight: 106.h,
+              backgroundColor: Colors.transparent,
+              flexibleSpace: FlexibleSpaceBar(
+                background: filterSection(
+                  taskSearchController: taskSearchController,
+                  categorySearchController: categorySearchController,
+                  assignedSearchController: assignedSearchController,
+                  userController: userController,
+                  filterController: filterController,
+                ),
               ),
             ),
-          ),
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 50.h,
-            pinned: true,
-            backgroundColor: AppColor.scaffoldBackgroundColor,
-            surfaceTintColor: AppColor.scaffoldBackgroundColor,
-            flexibleSpace: FlexibleSpaceBar(
-              background: tasksTabBar(tabController: tabController),
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              toolbarHeight: 50.h,
+              pinned: true,
+              backgroundColor: AppColor.scaffoldBackgroundColor,
+              surfaceTintColor: AppColor.scaffoldBackgroundColor,
+              flexibleSpace: FlexibleSpaceBar(
+                background: tasksTabBar(tabController: tabController),
+              ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 10.h),
-              ],
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SizedBox(height: 10.h),
+                ],
+              ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 10,
-              (context, index) {
-                return Padding(
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: 10,
+                (context, index) {
+                  return Padding(
                     padding: EdgeInsets.only(
                       bottom: 10.h,
                       left: 10.w,
                       right: 10.w,
                     ),
                     child: taskCard(lottieController: lottieController)
-                    // .animate()
-                    // .slideX(
-                    //   begin: index % 2 == 0 ? -.2 : .2,
-                    //   duration: const Duration(milliseconds: 900),
-                    //   curve: Curves.elasticOut,
-                    // ),
-                    );
-              },
+                        .animate()
+                        .slideX(
+                          begin: index % 2 == 0 ? -.4 : .4,
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.elasticOut,
+                        ),
+                  );
+                },
+              ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 65.h),
-              ],
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SizedBox(height: 65.h),
+                ],
+              ),
             ),
-          ),
-        ],
-      ).animate().slideY(
-            begin: .2,
-            duration: const Duration(milliseconds: 1200),
-            curve: Curves.elasticOut,
-          ),
-    );
+          ],
+        )
+        // .animate().slideY(
+        //       begin: .2,
+        //       duration: const Duration(milliseconds: 1200),
+        //       curve: Curves.elasticOut,
+        //     ),
+        );
   }
 }

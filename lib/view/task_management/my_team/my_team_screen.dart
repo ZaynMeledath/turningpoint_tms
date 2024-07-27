@@ -32,61 +32,67 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(
-        context: context,
-        title: 'My Team',
-        implyLeading: false,
-        profileAvatar: true,
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            pinned: true,
-            toolbarHeight: 50.h,
-            backgroundColor: AppColor.scaffoldBackgroundColor,
-            surfaceTintColor: AppColor.scaffoldBackgroundColor,
-            flexibleSpace: FlexibleSpaceBar(
-              background:
-                  teamTabBar(tabController: tabController).animate().slideX(
-                        begin: .4,
-                        curve: Curves.elasticOut,
-                        duration: const Duration(milliseconds: 900),
-                      ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate.fixed(
-              [
-                SizedBox(height: 12.h),
-              ],
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 10,
-              (context, index) => Padding(
-                padding: EdgeInsets.only(
-                  left: 10.w,
-                  right: 10.w,
-                  bottom: 12.h,
-                ),
-                child: teamCard(),
+        appBar: myAppBar(
+          context: context,
+          title: 'My Team',
+          implyLeading: false,
+          profileAvatar: true,
+        ),
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              toolbarHeight: 50.h,
+              backgroundColor: AppColor.scaffoldBackgroundColor,
+              surfaceTintColor: AppColor.scaffoldBackgroundColor,
+              flexibleSpace: FlexibleSpaceBar(
+                background:
+                    teamTabBar(tabController: tabController).animate().slideX(
+                          begin: .4,
+                          curve: Curves.elasticOut,
+                          duration: const Duration(milliseconds: 900),
+                        ),
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 65.h),
-              ],
+            SliverList(
+              delegate: SliverChildListDelegate.fixed(
+                [
+                  SizedBox(height: 12.h),
+                ],
+              ),
             ),
-          ),
-        ],
-      ).animate().slideY(
-            begin: .2,
-            duration: const Duration(milliseconds: 1200),
-            curve: Curves.elasticOut,
-          ),
-    );
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: 10,
+                (context, index) => Padding(
+                  padding: EdgeInsets.only(
+                    left: 10.w,
+                    right: 10.w,
+                    bottom: 12.h,
+                  ),
+                  child: teamCard().animate().slideX(
+                        begin: index % 2 == 0 ? -.4 : .4,
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                ),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  SizedBox(height: 65.h),
+                ],
+              ),
+            ),
+          ],
+        )
+        // .animate().slideY(
+        //       begin: .2,
+        //       duration: const Duration(milliseconds: 1200),
+        //       curve: Curves.elasticOut,
+        //     ),
+        );
   }
 }
