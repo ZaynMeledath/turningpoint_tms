@@ -27,11 +27,12 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   late final TabController tabController;
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
-  late FilterController filterController = FilterController();
+  final FilterController filterController = FilterController();
   int animationCounter = 0;
 
   @override
   void initState() {
+    super.initState();
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -46,11 +47,11 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
     getData();
     animateLottie();
-    super.initState();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     await tasksController.getMyTasks();
+    // setState(() {});
   }
 
   void animateLottie() async {
@@ -58,27 +59,19 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     lottieController
       ..reset()
       ..forward();
-    if (animationCounter < 2) {
-      await Future.delayed(
-        const Duration(milliseconds: 1500),
-      );
-    } else {
-      await Future.delayed(
-        const Duration(seconds: 15),
-      );
-    }
-
+    await Future.delayed(
+      Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+    );
     animateLottie();
   }
 
   @override
   void dispose() {
-    lottieController
-      ..reset()
-      ..dispose();
+    lottieController.dispose();
     taskSearchController.dispose();
-
-    filterController.dispose();
+    categorySearchController.dispose();
+    assignedSearchController.dispose();
+    tabController.dispose();
     super.dispose();
   }
 
@@ -119,35 +112,38 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 10.h),
-              ],
-            ),
+            delegate: SliverChildListDelegate([
+              SizedBox(height: 10.h),
+            ]),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              childCount: 1,
+              childCount: tasksController.myTasksListObs.value?.length ?? 0,
               (context, index) {
-                if (tasksController.myTasksList != null &&
-                    tasksController.myTasksList!.isNotEmpty) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 10.h,
-                      left: 10.w,
-                      right: 10.w,
-                    ),
-                    child: taskCard(lottieController: lottieController)
-                        .animate()
-                        .slideX(
-                          begin: index % 2 == 0 ? -.4 : .4,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.elasticOut,
-                        ),
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
+                return Obx(() {
+                  final myTasksList = tasksController.myTasksListObs.value;
+                  if (myTasksList != null && myTasksList.isNotEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10.h,
+                        horizontal: 10.w,
+                      ),
+                      child: taskCard(
+                        lottieController: lottieController,
+                        taskModel: myTasksList[index],
+                        isDelegated: false,
+                      ).animate().slideX(
+                            begin: index.isEven ? -.4 : .4,
+                            duration: const Duration(milliseconds: 1000),
+                            curve: Curves.elasticOut,
+                          ),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                });
               },
             ),
           ),
@@ -160,12 +156,6 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           ),
         ],
       ),
-
-      // .animate().slideY(
-      //       begin: .2,
-      //       duration: const Duration(milliseconds: 1200),
-      //       curve: Curves.elasticOut,
-      //     ),
     );
   }
 }

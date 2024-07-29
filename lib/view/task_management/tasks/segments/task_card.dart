@@ -4,12 +4,65 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
 Widget taskCard({
   required AnimationController lottieController,
+  required TaskModel taskModel,
+  required bool isDelegated,
+  bool? isAllTasks,
 }) {
+  Color priorityFlagColor = Colors.white.withOpacity(.9);
+
+  final weekList = [
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat',
+    'Sun',
+  ];
+
+  final monthList = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  switch (taskModel.priority) {
+    case 'High':
+      priorityFlagColor = Colors.red;
+      break;
+    case 'Medium':
+      priorityFlagColor = Colors.orange;
+      break;
+    default:
+      break;
+  }
+
+  final dueDate = DateTime.parse(taskModel.dueDate.toString());
+  final month = monthList[dueDate.month - 1];
+  final weekDay = weekList[dueDate.weekday - 1];
+  final date = dueDate.day;
+
+  final hour24 = dueDate.hour;
+  final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
+  final minute = dueDate.minute;
+  final period = hour24 >= 12 ? 'PM' : 'AM';
+  final time = '$hour:$minute $period';
+
   return InkWell(
     onTap: () {
       Get.to(
@@ -45,7 +98,7 @@ Widget taskCard({
                     SizedBox(
                       width: 215.w,
                       child: Text(
-                        'Demo Task Title',
+                        taskModel.title.toString(),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -54,64 +107,76 @@ Widget taskCard({
                       ),
                     ),
                     SizedBox(height: 2.w),
-                    Text.rich(
-                      TextSpan(
-                        text: 'Assigned By ',
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(.6),
-                        ),
-                        children: const [
-                          TextSpan(
-                            text: 'Zayn Meledath',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
+                    SizedBox(
+                      width: 215.w,
+                      child: Text.rich(
+                        overflow: TextOverflow.ellipsis,
+                        TextSpan(
+                          text: isDelegated ? 'Assigned To' : 'Assigned By ',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(.6),
                           ),
-                        ],
+                          children: [
+                            TextSpan(
+                              text: isDelegated
+                                  ? taskModel.assignedTo
+                                  : taskModel.createdBy,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(height: 8.h),
                     Row(
                       children: [
-                        Icon(
-                          Icons.person,
-                          size: 19.sp,
-                          color: Colors.white70,
-                        ),
-                        SizedBox(width: 2.w),
-                        Text(
-                          'Ajay',
-                          style: TextStyle(
-                            fontSize: 13.5.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
+                        isAllTasks == true
+                            ? Row(
+                                children: [
+                                  Icon(
+                                    Icons.person,
+                                    size: 19.sp,
+                                    color: Colors.white70,
+                                  ),
+                                  SizedBox(width: 2.w),
+                                  Text(
+                                    taskModel.assignedTo.toString(),
+                                    style: TextStyle(
+                                      fontSize: 13.5.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(width: 12.w),
+                                ],
+                              )
+                            : const SizedBox(),
                         Icon(
                           Icons.sell,
-                          size: 15.sp,
+                          size: 16.sp,
                           color: Colors.white70,
                         ),
                         SizedBox(width: 2.w),
                         Text(
-                          'Marketing',
+                          taskModel.category.toString(),
                           style: TextStyle(
-                            fontSize: 13.5.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(width: 12.w),
+                        SizedBox(width: 14.w),
                         Icon(
                           Icons.flag,
-                          size: 16.sp,
-                          color: Colors.red,
+                          size: 17.sp,
+                          color: priorityFlagColor,
                         ),
                         SizedBox(width: 2.w),
                         Text(
-                          'High',
+                          taskModel.priority.toString(),
                           style: TextStyle(
-                            fontSize: 13.5.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -125,37 +190,37 @@ Widget taskCard({
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Icon(
                           Icons.alarm,
-                          size: 18,
+                          size: 17.sp,
                           color: Colors.white70,
                         ),
-                        SizedBox(width: 3),
+                        SizedBox(width: 3.w),
                         Text(
-                          'Fri, Jun 2 5:00 PM',
+                          '$weekDay, $date $month $time',
                           style: TextStyle(
                             color: Colors.green,
-                            fontSize: 13.5,
+                            fontSize: 13.5.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10.h),
                     Lottie.asset(
                       'assets/lotties/in_progress_animation.json',
                       controller: lottieController,
-                      width: 30,
+                      width: 30.sp,
                       // repeat: false,
                     ),
-                    const SizedBox(width: 3),
-                    const Text(
+                    SizedBox(width: 3.w),
+                    Text(
                       'In Progress',
                       style: TextStyle(
-                        fontSize: 13.5,
+                        fontSize: 13.5.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -163,7 +228,7 @@ Widget taskCard({
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -181,7 +246,7 @@ Widget taskCard({
                 ),
               ],
             ),
-            const SizedBox(height: 9),
+            SizedBox(height: 9.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

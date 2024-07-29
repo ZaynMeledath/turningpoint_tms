@@ -62,8 +62,12 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
         const Duration(seconds: 15),
       );
     }
-
+    getData();
     animateLottie();
+  }
+
+  Future<void> getData() async {
+    await tasksController.getDelegatedTasks();
   }
 
   @override
@@ -122,22 +126,34 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                childCount: 10,
+                childCount: tasksController.myTasksListObs.value?.length ?? 0,
                 (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 10.h,
-                      left: 10.w,
-                      right: 10.w,
-                    ),
-                    child: taskCard(lottieController: lottieController)
-                        .animate()
-                        .slideX(
-                          begin: index % 2 == 0 ? -.4 : .4,
-                          duration: const Duration(milliseconds: 1000),
-                          curve: Curves.elasticOut,
+                  return Obx(() {
+                    final delegatedTasksList =
+                        tasksController.delegatedTasksListObs.value;
+                    if (delegatedTasksList != null &&
+                        delegatedTasksList.isNotEmpty) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 10.h,
                         ),
-                  );
+                        child: taskCard(
+                          lottieController: lottieController,
+                          taskModel: delegatedTasksList[index],
+                          isDelegated: false,
+                        ).animate().slideX(
+                              begin: index.isEven ? -.4 : .4,
+                              duration: const Duration(milliseconds: 1000),
+                              curve: Curves.elasticOut,
+                            ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  });
                 },
               ),
             ),

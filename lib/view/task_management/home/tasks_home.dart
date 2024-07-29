@@ -17,7 +17,7 @@ class TasksHome extends StatefulWidget {
 }
 
 class _TasksHomeState extends State<TasksHome> {
-  int activeIndex = 3;
+  int activeIndex = 2;
 
   final widgetList = [
     const TasksDashboard(),

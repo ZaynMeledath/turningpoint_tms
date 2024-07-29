@@ -5,7 +5,8 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
-  List<TasksModel>? myTasksList = [];
+  Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
   final tasksRepository = TasksRepository();
 
@@ -99,8 +100,12 @@ class TasksController extends GetxController {
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
-    myTasksList = await tasksRepository.getMyTasks();
-    print(myTasksList.toString());
+    myTasksListObs.value = await tasksRepository.getMyTasks();
+  }
+
+//====================Get Delegated Tasks====================//
+  Future<void> getDelegatedTasks() async {
+    delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
   }
 }
 

@@ -1,15 +1,15 @@
 class TasksModelResponse {
   String? message;
-  List<TasksModel>? tasks;
+  List<TaskModel>? tasks;
 
   TasksModelResponse({this.message, this.tasks});
 
   TasksModelResponse.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['tasks'] != null) {
-      tasks = <TasksModel>[];
+      tasks = <TaskModel>[];
       json['tasks'].forEach((v) {
-        tasks!.add(TasksModel.fromJson(v));
+        tasks!.add(TaskModel.fromJson(v));
       });
     }
   }
@@ -25,7 +25,7 @@ class TasksModelResponse {
   }
 }
 
-class TasksModel {
+class TaskModel {
   Reminder? reminder;
   String? id;
   String? title;
@@ -33,18 +33,18 @@ class TasksModel {
   String? category;
   String? createdBy;
   String? currentUser;
-  String? assignTo;
+  String? assignedTo;
   String? priority;
   String? dueDate;
   String? status;
-  List<String>? attachments;
+  List<dynamic>? attachments;
   bool? isDelayed;
   String? closedAt;
   String? createdAt;
   String? updatedAt;
-  List<String>? statusChanges;
+  List<dynamic>? statusChanges;
 
-  TasksModel({
+  TaskModel({
     this.reminder,
     this.id,
     this.title,
@@ -52,7 +52,7 @@ class TasksModel {
     this.category,
     this.createdBy,
     this.currentUser,
-    this.assignTo,
+    this.assignedTo,
     this.priority,
     this.dueDate,
     this.status,
@@ -64,7 +64,7 @@ class TasksModel {
     this.statusChanges,
   });
 
-  TasksModel.fromJson(Map<String, dynamic> json) {
+  TaskModel.fromJson(Map<String, dynamic> json) {
     reminder =
         json['reminder'] != null ? Reminder.fromJson(json['reminder']) : null;
     id = json['_id'];
@@ -73,7 +73,7 @@ class TasksModel {
     category = json['category'];
     createdBy = json['createdBy'];
     currentUser = json['currentUser'];
-    assignTo = json['assignTo'];
+    assignedTo = json['assignTo'];
     priority = json['priority'];
     dueDate = json['dueDate'];
     status = json['status'];
@@ -108,7 +108,7 @@ class TasksModel {
     data['category'] = category;
     data['createdBy'] = createdBy;
     data['currentUser'] = currentUser;
-    data['assignTo'] = assignTo;
+    data['assignTo'] = assignedTo;
     data['priority'] = priority;
     data['dueDate'] = dueDate;
     data['status'] = status;
