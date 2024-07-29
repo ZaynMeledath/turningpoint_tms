@@ -34,7 +34,7 @@ Widget filterSection({
                 width: 45.w,
                 height: 42.w,
                 decoration: const BoxDecoration(
-                  color: Color.fromRGBO(44, 50, 54, 1),
+                  color: AppColor.textFieldColor,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -59,7 +59,7 @@ Widget filterSection({
           height: 40.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: const Color.fromRGBO(44, 50, 54, 1),
+            color: AppColor.textFieldColor,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

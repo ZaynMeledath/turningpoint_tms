@@ -14,7 +14,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
         padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: const Color.fromRGBO(44, 50, 54, 1),
+          color: AppColor.textFieldColor,
         ),
         child: Center(
           child: Column(

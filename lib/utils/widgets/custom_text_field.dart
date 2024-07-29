@@ -24,7 +24,7 @@ Widget customTextField({
     return textField(
         controller: controller,
         hintText: hintText,
-        userController: userController,
+        userController: null,
         isPassword: isPassword,
         isNum: isNum,
         isEmail: isEmail);
@@ -76,7 +76,7 @@ Widget textField({
         vertical: 13.5.h,
       ),
       // fillColor: Colors.grey.withOpacity(.1),
-      fillColor: const Color.fromRGBO(44, 50, 54, 1),
+      fillColor: AppColor.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),

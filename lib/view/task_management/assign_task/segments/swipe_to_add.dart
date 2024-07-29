@@ -15,7 +15,7 @@ Widget swipeToAdd() {
         fontSize: 16.sp,
       ),
       innerColor: AppColor.themeGreen,
-      outerColor: const Color.fromRGBO(44, 50, 54, 1),
+      outerColor: AppColor.textFieldColor,
       sliderButtonIcon: const Icon(
         Icons.arrow_forward,
         color: Color.fromRGBO(50, 50, 50, 1),

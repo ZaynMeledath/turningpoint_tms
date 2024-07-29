@@ -17,7 +17,7 @@ Widget descriptionTextField({
         horizontal: 14.w,
         vertical: 13.5.h,
       ),
-      fillColor: const Color.fromRGBO(44, 50, 54, 1),
+      fillColor: AppColor.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),

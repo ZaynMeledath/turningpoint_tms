@@ -44,8 +44,13 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     categorySearchController = TextEditingController();
     assignedSearchController = TextEditingController();
 
+    getData();
     animateLottie();
     super.initState();
+  }
+
+  void getData() async {
+    await tasksController.getMyTasks();
   }
 
   void animateLottie() async {
@@ -80,50 +85,52 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: myAppBar(
-          context: context,
-          title: 'My Tasks',
-          implyLeading: false,
-          profileAvatar: true,
-        ),
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              expandedHeight: 106.h,
-              backgroundColor: Colors.transparent,
-              flexibleSpace: FlexibleSpaceBar(
-                background: filterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
-                ),
+      appBar: myAppBar(
+        context: context,
+        title: 'My Tasks',
+        implyLeading: false,
+        profileAvatar: true,
+      ),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 106.h,
+            backgroundColor: Colors.transparent,
+            flexibleSpace: FlexibleSpaceBar(
+              background: filterSection(
+                taskSearchController: taskSearchController,
+                categorySearchController: categorySearchController,
+                assignedSearchController: assignedSearchController,
+                userController: userController,
+                filterController: filterController,
               ),
             ),
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 50.h,
-              pinned: true,
-              backgroundColor: AppColor.scaffoldBackgroundColor,
-              surfaceTintColor: AppColor.scaffoldBackgroundColor,
-              flexibleSpace: FlexibleSpaceBar(
-                background: tasksTabBar(tabController: tabController),
-              ),
+          ),
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            toolbarHeight: 50.h,
+            pinned: true,
+            backgroundColor: AppColor.scaffoldBackgroundColor,
+            surfaceTintColor: AppColor.scaffoldBackgroundColor,
+            flexibleSpace: FlexibleSpaceBar(
+              background: tasksTabBar(tabController: tabController),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 10.h),
-                ],
-              ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(height: 10.h),
+              ],
             ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                childCount: 10,
-                (context, index) {
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              childCount: 1,
+              (context, index) {
+                if (tasksController.myTasksList != null &&
+                    tasksController.myTasksList!.isNotEmpty) {
                   return Padding(
                     padding: EdgeInsets.only(
                       bottom: 10.h,
@@ -138,23 +145,27 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                           curve: Curves.elasticOut,
                         ),
                   );
-                },
-              ),
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 65.h),
-                ],
-              ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SizedBox(height: 65.h),
+              ],
             ),
-          ],
-        )
-        // .animate().slideY(
-        //       begin: .2,
-        //       duration: const Duration(milliseconds: 1200),
-        //       curve: Curves.elasticOut,
-        //     ),
-        );
+          ),
+        ],
+      ),
+
+      // .animate().slideY(
+      //       begin: .2,
+      //       duration: const Duration(milliseconds: 1200),
+      //       curve: Curves.elasticOut,
+      //     ),
+    );
   }
 }

@@ -56,7 +56,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                               borderRadius: BorderRadius.circular(20),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: const Color.fromRGBO(44, 50, 54, 1),
+                                fillColor: AppColor.textFieldColor,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),

@@ -44,7 +44,7 @@ class ApiService {
         case RequestMethod.POST:
           if (data is File) {
             final multiPartRequest = http.MultipartRequest(
-              'PATCH',
+              'POST',
               Uri.parse(url),
             );
 
@@ -68,7 +68,7 @@ class ApiService {
         case RequestMethod.PUT:
           if (data is File) {
             final multiPartRequest = http.MultipartRequest(
-              'PATCH',
+              'PUT',
               Uri.parse(url),
             );
 

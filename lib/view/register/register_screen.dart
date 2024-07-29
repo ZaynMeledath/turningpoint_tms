@@ -61,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  SizedBox(height: 48.h),
+                  SizedBox(height: 44.h),
                   Hero(
                     tag: 'turning_point_logo',
                     child: Image.asset(
@@ -94,11 +94,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 16.h),
                   customTextField(
                     controller: firstNameController,
                     hintText: 'First Name',
-                    userController: userController,
+                    // userController: userController,
                   ).animate().slideX(
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
@@ -107,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   customTextField(
                     controller: lastNameController,
                     hintText: 'Last Name',
-                    userController: userController,
+                    // userController: userController,
                   ).animate().slideX(
                         begin: 1,
                         delay: const Duration(milliseconds: 100),
@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 60,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(.1),
+                          color: AppColor.textFieldColor,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(
@@ -136,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: customTextField(
                           controller: phoneController,
                           hintText: 'WhatsApp Number',
-                          userController: userController,
+                          // userController: userController,
                           isNum: true,
                         ),
                       ),
@@ -149,7 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   customTextField(
                     controller: emailController,
                     hintText: 'Email',
-                    userController: userController,
+                    // userController: userController,
                     isEmail: true,
                   ).animate().slideX(
                         begin: 1,

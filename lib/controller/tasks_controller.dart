@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
+import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
+  List<TasksModel>? myTasksList = [];
+
+  final tasksRepository = TasksRepository();
+
 //====================Date and Time====================//
   Rx<DateTime> taskDate = DateTime.now().obs;
   Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
@@ -89,6 +95,12 @@ class TasksController extends GetxController {
     }
     resetDaysMap();
     resetDatesMap();
+  }
+
+//====================Get My Tasks====================//
+  Future<void> getMyTasks() async {
+    myTasksList = await tasksRepository.getMyTasks();
+    print(myTasksList.toString());
   }
 }
 

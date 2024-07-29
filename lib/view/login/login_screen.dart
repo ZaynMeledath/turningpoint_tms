@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     customTextField(
                       controller: emailController,
                       hintText: 'Email',
-                      userController: userController,
+                      // userController: userController,
                       isEmail: true,
                     ).animate().slideX(
                           begin: 1,
@@ -123,10 +125,24 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 20.h),
                     GestureDetector(
-                      onTap: () {
-                        Get.offAll(
-                          () => const TasksHome(),
-                        );
+                      onTap: () async {
+                        try {
+                          await userController.login(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          );
+                          Get.offAll(
+                            () => const TasksHome(),
+                          );
+                        } catch (e) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Something Went Wrong'),
+                            ),
+                          );
+                        }
                       },
                       child: customButton(buttonTitle: 'Login').animate().scale(
                             delay: const Duration(milliseconds: 150),
