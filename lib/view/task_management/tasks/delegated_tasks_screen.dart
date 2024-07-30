@@ -84,53 +84,54 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: myAppBar(
-          context: context,
-          title: 'Delegated Tasks',
-          implyLeading: false,
-          profileAvatar: true,
-        ),
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              expandedHeight: 106.h,
-              backgroundColor: Colors.transparent,
-              flexibleSpace: FlexibleSpaceBar(
-                background: filterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
+      appBar: myAppBar(
+        context: context,
+        title: 'Delegated Tasks',
+        implyLeading: false,
+        profileAvatar: true,
+      ),
+      body: Obx(
+        () {
+          final delegatedTasksList =
+              tasksController.delegatedTasksListObs.value;
+          return CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                expandedHeight: 106.h,
+                backgroundColor: Colors.transparent,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: filterSection(
+                    taskSearchController: taskSearchController,
+                    categorySearchController: categorySearchController,
+                    assignedSearchController: assignedSearchController,
+                    userController: userController,
+                    filterController: filterController,
+                  ),
                 ),
               ),
-            ),
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 50.h,
-              pinned: true,
-              backgroundColor: AppColor.scaffoldBackgroundColor,
-              surfaceTintColor: AppColor.scaffoldBackgroundColor,
-              flexibleSpace: FlexibleSpaceBar(
-                background: tasksTabBar(tabController: tabController),
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                toolbarHeight: 50.h,
+                pinned: true,
+                backgroundColor: AppColor.scaffoldBackgroundColor,
+                surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: tasksTabBar(tabController: tabController),
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 10.h),
-                ],
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    SizedBox(height: 10.h),
+                  ],
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                childCount: tasksController.myTasksListObs.value?.length ?? 0,
-                (context, index) {
-                  return Obx(() {
-                    final delegatedTasksList =
-                        tasksController.delegatedTasksListObs.value;
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: tasksController.myTasksListObs.value?.length ?? 0,
+                  (context, index) {
                     if (delegatedTasksList != null &&
                         delegatedTasksList.isNotEmpty) {
                       return Padding(
@@ -153,24 +154,26 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                         child: CircularProgressIndicator(),
                       );
                     }
-                  });
-                },
+                  },
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 65.h),
-                ],
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    SizedBox(height: 65.h),
+                  ],
+                ),
               ),
-            ),
-          ],
-        )
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
         // .animate().slideY(
         //       begin: .2,
         //       duration: const Duration(milliseconds: 1200),
         //       curve: Curves.elasticOut,
         //     ),
-        );
-  }
-}

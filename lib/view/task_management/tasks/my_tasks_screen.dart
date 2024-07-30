@@ -84,77 +84,79 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         implyLeading: false,
         profileAvatar: true,
       ),
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: 106.h,
-            backgroundColor: Colors.transparent,
-            flexibleSpace: FlexibleSpaceBar(
-              background: filterSection(
-                taskSearchController: taskSearchController,
-                categorySearchController: categorySearchController,
-                assignedSearchController: assignedSearchController,
-                userController: userController,
-                filterController: filterController,
+      body: Obx(
+        () {
+          final myTasksList = tasksController.myTasksListObs.value;
+          return CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                expandedHeight: 106.h,
+                backgroundColor: Colors.transparent,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: filterSection(
+                    taskSearchController: taskSearchController,
+                    categorySearchController: categorySearchController,
+                    assignedSearchController: assignedSearchController,
+                    userController: userController,
+                    filterController: filterController,
+                  ),
+                ),
               ),
-            ),
-          ),
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            toolbarHeight: 50.h,
-            pinned: true,
-            backgroundColor: AppColor.scaffoldBackgroundColor,
-            surfaceTintColor: AppColor.scaffoldBackgroundColor,
-            flexibleSpace: FlexibleSpaceBar(
-              background: tasksTabBar(tabController: tabController),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              SizedBox(height: 10.h),
-            ]),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: tasksController.myTasksListObs.value?.length ?? 0,
-              (context, index) {
-                return Obx(() {
-                  final myTasksList = tasksController.myTasksListObs.value;
-                  if (myTasksList != null && myTasksList.isNotEmpty) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 10.h,
-                        horizontal: 10.w,
-                      ),
-                      child: taskCard(
-                        lottieController: lottieController,
-                        taskModel: myTasksList[index],
-                        isDelegated: false,
-                      ).animate().slideX(
-                            begin: index.isEven ? -.4 : .4,
-                            duration: const Duration(milliseconds: 1000),
-                            curve: Curves.elasticOut,
-                          ),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                });
-              },
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 65.h),
-              ],
-            ),
-          ),
-        ],
+              SliverAppBar(
+                automaticallyImplyLeading: false,
+                toolbarHeight: 50.h,
+                pinned: true,
+                backgroundColor: AppColor.scaffoldBackgroundColor,
+                surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: tasksTabBar(tabController: tabController),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  SizedBox(height: 10.h),
+                ]),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: myTasksList?.length ?? 0,
+                  (context, index) {
+                    if (myTasksList != null && myTasksList.isNotEmpty) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 10.h,
+                          horizontal: 10.w,
+                        ),
+                        child: taskCard(
+                          lottieController: lottieController,
+                          taskModel: myTasksList[index],
+                          isDelegated: false,
+                        ).animate().slideX(
+                              begin: index.isEven ? -.4 : .4,
+                              duration: const Duration(milliseconds: 1000),
+                              curve: Curves.elasticOut,
+                            ),
+                      );
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    SizedBox(height: 65.h),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

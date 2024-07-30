@@ -101,6 +101,7 @@ class TasksController extends GetxController {
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
     myTasksListObs.value = await tasksRepository.getMyTasks();
+    print(myTasksListObs.value.toString());
   }
 
 //====================Get Delegated Tasks====================//
