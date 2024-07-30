@@ -63,10 +63,15 @@ Widget taskCard({
   final period = hour24 >= 12 ? 'PM' : 'AM';
   final time = '$hour:$minute $period';
 
+  final dueDateString = '$weekDay, $date $month $time';
+
   return InkWell(
     onTap: () {
       Get.to(
-        () => const TaskDetailsScreen(),
+        () => TaskDetailsScreen(
+          taskModel: taskModel,
+          dueDateString: dueDateString,
+        ),
       );
     },
     borderRadius: BorderRadius.circular(16),
@@ -202,7 +207,7 @@ Widget taskCard({
                         ),
                         SizedBox(width: 3.w),
                         Text(
-                          '$weekDay, $date $month $time',
+                          dueDateString,
                           style: TextStyle(
                             color: taskModel.isDelayed == true
                                 ? Colors.red
