@@ -8,6 +8,16 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
+  final pendingTaskList = <TaskModel>[].obs;
+  final inProgressTaskList = <TaskModel>[].obs;
+  final completedTaskList = <TaskModel>[].obs;
+  final overdueTaskList = <TaskModel>[].obs;
+
+  final pendingDelegatedTaskList = <TaskModel>[].obs;
+  final inProgressDelegatedTaskList = <TaskModel>[].obs;
+  final completedDelegatedTaskList = <TaskModel>[].obs;
+  final overdueDelegatedTaskList = <TaskModel>[].obs;
+
   final tasksRepository = TasksRepository();
 
 //====================Date and Time====================//
@@ -100,13 +110,46 @@ class TasksController extends GetxController {
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
-    myTasksListObs.value = await tasksRepository.getMyTasks();
-    print(myTasksListObs.value.toString());
+    try {
+      myTasksListObs.value = await tasksRepository.getMyTasks();
+      pendingTaskList.value =
+          myTasksListObs.value!.where((item) => item.status == 'Open').toList();
+      inProgressTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.inProgress)
+          .toList();
+      completedTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.completed)
+          .toList();
+      overdueTaskList.value = myTasksListObs.value!
+          .where((item) =>
+              item.isDelayed == true && item.status != Status.completed)
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 
 //====================Get Delegated Tasks====================//
   Future<void> getDelegatedTasks() async {
-    delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
+    try {
+      delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
+
+      pendingDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == 'Open')
+          .toList();
+      inProgressDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.inProgress)
+          .toList();
+      completedDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.completed)
+          .toList();
+      overdueDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) =>
+              item.isDelayed == true && item.status != Status.completed)
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
   }
 }
 

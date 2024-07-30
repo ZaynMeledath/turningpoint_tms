@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
@@ -8,7 +7,7 @@ import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
 class MyTasksScreen extends StatefulWidget {
@@ -86,75 +85,75 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       ),
       body: Obx(
         () {
-          final myTasksList = tasksController.myTasksListObs.value;
-          return CustomScrollView(
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                expandedHeight: 106.h,
-                backgroundColor: Colors.transparent,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: filterSection(
-                    taskSearchController: taskSearchController,
-                    categorySearchController: categorySearchController,
-                    assignedSearchController: assignedSearchController,
-                    userController: userController,
-                    filterController: filterController,
+          final allTasksList = tasksController.myTasksListObs.value;
+          final pendingTasksList = tasksController.pendingTaskList.toList();
+          final inProgressTasksList =
+              tasksController.inProgressTaskList.toList();
+          final completedTasksList = tasksController.completedTaskList.toList();
+          final overdueTasksList = tasksController.overdueTaskList.toList();
+          return NestedScrollView(
+            // physics: const BouncingScrollPhysics(),
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  expandedHeight: 106.h,
+                  backgroundColor: Colors.transparent,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: filterSection(
+                      taskSearchController: taskSearchController,
+                      categorySearchController: categorySearchController,
+                      assignedSearchController: assignedSearchController,
+                      userController: userController,
+                      filterController: filterController,
+                    ),
                   ),
                 ),
-              ),
-              SliverAppBar(
-                automaticallyImplyLeading: false,
-                toolbarHeight: 50.h,
-                pinned: true,
-                backgroundColor: AppColor.scaffoldBackgroundColor,
-                surfaceTintColor: AppColor.scaffoldBackgroundColor,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: tasksTabBar(tabController: tabController),
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  toolbarHeight: 50.h,
+                  pinned: true,
+                  backgroundColor: AppColor.scaffoldBackgroundColor,
+                  surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: tasksTabBar(tabController: tabController),
+                  ),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate([
-                  SizedBox(height: 10.h),
-                ]),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: myTasksList?.length ?? 0,
-                  (context, index) {
-                    if (myTasksList != null && myTasksList.isNotEmpty) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10.h,
-                          horizontal: 10.w,
-                        ),
-                        child: taskCard(
-                          lottieController: lottieController,
-                          taskModel: myTasksList[index],
-                          isDelegated: false,
-                        ).animate().slideX(
-                              begin: index.isEven ? -.4 : .4,
-                              duration: const Duration(milliseconds: 1000),
-                              curve: Curves.elasticOut,
-                            ),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    SizedBox(height: 10.h),
+                  ]),
                 ),
+              ];
+            },
+            body: Padding(
+              padding: EdgeInsets.only(bottom: 65.h),
+              child: TabBarView(
+                controller: tabController,
+                children: [
+                  taskTabBarView(
+                    tasksList: allTasksList,
+                    lottieController: lottieController,
+                  ),
+                  taskTabBarView(
+                    tasksList: overdueTasksList,
+                    lottieController: lottieController,
+                  ),
+                  taskTabBarView(
+                    tasksList: pendingTasksList,
+                    lottieController: lottieController,
+                  ),
+                  taskTabBarView(
+                    tasksList: inProgressTasksList,
+                    lottieController: lottieController,
+                  ),
+                  taskTabBarView(
+                    tasksList: completedTasksList,
+                    lottieController: lottieController,
+                  ),
+                ],
               ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    SizedBox(height: 65.h),
-                  ],
-                ),
-              ),
-            ],
+            ),
           );
         },
       ),
