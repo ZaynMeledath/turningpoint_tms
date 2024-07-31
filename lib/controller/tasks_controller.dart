@@ -8,10 +8,10 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
-  final pendingTaskList = <TaskModel>[].obs;
-  final inProgressTaskList = <TaskModel>[].obs;
-  final completedTaskList = <TaskModel>[].obs;
-  final overdueTaskList = <TaskModel>[].obs;
+  Rxn<List<TaskModel>?> pendingTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> inProgressTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> completedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> overdueTaskList = Rxn<List<TaskModel>>();
 
   final pendingDelegatedTaskList = <TaskModel>[].obs;
   final inProgressDelegatedTaskList = <TaskModel>[].obs;

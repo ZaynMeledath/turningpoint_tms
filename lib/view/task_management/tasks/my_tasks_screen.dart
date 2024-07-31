@@ -50,7 +50,6 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   Future<void> getData() async {
     await tasksController.getMyTasks();
-    // setState(() {});
   }
 
   void animateLottie() async {
@@ -86,11 +85,10 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       body: Obx(
         () {
           final allTasksList = tasksController.myTasksListObs.value;
-          final pendingTasksList = tasksController.pendingTaskList.toList();
-          final inProgressTasksList =
-              tasksController.inProgressTaskList.toList();
-          final completedTasksList = tasksController.completedTaskList.toList();
-          final overdueTasksList = tasksController.overdueTaskList.toList();
+          final pendingTasksList = tasksController.pendingTaskList.value;
+          final inProgressTasksList = tasksController.inProgressTaskList.value;
+          final completedTasksList = tasksController.completedTaskList.value;
+          final overdueTasksList = tasksController.overdueTaskList.value;
           return NestedScrollView(
             // physics: const BouncingScrollPhysics(),
             headerSliverBuilder: (context, innerBoxIsScrolled) {

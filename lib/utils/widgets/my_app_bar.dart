@@ -74,8 +74,7 @@ AppBar myAppBar({
                         transition: Transition.rightToLeft,
                       ),
                       child: nameLetterAvatar(
-                        firstName: 'Zayn',
-                        lastName: 'Meledath',
+                        name: 'Zayn Meledath',
                       ),
                     ),
                   ),

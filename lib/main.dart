@@ -4,9 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/firebase_options.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +38,20 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
         ),
-        home: authToken == null ? const LoginScreen() : const TasksHome(),
+        // home: authToken == null ? const LoginScreen() : const TasksHome(),
+        home: TaskDetailsScreen(
+          taskModel: TaskModel(
+            title: 'Task Title',
+            createdAt: '',
+            createdBy: 'Zayn Meledath',
+            assignedTo: 'Ajay',
+            priority: 'High',
+            category: 'Business',
+            description:
+                'This is the task description which can be as long as this to test the description alignment.',
+          ),
+          dueDateString: 'Fri, 12 JUN 12:15 PM',
+        ),
       ),
     );
   }

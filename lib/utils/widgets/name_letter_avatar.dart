@@ -3,15 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget nameLetterAvatar({
-  required String firstName,
-  required String lastName,
+  required String name,
   Color? backgroundColor,
   double? circleDiameter,
 }) {
-  final firstLetter = firstName.characters.first;
-  final secondLetter = lastName.trim().isNotEmpty
-      ? lastName.characters.first
-      : firstName.characters.elementAt(1);
+  final firstName = name.split(' ').first;
+  final lastName = name.split(' ').last;
+  final firstLetter = firstName.characters.first.toUpperCase();
+  final secondLetter = firstName == lastName
+      ? lastName.characters.elementAt(1).toUpperCase()
+      : lastName.characters.first.toUpperCase();
 
   return Container(
     width: circleDiameter ?? 38.w,

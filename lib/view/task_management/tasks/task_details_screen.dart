@@ -4,7 +4,8 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 
-part 'segments/tasks_details_title_content.dart';
+part 'segments/title_description_container.dart';
+part 'segments/task_details_assigned_container.dart';
 
 class TaskDetailsScreen extends StatelessWidget {
   final TaskModel taskModel;
@@ -43,18 +44,18 @@ class TaskDetailsScreen extends StatelessWidget {
       'Dec',
     ];
 
-    final creationDate = DateTime.parse(taskModel.createdAt.toString());
-    final month = monthList[creationDate.month - 1];
-    final weekDay = weekList[creationDate.weekday - 1];
-    final date = creationDate.day;
+    // final creationDate = DateTime.parse(taskModel.createdAt.toString());
+    // final month = monthList[creationDate.month - 1];
+    // final weekDay = weekList[creationDate.weekday - 1];
+    // final date = creationDate.day;
 
-    final hour24 = creationDate.hour;
-    final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
-    final minute = creationDate.minute;
-    final period = hour24 >= 12 ? 'PM' : 'AM';
-    final time = '$hour:$minute $period';
+    // final hour24 = creationDate.hour;
+    // final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
+    // final minute = creationDate.minute;
+    // final period = hour24 >= 12 ? 'PM' : 'AM';
+    // final time = '$hour:$minute $period';
 
-    final creationDateString = '$weekDay, $date $month $time';
+    // final creationDateString = '$weekDay, $date $month $time';
 
     return Scaffold(
       appBar: myAppBar(
@@ -64,73 +65,29 @@ class TaskDetailsScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 14.w,
-          vertical: 12.h,
+          vertical: 14.h,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.maxFinite,
-              height: 190.h,
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(255, 245, 245, .23),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Task Title',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.alarm,
-                            size: 17.sp,
-                            color: Colors.white70,
-                          ),
-                          SizedBox(width: 3.w),
-                          Text(
-                            dueDateString,
-                            style: TextStyle(
-                              color: taskModel.isDelayed == true
-                                  ? Colors.red
-                                  : Colors.green,
-                              fontSize: 13.5.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Text(
-                    'Creation date : $creationDateString',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  Container(
-                    width: double.maxFinite,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-//--------------------Description Segment--------------------//
-                  Text(
-                    'Description',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
+            titleDescriptionContainer(
+              taskModel: taskModel,
+              dueDateString: dueDateString,
+              creationDateString: '',
+            ),
+            SizedBox(height: 10.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                taskDetailsAssignedContainer(
+                  name: 'Zayn Meledath',
+                  isAssignedBy: true,
+                ),
+                taskDetailsAssignedContainer(
+                  name: 'Ajay',
+                  isAssignedBy: false,
+                ),
+              ],
             ),
           ],
         ),

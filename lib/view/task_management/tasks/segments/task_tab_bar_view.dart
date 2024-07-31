@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
 
@@ -31,16 +33,22 @@ Widget taskTabBarView({
           );
         });
   } else if (tasksList == null) {
-    return const Center(
-      child: CircularProgressIndicator(),
+    return Column(
+      children: [
+        SizedBox(height: 120.h),
+        SpinKitCubeGrid(
+          color: AppColor.themeGreen,
+          size: 50.sp,
+        ),
+      ],
     );
   } else {
     return Column(
       children: [
-        SizedBox(height: 70.h),
+        SizedBox(height: 100.h),
         Lottie.asset(
           'assets/lotties/empty_list_animation.json',
-          width: 250.w,
+          width: 180.w,
         ),
       ],
     );

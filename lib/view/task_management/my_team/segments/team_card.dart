@@ -29,8 +29,7 @@ Widget teamCard() {
             Row(
               children: [
                 nameLetterAvatar(
-                  firstName: 'Zayn',
-                  lastName: 'Meledath',
+                  name: 'Zayn Meledath',
                   circleDiameter: 34,
                   backgroundColor: Colors.blue,
                 ),

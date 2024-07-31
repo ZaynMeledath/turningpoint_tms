@@ -59,8 +59,7 @@ Widget assignedFilterSegment({
                   child: Row(
                     children: [
                       nameLetterAvatar(
-                        firstName: name,
-                        lastName: ' ',
+                        name: name,
                         circleDiameter: 32.w,
                       ),
                       SizedBox(width: 8.w),

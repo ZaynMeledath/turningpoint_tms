@@ -22,8 +22,7 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               nameLetterAvatar(
-                firstName: 'Zayn',
-                lastName: 'Meledath',
+                name: 'Zayn Meledath',
                 circleDiameter: 80.w,
               ),
               SizedBox(height: 10.h),
