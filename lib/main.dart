@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/firebase_options.dart';
 import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
@@ -9,6 +11,7 @@ import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dar
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppPreferences.init();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -31,7 +34,6 @@ class MyApp extends StatelessWidget {
           ),
           useMaterial3: true,
           brightness: Brightness.dark,
-          // scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
           scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
         ),
         home: authToken == null ? const LoginScreen() : const TasksHome(),

@@ -7,6 +7,7 @@ class UserRepository {
   static Future<UserModelResponse> login({
     required String email,
     required String password,
+    required String fcmToken,
   }) async {
     try {
       final response = await ApiService().sendRequest(
@@ -15,6 +16,7 @@ class UserRepository {
         data: {
           'emailID': email,
           'password': password,
+          'fcmToken': fcmToken,
         },
         fieldNameForFiles: null,
         isTokenRequired: false,
