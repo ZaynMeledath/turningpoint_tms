@@ -116,6 +116,19 @@ class TaskDetailsScreen extends StatelessWidget {
                       fontSize: 14.sp,
                     ),
                   ),
+                  Container(
+                    width: double.maxFinite,
+                    height: 1,
+                    color: Colors.grey,
+                  ),
+//--------------------Description Segment--------------------//
+                  Text(
+                    'Description',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.white70,
+                    ),
+                  ),
                 ],
               ),
             ),
