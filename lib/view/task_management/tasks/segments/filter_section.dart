@@ -53,27 +53,27 @@ Widget filterSection({
             ),
           ],
         ),
-        SizedBox(height: 8.h),
-        Container(
-          width: 110.w,
-          height: 40.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: AppColor.textFieldColor,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Range',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                ),
-              ),
-              const Icon(Icons.arrow_drop_down)
-            ],
-          ),
-        ),
+        // SizedBox(height: 8.h),
+        // Container(
+        //   width: 110.w,
+        //   height: 40.h,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(16),
+        //     color: AppColor.textFieldColor,
+        //   ),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Text(
+        //         'Today',
+        //         style: TextStyle(
+        //           fontSize: 16.sp,
+        //         ),
+        //       ),
+        //       const Icon(Icons.arrow_drop_down)
+        //     ],
+        //   ),
+        // ),
       ],
     ),
   ).animate().scaleX(

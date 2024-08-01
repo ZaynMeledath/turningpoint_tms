@@ -95,7 +95,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
               return [
                 SliverAppBar(
                   automaticallyImplyLeading: false,
-                  expandedHeight: 106.h,
+                  expandedHeight: 70.h,
                   backgroundColor: Colors.transparent,
                   flexibleSpace: FlexibleSpaceBar(
                     background: filterSection(

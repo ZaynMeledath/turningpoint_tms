@@ -107,7 +107,8 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
               return [
                 SliverAppBar(
                   automaticallyImplyLeading: false,
-                  expandedHeight: 106.h,
+                  // expandedHeight: 106.h,
+                  expandedHeight: 70.h,
                   backgroundColor: Colors.transparent,
                   flexibleSpace: FlexibleSpaceBar(
                     background: filterSection(
