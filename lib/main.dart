@@ -5,16 +5,15 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/firebase_options.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppPreferences.init();
   await Hive.initFlutter();
+  await Hive.openBox(AppConstants.appDb);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

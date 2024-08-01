@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/flight_shuttle_builder.dart';
@@ -17,6 +16,7 @@ AppBar myAppBar({
   bool profileAvatar = false,
   bool implyLeading = true,
 }) {
+  final UserModel? userModel = UserController().getUserModelFromHive();
   return AppBar(
     automaticallyImplyLeading: false,
     elevation: 10,
@@ -77,7 +77,7 @@ AppBar myAppBar({
                         transition: Transition.rightToLeft,
                       ),
                       child: nameLetterAvatar(
-                        name: 'Nilesh',
+                        name: '${userModel?.userName}',
                       ),
                     ),
                   ),

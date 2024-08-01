@@ -9,6 +9,6 @@ class AppColor {
 
 class AppConstants {
   static const appDb = 'turningpoint_db';
-  static const userHiveBoxKey = 'user';
+  static const userModelStorageKey = 'user';
   static const authTokenKey = 'auth_token';
 }

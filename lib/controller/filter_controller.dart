@@ -121,4 +121,32 @@ class FilterController extends GetxController {
       selectedPriorityList.remove(filterKey);
     }
   }
+
+  void resetFilters() {
+    categoryFilterModel.value = {
+      for (String element in categoriesList) element.toString(): false
+    };
+
+    assignedByFilterModel.value = {
+      for (String element in assignedMap.values) element.toString(): false
+    };
+
+    assignedToFilterModel.value = {
+      for (String element in assignedMap.values) element.toString(): false
+    };
+
+    frequencyFilterModel.value = {
+      for (String element in frequencyList) element.toString(): false
+    };
+
+    priorityFilterModel.value = {
+      for (String element in priorityList) element.toString(): false
+    };
+
+    selectedCategoryList.value = [];
+    selectedAssignedByList.value = [];
+    selectedAssignedToList.value = [];
+    selectedFrequencyList.value = [];
+    selectedPriorityList.value = [];
+  }
 }

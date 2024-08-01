@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 
@@ -11,6 +13,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserModel? userModel = UserController().getUserModelFromHive();
+
     return Scaffold(
       appBar: myAppBar(
         context: context,
@@ -22,12 +26,12 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               nameLetterAvatar(
-                name: 'Zayn Meledath',
+                name: '${userModel?.userName}',
                 circleDiameter: 80.w,
               ),
               SizedBox(height: 10.h),
               Text(
-                'Zayn Meledath',
+                '${userModel?.userName}',
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
@@ -42,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                '+91 8289899007',
+                '+91 ${userModel?.phone}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.white70,

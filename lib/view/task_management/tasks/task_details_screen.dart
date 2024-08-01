@@ -22,6 +22,7 @@ class TaskDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTaskCompleted = taskModel.status == Status.completed;
     final weekList = [
       'Mon',
       'Tue',
@@ -47,18 +48,18 @@ class TaskDetailsScreen extends StatelessWidget {
       'Dec',
     ];
 
-    // final creationDate = DateTime.parse(taskModel.createdAt.toString());
-    // final month = monthList[creationDate.month - 1];
-    // final weekDay = weekList[creationDate.weekday - 1];
-    // final date = creationDate.day;
+    final creationDate = DateTime.parse(taskModel.createdAt.toString());
+    final month = monthList[creationDate.month - 1];
+    final weekDay = weekList[creationDate.weekday - 1];
+    final date = creationDate.day;
 
-    // final hour24 = creationDate.hour;
-    // final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
-    // final minute = creationDate.minute;
-    // final period = hour24 >= 12 ? 'PM' : 'AM';
-    // final time = '$hour:$minute $period';
+    final hour24 = creationDate.hour;
+    final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
+    final minute = creationDate.minute;
+    final period = hour24 >= 12 ? 'PM' : 'AM';
+    final time = '$hour:$minute $period';
 
-    // final creationDateString = '$weekDay, $date $month $time';
+    final creationDateString = '$weekDay, $date $month $time';
 
     return Scaffold(
       appBar: myAppBar(
@@ -77,7 +78,7 @@ class TaskDetailsScreen extends StatelessWidget {
               titleDescriptionContainer(
                 taskModel: taskModel,
                 dueDateString: dueDateString,
-                creationDateString: '',
+                creationDateString: creationDateString,
               ),
               SizedBox(height: 14.h),
               Row(
@@ -108,9 +109,13 @@ class TaskDetailsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     cardActionButton(
-                      title: 'In Progress',
-                      icon: StatusIcons.inProgress,
-                      iconColor: StatusIconColor.inProgress,
+                      title: isTaskCompleted ? 'Delete' : 'In Progress',
+                      icon: isTaskCompleted
+                          ? Icons.delete
+                          : StatusIcons.inProgress,
+                      iconColor: isTaskCompleted
+                          ? Colors.red
+                          : StatusIconColor.inProgress,
                       onTap: () {},
                       containerColor: Colors.grey.withOpacity(.08),
                       containerWidth: 150.w,
@@ -119,9 +124,13 @@ class TaskDetailsScreen extends StatelessWidget {
                       textSize: 14.sp,
                     ),
                     cardActionButton(
-                      title: 'Completed',
-                      icon: StatusIcons.completed,
-                      iconColor: StatusIconColor.completed,
+                      title: isTaskCompleted ? 'Re Open' : 'Complete',
+                      icon: isTaskCompleted
+                          ? StatusIcons.inProgress
+                          : StatusIcons.completed,
+                      iconColor: isTaskCompleted
+                          ? StatusIconColor.pending
+                          : StatusIconColor.completed,
                       onTap: () {},
                       containerColor: Colors.grey.withOpacity(.08),
                       containerWidth: 150.w,
@@ -132,39 +141,41 @@ class TaskDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 12.h),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 14.w,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    cardActionButton(
-                      title: 'Edit',
-                      icon: Icons.edit,
-                      iconColor: Colors.blueGrey,
-                      onTap: () {},
-                      containerColor: Colors.grey.withOpacity(.08),
-                      containerWidth: 150.w,
-                      containerHeight: 40,
-                      iconSize: 22.sp,
-                      textSize: 14.sp,
+              SizedBox(height: isTaskCompleted ? 0 : 12.h),
+              isTaskCompleted
+                  ? const SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          cardActionButton(
+                            title: 'Edit',
+                            icon: Icons.edit,
+                            iconColor: Colors.blueGrey,
+                            onTap: () {},
+                            containerColor: Colors.grey.withOpacity(.08),
+                            containerWidth: 150.w,
+                            containerHeight: 40,
+                            iconSize: 22.sp,
+                            textSize: 14.sp,
+                          ),
+                          cardActionButton(
+                            title: 'Delete',
+                            icon: Icons.delete,
+                            iconColor: Colors.red,
+                            onTap: () {},
+                            containerColor: Colors.grey.withOpacity(.08),
+                            containerWidth: 150.w,
+                            containerHeight: 40,
+                            iconSize: 22.sp,
+                            textSize: 14.sp,
+                          ),
+                        ],
+                      ),
                     ),
-                    cardActionButton(
-                      title: 'Delete',
-                      icon: Icons.delete,
-                      iconColor: Colors.red,
-                      onTap: () {},
-                      containerColor: Colors.grey.withOpacity(.08),
-                      containerWidth: 150.w,
-                      containerHeight: 40,
-                      iconSize: 22.sp,
-                      textSize: 14.sp,
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(height: 14.h),
               // Container(
               //   width: double.maxFinite,

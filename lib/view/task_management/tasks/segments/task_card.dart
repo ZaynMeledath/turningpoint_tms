@@ -244,18 +244,20 @@ Widget taskCard({
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 cardActionButton(
-                  title: isTaskCompleted ? 'Re Open' : 'In Progress',
-                  icon: StatusIcons.inProgress,
-                  iconColor: isTaskCompleted
-                      ? StatusIconColor.pending
-                      : StatusIconColor.inProgress,
+                  title: isTaskCompleted ? 'Delete' : 'In Progress',
+                  icon: isTaskCompleted ? Icons.delete : StatusIcons.inProgress,
+                  iconColor:
+                      isTaskCompleted ? Colors.red : StatusIconColor.inProgress,
                   onTap: () {},
                 ),
                 cardActionButton(
-                  title: isTaskCompleted ? 'Delete' : 'Complete',
-                  icon: isTaskCompleted ? Icons.delete : StatusIcons.completed,
-                  iconColor:
-                      isTaskCompleted ? Colors.red : StatusIconColor.completed,
+                  title: isTaskCompleted ? 'Re Open' : 'Complete',
+                  icon: isTaskCompleted
+                      ? StatusIcons.inProgress
+                      : StatusIcons.completed,
+                  iconColor: isTaskCompleted
+                      ? StatusIconColor.pending
+                      : StatusIconColor.completed,
                   onTap: () {},
                 ),
               ],

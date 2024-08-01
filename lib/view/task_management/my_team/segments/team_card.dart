@@ -125,7 +125,11 @@ Widget teamCard() {
               icon: Icons.edit,
               title: 'Edit',
               iconColor: Colors.blue,
-              onTap: () {},
+              onTap: () {
+                final userBox = Hive.box(AppConstants.appDb);
+                final userModel = userBox.get(AppConstants.userModelStorageKey);
+                print(userModel.toString());
+              },
             ),
             SizedBox(width: 30.w),
             teamCardActionButton(

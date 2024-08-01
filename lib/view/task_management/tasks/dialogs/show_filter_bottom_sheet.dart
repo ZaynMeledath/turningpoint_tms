@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
@@ -153,34 +154,99 @@ Future<Object?> showFilterBottomSheet({
                     ),
                   ),
                   //--------------------Filter Value Part--------------------//
-                  filterController.selectedFilterOptionKey == 'category'
-                      ? categoryFilterSegment(
-                          categorySearchController: categorySearchController,
-                          filterController: filterController,
-                        )
-                      : filterController.selectedFilterOptionKey == 'assignedBy'
-                          ? assignedFilterSegment(
-                              assignedSearchController:
-                                  assignedSearchController,
-                              filterController: filterController,
-                              isAssignedBy: true,
-                            )
-                          : filterController.selectedFilterOptionKey ==
-                                  'assignedTo'
-                              ? assignedFilterSegment(
-                                  assignedSearchController:
-                                      assignedSearchController,
-                                  filterController: filterController,
-                                  isAssignedBy: false,
-                                )
-                              : filterController.selectedFilterOptionKey ==
-                                      'frequency'
-                                  ? frequencyFilterSegment(
-                                      filterController: filterController,
-                                    )
-                                  : priorityFilterSegment(
-                                      filterController: filterController,
+                  Expanded(
+                    child: Column(
+                      children: [
+                        filterController.selectedFilterOptionKey == 'category'
+                            ? categoryFilterSegment(
+                                categorySearchController:
+                                    categorySearchController,
+                                filterController: filterController,
+                              )
+                            : filterController.selectedFilterOptionKey ==
+                                    'assignedBy'
+                                ? assignedFilterSegment(
+                                    assignedSearchController:
+                                        assignedSearchController,
+                                    filterController: filterController,
+                                    isAssignedBy: true,
+                                  )
+                                : filterController.selectedFilterOptionKey ==
+                                        'assignedTo'
+                                    ? assignedFilterSegment(
+                                        assignedSearchController:
+                                            assignedSearchController,
+                                        filterController: filterController,
+                                        isAssignedBy: false,
+                                      )
+                                    : filterController
+                                                .selectedFilterOptionKey ==
+                                            'frequency'
+                                        ? frequencyFilterSegment(
+                                            filterController: filterController,
+                                          )
+                                        : priorityFilterSegment(
+                                            filterController: filterController,
+                                          ),
+                        Container(
+                          height: 50.h,
+                          color: Colors.black26,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(12),
+                                  onTap: () {
+                                    filterController.resetFilters();
+                                  },
+                                  child: Container(
+                                    width: 100.w,
+                                    height: 38.h,
+                                    margin: EdgeInsets.only(
+                                      right: 14.w,
                                     ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.grey.withOpacity(.2),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Reset',
+                                        style: TextStyle(
+                                          fontSize: 16.sp,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 100.w,
+                                  height: 38.h,
+                                  margin: EdgeInsets.only(
+                                    right: 14.w,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: AppColor.themeGreen,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Filter',
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

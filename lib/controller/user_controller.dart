@@ -7,16 +7,6 @@ import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/repository/user_repository.dart';
 
-Box<dynamic>? userBox;
-
-Future<void> addUserModelToHive({
-  required UserModel? userModel,
-}) async {
-  userBox = await Hive.openBox(AppConstants.appDb);
-  userBox!.put(AppConstants.userHiveBoxKey, userModel);
-  print(userBox!.get(AppConstants.userHiveBoxKey));
-}
-
 class UserController extends GetxController {
   RxBool isObScure = true.obs;
 
@@ -37,12 +27,24 @@ class UserController extends GetxController {
           key: AppConstants.authTokenKey,
           value: userModelResponse.token,
         );
-        await addUserModelToHive(userModel: userModelResponse.user);
       } else {
         throw FcmTokenNullException();
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+//====================Get user from Hive Box====================//
+  UserModel? getUserModelFromHive() {
+    final userBox = Hive.box(AppConstants.appDb);
+    final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
+    if (userModelResponseJson != null) {
+      final userModelResponse =
+          UserModelResponse.fromJson(userModelResponseJson);
+      return userModelResponse.user;
+    } else {
+      return null;
     }
   }
 }

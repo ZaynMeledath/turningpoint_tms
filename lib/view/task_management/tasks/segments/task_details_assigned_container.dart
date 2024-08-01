@@ -14,7 +14,7 @@ Widget taskDetailsAssignedContainer({
       vertical: 10.h,
     ),
     decoration: BoxDecoration(
-      color: const Color.fromRGBO(255, 245, 245, .1),
+      color: const Color.fromRGBO(255, 245, 245, .07),
       borderRadius: BorderRadius.circular(10),
     ),
     child: Column(

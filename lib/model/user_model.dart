@@ -23,7 +23,7 @@ class UserModel {
   String? id;
   String? userName;
   String? department;
-  String? emailID;
+  String? emailId;
   String? phone;
   String? role;
   String? password;
@@ -35,7 +35,7 @@ class UserModel {
     this.id,
     this.userName,
     this.department,
-    this.emailID,
+    this.emailId,
     this.phone,
     this.role,
     this.password,
@@ -48,7 +48,7 @@ class UserModel {
     id = json['_id'];
     userName = json['userName'];
     department = json['department'];
-    emailID = json['emailID'];
+    emailId = json['emailID'];
     phone = json['phone'];
     role = json['role'];
     password = json['password'];
@@ -62,7 +62,7 @@ class UserModel {
     data['_id'] = id;
     data['userName'] = userName;
     data['department'] = department;
-    data['emailID'] = emailID;
+    data['emailID'] = emailId;
     data['phone'] = phone;
     data['role'] = role;
     data['password'] = password;

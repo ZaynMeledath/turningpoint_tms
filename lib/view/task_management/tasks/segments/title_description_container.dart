@@ -25,7 +25,7 @@ Widget titleDescriptionContainer({
       vertical: 12.h,
     ),
     decoration: BoxDecoration(
-      color: const Color.fromRGBO(255, 245, 245, .1),
+      color: const Color.fromRGBO(255, 245, 245, .07),
       borderRadius: BorderRadius.circular(10),
     ),
     child: Column(
@@ -40,13 +40,35 @@ Widget titleDescriptionContainer({
           ),
         ),
         SizedBox(height: 10.h),
-        Text(
-          'Creation : Fri, 12 Jun 12:15 AM ',
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 14.w,
-            color: Colors.white70,
-          ),
+        Row(
+          children: [
+            SizedBox(
+              width: 72.w,
+              child: Text(
+                'Creation',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 14.w,
+                  color: Colors.white70,
+                ),
+              ),
+            ),
+            const Text(':'),
+            SizedBox(width: 12.w),
+            Icon(
+              Icons.schedule,
+              size: 17.sp,
+              color: Colors.white70,
+            ),
+            SizedBox(width: 3.w),
+            Text(
+              dueDateString,
+              style: TextStyle(
+                fontSize: 14.w,
+                color: Colors.white70,
+              ),
+            ),
+          ],
         ),
         SizedBox(height: 8.h),
         Row(
