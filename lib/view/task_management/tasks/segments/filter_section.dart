@@ -13,6 +13,7 @@ Widget filterSection({
   required TextEditingController assignedSearchController,
   required UserController userController,
   required FilterController filterController,
+  bool? isDelegated,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -28,6 +29,7 @@ Widget filterSection({
                   categorySearchController: categorySearchController,
                   assignedSearchController: assignedSearchController,
                   filterController: filterController,
+                  isDelegated: isDelegated,
                 );
               },
               child: Container(

@@ -11,6 +11,8 @@ import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segme
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/priority_filter_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/selected_filter.dart';
 
+part 'segments/filter_reset_segment.dart';
+
 Future<Object?> showFilterBottomSheet({
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
@@ -47,6 +49,8 @@ Future<Object?> showFilterBottomSheet({
                 ),
               ),
             ),
+
+            //--------------------Selected Filters are displayed here--------------------//
             filterController.selectedCategoryList.isNotEmpty
                 ? selectedFilter(
                     title: 'Category',
@@ -62,7 +66,7 @@ Future<Object?> showFilterBottomSheet({
             filterController.selectedAssignedToList.isNotEmpty
                 ? selectedFilter(
                     title: 'Assigned To',
-                    filterList: filterController.selectedAssignedByList,
+                    filterList: filterController.selectedAssignedToList,
                   )
                 : const SizedBox(),
             filterController.selectedFrequencyList.isNotEmpty
@@ -105,16 +109,19 @@ Future<Object?> showFilterBottomSheet({
                           ),
                         ),
                         SizedBox(height: 6.h),
-                        InkWell(
-                          onTap: () => filterController.selectFilterOption(
-                            key: 'assignedBy',
-                          ),
-                          child: filterItem(
-                            title: 'Assigned By',
-                            isActive: filterController
-                                .filterOptionSelectedMap['assignedBy']!,
-                          ),
-                        ),
+                        isAllTasks != true && isDelegated != true
+                            ? InkWell(
+                                onTap: () =>
+                                    filterController.selectFilterOption(
+                                  key: 'assignedBy',
+                                ),
+                                child: filterItem(
+                                  title: 'Assigned By',
+                                  isActive: filterController
+                                      .filterOptionSelectedMap['assignedBy']!,
+                                ),
+                              )
+                            : const SizedBox(),
                         isAllTasks == true || isDelegated == true
                             ? InkWell(
                                 onTap: () =>
@@ -188,64 +195,7 @@ Future<Object?> showFilterBottomSheet({
                                         : priorityFilterSegment(
                                             filterController: filterController,
                                           ),
-                        Container(
-                          height: 50.h,
-                          color: Colors.black26,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                //--------------------Reset Filter Button--------------------//
-                                InkWell(
-                                  borderRadius: BorderRadius.circular(12),
-                                  onTap: () {
-                                    filterController.resetFilters();
-                                  },
-                                  child: Container(
-                                    width: 100.w,
-                                    height: 38.h,
-                                    margin: EdgeInsets.only(
-                                      right: 14.w,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.grey.withOpacity(.2),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Reset',
-                                        style: TextStyle(
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                //--------------------Filter Button--------------------//
-                                Container(
-                                  width: 100.w,
-                                  height: 38.h,
-                                  margin: EdgeInsets.only(
-                                    right: 14.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: AppColor.themeGreen,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Filter',
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        filterResetSegment(filterController: filterController),
                       ],
                     ),
                   ),

@@ -42,7 +42,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
     assignedSearchController = TextEditingController();
-
+    getData();
     animateLottie();
     super.initState();
   }
@@ -50,18 +50,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   void animateLottie() async {
     animationCounter++;
     lottieController
-      ..reset()
+      ..reset
       ..forward();
-    if (animationCounter < 2) {
-      await Future.delayed(
-        const Duration(milliseconds: 1500),
-      );
-    } else {
-      await Future.delayed(
-        const Duration(seconds: 15),
-      );
-    }
-    getData();
+    await Future.delayed(
+      Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+    );
     animateLottie();
   }
 
@@ -85,7 +78,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     return Scaffold(
       appBar: myAppBar(
         context: context,
-        title: 'My Tasks',
+        title: 'Delegated Tasks',
         implyLeading: false,
         profileAvatar: true,
       ),
@@ -117,6 +110,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                       assignedSearchController: assignedSearchController,
                       userController: userController,
                       filterController: filterController,
+                      isDelegated: true,
                     ),
                   ),
                 ),
