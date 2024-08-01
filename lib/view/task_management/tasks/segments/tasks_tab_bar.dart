@@ -45,7 +45,7 @@ Widget tasksTabBar({
           Icon(
             Icons.circle,
             size: 20.sp,
-            color: Colors.red,
+            color: StatusIconColor.overdue,
           ),
           SizedBox(width: 2.w),
           Text(
@@ -61,7 +61,7 @@ Widget tasksTabBar({
           Icon(
             Icons.circle,
             size: 20.sp,
-            color: Colors.orange,
+            color: StatusIconColor.pending,
           ),
           SizedBox(width: 2.w),
           Text(
@@ -77,7 +77,7 @@ Widget tasksTabBar({
           Icon(
             Icons.incomplete_circle,
             size: 20.sp,
-            color: Colors.blue,
+            color: StatusIconColor.inProgress,
           ),
           SizedBox(width: 2.w),
           Text(
@@ -93,7 +93,7 @@ Widget tasksTabBar({
           Icon(
             Icons.check_circle,
             size: 20.sp,
-            color: AppColor.themeGreen,
+            color: StatusIconColor.completed,
           ),
           SizedBox(width: 2.w),
           Text(

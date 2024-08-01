@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
@@ -245,13 +244,13 @@ Widget taskCard({
                 cardActionButton(
                   title: 'In Progress',
                   icon: StatusIcons.inProgress,
-                  iconColor: Colors.blue,
+                  iconColor: StatusIconColor.inProgress,
                   onTap: () {},
                 ),
                 cardActionButton(
                   title: 'Complete',
                   icon: StatusIcons.completed,
-                  iconColor: AppColor.themeGreen,
+                  iconColor: StatusIconColor.completed,
                   onTap: () {},
                 ),
               ],

@@ -7,6 +7,11 @@ Widget cardActionButton({
   required IconData icon,
   required Color iconColor,
   required void Function()? onTap,
+  Color? containerColor,
+  double? containerWidth,
+  double? containerHeight,
+  double? iconSize,
+  double? textSize,
 }) {
   Color splashColor = AppColor.themeGreen;
 
@@ -32,10 +37,10 @@ Widget cardActionButton({
     splashColor: splashColor,
     onTap: onTap,
     child: Container(
-      width: 108.w,
-      height: 38.h,
+      width: containerWidth ?? 108.w,
+      height: containerHeight ?? 38.h,
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(.3),
+        color: containerColor ?? Colors.black.withOpacity(.3),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Center(
@@ -45,13 +50,13 @@ Widget cardActionButton({
             Icon(
               icon,
               color: iconColor,
-              size: 20.sp,
+              size: iconSize ?? 20.sp,
             ),
             SizedBox(width: 4.w),
             Text(
               title,
               style: TextStyle(
-                fontSize: 13.sp,
+                fontSize: textSize ?? 13.sp,
                 fontWeight: FontWeight.w600,
               ),
             ),

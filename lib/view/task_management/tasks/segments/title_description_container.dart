@@ -40,54 +40,84 @@ Widget titleDescriptionContainer({
           ),
         ),
         SizedBox(height: 10.h),
+        Text(
+          'Creation : Fri, 12 Jun 12:15 AM ',
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            fontSize: 14.w,
+            color: Colors.white70,
+          ),
+        ),
+        SizedBox(height: 8.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 195.w,
-              child: Text(
-                'Creation : Fri, 12 Jun 12:15 AM ',
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 13.w,
-                  color: Colors.white70,
-                ),
+              width: 72.w,
+              child: const Text(
+                'Due Date',
               ),
             ),
-            Row(
-              children: [
-                Icon(
-                  Icons.alarm,
-                  size: 17.sp,
-                  color: Colors.white70,
-                ),
-                SizedBox(width: 3.w),
-                Text(
-                  dueDateString,
-                  style: TextStyle(
-                    color:
-                        taskModel.isDelayed == true ? Colors.red : Colors.green,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+            const Text(':'),
+            SizedBox(width: 12.w),
+            Icon(
+              Icons.alarm,
+              size: 17.sp,
+              color: Colors.white70,
+            ),
+            SizedBox(width: 3.w),
+            Text(
+              dueDateString,
+              style: TextStyle(
+                color: taskModel.isDelayed == true ? Colors.red : Colors.green,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
-        SizedBox(height: 6.h),
+        SizedBox(height: 8.h),
         Row(
           children: [
-            const Text(
-              'Category : ',
+            SizedBox(
+              width: 72.w,
+              child: const Text(
+                'Category',
+              ),
             ),
-            SizedBox(width: 4.w),
+            const Text(':'),
+            SizedBox(width: 12.w),
             Text(
               taskModel.category.toString(),
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),
             )
+          ],
+        ),
+        SizedBox(height: 8.h),
+        Row(
+          children: [
+            SizedBox(
+              width: 72.w,
+              child: const Text(
+                'Priority',
+              ),
+            ),
+            const Text(':'),
+            SizedBox(width: 12.w),
+            Icon(
+              Icons.flag,
+              size: 18.sp,
+              color: priorityFlagColor,
+            ),
+            Text(
+              taskModel.priority.toString(),
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
         SizedBox(height: 12.h),
@@ -99,44 +129,16 @@ Widget titleDescriptionContainer({
         SizedBox(height: 14.h),
 
 //--------------------Description Segment--------------------//
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            taskModel.description != null && taskModel.description!.isNotEmpty
-                ? Text(
-                    'Description',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.white70,
-                      decoration: TextDecoration.underline,
-                    ),
-                  )
-                : const SizedBox(),
-            Row(
-              children: [
-                Icon(
-                  Icons.flag,
-                  size: 18.sp,
-                  color: priorityFlagColor,
+        taskModel.description != null && taskModel.description!.isNotEmpty
+            ? Text(
+                'Description',
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.white70,
+                  decoration: TextDecoration.underline,
                 ),
-                SizedBox(width: 2.w),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: 6.w,
-                  ),
-                  child: Text(
-                    taskModel.priority.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+              )
+            : const SizedBox(),
         SizedBox(height: 6.h),
         Text(
           taskModel.description.toString(),
