@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -41,7 +43,7 @@ class UserController extends GetxController {
     final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
     if (userModelResponseJson != null) {
       final userModelResponse =
-          UserModelResponse.fromJson(userModelResponseJson);
+          UserModelResponse.fromJson(jsonDecode(userModelResponseJson));
       return userModelResponse.user;
     } else {
       return null;

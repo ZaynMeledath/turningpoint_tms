@@ -196,6 +196,7 @@ Future<Object?> showFilterBottomSheet({
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
+                                //--------------------Reset Filter Button--------------------//
                                 InkWell(
                                   borderRadius: BorderRadius.circular(12),
                                   onTap: () {
@@ -221,6 +222,7 @@ Future<Object?> showFilterBottomSheet({
                                     ),
                                   ),
                                 ),
+                                //--------------------Filter Button--------------------//
                                 Container(
                                   width: 100.w,
                                   height: 38.h,

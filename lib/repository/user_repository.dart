@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
@@ -31,7 +33,7 @@ class UserRepository {
         isTokenRequired: false,
       );
 
-      addUserModelToHive(userModelResponseJson: response);
+      addUserModelToHive(userModelResponseJson: jsonEncode(response));
       return UserModelResponse.fromJson(response);
     } catch (e) {
       rethrow;
