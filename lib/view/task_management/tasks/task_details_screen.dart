@@ -85,6 +85,7 @@ class TaskDetailsScreen extends StatelessWidget {
                 children: [
                   taskDetailsAssignedContainer(
                     name: 'Zayn Meledath',
+                    email: taskModel.createdBy.toString(),
                     isAssignedBy: true,
                   ),
                   Icon(
@@ -93,6 +94,7 @@ class TaskDetailsScreen extends StatelessWidget {
                   ),
                   taskDetailsAssignedContainer(
                     name: 'Ajay',
+                    email: taskModel.assignedTo.toString(),
                     isAssignedBy: false,
                   ),
                 ],

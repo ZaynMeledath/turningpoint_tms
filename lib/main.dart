@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/firebase_options.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
@@ -13,6 +14,7 @@ import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppPreferences.init();
+  await Hive.initFlutter();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
@@ -38,20 +40,20 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
         ),
-        // home: authToken == null ? const LoginScreen() : const TasksHome(),
-        home: TaskDetailsScreen(
-          taskModel: TaskModel(
-            title: 'Task Title',
-            createdAt: '',
-            createdBy: 'Zayn Meledath',
-            assignedTo: 'Ajay',
-            priority: 'High',
-            category: 'Business',
-            description:
-                'This is the task description which can be as long as this to test the description alignment.',
-          ),
-          dueDateString: 'Fri, 12 JUN 12:15 PM',
-        ),
+        home: authToken == null ? const LoginScreen() : const TasksHome(),
+        // home: TaskDetailsScreen(
+        //   taskModel: TaskModel(
+        //     title: 'Task Title',
+        //     createdAt: '',
+        //     createdBy: 'Zayn Meledath',
+        //     assignedTo: 'Ajay',
+        //     priority: 'High',
+        //     category: 'Business',
+        //     description:
+        //         'This is the task description which can be as long as this to test the description alignment.',
+        //   ),
+        //   dueDateString: 'Fri, 12 JUN 12:15 PM',
+        // ),
       ),
     );
   }

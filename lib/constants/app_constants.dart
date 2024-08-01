@@ -6,3 +6,9 @@ class AppColor {
 
   static const textFieldColor = Color.fromRGBO(44, 50, 54, 1);
 }
+
+class AppConstants {
+  static const appDb = 'turningpoint_db';
+  static const userHiveBoxKey = 'user';
+  static const authTokenKey = 'auth_token';
+}

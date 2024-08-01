@@ -15,6 +15,8 @@ Widget taskCard({
 }) {
   Color priorityFlagColor = Colors.white.withOpacity(.9);
 
+  final isTaskCompleted = taskModel.status == Status.completed;
+
   final weekList = [
     'Mon',
     'Tue',
@@ -103,7 +105,7 @@ Widget taskCard({
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        width: 215.w,
+                        width: 210.w,
                         child: Text(
                           taskModel.title.toString(),
                           overflow: TextOverflow.ellipsis,
@@ -242,37 +244,42 @@ Widget taskCard({
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 cardActionButton(
-                  title: 'In Progress',
+                  title: isTaskCompleted ? 'Re Open' : 'In Progress',
                   icon: StatusIcons.inProgress,
-                  iconColor: StatusIconColor.inProgress,
+                  iconColor: isTaskCompleted
+                      ? StatusIconColor.pending
+                      : StatusIconColor.inProgress,
                   onTap: () {},
                 ),
                 cardActionButton(
-                  title: 'Complete',
-                  icon: StatusIcons.completed,
-                  iconColor: StatusIconColor.completed,
+                  title: isTaskCompleted ? 'Delete' : 'Complete',
+                  icon: isTaskCompleted ? Icons.delete : StatusIcons.completed,
+                  iconColor:
+                      isTaskCompleted ? Colors.red : StatusIconColor.completed,
                   onTap: () {},
                 ),
               ],
             ),
-            SizedBox(height: 9.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                cardActionButton(
-                  title: 'Edit',
-                  icon: Icons.edit,
-                  iconColor: Colors.blueGrey,
-                  onTap: () {},
-                ),
-                cardActionButton(
-                  title: 'Delete',
-                  icon: Icons.delete,
-                  iconColor: Colors.red,
-                  onTap: () {},
-                ),
-              ],
-            ),
+            SizedBox(height: isTaskCompleted ? 0 : 9.h),
+            isTaskCompleted
+                ? const SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      cardActionButton(
+                        title: 'Edit',
+                        icon: Icons.edit,
+                        iconColor: Colors.blueGrey,
+                        onTap: () {},
+                      ),
+                      cardActionButton(
+                        title: 'Delete',
+                        icon: Icons.delete,
+                        iconColor: Colors.red,
+                        onTap: () {},
+                      ),
+                    ],
+                  )
           ],
         ),
       ),

@@ -18,8 +18,10 @@ Widget taskTabBarView({
         itemCount: tasksList.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10.w,
+            padding: EdgeInsets.only(
+              left: 10.w,
+              right: 10.w,
+              bottom: 10.w,
             ),
             child: taskCard(
               lottieController: lottieController,

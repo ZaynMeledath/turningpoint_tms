@@ -2,6 +2,7 @@ part of '../task_details_screen.dart';
 
 Widget taskDetailsAssignedContainer({
   required String name,
+  required String email,
   required bool isAssignedBy,
 }) {
   final color =
@@ -75,7 +76,7 @@ Widget taskDetailsAssignedContainer({
           child: Center(
             child: Text(
               overflow: TextOverflow.ellipsis,
-              'zayn@turningpointvapi.com',
+              email,
               style: TextStyle(
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w600,

@@ -31,17 +31,18 @@ class UserModel {
   String? createdStamp;
   String? updatedStamp;
 
-  UserModel(
-      {this.id,
-      this.userName,
-      this.department,
-      this.emailID,
-      this.phone,
-      this.role,
-      this.password,
-      this.reportingTo,
-      this.createdStamp,
-      this.updatedStamp});
+  UserModel({
+    this.id,
+    this.userName,
+    this.department,
+    this.emailID,
+    this.phone,
+    this.role,
+    this.password,
+    this.reportingTo,
+    this.createdStamp,
+    this.updatedStamp,
+  });
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
