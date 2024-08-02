@@ -11,6 +11,7 @@ import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 part 'segments/team_card.dart';
 part 'segments/team_tab_bar.dart';
 part 'segments/team_card_action_button.dart';
+part 'segments/team_tab_bar_view.dart';
 
 class MyTeamScreen extends StatefulWidget {
   const MyTeamScreen({super.key});
@@ -50,9 +51,9 @@ class _MyTeamScreenState extends State<MyTeamScreen>
         body: Obx(
           () {
             final myTeamList = userController.myTeamList.value;
-            return CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
+            return NestedScrollView(
+              // physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 SliverAppBar(
                   pinned: true,
                   toolbarHeight: 50.h,
@@ -75,50 +76,39 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                     ],
                   ),
                 ),
-                userController.myTeamList.value != null &&
-                        userController.myTeamList.value!.isNotEmpty
-                    ? SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          childCount: myTeamList!.length,
-                          (context, index) => Padding(
-                            padding: EdgeInsets.only(
-                              left: 10.w,
-                              right: 10.w,
-                              bottom: 12.h,
-                            ),
-                            child: teamCard(allUsersModel: myTeamList[index])
-                                .animate()
-                                .slideX(
-                                  begin: index % 2 == 0 ? -.4 : .4,
-                                  duration: const Duration(milliseconds: 1000),
-                                  curve: Curves.elasticOut,
-                                ),
-                          ),
-                        ),
-                      )
-                    : const SliverList(
-                        delegate: SliverChildListDelegate.fixed(
-                          [
-                            SizedBox(),
-                          ],
-                        ),
-                      ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      SizedBox(height: 65.h),
-                    ],
-                  ),
-                ),
               ],
+              body: userController.myTeamList.value != null &&
+                      userController.myTeamList.value!.isNotEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 65.h,
+                      ),
+                      child: TabBarView(
+                        controller: tabController,
+                        children: [
+                          teamTabBarView(myTeamList: myTeamList!),
+                          teamTabBarView(
+                            myTeamList: myTeamList
+                                .where((element) => element.role == Role.admin)
+                                .toList(),
+                          ),
+                          teamTabBarView(
+                            myTeamList: myTeamList
+                                .where((element) =>
+                                    element.role == Role.teamLeader)
+                                .toList(),
+                          ),
+                          teamTabBarView(
+                            myTeamList: myTeamList
+                                .where((element) => element.role == Role.user)
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
             );
           },
-        )
-        // .animate().slideY(
-        //       begin: .2,
-        //       duration: const Duration(milliseconds: 1200),
-        //       curve: Curves.elasticOut,
-        //     ),
-        );
+        ));
   }
 }

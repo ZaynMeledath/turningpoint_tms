@@ -35,7 +35,7 @@ Widget teamTabBar({
         ),
       ),
       Text(
-        'Manager',
+        'Team Leader',
         style: TextStyle(
           fontSize: 16.sp,
         ),
