@@ -1,6 +1,10 @@
 part of '../assign_task_screen.dart';
 
-Widget swipeToAdd() {
+Widget swipeToAdd({
+  required TasksController tasksController,
+  required String taskTitle,
+  required String taskDescription,
+}) {
   return Container(
     height: 85.h,
     padding: EdgeInsets.symmetric(
@@ -22,8 +26,15 @@ Widget swipeToAdd() {
       ),
       elevation: 2,
       onSubmit: () async {
-        await Future.delayed(const Duration(milliseconds: 800));
-        Get.back();
+        try {
+          await tasksController.assignTask(
+            title: taskTitle,
+            description: taskDescription,
+          );
+          Get.back();
+        } catch (e) {
+          Get.back();
+        }
       },
     ),
   );

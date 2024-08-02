@@ -5,7 +5,7 @@ Widget attatchmentSegment() {
     children: [
       IconButton(
         onPressed: () async {
-          await showLinkDialog();
+          // await showLinkDialog();
         },
         icon: Icon(
           Icons.link,

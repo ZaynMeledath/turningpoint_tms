@@ -22,11 +22,13 @@ Widget nameLetterAvatar({
       color: backgroundColor ?? AppColor.themeGreen,
     ),
     child: Center(
-      child: Text(
-        firstLetter + secondLetter,
+      child: DefaultTextStyle(
         style: TextStyle(
           fontSize: circleDiameter != null ? circleDiameter * .375 : 15,
           fontWeight: FontWeight.w600,
+        ),
+        child: Text(
+          firstLetter + secondLetter,
         ),
       ),
     ),

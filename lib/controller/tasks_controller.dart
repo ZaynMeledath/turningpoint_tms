@@ -1,13 +1,20 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
+import 'package:turning_point_tasks_app/service/api/api_service.dart';
 
 class TasksController extends GetxController {
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
+
+  Rxn<String> assignTo = Rxn<String>();
+  Rxn<String> category = Rxn<String>();
 
   Rxn<List<TaskModel>?> pendingTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> inProgressTaskList = Rxn<List<TaskModel>>();
@@ -34,7 +41,7 @@ class TasksController extends GetxController {
   Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
 
 //====================Priority====================//
-  Rx<TaskPriority> taskPriority = TaskPriority.low.obs;
+  Rx<String> taskPriority = TaskPriority.low.obs;
 
 //====================Repeat Frequency Segment====================//
   RxBool shouldRepeatTask = false.obs;
@@ -183,6 +190,43 @@ class TasksController extends GetxController {
     }
   }
 
+//====================Assign Task====================//
+  Future<void> assignTask({
+    required String title,
+    required String description,
+    // required String category,
+    // required String assignTo,
+    // required String priority,
+    // required String dueDate,
+    // required String? reminderFrequency,
+    // required String? reminderStartDate,
+    // required String? repeatFrequency,
+    // required String? repeatUntil,
+    // required List<dynamic>? attachments,
+  }) async {
+    final dueDate = DateTime(
+      taskDate.value.year,
+      taskDate.value.month,
+      taskDate.value.day,
+      taskTime.value.hour,
+      taskTime.value.minute,
+    );
+    final dueDateString = dueDate.toUtc().toIso8601String();
+    await tasksRepository.assignTask(
+      title: title,
+      description: description,
+      category: category.value ?? '',
+      assignTo: assignTo.value ?? '',
+      priority: taskPriority.value,
+      dueDate: dueDateString,
+      reminderFrequency: null,
+      reminderStartDate: null,
+      repeatFrequency: null,
+      repeatUntil: null,
+      attachments: null,
+    );
+  }
+
 //====================Get All Users Performance====================//
   Future<void> getAllUsersPerformance() async {
     try {
@@ -211,10 +255,10 @@ enum RepeatFrequency {
   monthly,
 }
 
-enum TaskPriority {
-  low,
-  medium,
-  high,
+class TaskPriority {
+  static const low = 'Low';
+  static const medium = 'Medium';
+  static const high = 'High';
 }
 
 //====================create Date Map====================//

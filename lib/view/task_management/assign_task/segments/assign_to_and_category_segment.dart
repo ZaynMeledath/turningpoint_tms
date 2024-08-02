@@ -3,6 +3,11 @@ part of '../assign_task_screen.dart';
 Widget assignToAndCategorySegment({
   required TasksController tasksController,
 }) {
+  final userController = Get.put(UserController());
+  var allUsers = <AllUsersModel>[];
+  if (userController.myTeamList.value != null) {
+    allUsers = userController.myTeamList.value!;
+  }
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -13,13 +18,13 @@ Widget assignToAndCategorySegment({
           elevation: 2,
           isExpanded: true,
           hint: Text(
-            'Assign to',
+            tasksController.assignTo.value ?? 'Assign To',
             style: TextStyle(
               fontSize: 16.sp,
               color: Colors.white70,
             ),
           ),
-          value: tasksController.taskRepeatFrequency.value,
+          value: tasksController.assignTo.value,
           borderRadius: BorderRadius.circular(20),
           decoration: InputDecoration(
             filled: true,
@@ -41,35 +46,20 @@ Widget assignToAndCategorySegment({
             ),
           ),
           items: [
-            DropdownMenuItem(
-              value: RepeatFrequency.daily,
-              child: Text(
-                'Daily',
-                style: TextStyle(
-                  fontSize: 16.sp,
+            for (int i = 0; i < allUsers.length; i++)
+              DropdownMenuItem(
+                value: allUsers[i].userName,
+                child: Text(
+                  allUsers[i].userName.toString(),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
-            ),
-            DropdownMenuItem(
-              value: RepeatFrequency.weekly,
-              child: Text(
-                'Weekly',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
-            DropdownMenuItem(
-              value: RepeatFrequency.monthly,
-              child: Text(
-                'Monthly',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
           ],
-          onChanged: tasksController.repeatFrequencyOnChanged,
+          onChanged: (value) {
+            tasksController.assignTo.value = value.toString();
+          },
         ),
       ),
 
@@ -108,35 +98,20 @@ Widget assignToAndCategorySegment({
             ),
           ),
           items: [
-            DropdownMenuItem(
-              value: RepeatFrequency.daily,
-              child: Text(
-                'Daily',
-                style: TextStyle(
-                  fontSize: 16.sp,
+            for (int i = 0; i < categoriesList.length; i++)
+              DropdownMenuItem(
+                value: categoriesList[i],
+                child: Text(
+                  categoriesList[i].toString(),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
-            ),
-            DropdownMenuItem(
-              value: RepeatFrequency.weekly,
-              child: Text(
-                'Weekly',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
-            DropdownMenuItem(
-              value: RepeatFrequency.monthly,
-              child: Text(
-                'Monthly',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                ),
-              ),
-            ),
           ],
-          onChanged: tasksController.repeatFrequencyOnChanged,
+          onChanged: (value) {
+            tasksController.category.value = value.toString();
+          },
         ),
       ),
     ],

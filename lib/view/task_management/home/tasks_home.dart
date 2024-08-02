@@ -19,7 +19,7 @@ class TasksHome extends StatefulWidget {
 }
 
 class _TasksHomeState extends State<TasksHome> {
-  int activeIndex = 0;
+  int activeIndex = 3;
 
   final tasksController = Get.put(TasksController());
   final userController = Get.put(UserController());

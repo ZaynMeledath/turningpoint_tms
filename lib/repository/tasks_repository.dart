@@ -37,18 +37,19 @@ class TasksRepository {
   }
 
 //====================Assign Task====================//
-  Future<void> assignTask(
-      {required String title,
-      required String description,
-      required String category,
-      required String assignTo,
-      required String priority,
-      required String dueDate,
-      required String? reminderFrequency,
-      required String? reminderStartDate,
-      required String? repeatFrequency,
-      required String? repeatUntil,
-      required List<dynamic>? attachments}) async {
+  Future<void> assignTask({
+    required String title,
+    required String description,
+    required String category,
+    required String assignTo,
+    required String priority,
+    required String dueDate,
+    required String? reminderFrequency,
+    required String? reminderStartDate,
+    required String? repeatFrequency,
+    required String? repeatUntil,
+    required List<dynamic>? attachments,
+  }) async {
     await ApiService().sendRequest(
       url: ApiEndpoints.assignTask,
       requestMethod: RequestMethod.POST,

@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 
 final categoriesList = [
-  'Marketing',
+  'IT',
+  'Finance',
+  'Admin',
+  'HR',
   'Sales',
-  'HR/Admin',
 ];
 
 final assignedMap = {
