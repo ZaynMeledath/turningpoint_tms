@@ -93,13 +93,13 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
             final pendingDelegatedTasksList =
-                tasksController.pendingDelegatedTaskList.toList();
+                tasksController.pendingDelegatedTaskList.value;
             final inProgressDelegatedTasksList =
-                tasksController.inProgressDelegatedTaskList.toList();
+                tasksController.inProgressDelegatedTaskList.value;
             final completedDelegatedTasksList =
-                tasksController.completedDelegatedTaskList.toList();
+                tasksController.completedDelegatedTaskList.value;
             final overdueDelegatedTasksList =
-                tasksController.overdueDelegatedTaskList.toList();
+                tasksController.overdueDelegatedTaskList.value;
             return NestedScrollView(
               // physics: const BouncingScrollPhysics(),
               headerSliverBuilder: (context, innerBoxIsScrolled) {

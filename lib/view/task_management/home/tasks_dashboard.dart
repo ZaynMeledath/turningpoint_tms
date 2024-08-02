@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 
 part 'segments/dashboard_status_overview_container.dart';
 part 'segments/dashboard_status_overview_section.dart';
+part 'segments/dashboard_tab_bar.dart';
 
-class TasksDashboard extends StatelessWidget {
+class TasksDashboard extends StatefulWidget {
   const TasksDashboard({super.key});
+
+  @override
+  State<TasksDashboard> createState() => _TasksDashboardState();
+}
+
+class _TasksDashboardState extends State<TasksDashboard>
+    with SingleTickerProviderStateMixin {
+  final tasksController = Get.put(TasksController());
+  late final TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(
+      length: 2,
+      vsync: this,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,58 +46,35 @@ class TasksDashboard extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 10.h),
-            dashboardStatusOverviewSection(),
+            dashboardStatusOverviewSection(tasksController: tasksController),
+            SizedBox(height: 18.h),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 14.w),
+                child: Text(
+                  'Report',
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 9.h),
+            dashboardTabBar(tabController: tabController),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: const [
+                  Text('Demo'),
+                  Text('Demo'),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-// SizedBox(
-//               height: 400,
-//               child: BarChart(
-//                 BarChartData(
-//                   gridData: const FlGridData(
-//                     drawHorizontalLine: false,
-//                     drawVerticalLine: false,
-//                   ),
-//                   maxY: 16,
-//                   borderData: FlBorderData(
-//                     border: Border.all(
-//                       color: Colors.transparent,
-//                     ),
-//                   ),
-//                   titlesData: const FlTitlesData(
-//                     leftTitles: AxisTitles(),
-//                     rightTitles: AxisTitles(),
-//                     topTitles: AxisTitles(),
-//                   ),
-//                   barGroups: [
-//                     BarChartGroupData(
-//                       x: 1,
-//                       barRods: [
-//                         BarChartRodData(
-//                           toY: 9,
-//                           fromY: 0,
-//                           width: 15,
-//                           color: Colors.blue,
-//                         ),
-//                         BarChartRodData(
-//                           toY: 8,
-//                           fromY: 0,
-//                           width: 15,
-//                           color: Colors.orange,
-//                         ),
-//                         BarChartRodData(
-//                           toY: 6,
-//                           fromY: 0,
-//                           width: 15,
-//                           color: AppColor.themeGreen,
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),

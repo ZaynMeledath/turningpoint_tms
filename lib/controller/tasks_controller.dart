@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
@@ -13,12 +14,20 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> completedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> overdueTaskList = Rxn<List<TaskModel>>();
 
-  final pendingDelegatedTaskList = <TaskModel>[].obs;
-  final inProgressDelegatedTaskList = <TaskModel>[].obs;
-  final completedDelegatedTaskList = <TaskModel>[].obs;
-  final overdueDelegatedTaskList = <TaskModel>[].obs;
+  Rxn<List<TaskModel>?> pendingDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> inProgressDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> completedDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> overdueDelegatedTaskList = Rxn<List<TaskModel>>();
+
+  final completedOnTimeMyTasksList = <TaskModel>[].obs;
+  final completedDelayedMyTasksList = <TaskModel>[].obs;
+  final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;
+  final completedDelayedDelegatedTasksList = <TaskModel>[].obs;
 
   final tasksRepository = TasksRepository();
+
+  Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
+      Rxn<List<AllUsersPerformanceModel>>();
 
 //====================Date and Time====================//
   Rx<DateTime> taskDate = DateTime.now().obs;
@@ -124,6 +133,17 @@ class TasksController extends GetxController {
           .where((item) =>
               item.isDelayed == true && item.status != Status.completed)
           .toList();
+
+      completedOnTimeMyTasksList.value = myTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed != true)
+          .toList();
+      completedDelayedMyTasksList.value = myTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed == true)
+          .toList();
     } catch (e) {
       rethrow;
     }
@@ -147,6 +167,27 @@ class TasksController extends GetxController {
           .where((item) =>
               item.isDelayed == true && item.status != Status.completed)
           .toList();
+
+      completedOnTimeDelegatedTasksList.value = delegatedTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed != true)
+          .toList();
+      completedDelayedDelegatedTasksList.value = delegatedTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed == true)
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get All Users Performance====================//
+  Future<void> getAllUsersPerformance() async {
+    try {
+      allUsersPerformanceModelList.value =
+          await tasksRepository.getAllUsersPerformanceReport();
     } catch (e) {
       rethrow;
     }
