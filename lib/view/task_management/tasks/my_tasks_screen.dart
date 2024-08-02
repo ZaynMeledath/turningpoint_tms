@@ -53,19 +53,23 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   }
 
   void animateLottie() async {
-    animationCounter++;
-    lottieController
-      ..reset()
-      ..forward();
-    await Future.delayed(
-      Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
-    );
-    animateLottie();
+    try {
+      animationCounter++;
+      lottieController
+        ..reset()
+        ..forward();
+      await Future.delayed(
+        Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+      );
+      animateLottie();
+    } catch (e) {
+      animateLottie();
+    }
   }
 
   @override
   void dispose() {
-    lottieController.dispose();
+    // lottieController.dispose();
     taskSearchController.dispose();
     categorySearchController.dispose();
     assignedSearchController.dispose();
@@ -75,85 +79,91 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar(
-        context: context,
-        title: 'My Tasks',
-        implyLeading: false,
-        profileAvatar: true,
-      ),
-      body: Obx(
-        () {
-          final allTasksList = tasksController.myTasksListObs.value;
-          final pendingTasksList = tasksController.pendingTaskList.value;
-          final inProgressTasksList = tasksController.inProgressTaskList.value;
-          final completedTasksList = tasksController.completedTaskList.value;
-          final overdueTasksList = tasksController.overdueTaskList.value;
-          return NestedScrollView(
-            // physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  expandedHeight: 70.h,
-                  backgroundColor: Colors.transparent,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: filterSection(
-                      taskSearchController: taskSearchController,
-                      categorySearchController: categorySearchController,
-                      assignedSearchController: assignedSearchController,
-                      userController: userController,
-                      filterController: filterController,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: myAppBar(
+          context: context,
+          title: 'My Tasks',
+          implyLeading: false,
+          profileAvatar: true,
+        ),
+        body: Obx(
+          () {
+            final allTasksList = tasksController.myTasksListObs.value;
+            final pendingTasksList = tasksController.pendingTaskList.value;
+            final inProgressTasksList =
+                tasksController.inProgressTaskList.value;
+            final completedTasksList = tasksController.completedTaskList.value;
+            final overdueTasksList = tasksController.overdueTaskList.value;
+            return NestedScrollView(
+              // physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    expandedHeight: 70.h,
+                    backgroundColor: Colors.transparent,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: filterSection(
+                        taskSearchController: taskSearchController,
+                        categorySearchController: categorySearchController,
+                        assignedSearchController: assignedSearchController,
+                        userController: userController,
+                        filterController: filterController,
+                      ),
                     ),
                   ),
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    toolbarHeight: 50.h,
+                    pinned: true,
+                    backgroundColor: AppColor.scaffoldBackgroundColor,
+                    surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: tasksTabBar(tabController: tabController),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      SizedBox(height: 10.h),
+                    ]),
+                  ),
+                ];
+              },
+              body: Padding(
+                padding: EdgeInsets.only(bottom: 65.h),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    taskTabBarView(
+                      tasksList: allTasksList,
+                      lottieController: lottieController,
+                    ),
+                    taskTabBarView(
+                      tasksList: overdueTasksList,
+                      lottieController: lottieController,
+                    ),
+                    taskTabBarView(
+                      tasksList: pendingTasksList,
+                      lottieController: lottieController,
+                    ),
+                    taskTabBarView(
+                      tasksList: inProgressTasksList,
+                      lottieController: lottieController,
+                    ),
+                    taskTabBarView(
+                      tasksList: completedTasksList,
+                      lottieController: lottieController,
+                    ),
+                  ],
                 ),
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  toolbarHeight: 50.h,
-                  pinned: true,
-                  backgroundColor: AppColor.scaffoldBackgroundColor,
-                  surfaceTintColor: AppColor.scaffoldBackgroundColor,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: tasksTabBar(tabController: tabController),
-                  ),
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    SizedBox(height: 10.h),
-                  ]),
-                ),
-              ];
-            },
-            body: Padding(
-              padding: EdgeInsets.only(bottom: 65.h),
-              child: TabBarView(
-                controller: tabController,
-                children: [
-                  taskTabBarView(
-                    tasksList: allTasksList,
-                    lottieController: lottieController,
-                  ),
-                  taskTabBarView(
-                    tasksList: overdueTasksList,
-                    lottieController: lottieController,
-                  ),
-                  taskTabBarView(
-                    tasksList: pendingTasksList,
-                    lottieController: lottieController,
-                  ),
-                  taskTabBarView(
-                    tasksList: inProgressTasksList,
-                    lottieController: lottieController,
-                  ),
-                  taskTabBarView(
-                    tasksList: completedTasksList,
-                    lottieController: lottieController,
-                  ),
-                ],
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
 import 'package:turning_point_tasks_app/service/api/api_service.dart';
@@ -35,6 +36,25 @@ class UserRepository {
 
       addUserModelToHive(userModelResponseJson: jsonEncode(response));
       return UserModelResponse.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get All Team Members====================//
+  static Future<List<AllUsersModel>?> getAllTeamMembers() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.getAllTeamMembers,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final allUsersModelResponse = AllUsersModelResponse.fromJson(response);
+
+      return allUsersModelResponse.users;
     } catch (e) {
       rethrow;
     }

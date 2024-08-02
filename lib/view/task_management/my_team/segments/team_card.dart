@@ -1,6 +1,10 @@
 part of '../my_team_screen.dart';
 
-Widget teamCard() {
+Widget teamCard({
+  required AllUsersModel allUsersModel,
+}) {
+  final userController = Get.put(UserController());
+  final userModel = userController.getUserModelFromHive();
   return Container(
     padding: EdgeInsets.symmetric(
       horizontal: 14.w,
@@ -29,13 +33,13 @@ Widget teamCard() {
             Row(
               children: [
                 nameLetterAvatar(
-                  name: 'Zayn Meledath',
+                  name: allUsersModel.userName.toString(),
                   circleDiameter: 34,
                   backgroundColor: Colors.blue,
                 ),
                 SizedBox(width: 8.w),
                 Text(
-                  'Zayn Meledath',
+                  allUsersModel.userName.toString(),
                   style: TextStyle(
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w600,
@@ -54,7 +58,7 @@ Widget teamCard() {
               ),
               child: Center(
                 child: Text(
-                  'Admin',
+                  allUsersModel.role.toString(),
                   style: TextStyle(
                     fontSize: 13.sp,
                   ),
@@ -73,7 +77,7 @@ Widget teamCard() {
             ),
             SizedBox(width: 6.w),
             Text(
-              'zayn@turningpointvapi.com',
+              allUsersModel.emailId.toString(),
               style: TextStyle(
                 fontSize: 14.5.sp,
                 color: Colors.white60,
@@ -91,7 +95,7 @@ Widget teamCard() {
             ),
             SizedBox(width: 6.w),
             Text(
-              '+91 8289899007',
+              '+91 ${allUsersModel.phone}',
               style: TextStyle(
                 fontSize: 14.5.sp,
                 color: Colors.white60,
@@ -109,7 +113,10 @@ Widget teamCard() {
             ),
             SizedBox(width: 6.w),
             Text(
-              'Nilesh Gala',
+              allUsersModel.reportingTo != null &&
+                      allUsersModel.reportingTo!.isNotEmpty
+                  ? allUsersModel.reportingTo.toString()
+                  : '-',
               style: TextStyle(
                 fontSize: 14.5.sp,
                 color: Colors.white60,
@@ -118,28 +125,26 @@ Widget teamCard() {
           ],
         ),
         SizedBox(height: 15.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            teamCardActionButton(
-              icon: Icons.edit,
-              title: 'Edit',
-              iconColor: Colors.blue,
-              onTap: () {
-                final userBox = Hive.box(AppConstants.appDb);
-                final userModel = userBox.get(AppConstants.userModelStorageKey);
-                print(userModel.toString());
-              },
-            ),
-            SizedBox(width: 30.w),
-            teamCardActionButton(
-              icon: Icons.delete,
-              title: 'Delete',
-              iconColor: Colors.red,
-              onTap: () {},
-            ),
-          ],
-        ),
+        userModel?.role == Role.admin || userModel?.role == Role.teamLeader
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  teamCardActionButton(
+                    icon: Icons.edit,
+                    title: 'Edit',
+                    iconColor: Colors.blue,
+                    onTap: () {},
+                  ),
+                  SizedBox(width: 30.w),
+                  teamCardActionButton(
+                    icon: Icons.delete,
+                    title: 'Delete',
+                    iconColor: Colors.red,
+                    onTap: () {},
+                  ),
+                ],
+              )
+            : const SizedBox(),
       ],
     ),
   );

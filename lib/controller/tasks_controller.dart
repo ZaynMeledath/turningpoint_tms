@@ -151,9 +151,16 @@ class TasksController extends GetxController {
       rethrow;
     }
   }
-}
 
-// final tasksController = Get.put(TasksController());
+//====================Filter Tasks List====================//
+  // void filterList({required List<TaskModel> list}) {
+  //   final filteredList = list.where(
+  //     (element) {
+  //       element.category =
+  //     },
+  //   );
+  // }
+}
 
 //====================ENUMS====================//
 enum RepeatFrequency {

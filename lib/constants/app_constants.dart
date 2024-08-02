@@ -12,3 +12,9 @@ class AppConstants {
   static const userModelStorageKey = 'user';
   static const authTokenKey = 'auth_token';
 }
+
+class Role {
+  static const admin = 'Admin';
+  static const teamLeader = 'TeamLeader';
+  static const user = 'User';
+}
