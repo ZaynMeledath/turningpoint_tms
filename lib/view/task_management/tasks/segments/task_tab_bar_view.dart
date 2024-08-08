@@ -2,15 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
+import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
 
 Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
 }) {
+  final tasksController = Get.put(TasksController());
+
+  if (tasksController.tasksException.value != null) {
+    return Column(
+      children: [
+        SizedBox(height: 60.h),
+        serverErrorWidget(onRefresh: () {}),
+      ],
+    );
+  }
+
   if (tasksList != null && tasksList.isNotEmpty) {
     return ListView.builder(
         physics: const BouncingScrollPhysics(),

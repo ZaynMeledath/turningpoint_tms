@@ -27,6 +27,8 @@ class TasksController extends GetxController {
   final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;
   final completedDelayedDelegatedTasksList = <TaskModel>[].obs;
 
+  final tasksException = Rxn<Exception>();
+
   final tasksRepository = TasksRepository();
 
   Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
@@ -123,6 +125,7 @@ class TasksController extends GetxController {
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
     try {
+      tasksException.value = null;
       myTasksListObs.value = await tasksRepository.getMyTasks();
       pendingTaskList.value =
           myTasksListObs.value!.where((item) => item.status == 'Open').toList();
@@ -148,13 +151,14 @@ class TasksController extends GetxController {
               taskModel.isDelayed == true)
           .toList();
     } catch (e) {
-      rethrow;
+      tasksException.value = e as Exception;
     }
   }
 
 //====================Get Delegated Tasks====================//
   Future<void> getDelegatedTasks() async {
     try {
+      tasksException.value = null;
       delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
 
       pendingDelegatedTaskList.value = delegatedTasksListObs.value!
@@ -182,7 +186,8 @@ class TasksController extends GetxController {
               taskModel.isDelayed == true)
           .toList();
     } catch (e) {
-      rethrow;
+      tasksException.value = e as Exception;
+      return;
     }
   }
 
