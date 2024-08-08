@@ -49,7 +49,11 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   }
 
   Future<void> getData() async {
-    await tasksController.getMyTasks();
+    try {
+      await tasksController.getMyTasks();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void animateLottie() async {

@@ -129,16 +129,18 @@ class ApiService {
     } on UnauthenticatedException {
       token = null;
       sendUserToLoginScreen();
-    } on CustomException {
+    }
+    // on CustomException {
+    //   rethrow;
+    // } on NotFoundException {
+    //   rethrow;
+    // } on ProfileInactiveException {
+    //   rethrow;
+    // } on BadRequestException {
+    //   rethrow;
+    // }
+    catch (e) {
       rethrow;
-    } on NotFoundException {
-      rethrow;
-    } on ProfileInactiveException {
-      rethrow;
-    } on BadRequestException {
-      rethrow;
-    } catch (e) {
-      throw Exception(e);
     }
     return responseJson;
   }

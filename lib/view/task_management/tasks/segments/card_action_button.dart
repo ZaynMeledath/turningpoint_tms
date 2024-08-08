@@ -28,6 +28,10 @@ Widget cardActionButton({
       splashColor = Colors.red;
       break;
 
+    case 'Re Open':
+      splashColor = Colors.orange;
+      break;
+
     default:
       break;
   }

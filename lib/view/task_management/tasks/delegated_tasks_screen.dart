@@ -63,7 +63,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   }
 
   Future<void> getData() async {
-    await tasksController.getDelegatedTasks();
+    try {
+      await tasksController.getDelegatedTasks();
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override

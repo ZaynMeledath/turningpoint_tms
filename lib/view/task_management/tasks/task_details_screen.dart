@@ -85,7 +85,10 @@ class TaskDetailsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   taskDetailsAssignedContainer(
-                    name: 'Zayn Meledath',
+                    name: taskModel.createdBy
+                        .toString()
+                        .split('@')[0]
+                        .toUpperCase(),
                     email: taskModel.createdBy.toString(),
                     isAssignedBy: true,
                   ),
@@ -94,7 +97,10 @@ class TaskDetailsScreen extends StatelessWidget {
                     size: 28.w,
                   ),
                   taskDetailsAssignedContainer(
-                    name: 'Ajay',
+                    name: taskModel.assignedTo
+                        .toString()
+                        .split('@')[0]
+                        .toUpperCase(),
                     email: taskModel.assignedTo.toString(),
                     isAssignedBy: false,
                   ),

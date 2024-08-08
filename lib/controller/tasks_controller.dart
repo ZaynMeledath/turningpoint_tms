@@ -1,13 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
-import 'package:turning_point_tasks_app/service/api/api_service.dart';
 
 class TasksController extends GetxController {
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
