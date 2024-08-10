@@ -149,22 +149,27 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                     taskTabBarView(
                       tasksList: allDelegatedTasksList,
                       lottieController: lottieController,
+                      isDelegated: true,
                     ),
                     taskTabBarView(
                       tasksList: overdueDelegatedTasksList,
                       lottieController: lottieController,
+                      isDelegated: true,
                     ),
                     taskTabBarView(
                       tasksList: pendingDelegatedTasksList,
                       lottieController: lottieController,
+                      isDelegated: true,
                     ),
                     taskTabBarView(
                       tasksList: inProgressDelegatedTasksList,
                       lottieController: lottieController,
+                      isDelegated: true,
                     ),
                     taskTabBarView(
                       tasksList: completedDelegatedTasksList,
                       lottieController: lottieController,
+                      isDelegated: true,
                     ),
                   ],
                 ),

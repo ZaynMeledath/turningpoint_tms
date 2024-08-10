@@ -100,7 +100,7 @@ Widget taskCard({
               children: [
 //--------------------Name and details column--------------------//
                 SizedBox(
-                  width: 215.w,
+                  width: 208.w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -119,7 +119,7 @@ Widget taskCard({
                       Text.rich(
                         overflow: TextOverflow.ellipsis,
                         TextSpan(
-                          text: isDelegated ? 'Assigned To' : 'Assigned By ',
+                          text: isDelegated ? 'Assigned To ' : 'Assigned By ',
                           style: TextStyle(
                             color: Colors.white.withOpacity(.6),
                           ),

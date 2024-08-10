@@ -13,6 +13,7 @@ import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task
 Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
+  bool isDelegated = false,
 }) {
   final tasksController = Get.put(TasksController());
 
@@ -40,7 +41,7 @@ Widget taskTabBarView({
             child: taskCard(
               lottieController: lottieController,
               taskModel: tasksList[index],
-              isDelegated: false,
+              isDelegated: isDelegated,
             ).animate().slideX(
                   begin: index.isEven ? -.4 : .4,
                   duration: const Duration(milliseconds: 1000),

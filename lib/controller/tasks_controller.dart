@@ -216,8 +216,8 @@ class TasksController extends GetxController {
     await tasksRepository.assignTask(
       title: title,
       description: description,
-      category: category.value ?? '',
-      assignTo: assignTo.value ?? '',
+      category: category.value ?? 'Category',
+      assignTo: assignTo.value ?? 'zayn@turningpointvapi.com',
       priority: taskPriority.value,
       dueDate: dueDateString,
       reminderFrequency: null,
