@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
@@ -12,6 +13,8 @@ Widget assignedFilterSegment({
   required FilterController filterController,
   required bool isAssignedBy,
 }) {
+  final userController = Get.put(UserController());
+  final allUsers = userController.myTeamList.value;
   return Expanded(
     child: Column(
       children: [
@@ -36,14 +39,16 @@ Widget assignedFilterSegment({
         SizedBox(height: 4.h),
         Expanded(
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: allUsers?.length ?? 0,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              final name = assignedMap.keys.elementAt(index);
-              final email = assignedMap.values.elementAt(index);
+              final name =
+                  userController.myTeamList.value?[index].userName ?? '';
+              final email =
+                  userController.myTeamList.value?[index].emailId ?? '';
               return InkWell(
                 onTap: () {
                   if (isAssignedBy) {

@@ -45,10 +45,10 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   void getData() async {
+    await userController.getAllTeamMembers();
     await tasksController.getMyTasks();
     await tasksController.getDelegatedTasks();
     await tasksController.getAllUsersPerformance();
-    await userController.getAllTeamMembers();
   }
 
   @override

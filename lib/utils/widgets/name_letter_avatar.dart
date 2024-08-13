@@ -7,8 +7,12 @@ Widget nameLetterAvatar({
   Color? backgroundColor,
   double? circleDiameter,
 }) {
-  final firstName = name.split(' ').first;
-  final lastName = name.split(' ').last;
+  final nameSplitArray = name.split(' ');
+  final firstName = nameSplitArray.first;
+  String lastName = nameSplitArray.last;
+  if (nameSplitArray.length > 1) {
+    lastName = nameSplitArray[1];
+  }
   final firstLetter = firstName.characters.first.toUpperCase();
   final secondLetter = firstName == lastName
       ? lastName.characters.elementAt(1).toUpperCase()

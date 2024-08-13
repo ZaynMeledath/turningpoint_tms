@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/all_users_model.dart';
 
 final categoriesList = [
   'IT',
@@ -7,12 +9,6 @@ final categoriesList = [
   'HR',
   'Sales',
 ];
-
-final assignedMap = {
-  'Zayn': 'zayn@turningpointvapi.com',
-  'Ajay': 'ajay@turningpointvapi.com',
-  'Tanya': 'tanya@turningpointvapi.com',
-};
 
 final priorityList = ['High', 'Medium', 'Low'];
 
@@ -33,11 +29,13 @@ class FilterController extends GetxController {
       {for (String element in categoriesList) element.toString(): false}.obs;
 
   final RxMap<String, bool> assignedByFilterModel = {
-    for (String element in assignedMap.values) element.toString(): false
+    for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+      element.emailId.toString(): false
   }.obs;
 
   final RxMap<String, bool> assignedToFilterModel = {
-    for (String element in assignedMap.values) element.toString(): false
+    for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+      element.emailId.toString(): false
   }.obs;
 
   final RxMap<String, bool> frequencyFilterModel =
@@ -130,12 +128,14 @@ class FilterController extends GetxController {
     };
 
     assignedByFilterModel.value = {
-      for (String element in assignedMap.values) element.toString(): false
-    };
+      for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+        element.emailId.toString(): false
+    }.obs;
 
     assignedToFilterModel.value = {
-      for (String element in assignedMap.values) element.toString(): false
-    };
+      for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+        element.emailId.toString(): false
+    }.obs;
 
     frequencyFilterModel.value = {
       for (String element in frequencyList) element.toString(): false
