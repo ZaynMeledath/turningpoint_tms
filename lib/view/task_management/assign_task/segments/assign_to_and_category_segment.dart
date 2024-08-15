@@ -4,9 +4,9 @@ Widget assignToAndCategorySegment({
   required TasksController tasksController,
 }) {
   final userController = Get.put(UserController());
-  var allUsers = <AllUsersModel>[];
+  var allUsersModelList = <AllUsersModel>[];
   if (userController.myTeamList.value != null) {
-    allUsers = userController.myTeamList.value!;
+    allUsersModelList = userController.myTeamList.value!;
   }
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

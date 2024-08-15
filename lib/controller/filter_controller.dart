@@ -25,30 +25,44 @@ class FilterController extends GetxController {
 
   String selectedFilterOptionKey = 'category';
 
-  final RxMap<String, bool> categoryFilterModel =
-      {for (String element in categoriesList) element.toString(): false}.obs;
-
-  final RxMap<String, bool> assignedByFilterModel = {
-    for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
-      element.emailId.toString(): false
-  }.obs;
-
-  final RxMap<String, bool> assignedToFilterModel = {
-    for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
-      element.emailId.toString(): false
-  }.obs;
-
-  final RxMap<String, bool> frequencyFilterModel =
-      {for (String element in frequencyList) element.toString(): false}.obs;
-
-  final RxMap<String, bool> priorityFilterModel =
-      {for (String element in priorityList) element.toString(): false}.obs;
+  final RxMap<String, bool> categoryFilterModel = <String, bool>{}.obs;
+  final RxMap<String, bool> assignedByFilterModel = <String, bool>{}.obs;
+  final RxMap<String, bool> assignedToFilterModel = <String, bool>{}.obs;
+  final RxMap<String, bool> frequencyFilterModel = <String, bool>{}.obs;
+  final RxMap<String, bool> priorityFilterModel = <String, bool>{}.obs;
 
   final RxList selectedCategoryList = [].obs;
   final RxList selectedAssignedByList = [].obs;
   final RxList selectedAssignedToList = [].obs;
   final RxList selectedFrequencyList = [].obs;
   final RxList selectedPriorityList = [].obs;
+
+  void assignValuesToModels() {
+    final userController = Get.put(UserController());
+    categoryFilterModel.value = {
+      for (String element in categoriesList) element.toString(): false
+    };
+
+    if (userController.myTeamList.value != null) {
+      assignedByFilterModel.value = {
+        for (AllUsersModel element in userController.myTeamList.value!)
+          element.emailId.toString(): false
+      };
+
+      assignedToFilterModel.value = {
+        for (AllUsersModel element in userController.myTeamList.value!)
+          element.emailId.toString(): false
+      };
+    }
+
+    frequencyFilterModel.value = {
+      for (String element in frequencyList) element.toString(): false
+    };
+
+    priorityFilterModel.value = {
+      for (String element in priorityList) element.toString(): false
+    };
+  }
 
 //====================Select Filter ====================//
   void selectFilterOption({required String key}) {

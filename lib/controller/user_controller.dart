@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/exception/user_exceptions.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
@@ -13,6 +14,7 @@ import 'package:turning_point_tasks_app/repository/user_repository.dart';
 class UserController extends GetxController {
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
+  final filterController = Get.put(FilterController());
 
 //====================User Login====================//
   Future<void> login({
@@ -56,6 +58,7 @@ class UserController extends GetxController {
   Future<void> getAllTeamMembers() async {
     try {
       myTeamList.value = await UserRepository.getAllTeamMembers();
+      filterController.assignValuesToModels();
     } catch (e) {
       rethrow;
     }

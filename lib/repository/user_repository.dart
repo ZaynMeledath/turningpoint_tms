@@ -28,7 +28,7 @@ class UserRepository {
         data: {
           'emailID': email,
           'password': password,
-          'fcmToken': fcmToken,
+          // 'fcmToken': fcmToken,
         },
         fieldNameForFiles: null,
         isTokenRequired: false,

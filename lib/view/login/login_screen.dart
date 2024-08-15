@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +11,7 @@ import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 part '../../utils/widgets/custom_text_field.dart';
 part '../../utils/widgets/custom_button.dart';
@@ -126,7 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 20.h),
                     GestureDetector(
                       onTap: () async {
+                        log('BUTTON PRESSED');
                         try {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: SpinKitWave(
+                                    color: Colors.white,
+                                    size: 30.sp,
+                                  ),
+                                );
+                              });
                           await userController.login(
                             email: emailController.text.trim(),
                             password: passwordController.text.trim(),
