@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/view/register/register_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   final userController = UserController();
+  final appController = Get.put(AppController());
 
   @override
   void initState() {
@@ -127,42 +129,49 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(height: 20.h),
-                    GestureDetector(
-                      onTap: () async {
-                        log('BUTTON PRESSED');
-                        try {
-                          showDialog(
-                              barrierDismissible: false,
+                    Obx(
+                      () => GestureDetector(
+                        onTap: () async {
+                          log('BUTTON PRESSED');
+                          appController.isLoadingObs.value = true;
+                          try {
+                            // showDialog(
+                            //     barrierDismissible: false,
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return Center(
+                            //         child: SpinKitWave(
+                            //           color: Colors.white,
+                            //           size: 30.sp,
+                            //         ),
+                            //       );
+                            //     });
+                            await userController.login(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                            appController.isLoadingObs.value = false;
+                            Get.offAll(
+                              () => const TasksHome(),
+                            );
+                          } catch (e) {
+                            showDialog(
                               context: context,
-                              builder: (context) {
-                                return Center(
-                                  child: SpinKitWave(
-                                    color: Colors.white,
-                                    size: 30.sp,
-                                  ),
-                                );
-                              });
-                          await userController.login(
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                          );
-                          Get.offAll(
-                            () => const TasksHome(),
-                          );
-                        } catch (e) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const AlertDialog(
-                              title: Text('Error'),
-                              content: Text('Something Went Wrong'),
+                              builder: (context) => const AlertDialog(
+                                title: Text('Error'),
+                                content: Text('Something Went Wrong'),
+                              ),
+                            );
+                          }
+                        },
+                        child: customButton(
+                          buttonTitle: 'Login',
+                          isLoading: appController.isLoadingObs.value,
+                        ).animate().scale(
+                              delay: const Duration(milliseconds: 150),
+                              curve: Curves.fastLinearToSlowEaseIn,
                             ),
-                          );
-                        }
-                      },
-                      child: customButton(buttonTitle: 'Login').animate().scale(
-                            delay: const Duration(milliseconds: 150),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                          ),
+                      ),
                     ),
                     SizedBox(height: 16.h),
                     Row(

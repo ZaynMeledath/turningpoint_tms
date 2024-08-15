@@ -2,6 +2,7 @@ part of '../../view/login/login_screen.dart';
 
 Widget customButton({
   required String buttonTitle,
+  bool? isLoading,
 }) {
   return AnimatedContainer(
     duration: const Duration(milliseconds: 500),
@@ -16,13 +17,18 @@ Widget customButton({
       ),
     ),
     child: Center(
-      child: Text(
-        buttonTitle,
-        style: const TextStyle(
-          fontSize: 18,
-          // fontWeight: FontWeight.w500,
-        ),
-      ),
+      child: isLoading == true
+          ? SpinKitWave(
+              color: Colors.white,
+              size: 30.w,
+            )
+          : Text(
+              buttonTitle,
+              style: const TextStyle(
+                fontSize: 18,
+                // fontWeight: FontWeight.w500,
+              ),
+            ),
     ),
   );
 }
