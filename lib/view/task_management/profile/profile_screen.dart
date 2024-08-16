@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 4.h),
               Text(
-                'zayn@turningpointvapi.com',
+                '${userModel?.emailId}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.white70,

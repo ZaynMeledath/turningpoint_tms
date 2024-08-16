@@ -22,16 +22,23 @@ Widget selectedFilter({
             ),
             Flexible(
               child: SizedBox(
-                height: 20.h,
+                height: 35.h,
                 child: ListView.builder(
                   itemCount: filterList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(right: 8.w),
-                    child: Text(
-                      filterList[index],
-                      style: TextStyle(
-                        fontSize: 14.5.sp,
+                    child: Chip(
+                      backgroundColor: AppColor.bottomSheetColor,
+                      side: const BorderSide(
+                        color: Colors.white12,
+                      ),
+                      padding: EdgeInsets.zero,
+                      label: Text(
+                        filterList[index],
+                        style: TextStyle(
+                          fontSize: 14.5.sp,
+                        ),
                       ),
                     ),
                   ),

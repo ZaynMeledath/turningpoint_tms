@@ -15,6 +15,10 @@ final priorityList = ['High', 'Medium', 'Low'];
 final frequencyList = ['Once', 'Daily', 'Weekly', 'Monthly'];
 
 class FilterController extends GetxController {
+  FilterController() {
+    assignValuesToModels();
+  }
+
   RxMap<String, bool> filterOptionSelectedMap = {
     'category': true,
     'assignedBy': false,
@@ -37,6 +41,7 @@ class FilterController extends GetxController {
   final RxList selectedFrequencyList = [].obs;
   final RxList selectedPriorityList = [].obs;
 
+//====================Assign Values to Models====================//
   void assignValuesToModels() {
     final userController = Get.put(UserController());
     categoryFilterModel.value = {
@@ -64,7 +69,7 @@ class FilterController extends GetxController {
     };
   }
 
-//====================Select Filter ====================//
+//====================Select Filter====================//
   void selectFilterOption({required String key}) {
     filterOptionSelectedMap[selectedFilterOptionKey] = false;
     filterOptionSelectedMap[key] = true;

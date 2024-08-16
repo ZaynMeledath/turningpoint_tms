@@ -19,13 +19,11 @@ Widget assignedFilterSegment({
     child: Column(
       children: [
         SizedBox(height: 8.h),
-        Flexible(
-          child: Transform.scale(
-            scale: .94,
-            child: customTextField(
-              controller: assignedSearchController,
-              hintText: 'Search by Name/Email',
-            ),
+        Transform.scale(
+          scale: .94,
+          child: customTextField(
+            controller: assignedSearchController,
+            hintText: 'Search by Name/Email',
           ),
         )
             .animate(
@@ -39,6 +37,7 @@ Widget assignedFilterSegment({
         SizedBox(height: 4.h),
         Expanded(
           child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
             itemCount: allUsers?.length ?? 0,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
@@ -100,10 +99,14 @@ Widget assignedFilterSegment({
                               : filterController.assignedToFilterModel[email],
                           visualDensity: VisualDensity.compact,
                           fillColor: WidgetStatePropertyAll(
-                              filterController.assignedByFilterModel[email] ==
-                                      true
-                                  ? AppColor.themeGreen
-                                  : Colors.transparent),
+                            filterController.assignedToFilterModel[email] ==
+                                        true ||
+                                    filterController
+                                            .assignedByFilterModel[email] ==
+                                        true
+                                ? AppColor.themeGreen
+                                : Colors.transparent,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
                           ),

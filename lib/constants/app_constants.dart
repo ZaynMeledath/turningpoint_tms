@@ -5,6 +5,7 @@ class AppColor {
   static const scaffoldBackgroundColor = Color.fromRGBO(30, 36, 40, 1);
 
   static const textFieldColor = Color.fromRGBO(44, 50, 54, 1);
+  static const bottomSheetColor = Color.fromRGBO(29, 36, 41, 1);
 }
 
 class AppConstants {

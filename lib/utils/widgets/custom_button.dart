@@ -20,7 +20,7 @@ Widget customButton({
       child: isLoading == true
           ? SpinKitWave(
               color: Colors.white,
-              size: 30.w,
+              size: 20.w,
             )
           : Text(
               buttonTitle,

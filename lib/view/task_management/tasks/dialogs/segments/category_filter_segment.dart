@@ -14,14 +14,12 @@ Widget categoryFilterSegment({
     child: Column(
       children: [
         SizedBox(height: 8.h),
-        Flexible(
-          child: Transform.scale(
-              scale: .94,
-              child: customTextField(
-                controller: categorySearchController,
-                hintText: 'Search Category',
-              )),
-        )
+        Transform.scale(
+                scale: .94,
+                child: customTextField(
+                  controller: categorySearchController,
+                  hintText: 'Search Category',
+                ))
             .animate(
               key: GlobalKey(),
             )

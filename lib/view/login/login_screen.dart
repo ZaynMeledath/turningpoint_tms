@@ -132,7 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     Obx(
                       () => GestureDetector(
                         onTap: () async {
-                          log('BUTTON PRESSED');
                           appController.isLoadingObs.value = true;
                           try {
                             // showDialog(
@@ -155,6 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               () => const TasksHome(),
                             );
                           } catch (e) {
+                            appController.isLoadingObs.value = false;
                             showDialog(
                               context: context,
                               builder: (context) => const AlertDialog(
