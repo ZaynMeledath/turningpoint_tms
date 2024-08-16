@@ -72,11 +72,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
 
   @override
   void dispose() {
-    // lottieController.dispose();
-    taskSearchController.dispose();
-
-    filterController.dispose();
     super.dispose();
+    final demo = Get.currentRoute;
+    lottieController.dispose();
+    taskSearchController.dispose();
+    filterController.dispose();
   }
 
   @override

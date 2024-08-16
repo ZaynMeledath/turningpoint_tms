@@ -66,223 +66,234 @@ Widget taskCard({
 
   final dueDateString = '$weekDay, $date $month $time';
 
-  return InkWell(
-    onTap: () {
-      Get.to(
-        () => TaskDetailsScreen(
-          taskModel: taskModel,
-          dueDateString: dueDateString,
-        ),
-      );
-    },
-    borderRadius: BorderRadius.circular(16),
-    child: Container(
-      decoration: BoxDecoration(
+  return Hero(
+    tag: 'task_card${taskModel.id}',
+    child: Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: () {
+          Get.to(
+            () => TaskDetailsScreen(
+              taskModel: taskModel,
+              dueDateString: dueDateString,
+            ),
+          );
+        },
         borderRadius: BorderRadius.circular(16),
-        gradient: const LinearGradient(
-          colors: [
-            Color.fromRGBO(48, 78, 85, 0.6),
-            Color.fromRGBO(29, 36, 41, 1),
-            Color.fromRGBO(90, 90, 90, .5),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 13.5.w,
-          vertical: 10.h,
-        ),
-        child: Column(
-          children: [
-            Row(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            gradient: const LinearGradient(
+              colors: [
+                Color.fromRGBO(48, 78, 85, 0.6),
+                Color.fromRGBO(29, 36, 41, 1),
+                Color.fromRGBO(90, 90, 90, .5),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 13.5.w,
+              vertical: 10.h,
+            ),
+            child: Column(
               children: [
-//--------------------Name and details column--------------------//
-                SizedBox(
-                  width: 208.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 210.w,
-                        child: Text(
-                          taskModel.title.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18.sp,
+                Row(
+                  children: [
+                    //--------------------Name and details column--------------------//
+                    SizedBox(
+                      width: 208.w,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 210.w,
+                            child: Text(
+                              taskModel.title.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18.sp,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(height: 2.w),
-                      Text.rich(
-                        overflow: TextOverflow.ellipsis,
-                        TextSpan(
-                          text: isDelegated ? 'Assigned To ' : 'Assigned By ',
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(.6),
-                          ),
-                          children: [
+                          SizedBox(height: 2.w),
+                          Text.rich(
+                            overflow: TextOverflow.ellipsis,
                             TextSpan(
-                              text: isDelegated
-                                  ? taskModel.assignedTo
-                                  : taskModel.createdBy,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              text:
+                                  isDelegated ? 'Assigned To ' : 'Assigned By ',
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(.6),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: isDelegated
+                                      ? taskModel.assignedTo
+                                      : taskModel.createdBy,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Row(
+                            children: [
+                              isAllTasks == true
+                                  ? Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person,
+                                          size: 19.sp,
+                                          color: Colors.white70,
+                                        ),
+                                        SizedBox(width: 2.w),
+                                        Text(
+                                          taskModel.assignedTo.toString(),
+                                          style: TextStyle(
+                                            fontSize: 13.5.sp,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        SizedBox(width: 12.w),
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              Icon(
+                                Icons.sell,
+                                size: 16.sp,
+                                color: Colors.white70,
+                              ),
+                              SizedBox(width: 2.w),
+                              Text(
+                                taskModel.category.toString(),
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(width: 14.w),
+                              Icon(
+                                Icons.flag,
+                                size: 17.sp,
+                                color: priorityFlagColor,
+                              ),
+                              SizedBox(width: 2.w),
+                              Text(
+                                taskModel.priority.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Expanded(
+                      child: SizedBox(),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.alarm,
+                              size: 17.sp,
+                              color: Colors.white70,
+                            ),
+                            SizedBox(width: 3.w),
+                            Text(
+                              dueDateString,
+                              style: TextStyle(
+                                color: taskModel.isDelayed == true
+                                    ? Colors.red
+                                    : Colors.green,
+                                fontSize: 13.5.sp,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(height: 8.h),
-                      Row(
-                        children: [
-                          isAllTasks == true
-                              ? Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person,
-                                      size: 19.sp,
-                                      color: Colors.white70,
-                                    ),
-                                    SizedBox(width: 2.w),
-                                    Text(
-                                      taskModel.assignedTo.toString(),
-                                      style: TextStyle(
-                                        fontSize: 13.5.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    SizedBox(width: 12.w),
-                                  ],
-                                )
-                              : const SizedBox(),
-                          Icon(
-                            Icons.sell,
-                            size: 16.sp,
-                            color: Colors.white70,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            taskModel.category.toString(),
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(width: 14.w),
-                          Icon(
-                            Icons.flag,
-                            size: 17.sp,
-                            color: priorityFlagColor,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            taskModel.priority.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const Expanded(
-                  child: SizedBox(),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(
-                          Icons.alarm,
-                          size: 17.sp,
-                          color: Colors.white70,
+                        SizedBox(height: 10.h),
+                        Lottie.asset(
+                          'assets/lotties/task_${taskModel.status}_animation.json',
+                          controller: lottieController,
+                          width: 30.sp,
                         ),
                         SizedBox(width: 3.w),
                         Text(
-                          dueDateString,
+                          taskModel.status == 'Open'
+                              ? 'Pending'
+                              : taskModel.status.toString(),
                           style: TextStyle(
-                            color: taskModel.isDelayed == true
-                                ? Colors.red
-                                : Colors.green,
                             fontSize: 13.5.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 10.h),
-                    Lottie.asset(
-                      'assets/lotties/task_${taskModel.status}_animation.json',
-                      controller: lottieController,
-                      width: 30.sp,
+                  ],
+                ),
+                SizedBox(height: 12.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    cardActionButton(
+                      title: isTaskCompleted ? 'Delete' : 'In Progress',
+                      icon: isTaskCompleted
+                          ? Icons.delete
+                          : StatusIcons.inProgress,
+                      iconColor: isTaskCompleted
+                          ? Colors.red
+                          : StatusIconColor.inProgress,
+                      onTap: () {},
                     ),
-                    SizedBox(width: 3.w),
-                    Text(
-                      taskModel.status == 'Open'
-                          ? 'Pending'
-                          : taskModel.status.toString(),
-                      style: TextStyle(
-                        fontSize: 13.5.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    cardActionButton(
+                      title: isTaskCompleted ? 'Re Open' : 'Complete',
+                      icon: isTaskCompleted
+                          ? StatusIcons.inProgress
+                          : StatusIcons.completed,
+                      iconColor: isTaskCompleted
+                          ? StatusIconColor.pending
+                          : StatusIconColor.completed,
+                      onTap: () {},
                     ),
                   ],
                 ),
+                SizedBox(height: isTaskCompleted ? 0 : 9.h),
+                isTaskCompleted
+                    ? const SizedBox()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          cardActionButton(
+                            title: 'Edit',
+                            icon: Icons.edit,
+                            iconColor: Colors.blueGrey,
+                            onTap: () {},
+                          ),
+                          cardActionButton(
+                            title: 'Delete',
+                            icon: Icons.delete,
+                            iconColor: Colors.red,
+                            onTap: () {},
+                          ),
+                        ],
+                      )
               ],
             ),
-            SizedBox(height: 12.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                cardActionButton(
-                  title: isTaskCompleted ? 'Delete' : 'In Progress',
-                  icon: isTaskCompleted ? Icons.delete : StatusIcons.inProgress,
-                  iconColor:
-                      isTaskCompleted ? Colors.red : StatusIconColor.inProgress,
-                  onTap: () {},
-                ),
-                cardActionButton(
-                  title: isTaskCompleted ? 'Re Open' : 'Complete',
-                  icon: isTaskCompleted
-                      ? StatusIcons.inProgress
-                      : StatusIcons.completed,
-                  iconColor: isTaskCompleted
-                      ? StatusIconColor.pending
-                      : StatusIconColor.completed,
-                  onTap: () {},
-                ),
-              ],
-            ),
-            SizedBox(height: isTaskCompleted ? 0 : 9.h),
-            isTaskCompleted
-                ? const SizedBox()
-                : Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      cardActionButton(
-                        title: 'Edit',
-                        icon: Icons.edit,
-                        iconColor: Colors.blueGrey,
-                        onTap: () {},
-                      ),
-                      cardActionButton(
-                        title: 'Delete',
-                        icon: Icons.delete,
-                        iconColor: Colors.red,
-                        onTap: () {},
-                      ),
-                    ],
-                  )
-          ],
+          ),
         ),
       ),
     ),
