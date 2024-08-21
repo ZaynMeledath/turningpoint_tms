@@ -27,6 +27,7 @@ Widget teamCard({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+//====================DP, Name and Role====================//
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -68,6 +69,7 @@ Widget teamCard({
           ],
         ),
         SizedBox(height: 8.h),
+//====================Email, Phone, Reporting Manager====================//
         Row(
           children: [
             Icon(
@@ -107,24 +109,45 @@ Widget teamCard({
         Row(
           children: [
             Icon(
-              Icons.manage_accounts_rounded,
+              Icons.work,
               size: 16.sp,
               color: AppColor.themeGreen.withOpacity(.8),
             ),
             SizedBox(width: 6.w),
             Text(
-              allUsersModel.reportingTo != null &&
-                      allUsersModel.reportingTo!.isNotEmpty
-                  ? allUsersModel.reportingTo.toString()
+              allUsersModel.department != null &&
+                      allUsersModel.department!.isNotEmpty
+                  ? allUsersModel.department.toString()
                   : '-',
               style: TextStyle(
                 fontSize: 14.5.sp,
                 color: Colors.white60,
               ),
             ),
+            SizedBox(width: 30.w),
+            Icon(
+              Icons.manage_accounts_rounded,
+              size: 16.sp,
+              color: AppColor.themeGreen.withOpacity(.8),
+            ),
+            SizedBox(width: 6.w),
+            Expanded(
+              child: Text(
+                allUsersModel.reportingTo != null &&
+                        allUsersModel.reportingTo!.isNotEmpty
+                    ? allUsersModel.reportingTo.toString()
+                    : '-',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 14.5.sp,
+                  color: Colors.white60,
+                ),
+              ),
+            ),
           ],
         ),
         SizedBox(height: 15.h),
+//====================Buttons====================//
         userModel?.role == Role.admin || userModel?.role == Role.teamLeader
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,

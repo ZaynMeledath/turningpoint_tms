@@ -19,11 +19,11 @@ class DelegatedTasksScreen extends StatefulWidget {
 
 class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     with TickerProviderStateMixin {
-  late final AnimationController lottieController;
-  late final TextEditingController taskSearchController;
-  late final TextEditingController categorySearchController;
-  late final TextEditingController assignedSearchController;
-  late final TabController tabController;
+  late AnimationController lottieController;
+  late TextEditingController taskSearchController;
+  late TextEditingController categorySearchController;
+  late TextEditingController assignedSearchController;
+  late TabController tabController;
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
   late FilterController filterController = FilterController();
@@ -48,17 +48,19 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   }
 
   void animateLottie() async {
-    try {
-      animationCounter++;
-      lottieController
-        ..reset()
-        ..forward();
-      await Future.delayed(
-        Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
-      );
-      animateLottie();
-    } catch (e) {
-      animateLottie();
+    if (!lottieController.isDismissed) {
+      try {
+        animationCounter++;
+        lottieController
+          ..reset()
+          ..forward();
+        await Future.delayed(
+          Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+        );
+        animateLottie();
+      } catch (e) {
+        animateLottie();
+      }
     }
   }
 

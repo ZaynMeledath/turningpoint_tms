@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/view/register/register_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
