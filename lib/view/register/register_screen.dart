@@ -1,12 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/home/tasks_dashboard.dart';
+import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -16,18 +19,19 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  late final TextEditingController firstNameController;
-  late final TextEditingController lastNameController;
+  late final TextEditingController nameController;
   late final TextEditingController phoneController;
   late final TextEditingController emailController;
+  // late final TextEditingController departmentController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
   final userController = UserController();
+  final appController = Get.put(AppController());
 
   @override
   void initState() {
-    firstNameController = TextEditingController();
-    lastNameController = TextEditingController();
+    nameController = TextEditingController();
+    // departmentController = TextEditingController();
     phoneController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
@@ -37,8 +41,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
+    nameController.dispose();
+    // departmentController.dispose();
     phoneController.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -61,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  SizedBox(height: 44.h),
+                  SizedBox(height: 60.h),
                   Hero(
                     tag: 'turning_point_logo',
                     child: Image.asset(
@@ -96,20 +100,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 16.h),
                   customTextField(
-                    controller: firstNameController,
-                    hintText: 'First Name',
+                    controller: nameController,
+                    hintText: 'Name',
                     // userController: userController,
                   ).animate().slideX(
-                        delay: const Duration(milliseconds: 100),
-                        curve: Curves.fastLinearToSlowEaseIn,
-                      ),
-                  SizedBox(height: 25.h),
-                  customTextField(
-                    controller: lastNameController,
-                    hintText: 'Last Name',
-                    // userController: userController,
-                  ).animate().slideX(
-                        begin: 1,
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
@@ -149,13 +143,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   customTextField(
                     controller: emailController,
                     hintText: 'Email',
-                    // userController: userController,
                     isEmail: true,
                   ).animate().slideX(
                         begin: 1,
                         delay: const Duration(milliseconds: 100),
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
+                  // SizedBox(height: 25.h),
+                  // customTextField(
+                  //   controller: departmentController,
+                  //   hintText: 'Department',
+                  // ).animate().slideX(
+                  //       begin: 1,
+                  //       delay: const Duration(milliseconds: 100),
+                  //       curve: Curves.fastLinearToSlowEaseIn,
+                  //     ),
                   SizedBox(height: 25.h),
                   customTextField(
                     controller: passwordController,
@@ -178,17 +180,42 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         curve: Curves.fastLinearToSlowEaseIn,
                       ),
                   SizedBox(height: 34.h),
-                  GestureDetector(
-                    onTap: () {
-                      Get.offAll(
-                        () => const TasksDashboard(),
-                      );
-                    },
-                    child:
-                        customButton(buttonTitle: 'Register').animate().scale(
-                              delay: const Duration(milliseconds: 100),
-                              curve: Curves.fastLinearToSlowEaseIn,
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () async {
+                        appController.isLoadingObs.value = true;
+                        try {
+                          await userController.register(
+                            name: nameController.text.trim(),
+                            phone: phoneController.text.trim(),
+                            email: emailController.text.trim(),
+                            department: 'Admin',
+                            role: 'Admin',
+                            password: passwordController.text.trim(),
+                          );
+                          appController.isLoadingObs.value = false;
+                          Get.offAll(
+                            () => const TasksHome(),
+                          );
+                        } catch (e) {
+                          appController.isLoadingObs.value = false;
+                          showDialog(
+                            context: context,
+                            builder: (context) => const AlertDialog(
+                              title: Text('Error'),
+                              content: Text('Something Went Wrong'),
                             ),
+                          );
+                        }
+                      },
+                      child: customButton(
+                        buttonTitle: 'Register',
+                        isLoading: appController.isLoadingObs.value,
+                      ).animate().scale(
+                            delay: const Duration(milliseconds: 100),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                          ),
+                    ),
                   ),
                   SizedBox(height: 16.h),
                   Row(

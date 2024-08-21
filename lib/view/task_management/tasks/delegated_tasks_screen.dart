@@ -73,7 +73,6 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   @override
   void dispose() {
     super.dispose();
-    final demo = Get.currentRoute;
     lottieController.dispose();
     taskSearchController.dispose();
     filterController.dispose();
@@ -141,38 +140,35 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                   ),
                 ];
               },
-              body: Padding(
-                padding: EdgeInsets.only(bottom: 65.h),
-                child: TabBarView(
-                  controller: tabController,
-                  children: [
-                    taskTabBarView(
-                      tasksList: allDelegatedTasksList,
-                      lottieController: lottieController,
-                      isDelegated: true,
-                    ),
-                    taskTabBarView(
-                      tasksList: overdueDelegatedTasksList,
-                      lottieController: lottieController,
-                      isDelegated: true,
-                    ),
-                    taskTabBarView(
-                      tasksList: pendingDelegatedTasksList,
-                      lottieController: lottieController,
-                      isDelegated: true,
-                    ),
-                    taskTabBarView(
-                      tasksList: inProgressDelegatedTasksList,
-                      lottieController: lottieController,
-                      isDelegated: true,
-                    ),
-                    taskTabBarView(
-                      tasksList: completedDelegatedTasksList,
-                      lottieController: lottieController,
-                      isDelegated: true,
-                    ),
-                  ],
-                ),
+              body: TabBarView(
+                controller: tabController,
+                children: [
+                  taskTabBarView(
+                    tasksList: allDelegatedTasksList,
+                    lottieController: lottieController,
+                    isDelegated: true,
+                  ),
+                  taskTabBarView(
+                    tasksList: overdueDelegatedTasksList,
+                    lottieController: lottieController,
+                    isDelegated: true,
+                  ),
+                  taskTabBarView(
+                    tasksList: pendingDelegatedTasksList,
+                    lottieController: lottieController,
+                    isDelegated: true,
+                  ),
+                  taskTabBarView(
+                    tasksList: inProgressDelegatedTasksList,
+                    lottieController: lottieController,
+                    isDelegated: true,
+                  ),
+                  taskTabBarView(
+                    tasksList: completedDelegatedTasksList,
+                    lottieController: lottieController,
+                    isDelegated: true,
+                  ),
+                ],
               ),
             );
           },

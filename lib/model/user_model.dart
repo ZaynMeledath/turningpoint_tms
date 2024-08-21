@@ -21,7 +21,7 @@ class UserModelResponse {
 
 class UserModel {
   String? id;
-  String? userName;
+  String? name;
   String? department;
   String? emailId;
   String? phone;
@@ -33,7 +33,7 @@ class UserModel {
 
   UserModel({
     this.id,
-    this.userName,
+    this.name,
     this.department,
     this.emailId,
     this.phone,
@@ -46,7 +46,7 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
-    userName = json['userName'];
+    name = json['userName'];
     department = json['department'];
     emailId = json['emailID'];
     phone = json['phone'];
@@ -60,7 +60,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = id;
-    data['userName'] = userName;
+    data['userName'] = name;
     data['department'] = department;
     data['emailID'] = emailId;
     data['phone'] = phone;

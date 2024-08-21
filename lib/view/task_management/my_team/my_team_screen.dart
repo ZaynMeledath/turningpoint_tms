@@ -25,6 +25,10 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   late final TabController tabController;
   final userController = Get.put(UserController());
 
+  List<AllUsersModel> adminList = [];
+  List<AllUsersModel> teamLeaderList = [];
+  List<AllUsersModel> teamMemberList = [];
+
   @override
   void initState() {
     tabController = TabController(
@@ -42,73 +46,69 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: myAppBar(
-          context: context,
-          title: 'My Team',
-          implyLeading: false,
-          profileAvatar: true,
-        ),
-        body: Obx(
-          () {
-            final myTeamList = userController.myTeamList.value;
-            return NestedScrollView(
-              // physics: const BouncingScrollPhysics(),
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverAppBar(
-                  pinned: true,
-                  toolbarHeight: 50.h,
-                  backgroundColor: AppColor.scaffoldBackgroundColor,
-                  surfaceTintColor: AppColor.scaffoldBackgroundColor,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: teamTabBar(tabController: tabController)
-                        .animate()
-                        .slideX(
-                          begin: .4,
-                          curve: Curves.elasticOut,
-                          duration: const Duration(milliseconds: 900),
-                        ),
-                  ),
+      appBar: myAppBar(
+        context: context,
+        title: 'My Team',
+        implyLeading: false,
+        profileAvatar: true,
+      ),
+      body: Obx(
+        () {
+          final myTeamList = userController.myTeamList.value;
+          if (userController.myTeamList.value != null &&
+              userController.myTeamList.value!.isNotEmpty) {
+            adminList = myTeamList!
+                .where((element) => element.role == Role.admin)
+                .toList();
+
+            teamLeaderList = myTeamList
+                .where((element) => element.role == Role.teamLeader)
+                .toList();
+
+            teamMemberList = myTeamList
+                .where((element) => element.role == Role.teamMember)
+                .toList();
+          }
+          return NestedScrollView(
+            // physics: const BouncingScrollPhysics(),
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverAppBar(
+                pinned: true,
+                toolbarHeight: 50.h,
+                backgroundColor: AppColor.scaffoldBackgroundColor,
+                surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                flexibleSpace: FlexibleSpaceBar(
+                  background:
+                      teamTabBar(tabController: tabController).animate().slideX(
+                            begin: .4,
+                            curve: Curves.elasticOut,
+                            duration: const Duration(milliseconds: 900),
+                          ),
                 ),
-                SliverList(
-                  delegate: SliverChildListDelegate.fixed(
-                    [
-                      SizedBox(height: 12.h),
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate.fixed(
+                  [
+                    SizedBox(height: 12.h),
+                  ],
+                ),
+              ),
+            ],
+            body: userController.myTeamList.value != null &&
+                    userController.myTeamList.value!.isNotEmpty
+                ? TabBarView(
+                    controller: tabController,
+                    children: [
+                      teamTabBarView(myTeamList: myTeamList!),
+                      teamTabBarView(myTeamList: adminList),
+                      teamTabBarView(myTeamList: teamLeaderList),
+                      teamTabBarView(myTeamList: teamMemberList),
                     ],
-                  ),
-                ),
-              ],
-              body: userController.myTeamList.value != null &&
-                      userController.myTeamList.value!.isNotEmpty
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 65.h,
-                      ),
-                      child: TabBarView(
-                        controller: tabController,
-                        children: [
-                          teamTabBarView(myTeamList: myTeamList!),
-                          teamTabBarView(
-                            myTeamList: myTeamList
-                                .where((element) => element.role == Role.admin)
-                                .toList(),
-                          ),
-                          teamTabBarView(
-                            myTeamList: myTeamList
-                                .where((element) =>
-                                    element.role == Role.teamLeader)
-                                .toList(),
-                          ),
-                          teamTabBarView(
-                            myTeamList: myTeamList
-                                .where((element) => element.role == Role.user)
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    )
-                  : const SizedBox(),
-            );
-          },
-        ));
+                  )
+                : const SizedBox(),
+          );
+        },
+      ),
+    );
   }
 }

@@ -77,7 +77,7 @@ AppBar myAppBar({
                         transition: Transition.rightToLeft,
                       ),
                       child: nameLetterAvatar(
-                        name: '${userModel?.userName}',
+                        name: '${userModel?.name}',
                       ),
                     ),
                   ),

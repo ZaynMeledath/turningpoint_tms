@@ -15,6 +15,35 @@ Future<void> addUserModelToHive({
 }
 
 class UserRepository {
+//====================User Register====================//
+  static Future<void> register({
+    required String name,
+    required String phone,
+    required String email,
+    required String department,
+    required String password,
+    required String role,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.register,
+        requestMethod: RequestMethod.POST,
+        data: {
+          'userName': name,
+          'phone': phone,
+          'emailID': email,
+          'department': department,
+          'role': role,
+          'password': password,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: false,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //====================User Login====================//
   static Future<UserModelResponse> login({
     required String email,

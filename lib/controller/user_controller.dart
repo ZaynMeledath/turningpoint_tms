@@ -14,6 +14,29 @@ class UserController extends GetxController {
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
 
+//====================User Register====================//
+  Future<void> register({
+    required String name,
+    required String phone,
+    required String email,
+    required String department,
+    required String role,
+    required String password,
+  }) async {
+    try {
+      await UserRepository.register(
+        name: name,
+        phone: phone,
+        email: email,
+        department: department,
+        role: role,
+        password: password,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================User Login====================//
   Future<void> login({
     required String email,

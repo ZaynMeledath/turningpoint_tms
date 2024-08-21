@@ -75,7 +75,6 @@ Widget textField({
         horizontal: 14.w,
         vertical: 13.5.h,
       ),
-      // fillColor: Colors.grey.withOpacity(.1),
       fillColor: AppColor.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
@@ -85,13 +84,13 @@ Widget textField({
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(
           color: Color.fromRGBO(52, 228, 140, .18),
         ),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(
           color: Colors.red,
         ),

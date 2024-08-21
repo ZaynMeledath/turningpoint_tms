@@ -26,12 +26,12 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               nameLetterAvatar(
-                name: '${userModel?.userName}',
+                name: '${userModel?.name}',
                 circleDiameter: 80.w,
               ),
               SizedBox(height: 10.h),
               Text(
-                '${userModel?.userName}',
+                '${userModel?.name}',
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,

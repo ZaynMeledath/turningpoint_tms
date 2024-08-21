@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
-                    SizedBox(height: 135.h),
+                    SizedBox(height: 140.h),
                     Hero(
                       tag: 'turning_point_logo',
                       child: Image.asset(
@@ -134,17 +132,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () async {
                           appController.isLoadingObs.value = true;
                           try {
-                            // showDialog(
-                            //     barrierDismissible: false,
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return Center(
-                            //         child: SpinKitWave(
-                            //           color: Colors.white,
-                            //           size: 30.sp,
-                            //         ),
-                            //       );
-                            //     });
                             await userController.login(
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
@@ -173,38 +160,38 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                       ),
                     ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Dont have an Account?',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(
-                              () => const RegisterScreen(),
-                              transition: Transition.downToUp,
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(16),
-                          child: Padding(
-                            padding: EdgeInsets.all(5.w),
-                            child: Text(
-                              'Sign Up here',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.themeGreen,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // SizedBox(height: 16.h),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       'Dont have an Account?',
+                    //       style: TextStyle(
+                    //         fontSize: 14.sp,
+                    //       ),
+                    //     ),
+                    //     InkWell(
+                    //       onTap: () {
+                    //         Get.to(
+                    //           () => const RegisterScreen(),
+                    //           transition: Transition.downToUp,
+                    //         );
+                    //       },
+                    //       borderRadius: BorderRadius.circular(16),
+                    //       child: Padding(
+                    //         padding: EdgeInsets.all(5.w),
+                    //         child: Text(
+                    //           'Sign Up here',
+                    //           style: TextStyle(
+                    //             fontSize: 14.sp,
+                    //             fontWeight: FontWeight.w600,
+                    //             color: AppColor.themeGreen,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(height: 15.h),
                   ],
                 ),

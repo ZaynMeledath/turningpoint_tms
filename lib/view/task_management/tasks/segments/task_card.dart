@@ -105,7 +105,7 @@ Widget taskCard({
                   children: [
                     //--------------------Name and details column--------------------//
                     SizedBox(
-                      width: 208.w,
+                      width: 200.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
