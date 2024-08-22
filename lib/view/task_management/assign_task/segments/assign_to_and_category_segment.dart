@@ -74,10 +74,8 @@ Widget assignToAndCategorySegment({
 //====================Category DropDown====================//
       InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: () => showAssignToDialog(
-          tasksController: tasksController,
+        onTap: () => showCategoryDialog(
           filterController: filterController,
-          assignToSearchController: assignToSearchController,
         ),
         child: Container(
           width: 156,
@@ -88,46 +86,27 @@ Widget assignToAndCategorySegment({
           ),
           child: Obx(
             () {
-              final assignToList = tasksController.assignToMap;
-              if (assignToList.isNotEmpty) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: assignToList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        left: index == 0 ? 8.w : 0,
-                        right: 8.w,
-                      ),
-                      child: nameLetterAvatar(
-                        name: assignToList.values.elementAt(index),
-                        circleDiameter: 30.w,
-                      ),
-                    );
-                  },
-                );
-              } else {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Category',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white70,
-                        ),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down,
+              final category = tasksController.selectedCategory;
+              return Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      category.isNotEmpty ? category.value : 'Category',
+                      style: TextStyle(
+                        fontSize: 16.sp,
                         color: Colors.white70,
-                        size: 24.w,
                       ),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.white70,
+                      size: 24.w,
+                    ),
+                  ],
+                ),
+              );
             },
           ),
         ),

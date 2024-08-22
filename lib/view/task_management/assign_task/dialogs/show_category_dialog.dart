@@ -1,23 +1,25 @@
 part of '../assign_task_screen.dart';
 
-Future<Object?> showCategoryDialog() async {
+Future<Object?> showCategoryDialog({
+  required FilterController filterController,
+}) async {
   return Get.dialog(
     useSafeArea: true,
     barrierColor: Colors.transparent,
-    categoryDialog(),
+    categoryDialog(filterController: filterController),
     transitionCurve: Curves.easeInOut,
   );
 }
 
-Widget categoryDialog() {
-  final filterController = FilterController();
-
+Widget categoryDialog({
+  required FilterController filterController,
+}) {
   return Container(
       margin: EdgeInsets.only(
-        left: 14.w,
+        left: 160.w,
         right: 14.w,
-        top: 400.h,
-        bottom: 10.h,
+        top: 398.h,
+        bottom: 78.h,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -62,12 +64,16 @@ Widget categoryDialog() {
                           ),
                         ),
                       ),
-                      DefaultTextStyle(
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                        ),
-                        child: Text(
-                          category,
+                      SizedBox(width: 4.w),
+                      Expanded(
+                        child: DefaultTextStyle(
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                          ),
+                          child: Text(
+                            category,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],

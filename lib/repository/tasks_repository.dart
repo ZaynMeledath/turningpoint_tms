@@ -37,6 +37,18 @@ class TasksRepository {
   }
 
 //====================Assign Task====================//
+  Future<List<String>> getCategories() async {
+    final response = await ApiService().sendRequest(
+      url: ApiEndpoints.getCategories,
+      requestMethod: RequestMethod.GET,
+      data: {},
+      isTokenRequired: true,
+      fieldNameForFiles: null,
+    );
+    return response['categories'];
+  }
+
+//====================Assign Task====================//
   Future<void> assignTask({
     required String title,
     required String description,

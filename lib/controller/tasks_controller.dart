@@ -7,12 +7,17 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
+  TasksController() {
+    getCategories();
+  }
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
   //Email is the key and Name is the value
   RxMap<String, String> assignToMap = RxMap<String, String>();
-  // Rxn<List<AllUsersModel>> categoryList = Rxn<List<AllUsersModel>>();
+  RxString selectedCategory = RxString('');
+
+  RxList<String> categoriesList = RxList<String>();
 
   RxList<AllUsersModel> assignToSearchList = RxList<AllUsersModel>();
   // Rxn<List<CategoryModel>> categorySearchList = Rxn<List<AllUsersModel>>();
@@ -196,18 +201,15 @@ class TasksController extends GetxController {
     }
   }
 
+//====================Get Categories====================//
+  void getCategories() async {
+    categoriesList.value = await tasksRepository.getCategories();
+  }
+
 //====================Assign Task====================//
   Future<void> assignTask({
     required String title,
     required String description,
-    // required String category,
-    // required String assignTo,
-    // required String priority,
-    // required String dueDate,
-    // required String? reminderFrequency,
-    // required String? reminderStartDate,
-    // required String? repeatFrequency,
-    // required String? repeatUntil,
     // required List<dynamic>? attachments,
   }) async {
     final dueDate = DateTime(
