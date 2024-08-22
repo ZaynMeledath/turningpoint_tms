@@ -79,7 +79,7 @@ class Stats {
     overdueTasks = json['overdueTasks'];
     onTimeTasks = json['onTimeTasks'];
     delayedTasks = json['delayedTasks'];
-    completionRate = json['completionRate'];
+    completionRate = json['completionRate'].toInt();
   }
 
   Map<String, dynamic> toJson() {

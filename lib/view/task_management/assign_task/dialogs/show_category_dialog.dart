@@ -21,7 +21,7 @@ Widget categoryDialog({
 }) {
   return Container(
       margin: EdgeInsets.only(
-        left: 160.w,
+        left: 180.w,
         right: 14.w,
         top: 398.h,
         bottom: 78.h,
@@ -32,81 +32,84 @@ Widget categoryDialog({
       ),
       child: Column(
         children: [
-          SizedBox(height: 8.h),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 3,
-              padding: EdgeInsets.symmetric(
-                horizontal: 12.w,
-                vertical: 8.h,
-              ),
-              itemBuilder: (context, index) {
-                final category = categoriesList[index];
-                return GestureDetector(
-                  onTap: () => filterController.selectOrUnselectCategoryFilter(
-                      filterKey: category),
-                  child: Row(
-                    children: [
-                      Obx(
-                        () => Material(
-                          color: Colors.transparent,
-                          child: Checkbox.adaptive(
-                            value:
-                                filterController.categoryFilterModel[category],
-                            visualDensity: VisualDensity.compact,
-                            fillColor: WidgetStatePropertyAll(
-                              filterController.categoryFilterModel[category] ==
-                                      true
-                                  ? AppColor.themeGreen
-                                  : Colors.transparent,
+          SizedBox(height: 4.h),
+          Obx(
+            () {
+              final categoriesList = tasksController.categoriesList;
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: categoriesList.length,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 8.h,
+                  ),
+                  itemBuilder: (context, index) {
+                    final category = categoriesList[index];
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: 12.h,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          tasksController.selectedCategory.value = category;
+                          Get.back();
+                        },
+                        child: Row(
+                          children: [
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                fontSize: 18.sp,
+                              ),
+                              child: const Text(
+                                '⦿',
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(100),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w,
+                                  vertical: 8.h,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: DefaultTextStyle(
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                    ),
+                                    child: Text(
+                                      category,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
+                                      .animate(
+                                        key: GlobalKey(),
+                                      )
+                                      .slideX(
+                                        begin: -.06,
+                                        delay: Duration(
+                                            milliseconds: 30 * (index + 1)),
+                                        duration:
+                                            const Duration(milliseconds: 700),
+                                        curve: Curves.elasticOut,
+                                      ),
+                                ),
+                              ),
                             ),
-                            onChanged: (value) {
-                              filterController.selectOrUnselectCategoryFilter(
-                                  filterKey: category);
-                              // if (filterController
-                              //         .categoryFilterModel[category] ==
-                              //     true) {
-                              //   tasksController.addToAssignToList(
-
-                              //   );
-                              // } else {
-                              //   tasksController.removeFromAssignToList(
-                              //     email: email,
-                              //   );
-                              // }
-                            },
-                          ),
+                          ],
                         ),
                       ),
-                      SizedBox(width: 4.w),
-                      Expanded(
-                        child: DefaultTextStyle(
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                          ),
-                          child: Text(
-                            category,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                      .animate(
-                        key: GlobalKey(),
-                      )
-                      .slideX(
-                        begin: -.06,
-                        delay: Duration(milliseconds: 30 * (index + 1)),
-                        duration: const Duration(milliseconds: 700),
-                        curve: Curves.elasticOut,
-                      ),
-                );
-              },
-            ),
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ));

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/filter_item.dart';
@@ -17,6 +18,7 @@ Future<Object?> showFilterBottomSheet({
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
   required FilterController filterController,
+  required TasksController tasksController,
   bool? isAllTasks,
   bool? isDelegated,
 }) async {
@@ -169,6 +171,7 @@ Future<Object?> showFilterBottomSheet({
                                 categorySearchController:
                                     categorySearchController,
                                 filterController: filterController,
+                                tasksController: tasksController,
                               )
                             : filterController.selectedFilterOptionKey ==
                                     'assignedBy'

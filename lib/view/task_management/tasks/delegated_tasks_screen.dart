@@ -121,6 +121,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                         assignedSearchController: assignedSearchController,
                         userController: userController,
                         filterController: filterController,
+                        tasksController: tasksController,
                         isDelegated: true,
                       ),
                     ),

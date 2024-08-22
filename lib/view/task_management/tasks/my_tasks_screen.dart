@@ -125,6 +125,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                                   assignedSearchController,
                               userController: userController,
                               filterController: filterController,
+                              tasksController: tasksController,
                             ),
                           ),
                         ),

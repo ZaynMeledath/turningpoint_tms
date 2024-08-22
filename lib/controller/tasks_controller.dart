@@ -203,7 +203,10 @@ class TasksController extends GetxController {
 
 //====================Get Categories====================//
   void getCategories() async {
-    categoriesList.value = await tasksRepository.getCategories();
+    final temp = await tasksRepository.getCategories();
+    for (var item in temp) {
+      categoriesList.add(item.toString());
+    }
   }
 
 //====================Assign Task====================//

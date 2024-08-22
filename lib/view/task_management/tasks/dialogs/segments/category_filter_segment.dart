@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 Widget categoryFilterSegment({
   required TextEditingController categorySearchController,
   required FilterController filterController,
+  required TasksController tasksController,
 }) {
   return Expanded(
     child: Column(
@@ -36,7 +38,7 @@ Widget categoryFilterSegment({
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              final category = categoriesList[index];
+              final category = tasksController.categoriesList[index];
               return InkWell(
                 onTap: () => filterController.selectOrUnselectCategoryFilter(
                     filterKey: category),

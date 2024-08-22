@@ -1,20 +1,22 @@
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 
-final categoriesList = [
-  'IT',
-  'Finance',
-  'Admin',
-  'HR',
-  'Sales',
-];
+// final categoriesList = [
+//   'IT',
+//   'Finance',
+//   'Admin',
+//   'HR',
+//   'Sales',
+// ];
 
 final priorityList = ['High', 'Medium', 'Low'];
 
 final frequencyList = ['Once', 'Daily', 'Weekly', 'Monthly'];
 
 class FilterController extends GetxController {
+  final TasksController tasksController = Get.put(TasksController());
   FilterController() {
     assignValuesToModels();
   }
@@ -45,7 +47,8 @@ class FilterController extends GetxController {
   void assignValuesToModels() {
     final userController = Get.put(UserController());
     categoryFilterModel.value = {
-      for (String element in categoriesList) element.toString(): false
+      for (String element in tasksController.categoriesList)
+        element.toString(): false
     };
 
     if (userController.myTeamList.value != null) {
@@ -143,7 +146,8 @@ class FilterController extends GetxController {
 
   void resetFilters() {
     categoryFilterModel.value = {
-      for (String element in categoriesList) element.toString(): false
+      for (String element in tasksController.categoriesList)
+        element.toString(): false
     };
 
     assignedByFilterModel.value = {
