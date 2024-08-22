@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,6 @@ import 'package:turning_point_tasks_app/constants/tasks_management_constants.dar
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
@@ -44,6 +42,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController descriptionController;
   late final TextEditingController assignToSearchController;
   late final TextEditingController categorySearchController;
+  final filterController = FilterController();
   final tasksController = TasksController();
 
   @override
@@ -133,6 +132,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 28.h),
                 assignToAndCategorySegment(
                   tasksController: tasksController,
+                  filterController: filterController,
                   assignToSearchController: assignToSearchController,
                   categorySearchController: categorySearchController,
                 ).animate().slideY(
