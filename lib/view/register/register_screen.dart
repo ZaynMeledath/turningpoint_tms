@@ -60,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            reverse: true,
+            reverse: MediaQuery.viewInsetsOf(context).bottom != 0,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(

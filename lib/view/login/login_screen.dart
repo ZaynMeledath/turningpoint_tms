@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            reverse: true,
+            reverse: MediaQuery.viewInsetsOf(context).bottom != 0,
             child: Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),

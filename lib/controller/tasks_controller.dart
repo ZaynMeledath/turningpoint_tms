@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
@@ -9,8 +10,12 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
-  Rxn<String> assignTo = Rxn<String>();
-  Rxn<String> category = Rxn<String>();
+  //Email is the key and Name is the value
+  Rxn<Map<String, String>> assignToList = Rxn<Map<String, String>>();
+  // Rxn<List<AllUsersModel>> categoryList = Rxn<List<AllUsersModel>>();
+
+  Rxn<List<AllUsersModel>> assignToSearchList = Rxn<List<AllUsersModel>>();
+  // Rxn<List<CategoryModel>> categorySearchList = Rxn<List<AllUsersModel>>();
 
   Rxn<List<TaskModel>?> pendingTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> inProgressTaskList = Rxn<List<TaskModel>>();
@@ -216,8 +221,8 @@ class TasksController extends GetxController {
     await tasksRepository.assignTask(
       title: title,
       description: description,
-      category: category.value ?? 'Category',
-      assignTo: assignTo.value ?? 'zayn@turningpointvapi.com',
+      category: 'Category',
+      assignTo: 'zayn@turningpointvapi.com',
       priority: taskPriority.value,
       dueDate: dueDateString,
       reminderFrequency: null,
@@ -226,6 +231,25 @@ class TasksController extends GetxController {
       repeatUntil: null,
       attachments: null,
     );
+  }
+
+//====================Add user to AssignToList====================//
+  void addToAssignToList({
+    required String name,
+    required String email,
+  }) {
+    if (assignToList.value != null) {
+      assignToList.value?.addAll({email: name});
+    } else {
+      assignToList.value = {email: name};
+    }
+  }
+
+//====================Delete user from AssignToList====================//
+  void removeFromAssignToList({
+    required String email,
+  }) {
+    assignToList.value?.remove(email);
   }
 
 //====================Get All Users Performance====================//

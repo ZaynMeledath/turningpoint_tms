@@ -36,7 +36,7 @@ Widget taskTabBarView({
             padding: EdgeInsets.only(
               left: 10.w,
               right: 10.w,
-              bottom: index == (tasksList.length - 1) ? 65.h : 10.h,
+              bottom: index == (tasksList.length - 1) ? 70.h : 10.h,
             ),
             child: taskCard(
               lottieController: lottieController,

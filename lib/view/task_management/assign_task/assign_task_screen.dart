@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
@@ -40,6 +42,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TabController tabController;
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
+  late final TextEditingController assignToSearchController;
+  late final TextEditingController categorySearchController;
   final tasksController = TasksController();
 
   @override
@@ -47,6 +51,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     tabController = TabController(length: 3, vsync: this);
     titleController = TextEditingController();
     descriptionController = TextEditingController();
+    assignToSearchController = TextEditingController();
+    categorySearchController = TextEditingController();
     super.initState();
   }
 
@@ -55,6 +61,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     tabController.dispose();
     titleController.dispose();
     descriptionController.dispose();
+    assignToSearchController.dispose();
+    categorySearchController.dispose();
     tasksController.dispose();
     super.dispose();
   }
@@ -125,6 +133,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 28.h),
                 assignToAndCategorySegment(
                   tasksController: tasksController,
+                  assignToSearchController: assignToSearchController,
+                  categorySearchController: categorySearchController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 120),

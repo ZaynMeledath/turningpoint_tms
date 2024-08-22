@@ -6,28 +6,39 @@ Widget customTextField({
   required TextEditingController controller,
   required String hintText,
   UserController? userController,
+  Color? backgroundColor,
+  Color? borderColor,
   bool? isPassword,
   bool? isNum,
   bool? isEmail,
+  void Function(String)? onChanged,
 }) {
   if (userController != null) {
     return Obx(
       () => textField(
-          controller: controller,
-          hintText: hintText,
-          userController: userController,
-          isPassword: isPassword,
-          isNum: isNum,
-          isEmail: isEmail),
+        controller: controller,
+        hintText: hintText,
+        userController: userController,
+        backgroundColor: backgroundColor,
+        borderColor: borderColor,
+        isPassword: isPassword,
+        isNum: isNum,
+        isEmail: isEmail,
+        onChanged: onChanged,
+      ),
     );
   } else {
     return textField(
-        controller: controller,
-        hintText: hintText,
-        userController: null,
-        isPassword: isPassword,
-        isNum: isNum,
-        isEmail: isEmail);
+      controller: controller,
+      hintText: hintText,
+      userController: null,
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
+      isPassword: isPassword,
+      isNum: isNum,
+      isEmail: isEmail,
+      onChanged: onChanged,
+    );
   }
 }
 
@@ -35,9 +46,12 @@ Widget textField({
   required TextEditingController controller,
   required String hintText,
   UserController? userController,
+  Color? backgroundColor,
+  Color? borderColor,
   bool? isPassword,
   bool? isNum,
   bool? isEmail,
+  void Function(String)? onChanged,
 }) {
   return TextFormField(
     controller: controller,
@@ -75,12 +89,12 @@ Widget textField({
         horizontal: 14.w,
         vertical: 13.5.h,
       ),
-      fillColor: AppColor.textFieldColor,
+      fillColor: backgroundColor ?? AppColor.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(
-          color: Colors.transparent,
+        borderSide: BorderSide(
+          color: borderColor ?? Colors.transparent,
         ),
       ),
       focusedBorder: OutlineInputBorder(
@@ -96,5 +110,6 @@ Widget textField({
         ),
       ),
     ),
+    onChanged: onChanged,
   );
 }

@@ -2,6 +2,8 @@ part of '../assign_task_screen.dart';
 
 Widget assignToAndCategorySegment({
   required TasksController tasksController,
+  required TextEditingController assignToSearchController,
+  required TextEditingController categorySearchController,
 }) {
   final userController = Get.put(UserController());
   var allUsersModelList = <AllUsersModel>[];
@@ -13,7 +15,9 @@ Widget assignToAndCategorySegment({
     children: [
       InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: () => showAssignToDialog(),
+        onTap: () => showAssignToDialog(
+          assignToSearchController: assignToSearchController,
+        ),
         child: Container(
           width: 156,
           height: 56,
@@ -69,7 +73,7 @@ Widget assignToAndCategorySegment({
               ),
           ],
           onChanged: (value) {
-            tasksController.category.value = value.toString();
+            // tasksController.category.value = value.toString();
           },
         ),
       ),
