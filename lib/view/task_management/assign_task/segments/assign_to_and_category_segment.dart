@@ -76,6 +76,7 @@ Widget assignToAndCategorySegment({
         borderRadius: BorderRadius.circular(20),
         onTap: () => showCategoryDialog(
           filterController: filterController,
+          tasksController: tasksController,
         ),
         child: Container(
           width: 156,

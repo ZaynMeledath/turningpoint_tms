@@ -2,17 +2,22 @@ part of '../assign_task_screen.dart';
 
 Future<Object?> showCategoryDialog({
   required FilterController filterController,
+  required TasksController tasksController,
 }) async {
   return Get.dialog(
     useSafeArea: true,
     barrierColor: Colors.transparent,
-    categoryDialog(filterController: filterController),
+    categoryDialog(
+      filterController: filterController,
+      tasksController: tasksController,
+    ),
     transitionCurve: Curves.easeInOut,
   );
 }
 
 Widget categoryDialog({
   required FilterController filterController,
+  required TasksController tasksController,
 }) {
   return Container(
       margin: EdgeInsets.only(
@@ -58,9 +63,21 @@ Widget categoryDialog({
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            onChanged: (value) =>
-                                filterController.selectOrUnselectCategoryFilter(
-                                    filterKey: category),
+                            onChanged: (value) {
+                              filterController.selectOrUnselectCategoryFilter(
+                                  filterKey: category);
+                              // if (filterController
+                              //         .categoryFilterModel[category] ==
+                              //     true) {
+                              //   tasksController.addToAssignToList(
+
+                              //   );
+                              // } else {
+                              //   tasksController.removeFromAssignToList(
+                              //     email: email,
+                              //   );
+                              // }
+                            },
                           ),
                         ),
                       ),

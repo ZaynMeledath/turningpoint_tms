@@ -106,6 +106,18 @@ Widget assignToDialog({
                           onTap: () {
                             filterController.selectOrUnselectAssignedToFilter(
                                 filterKey: email.toString());
+
+                            if (filterController.assignedToFilterModel[email] ==
+                                true) {
+                              tasksController.addToAssignToList(
+                                name: name,
+                                email: email,
+                              );
+                            } else {
+                              tasksController.removeFromAssignToList(
+                                email: email,
+                              );
+                            }
                           },
                           child: Container(
                             color: Colors.transparent,
