@@ -53,25 +53,25 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   }
 
   void animateLottie() async {
-    if (!lottieController.isDismissed) {
-      try {
-        animationCounter++;
-        lottieController
-          ..reset()
-          ..forward();
-        await Future.delayed(
-          Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
-        );
-        animateLottie();
-      } catch (e) {
+    try {
+      animationCounter++;
+      lottieController
+        ..reset()
+        ..forward();
+      await Future.delayed(
+        Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+      );
+      if (!lottieController.isDismissed) {
         animateLottie();
       }
+    } catch (e) {
+      return;
     }
   }
 
   @override
   void dispose() {
-    // lottieController.dispose();
+    lottieController.dispose();
     taskSearchController.dispose();
     categorySearchController.dispose();
     assignedSearchController.dispose();

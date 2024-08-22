@@ -48,19 +48,19 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   }
 
   void animateLottie() async {
-    if (!lottieController.isDismissed) {
-      try {
-        animationCounter++;
-        lottieController
-          ..reset()
-          ..forward();
-        await Future.delayed(
-          Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
-        );
-        animateLottie();
-      } catch (e) {
+    try {
+      animationCounter++;
+      lottieController
+        ..reset()
+        ..forward();
+      await Future.delayed(
+        Duration(milliseconds: animationCounter < 2 ? 1500 : 15000),
+      );
+      if (!lottieController.isDismissed) {
         animateLottie();
       }
+    } catch (e) {
+      return;
     }
   }
 
