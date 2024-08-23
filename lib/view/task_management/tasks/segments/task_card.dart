@@ -132,8 +132,13 @@ Widget taskCard({
                               children: [
                                 TextSpan(
                                   text: isDelegated
-                                      ? taskModel.assignedTo
-                                      : taskModel.createdBy,
+                                      ? '${taskModel.assignedTo?.first}'
+                                          .split('@')[0]
+                                          .toUpperCase()
+                                      : taskModel.createdBy
+                                          .toString()
+                                          .split('@')[0]
+                                          .toUpperCase(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,

@@ -14,9 +14,8 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
   //Email is the key and Name is the value
-  RxMap<String, String> assignToMap = RxMap<String, String>();
+  RxMap<String, String> assignToList = RxMap<String, String>();
   RxString selectedCategory = RxString('');
-
   RxList<String> categoriesList = RxList<String>();
 
   RxList<AllUsersModel> assignToSearchList = RxList<AllUsersModel>();
@@ -228,8 +227,8 @@ class TasksController extends GetxController {
     await tasksRepository.assignTask(
       title: title,
       description: description,
-      category: 'IT',
-      assignTo: assignToMap.keys.first,
+      category: selectedCategory.value,
+      assignTo: assignToList.keys.toList(),
       priority: taskPriority.value,
       dueDate: dueDateString,
       reminderFrequency: null,
@@ -245,14 +244,14 @@ class TasksController extends GetxController {
     required String name,
     required String email,
   }) {
-    assignToMap.addAll({email: name});
+    assignToList.addAll({email: name});
   }
 
 //====================Delete user from AssignToList====================//
   void removeFromAssignToList({
     required String email,
   }) {
-    assignToMap.remove(email);
+    assignToList.remove(email);
   }
 
 //====================Get All Users Performance====================//

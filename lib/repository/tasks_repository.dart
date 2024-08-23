@@ -53,7 +53,7 @@ class TasksRepository {
     required String title,
     required String description,
     required String category,
-    required String assignTo,
+    required List<String> assignTo,
     required String priority,
     required String dueDate,
     required String? reminderFrequency,

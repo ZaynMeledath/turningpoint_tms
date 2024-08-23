@@ -33,7 +33,7 @@ class TaskModel {
   String? category;
   String? createdBy;
   String? currentUser;
-  String? assignedTo;
+  List<dynamic>? assignedTo;
   String? priority;
   String? dueDate;
   String? status;

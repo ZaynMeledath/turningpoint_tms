@@ -97,8 +97,7 @@ class TaskDetailsScreen extends StatelessWidget {
                     size: 28.w,
                   ),
                   taskDetailsAssignedContainer(
-                    name: taskModel.assignedTo
-                        .toString()
+                    name: '${taskModel.assignedTo?.first}'
                         .split('@')[0]
                         .toUpperCase(),
                     email: taskModel.assignedTo.toString(),

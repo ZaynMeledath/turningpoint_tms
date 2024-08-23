@@ -26,7 +26,7 @@ Widget assignToAndCategorySegment({
           ),
           child: Obx(
             () {
-              final assignToList = tasksController.assignToMap;
+              final assignToList = tasksController.assignToList;
               if (assignToList.isNotEmpty) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
