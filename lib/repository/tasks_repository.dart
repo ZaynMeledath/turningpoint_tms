@@ -37,7 +37,7 @@ class TasksRepository {
   }
 
 //====================Assign Task====================//
-  Future<List<dynamic>> getCategories() async {
+  Future<List<dynamic>?> getCategories() async {
     final response = await ApiService().sendRequest(
       url: ApiEndpoints.getCategories,
       requestMethod: RequestMethod.GET,

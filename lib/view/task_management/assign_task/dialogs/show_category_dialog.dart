@@ -54,55 +54,58 @@ Widget categoryDialog({
                           tasksController.selectedCategory.value = category;
                           Get.back();
                         },
-                        child: Row(
-                          children: [
-                            DefaultTextStyle(
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                              ),
-                              child: const Text(
-                                '⦿',
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 8.h,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color.fromRGBO(72, 73, 73, 0.4),
+                                Color.fromRGBO(40, 45, 49, 0.8),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
                             ),
-                            SizedBox(width: 8.w),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w,
-                                  vertical: 8.h,
+                            border: Border.all(
+                              color: Colors.blueGrey.withOpacity(.4),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              DefaultTextStyle(
+                                style: TextStyle(
+                                  fontSize: 18.sp,
                                 ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(
-                                    color: Colors.white70,
-                                  ),
+                                child: const Text(
+                                  '⦿',
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                child: Center(
-                                  child: DefaultTextStyle(
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                    ),
-                                    child: Text(
-                                      category,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                              ),
+                              SizedBox(width: 8.w),
+                              DefaultTextStyle(
+                                style: TextStyle(
+                                  fontSize: 18.sp,
+                                ),
+                                child: Text(
+                                  category,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                                  .animate(
+                                    key: GlobalKey(),
                                   )
-                                      .animate(
-                                        key: GlobalKey(),
-                                      )
-                                      .slideX(
-                                        begin: -.06,
-                                        delay: Duration(
-                                            milliseconds: 30 * (index + 1)),
-                                        duration:
-                                            const Duration(milliseconds: 700),
-                                        curve: Curves.elasticOut,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ],
+                                  .slideX(
+                                    begin: -.06,
+                                    delay: Duration(
+                                        milliseconds: 30 * (index + 1)),
+                                    duration: const Duration(milliseconds: 700),
+                                    curve: Curves.elasticOut,
+                                  ),
+                            ],
+                          ),
                         ),
                       ),
                     );
