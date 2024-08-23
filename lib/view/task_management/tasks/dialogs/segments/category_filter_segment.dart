@@ -51,7 +51,7 @@ Widget categoryFilterSegment({
                         fillColor: WidgetStatePropertyAll(
                             filterController.categoryFilterModel[category] ==
                                     true
-                                ? AppColor.themeGreen
+                                ? AppColors.themeGreen
                                 : Colors.transparent),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),

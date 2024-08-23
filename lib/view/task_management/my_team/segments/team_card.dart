@@ -75,7 +75,7 @@ Widget teamCard({
             Icon(
               Icons.email,
               size: 16.sp,
-              color: AppColor.themeGreen.withOpacity(.8),
+              color: AppColors.themeGreen.withOpacity(.8),
             ),
             SizedBox(width: 6.w),
             Text(
@@ -93,7 +93,7 @@ Widget teamCard({
             Icon(
               Icons.phone,
               size: 16.sp,
-              color: AppColor.themeGreen.withOpacity(.8),
+              color: AppColors.themeGreen.withOpacity(.8),
             ),
             SizedBox(width: 6.w),
             Text(
@@ -111,7 +111,7 @@ Widget teamCard({
             Icon(
               Icons.work,
               size: 16.sp,
-              color: AppColor.themeGreen.withOpacity(.8),
+              color: AppColors.themeGreen.withOpacity(.8),
             ),
             SizedBox(width: 6.w),
             Text(
@@ -128,7 +128,7 @@ Widget teamCard({
             Icon(
               Icons.manage_accounts_rounded,
               size: 16.sp,
-              color: AppColor.themeGreen.withOpacity(.8),
+              color: AppColors.themeGreen.withOpacity(.8),
             ),
             SizedBox(width: 6.w),
             Expanded(

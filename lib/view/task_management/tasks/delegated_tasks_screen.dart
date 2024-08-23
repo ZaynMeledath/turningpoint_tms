@@ -130,8 +130,8 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                     automaticallyImplyLeading: false,
                     toolbarHeight: 50.h,
                     pinned: true,
-                    backgroundColor: AppColor.scaffoldBackgroundColor,
-                    surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                    backgroundColor: AppColors.scaffoldBackgroundColor,
+                    surfaceTintColor: AppColors.scaffoldBackgroundColor,
                     flexibleSpace: FlexibleSpaceBar(
                       background: tasksTabBar(tabController: tabController),
                     ),

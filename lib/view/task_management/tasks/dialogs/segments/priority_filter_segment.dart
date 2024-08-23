@@ -61,7 +61,7 @@ Widget priorityFilterSegment({
                         fillColor: WidgetStatePropertyAll(
                             filterController.priorityFilterModel[priority] ==
                                     true
-                                ? AppColor.themeGreen
+                                ? AppColors.themeGreen
                                 : Colors.transparent),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),

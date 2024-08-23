@@ -62,14 +62,14 @@ Widget dashboardStatusOverviewSection({
                 status: Status.completed,
                 count: completedMyTasksCount + completedDelegatedTasksCount,
                 icon: StatusIcons.completed,
-                iconColor: AppColor.themeGreen,
+                iconColor: AppColors.themeGreen,
               ),
               dashboardStatusOverviewContainer(
                 status: 'On Time',
                 count: tasksController.completedOnTimeMyTasksList.length +
                     tasksController.completedOnTimeDelegatedTasksList.length,
                 icon: Icons.schedule,
-                iconColor: AppColor.themeGreen,
+                iconColor: AppColors.themeGreen,
               ),
               dashboardStatusOverviewContainer(
                 status: 'Delayed',

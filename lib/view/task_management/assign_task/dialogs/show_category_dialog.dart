@@ -28,7 +28,7 @@ Widget categoryDialog({
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: AppColor.textFieldColor,
+        color: AppColors.textFieldColor,
       ),
       child: Column(
         children: [

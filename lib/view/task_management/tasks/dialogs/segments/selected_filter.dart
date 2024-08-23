@@ -17,7 +17,7 @@ Widget selectedFilter({
               '$title : ',
               style: TextStyle(
                 fontSize: 14.5.sp,
-                color: AppColor.themeGreen,
+                color: AppColors.themeGreen,
               ),
             ),
             Flexible(
@@ -29,7 +29,7 @@ Widget selectedFilter({
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(right: 8.w),
                     child: Chip(
-                      backgroundColor: AppColor.bottomSheetColor,
+                      backgroundColor: AppColors.bottomSheetColor,
                       side: const BorderSide(
                         color: Colors.white12,
                       ),

@@ -104,7 +104,7 @@ Widget assignedFilterSegment({
                                     filterController
                                             .assignedByFilterModel[email] ==
                                         true
-                                ? AppColor.themeGreen
+                                ? AppColors.themeGreen
                                 : Colors.transparent,
                           ),
                           shape: RoundedRectangleBorder(

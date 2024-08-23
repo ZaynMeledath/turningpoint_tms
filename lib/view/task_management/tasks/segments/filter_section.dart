@@ -39,12 +39,12 @@ Widget filterSection({
                 width: 45.w,
                 height: 42.w,
                 decoration: const BoxDecoration(
-                  color: AppColor.textFieldColor,
+                  color: AppColors.textFieldColor,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.filter_list,
-                  color: AppColor.themeGreen,
+                  color: AppColors.themeGreen,
                 ),
               ),
             ),

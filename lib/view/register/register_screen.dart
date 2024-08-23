@@ -115,7 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: 60,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: AppColor.textFieldColor,
+                          color: AppColors.textFieldColor,
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Center(
@@ -242,7 +242,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
-                              color: AppColor.themeGreen,
+                              color: AppColors.themeGreen,
                             ),
                           ),
                         ),

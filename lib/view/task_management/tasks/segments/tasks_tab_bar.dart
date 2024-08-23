@@ -20,8 +20,8 @@ Widget tasksTabBar({
     splashBorderRadius: BorderRadius.circular(16),
     indicatorPadding: EdgeInsets.only(bottom: 2.h),
     // dividerColor: AppColor.themeGreen.withOpacity(.2),
-    indicatorColor: AppColor.themeGreen,
-    labelColor: AppColor.themeGreen,
+    indicatorColor: AppColors.themeGreen,
+    labelColor: AppColors.themeGreen,
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     tabs: [

@@ -19,7 +19,7 @@ Widget filterItem({
           width: 10.w,
           height: double.maxFinite,
           duration: const Duration(milliseconds: 300),
-          color: isActive ? AppColor.themeGreen : Colors.transparent,
+          color: isActive ? AppColors.themeGreen : Colors.transparent,
         ),
         // : const SizedBox(),
         SizedBox(width: 10.w),

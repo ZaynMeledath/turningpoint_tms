@@ -52,7 +52,7 @@ Widget frequencyFilterSegment({
                         fillColor: WidgetStatePropertyAll(
                             filterController.frequencyFilterModel[frequency] ==
                                     true
-                                ? AppColor.themeGreen
+                                ? AppColors.themeGreen
                                 : Colors.transparent),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),

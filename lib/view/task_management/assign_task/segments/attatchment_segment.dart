@@ -28,7 +28,7 @@ Widget attatchmentSegment() {
               width: double.maxFinite,
               height: 200.h,
               decoration: const BoxDecoration(
-                color: Colors.lightBlue,
+                color: AppColors.bottomSheetColor,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(12),
                 ),

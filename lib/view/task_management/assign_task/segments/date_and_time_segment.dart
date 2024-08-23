@@ -47,7 +47,7 @@ Widget dateAndTimeSegment({
                   width: 61.w,
                   height: 61.w,
                   decoration: const BoxDecoration(
-                    color: AppColor.textFieldColor,
+                    color: AppColors.textFieldColor,
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
@@ -102,7 +102,7 @@ Widget dateAndTimeSegment({
                   width: 61.w,
                   height: 61.w,
                   decoration: const BoxDecoration(
-                    color: AppColor.textFieldColor,
+                    color: AppColors.textFieldColor,
                     shape: BoxShape.circle,
                   ),
                   child: const Center(

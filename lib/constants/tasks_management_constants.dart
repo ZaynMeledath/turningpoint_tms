@@ -20,6 +20,6 @@ class StatusIcons {
 class StatusIconColor {
   static const pending = Colors.orange;
   static const inProgress = Colors.blue;
-  static const completed = AppColor.themeGreen;
+  static const completed = AppColors.themeGreen;
   static const overdue = Colors.red;
 }

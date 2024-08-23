@@ -15,7 +15,7 @@ Widget dashboardTabBar({
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     indicator: BoxDecoration(
-      color: AppColor.themeGreen,
+      color: AppColors.themeGreen,
       borderRadius: BorderRadius.circular(16),
     ),
     unselectedLabelColor: Colors.white60,

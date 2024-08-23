@@ -60,7 +60,7 @@ class _TasksHomeState extends State<TasksHome> {
         width: 50.w,
         height: 50.w,
         child: FloatingActionButton(
-          backgroundColor: AppColor.themeGreen,
+          backgroundColor: AppColors.themeGreen,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),
@@ -85,13 +85,13 @@ class _TasksHomeState extends State<TasksHome> {
             children: [
               Icon(
                 titleIconMap.values.elementAt(index),
-                color: isActive ? AppColor.themeGreen : Colors.grey,
+                color: isActive ? AppColors.themeGreen : Colors.grey,
               ),
               Text(
                 titleIconMap.keys.elementAt(index),
                 style: TextStyle(
                   fontSize: 12.5.sp,
-                  color: isActive ? AppColor.themeGreen : Colors.grey,
+                  color: isActive ? AppColors.themeGreen : Colors.grey,
                 ),
               )
             ],

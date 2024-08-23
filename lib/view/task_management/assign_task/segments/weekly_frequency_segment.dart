@@ -14,7 +14,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
         padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: AppColor.textFieldColor,
+          color: AppColors.textFieldColor,
         ),
         child: Center(
           child: Column(
@@ -39,7 +39,7 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
                           fillColor: WidgetStateProperty.resolveWith<Color?>(
                             (Set<WidgetState> states) {
                               if (states.contains(WidgetState.selected)) {
-                                return AppColor.themeGreen;
+                                return AppColors.themeGreen;
                               }
                               return Colors.transparent;
                             },

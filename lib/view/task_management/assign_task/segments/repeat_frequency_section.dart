@@ -26,7 +26,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                   fillColor: WidgetStateProperty.resolveWith<Color?>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return AppColor.themeGreen;
+                        return AppColors.themeGreen;
                       }
                       return Colors.transparent;
                     },
@@ -56,7 +56,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                               borderRadius: BorderRadius.circular(20),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: AppColor.textFieldColor,
+                                fillColor: AppColors.textFieldColor,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),

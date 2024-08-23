@@ -89,7 +89,7 @@ Widget textField({
         horizontal: 14.w,
         vertical: 13.5.h,
       ),
-      fillColor: backgroundColor ?? AppColor.textFieldColor,
+      fillColor: backgroundColor ?? AppColors.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),

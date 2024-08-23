@@ -15,7 +15,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
         padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: AppColor.textFieldColor,
+          color: AppColors.textFieldColor,
         ),
         child: Center(
           child: Column(

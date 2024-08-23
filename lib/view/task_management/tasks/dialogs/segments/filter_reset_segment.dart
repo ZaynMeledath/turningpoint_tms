@@ -46,7 +46,7 @@ Widget filterResetSegment({
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: AppColor.themeGreen,
+              color: AppColors.themeGreen,
             ),
             child: Center(
               child: Text(

@@ -33,7 +33,7 @@ Widget priorityTabBar({
         height: 62.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: AppColor.textFieldColor,
+          color: AppColors.textFieldColor,
         ),
         child: TabBar(
           onTap: (index) => tasksController.changeTaskPriority(index),
@@ -52,7 +52,7 @@ Widget priorityTabBar({
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             gradient: const LinearGradient(
-              colors: [AppColor.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
+              colors: [AppColors.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),

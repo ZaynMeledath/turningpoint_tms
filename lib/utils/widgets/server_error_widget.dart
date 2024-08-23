@@ -26,7 +26,7 @@ Widget serverErrorWidget({
           width: 90.w,
           height: 35.w,
           decoration: BoxDecoration(
-            color: AppColor.themeGreen.withOpacity(.9),
+            color: AppColors.themeGreen.withOpacity(.9),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Center(

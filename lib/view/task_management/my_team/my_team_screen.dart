@@ -75,8 +75,8 @@ class _MyTeamScreenState extends State<MyTeamScreen>
               SliverAppBar(
                 pinned: true,
                 toolbarHeight: 50.h,
-                backgroundColor: AppColor.scaffoldBackgroundColor,
-                surfaceTintColor: AppColor.scaffoldBackgroundColor,
+                backgroundColor: AppColors.scaffoldBackgroundColor,
+                surfaceTintColor: AppColors.scaffoldBackgroundColor,
                 flexibleSpace: FlexibleSpaceBar(
                   background:
                       teamTabBar(tabController: tabController).animate().slideX(

@@ -13,7 +13,7 @@ Widget cardActionButton({
   double? iconSize,
   double? textSize,
 }) {
-  Color splashColor = AppColor.themeGreen;
+  Color splashColor = AppColors.themeGreen;
 
   switch (title) {
     case 'In Progress':

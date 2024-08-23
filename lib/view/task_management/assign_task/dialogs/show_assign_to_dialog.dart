@@ -39,7 +39,7 @@ Widget assignToDialog({
         height: 380,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: AppColor.textFieldColor,
+          color: AppColors.textFieldColor,
         ),
         child: Material(
           color: Colors.transparent,
@@ -171,7 +171,7 @@ Widget assignToDialog({
                                         filterController.assignedToFilterModel[
                                                     email] ==
                                                 true
-                                            ? AppColor.themeGreen
+                                            ? AppColors.themeGreen
                                             : Colors.transparent,
                                       ),
                                       shape: RoundedRectangleBorder(

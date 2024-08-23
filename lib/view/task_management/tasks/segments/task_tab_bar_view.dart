@@ -54,7 +54,7 @@ Widget taskTabBarView({
       children: [
         SizedBox(height: 120.h),
         SpinKitCubeGrid(
-          color: AppColor.themeGreen,
+          color: AppColors.themeGreen,
           size: 50.sp,
         ),
       ],

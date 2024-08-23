@@ -11,7 +11,7 @@ Widget customButton({
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
       gradient: const LinearGradient(
-        colors: [AppColor.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
+        colors: [AppColors.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ),

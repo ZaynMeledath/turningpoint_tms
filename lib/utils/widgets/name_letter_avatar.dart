@@ -23,7 +23,7 @@ Widget nameLetterAvatar({
     height: circleDiameter ?? 38.w,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: backgroundColor ?? AppColor.themeGreen,
+      color: backgroundColor ?? AppColors.themeGreen,
     ),
     child: Center(
       child: DefaultTextStyle(

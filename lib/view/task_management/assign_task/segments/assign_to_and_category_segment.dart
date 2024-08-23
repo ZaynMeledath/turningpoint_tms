@@ -21,7 +21,7 @@ Widget assignToAndCategorySegment({
           width: 156,
           height: 56,
           decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
+            color: AppColors.textFieldColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Obx(
@@ -82,7 +82,7 @@ Widget assignToAndCategorySegment({
           width: 156,
           height: 56,
           decoration: BoxDecoration(
-            color: AppColor.textFieldColor,
+            color: AppColors.textFieldColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Obx(

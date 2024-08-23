@@ -28,7 +28,7 @@ Future<Object?> showFilterBottomSheet({
       () => Container(
         // height: 480.h,
         decoration: const BoxDecoration(
-          color: AppColor.bottomSheetColor,
+          color: AppColors.bottomSheetColor,
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(16),
           ),

@@ -33,11 +33,11 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Lufga',
           colorScheme: ColorScheme.fromSeed(
             brightness: Brightness.dark,
-            seedColor: AppColor.themeGreen,
+            seedColor: AppColors.themeGreen,
           ),
           useMaterial3: true,
           brightness: Brightness.dark,
-          scaffoldBackgroundColor: AppColor.scaffoldBackgroundColor,
+          scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
         ),
         home: authToken == null ? const LoginScreen() : const TasksHome(),
         // home: TaskDetailsScreen(
