@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -14,6 +15,7 @@ import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
+import 'package:record/record.dart';
 
 part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
@@ -28,6 +30,7 @@ part 'segments/swipe_to_add.dart';
 part 'dialogs/show_link_dialog.dart';
 part 'dialogs/show_assign_to_dialog.dart';
 part 'dialogs/show_category_dialog.dart';
+part 'dialogs/show_reminder_bottom_sheet.dart';
 
 class AssignTaskScreen extends StatefulWidget {
   const AssignTaskScreen({super.key});
@@ -46,6 +49,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   final filterController = FilterController();
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
+  final recorder = AudioRecorder();
 
   @override
   void initState() {
@@ -174,7 +178,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       curve: Curves.elasticOut,
                     ),
                 SizedBox(height: 4.5.h),
-                attatchmentSegment().animate().slideY(
+                attatchmentSegment(
+                  assignTaskController: assignTaskController,
+                  recorder: recorder,
+                ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 280),
                       duration: const Duration(milliseconds: 1000),

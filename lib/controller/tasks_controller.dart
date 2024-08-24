@@ -131,6 +131,9 @@ class TasksController extends GetxController {
   //     },
   //   );
   // }
+
+//====================Reset Task Controller====================//
+  void resetTasksController() {}
 }
 
 //====================ENUMS====================//

@@ -100,7 +100,7 @@ class TaskDetailsScreen extends StatelessWidget {
                     name: '${taskModel.assignedTo?.first}'
                         .split('@')[0]
                         .toUpperCase(),
-                    email: taskModel.assignedTo.toString(),
+                    email: '${taskModel.assignedTo?.first}',
                     isAssignedBy: false,
                   ),
                 ],

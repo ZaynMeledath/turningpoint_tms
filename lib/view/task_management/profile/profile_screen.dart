@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/section_title_container.dart';
 part 'segments/profile_option.dart';
@@ -63,25 +65,33 @@ class ProfileScreen extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: 100.w,
-                    height: 46.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: const Color.fromRGBO(21, 25, 28, 1),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.white38,
-                          blurRadius: 1.2,
-                          blurStyle: BlurStyle.outer,
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Log Out',
-                        style: TextStyle(
-                          fontSize: 16.sp,
+                  child: InkWell(
+                    onTap: () {
+                      // tasksController.resetTasksController();
+                      Get.off(
+                        () => const LoginScreen(),
+                      );
+                    },
+                    child: Container(
+                      width: 100.w,
+                      height: 46.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color.fromRGBO(21, 25, 28, 1),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.white38,
+                            blurRadius: 1.2,
+                            blurStyle: BlurStyle.outer,
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Log Out',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                          ),
                         ),
                       ),
                     ),

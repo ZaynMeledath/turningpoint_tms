@@ -26,7 +26,7 @@ class TasksModelResponse {
 }
 
 class TaskModel {
-  Reminder? reminder;
+  List<Reminder>? reminders;
   String? id;
   String? title;
   String? description;
@@ -45,7 +45,7 @@ class TaskModel {
   List<dynamic>? statusChanges;
 
   TaskModel({
-    this.reminder,
+    this.reminders,
     this.id,
     this.title,
     this.description,
@@ -65,8 +65,12 @@ class TaskModel {
   });
 
   TaskModel.fromJson(Map<String, dynamic> json) {
-    reminder =
-        json['reminder'] != null ? Reminder.fromJson(json['reminder']) : null;
+    if (json['reminders'] != null) {
+      reminders = [];
+      json['reminders']
+          .forEach((item) => reminders!.add(Reminder.fromJson(item)));
+    }
+
     id = json['_id'];
     title = json['title'];
     description = json['description'];
@@ -77,30 +81,31 @@ class TaskModel {
     priority = json['priority'];
     dueDate = json['dueDate'];
     status = json['status'];
-    // if (json['attachments'] != null) {
-    //   attachments = [];
-    //   json['attachments'].forEach((item) {
-    //     attachments!.add(item);
-    //   });
-    // }
+    if (json['attachments'] != null) {
+      attachments = [];
+      json['attachments'].forEach((item) {
+        attachments!.add(item);
+      });
+    }
     attachments = json['attachments'];
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    // if (json['statusChanges'] != null) {
-    //   statusChanges = [];
-    //   json['statusChanges'].forEach((v) {
-    //     statusChanges!.add(v);
-    //   });
-    // }
+    if (json['statusChanges'] != null) {
+      statusChanges = [];
+      json['statusChanges'].forEach((v) {
+        statusChanges!.add(v);
+      });
+    }
     statusChanges = json['statusChanges'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (reminder != null) {
-      data['reminder'] = reminder!.toJson();
+
+    if (reminders != null) {
+      data['reminders'] = reminders!.map((v) => v.toJson()).toList();
     }
     data['_id'] = id;
     data['title'] = title;
@@ -112,40 +117,40 @@ class TaskModel {
     data['priority'] = priority;
     data['dueDate'] = dueDate;
     data['status'] = status;
-    // if (attachments != null) {
-    //   data['attachments'] = attachments!.map((v) => v.toJson()).toList();
-    // }
+    if (attachments != null) {
+      data['attachments'] = attachments!.map((v) => v.toJson()).toList();
+    }
     data['attachments'] = attachments;
     data['isDelayed'] = isDelayed;
     data['closedAt'] = closedAt;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    // if (statusChanges != null) {
-    //   data['statusChanges'] = statusChanges!.map((v) => v.toJson()).toList();
-    // }
+    if (statusChanges != null) {
+      data['statusChanges'] = statusChanges!.map((v) => v.toJson()).toList();
+    }
     data['statusChanges'] = statusChanges;
     return data;
   }
 }
 
 class Reminder {
-  String? frequency;
-  String? startDate;
+  int? time;
+  String? unit;
 
   Reminder({
-    this.frequency,
-    this.startDate,
+    this.time,
+    this.unit,
   });
 
   Reminder.fromJson(Map<String, dynamic> json) {
-    frequency = json['frequency'];
-    startDate = json['startDate'];
+    time = json['time'];
+    unit = json['unit'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['frequency'] = frequency;
-    data['startDate'] = startDate;
+    data['time'] = time;
+    data['unit'] = unit;
     return data;
   }
 }

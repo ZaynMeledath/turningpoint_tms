@@ -26,6 +26,10 @@ class AssignTaskController extends GetxController {
   RxBool shouldRepeatTask = false.obs;
   Rxn<RepeatFrequency?> taskRepeatFrequency = Rxn<RepeatFrequency>();
 
+//====================Voice Recorder====================//
+  RxBool isRecording = false.obs;
+  RxString voiceRecordPath = ''.obs;
+
   RxMap<String, bool> daysMap = {
     'Sun': false,
     'Mon': false,

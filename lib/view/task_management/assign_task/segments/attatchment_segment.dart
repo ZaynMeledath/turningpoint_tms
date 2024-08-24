@@ -1,6 +1,9 @@
 part of '../assign_task_screen.dart';
 
-Widget attatchmentSegment() {
+Widget attatchmentSegment({
+  required AssignTaskController assignTaskController,
+  required AudioRecorder recorder,
+}) {
   return Row(
     children: [
       // IconButton(
@@ -22,7 +25,18 @@ Widget attatchmentSegment() {
         ),
       ),
       IconButton(
-        onPressed: () {},
+        onPressed: () async {
+          // final appDir = await getApplicationDocumentsDirectory();
+          // if (assignTaskController.isRecording.value) {
+          //   assignTaskController.voiceRecordPath.value =
+          //       await recorder.stop() ?? '';
+          // } else {
+          //   recorder.start(
+          //     const RecordConfig(),
+          //     path: '${appDir.path}/myRecording.wav',
+          //   );
+          // }
+        },
         icon: Icon(
           Icons.mic,
           color: Colors.white,
@@ -31,40 +45,7 @@ Widget attatchmentSegment() {
       ),
       IconButton(
         onPressed: () {
-          Get.bottomSheet(
-            Container(
-              width: double.maxFinite,
-              height: 200.h,
-              decoration: const BoxDecoration(
-                color: AppColors.bottomSheetColor,
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.alarm,
-                        color: Colors.white,
-                        size: 24.w,
-                      ),
-                      Text(
-                        'Add Task Reminders',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.blueGrey[500],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container()
-                ],
-              ),
-            ),
-            isDismissible: false,
-          );
+          showReminderBottomSheet();
         },
         icon: Icon(
           Icons.alarm,
