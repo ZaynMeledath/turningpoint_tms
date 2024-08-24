@@ -1,14 +1,14 @@
 part of '../assign_task_screen.dart';
 
 Future<Object?> showAssignToDialog({
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
   required FilterController filterController,
   required TextEditingController assignToSearchController,
 }) async {
   return Get.dialog(
     assignToDialog(
       searchController: assignToSearchController,
-      tasksController: tasksController,
+      assignTaskController: assignTaskController,
       filterController: filterController,
     ),
     useSafeArea: true,
@@ -19,7 +19,7 @@ Future<Object?> showAssignToDialog({
 
 Widget assignToDialog({
   required TextEditingController searchController,
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
   required FilterController filterController,
 }) {
   final userController = Get.put(UserController());
@@ -53,8 +53,8 @@ Widget assignToDialog({
                     hintText: 'Search by Name/Email',
                     borderColor: Colors.grey.withOpacity(.3),
                     onChanged: (value) {
-                      tasksController.assignToSearchList.clear();
-                      tasksController.assignToSearchList.value = allUsers!
+                      assignTaskController.assignToSearchList.clear();
+                      assignTaskController.assignToSearchList.value = allUsers!
                           .where((allUsersModel) => allUsersModel.userName!
                               .toLowerCase()
                               .contains(value.toLowerCase()))
@@ -65,7 +65,7 @@ Widget assignToDialog({
                 child: Obx(
                   () {
                     final assignToSearchList =
-                        tasksController.assignToSearchList;
+                        assignTaskController.assignToSearchList;
                     return ListView.builder(
                       itemCount: assignToSearchList.isEmpty &&
                               searchController.text.isEmpty
@@ -109,12 +109,12 @@ Widget assignToDialog({
 
                             if (filterController.assignedToFilterModel[email] ==
                                 true) {
-                              tasksController.addToAssignToList(
+                              assignTaskController.addToAssignToList(
                                 name: name,
                                 email: email,
                               );
                             } else {
-                              tasksController.removeFromAssignToList(
+                              assignTaskController.removeFromAssignToList(
                                 email: email,
                               );
                             }
@@ -186,12 +186,13 @@ Widget assignToDialog({
                                         if (filterController
                                                 .assignedToFilterModel[email] ==
                                             true) {
-                                          tasksController.addToAssignToList(
+                                          assignTaskController
+                                              .addToAssignToList(
                                             name: name,
                                             email: email,
                                           );
                                         } else {
-                                          tasksController
+                                          assignTaskController
                                               .removeFromAssignToList(
                                             email: email,
                                           );

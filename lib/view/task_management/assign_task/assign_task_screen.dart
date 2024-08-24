@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/assign_task_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -44,6 +44,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController assignToSearchController;
   late final TextEditingController categorySearchController;
   final filterController = FilterController();
+  final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
 
   @override
@@ -63,7 +64,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     descriptionController.dispose();
     assignToSearchController.dispose();
     categorySearchController.dispose();
-    tasksController.dispose();
+    assignTaskController.dispose();
     super.dispose();
   }
 
@@ -113,7 +114,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 30.h),
                 titleTextField(
                   titleController: titleController,
-                  tasksController: tasksController,
+                  assignTaskController: assignTaskController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 40),
@@ -123,7 +124,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 32.h),
                 descriptionTextField(
                   descriptionController: descriptionController,
-                  tasksController: tasksController,
+                  assingTaskController: assignTaskController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 80),
@@ -132,6 +133,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     ),
                 SizedBox(height: 28.h),
                 assignToAndCategorySegment(
+                  assignTaskController: assignTaskController,
                   tasksController: tasksController,
                   filterController: filterController,
                   assignToSearchController: assignToSearchController,
@@ -145,7 +147,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 28.h),
                 priorityTabBar(
                   tabController: tabController,
-                  tasksController: tasksController,
+                  assignTaskController: assignTaskController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 160),
@@ -155,7 +157,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 SizedBox(height: 28.h),
                 dateAndTimeSegment(
                   context: context,
-                  tasksController: tasksController,
+                  assignTaskController: assignTaskController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 200),
@@ -164,7 +166,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     ),
                 SizedBox(height: 15.h),
                 repeatFrequencySection(
-                  tasksController: tasksController,
+                  assignTaskController: assignTaskController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 240),
@@ -184,7 +186,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           ),
         ),
         bottomNavigationBar: swipeToAdd(
-          tasksController: tasksController,
+          assignTaskController: assignTaskController,
           taskTitle: titleController.text.trim(),
           taskDescription: descriptionController.text.trim(),
         ).animate().slideY(

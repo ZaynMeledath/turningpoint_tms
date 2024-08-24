@@ -22,6 +22,14 @@ Widget attatchmentSegment() {
         ),
       ),
       IconButton(
+        onPressed: () {},
+        icon: Icon(
+          Icons.mic,
+          color: Colors.white,
+          size: 24.w,
+        ),
+      ),
+      IconButton(
         onPressed: () {
           Get.bottomSheet(
             Container(
@@ -33,18 +41,31 @@ Widget attatchmentSegment() {
                   top: Radius.circular(12),
                 ),
               ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.alarm,
+                        color: Colors.white,
+                        size: 24.w,
+                      ),
+                      Text(
+                        'Add Task Reminders',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.blueGrey[500],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container()
+                ],
+              ),
             ),
             isDismissible: false,
           );
         },
-        icon: Icon(
-          Icons.mic,
-          color: Colors.white,
-          size: 24.w,
-        ),
-      ),
-      IconButton(
-        onPressed: () {},
         icon: Icon(
           Icons.alarm,
           color: Colors.white,

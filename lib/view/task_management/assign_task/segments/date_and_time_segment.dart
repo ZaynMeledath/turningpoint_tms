@@ -4,7 +4,7 @@ part of '../assign_task_screen.dart';
 
 Widget dateAndTimeSegment({
   required BuildContext context,
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 6.w),
@@ -21,22 +21,22 @@ Widget dateAndTimeSegment({
               currentFocus.unfocus();
             }
 
-            tasksController.isTitleAndDescriptionEnabled.value = false;
+            assignTaskController.isTitleAndDescriptionEnabled.value = false;
             final date = await showDatePicker(
               context: context,
               firstDate: DateTime.now(),
               lastDate: DateTime(2030),
             );
             if (date != null) {
-              tasksController.taskDate.value = date;
-              tasksController.taskTime.value = await showTimePicker(
+              assignTaskController.taskDate.value = date;
+              assignTaskController.taskTime.value = await showTimePicker(
                     context: context,
                     initialTime: TimeOfDay.now(),
                   ) ??
                   TimeOfDay.now();
             }
             Future.delayed(Duration.zero, () {
-              tasksController.isTitleAndDescriptionEnabled.value = true;
+              assignTaskController.isTitleAndDescriptionEnabled.value = true;
             });
           },
           child: Padding(
@@ -59,7 +59,7 @@ Widget dateAndTimeSegment({
                 SizedBox(width: 8.w),
                 Obx(
                   () => Text(
-                    '${tasksController.taskDate.value.day} ${DateFormat.MMMM().format(tasksController.taskDate.value)}',
+                    '${assignTaskController.taskDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDate.value)}',
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: 14.sp,
@@ -84,14 +84,14 @@ Widget dateAndTimeSegment({
               currentFocus.unfocus();
             }
 
-            tasksController.isTitleAndDescriptionEnabled.value = false;
-            tasksController.taskTime.value = await showTimePicker(
+            assignTaskController.isTitleAndDescriptionEnabled.value = false;
+            assignTaskController.taskTime.value = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.now(),
                 ) ??
                 TimeOfDay.now();
             Future.delayed(Duration.zero, () {
-              tasksController.isTitleAndDescriptionEnabled.value = true;
+              assignTaskController.isTitleAndDescriptionEnabled.value = true;
             });
           },
           child: Padding(
@@ -114,7 +114,7 @@ Widget dateAndTimeSegment({
                 SizedBox(width: 8.w),
                 Obx(
                   () => Text(
-                    tasksController.taskTime.value.format(context),
+                    assignTaskController.taskTime.value.format(context),
                     style: TextStyle(
                       color: Colors.white60,
                       fontSize: 14.sp,

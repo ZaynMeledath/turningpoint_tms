@@ -2,11 +2,11 @@ part of '../assign_task_screen.dart';
 
 Widget descriptionTextField({
   required TextEditingController descriptionController,
-  required TasksController tasksController,
+  required AssignTaskController assingTaskController,
 }) {
   return TextFormField(
     controller: descriptionController,
-    enabled: tasksController.isTitleAndDescriptionEnabled.value,
+    enabled: assingTaskController.isTitleAndDescriptionEnabled.value,
     style: GoogleFonts.roboto(),
     maxLines: null,
     keyboardAppearance: Brightness.dark,

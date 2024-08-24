@@ -1,12 +1,14 @@
 part of '../assign_task_screen.dart';
 
-Widget monthlyFrequencySegment({required TasksController tasksController}) {
+Widget monthlyFrequencySegment({
+  required AssignTaskController assignTaskController,
+}) {
   const rowElementsCount = 8;
   return AnimatedOpacity(
-    opacity: tasksController.scaleMonthly.value ? 1 : 0,
+    opacity: assignTaskController.scaleMonthly.value ? 1 : 0,
     duration: const Duration(milliseconds: 400),
     child: AnimatedSlide(
-      offset: tasksController.scaleMonthly.value
+      offset: assignTaskController.scaleMonthly.value
           ? const Offset(0, 0)
           : const Offset(0, -.1),
       duration: const Duration(milliseconds: 1000),
@@ -41,7 +43,7 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                         child: Column(
                           children: [
                             Checkbox(
-                              value: tasksController.datesMap[j],
+                              value: assignTaskController.datesMap[j],
                               fillColor:
                                   WidgetStateProperty.resolveWith<Color?>(
                                 (Set<WidgetState> states) {
@@ -57,12 +59,12 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                               ),
                               visualDensity: VisualDensity.compact,
                               onChanged: (value) {
-                                tasksController.datesMap[j] =
-                                    value ?? tasksController.datesMap[j]!;
+                                assignTaskController.datesMap[j] =
+                                    value ?? assignTaskController.datesMap[j]!;
                               },
                             ),
                             Text(
-                              tasksController.datesMap.keys
+                              assignTaskController.datesMap.keys
                                   .elementAt(j - 1)
                                   .toString(),
                             ),

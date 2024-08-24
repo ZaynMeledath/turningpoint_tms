@@ -1,6 +1,8 @@
 part of '../assign_task_screen.dart';
 
-Widget repeatFrequencySection({required TasksController tasksController}) {
+Widget repeatFrequencySection({
+  required AssignTaskController assignTaskController,
+}) {
   return Column(
     children: [
       Obx(
@@ -22,7 +24,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                   ),
                 ),
                 Checkbox(
-                  value: tasksController.shouldRepeatTask.value,
+                  value: assignTaskController.shouldRepeatTask.value,
                   fillColor: WidgetStateProperty.resolveWith<Color?>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
@@ -35,9 +37,9 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   visualDensity: VisualDensity.compact,
-                  onChanged: tasksController.repeatCheckBoxOnChanged,
+                  onChanged: assignTaskController.repeatCheckBoxOnChanged,
                 ),
-                tasksController.shouldRepeatTask.value
+                assignTaskController.shouldRepeatTask.value
                     ? Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
@@ -52,7 +54,8 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                                   color: Colors.white70,
                                 ),
                               ),
-                              value: tasksController.taskRepeatFrequency.value,
+                              value: assignTaskController
+                                  .taskRepeatFrequency.value,
                               borderRadius: BorderRadius.circular(20),
                               decoration: InputDecoration(
                                 filled: true,
@@ -103,7 +106,7 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                                 ),
                               ],
                               onChanged:
-                                  tasksController.repeatFrequencyOnChanged,
+                                  assignTaskController.repeatFrequencyOnChanged,
                             ),
                           ),
                         ),
@@ -117,13 +120,15 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
       SizedBox(height: 13.5.h),
 //====================Day Frequency Segment====================//
       Obx(() {
-        switch (tasksController.taskRepeatFrequency.value) {
+        switch (assignTaskController.taskRepeatFrequency.value) {
           case RepeatFrequency.daily:
             return const SizedBox();
           case RepeatFrequency.weekly:
-            return weeklyFrequencySegment(tasksController: tasksController);
+            return weeklyFrequencySegment(
+                assignTaskController: assignTaskController);
           case RepeatFrequency.monthly:
-            return monthlyFrequencySegment(tasksController: tasksController);
+            return monthlyFrequencySegment(
+                assignTaskController: assignTaskController);
           default:
             return const SizedBox();
         }

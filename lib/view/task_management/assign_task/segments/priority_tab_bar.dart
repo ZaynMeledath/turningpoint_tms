@@ -2,7 +2,7 @@ part of '../assign_task_screen.dart';
 
 Widget priorityTabBar({
   required TabController tabController,
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
 }) {
   return Column(
     children: [
@@ -12,9 +12,10 @@ Widget priorityTabBar({
           Obx(
             () => Icon(
               Icons.flag,
-              color: tasksController.taskPriority.value == TaskPriority.low
+              color: assignTaskController.taskPriority.value == TaskPriority.low
                   ? Colors.white.withOpacity(.9)
-                  : tasksController.taskPriority.value == TaskPriority.medium
+                  : assignTaskController.taskPriority.value ==
+                          TaskPriority.medium
                       ? Colors.orange
                       : Colors.red,
             ),
@@ -36,7 +37,7 @@ Widget priorityTabBar({
           color: AppColors.textFieldColor,
         ),
         child: TabBar(
-          onTap: (index) => tasksController.changeTaskPriority(index),
+          onTap: (index) => assignTaskController.changeTaskPriority(index),
           controller: tabController,
           dividerColor: Colors.transparent,
           enableFeedback: true,

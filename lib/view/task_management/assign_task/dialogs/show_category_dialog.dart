@@ -2,6 +2,7 @@ part of '../assign_task_screen.dart';
 
 Future<Object?> showCategoryDialog({
   required FilterController filterController,
+  required AssignTaskController assignTaskController,
   required TasksController tasksController,
 }) async {
   return Get.dialog(
@@ -9,6 +10,7 @@ Future<Object?> showCategoryDialog({
     barrierColor: Colors.transparent,
     categoryDialog(
       filterController: filterController,
+      assignTaskController: assignTaskController,
       tasksController: tasksController,
     ),
     transitionCurve: Curves.easeInOut,
@@ -17,6 +19,7 @@ Future<Object?> showCategoryDialog({
 
 Widget categoryDialog({
   required FilterController filterController,
+  required AssignTaskController assignTaskController,
   required TasksController tasksController,
 }) {
   return Container(
@@ -51,7 +54,8 @@ Widget categoryDialog({
                       ),
                       child: GestureDetector(
                         onTap: () {
-                          tasksController.selectedCategory.value = category;
+                          assignTaskController.selectedCategory.value =
+                              category;
                           Get.back();
                         },
                         child: Container(

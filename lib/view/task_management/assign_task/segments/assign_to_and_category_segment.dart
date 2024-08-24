@@ -1,6 +1,7 @@
 part of '../assign_task_screen.dart';
 
 Widget assignToAndCategorySegment({
+  required AssignTaskController assignTaskController,
   required TasksController tasksController,
   required FilterController filterController,
   required TextEditingController assignToSearchController,
@@ -13,7 +14,7 @@ Widget assignToAndCategorySegment({
       InkWell(
         borderRadius: BorderRadius.circular(20),
         onTap: () => showAssignToDialog(
-          tasksController: tasksController,
+          assignTaskController: assignTaskController,
           filterController: filterController,
           assignToSearchController: assignToSearchController,
         ),
@@ -26,7 +27,7 @@ Widget assignToAndCategorySegment({
           ),
           child: Obx(
             () {
-              final assignToList = tasksController.assignToList;
+              final assignToList = assignTaskController.assignToList;
               if (assignToList.isNotEmpty) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -76,6 +77,7 @@ Widget assignToAndCategorySegment({
         borderRadius: BorderRadius.circular(20),
         onTap: () => showCategoryDialog(
           filterController: filterController,
+          assignTaskController: assignTaskController,
           tasksController: tasksController,
         ),
         child: Container(
@@ -87,7 +89,7 @@ Widget assignToAndCategorySegment({
           ),
           child: Obx(
             () {
-              final category = tasksController.selectedCategory;
+              final category = assignTaskController.selectedCategory;
               return Padding(
                 padding: EdgeInsets.symmetric(horizontal: 12.w),
                 child: Row(

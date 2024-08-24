@@ -1,7 +1,7 @@
 part of '../assign_task_screen.dart';
 
 Widget swipeToAdd({
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
   required String taskTitle,
   required String taskDescription,
 }) {
@@ -27,7 +27,7 @@ Widget swipeToAdd({
       elevation: 2,
       onSubmit: () async {
         try {
-          await tasksController.assignTask(
+          await assignTaskController.assignTask(
             title: taskTitle,
             description: taskDescription,
           );
