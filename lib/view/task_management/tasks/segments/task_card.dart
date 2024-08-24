@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
+import 'package:turning_point_tasks_app/utils/name_formatter.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
@@ -132,13 +133,15 @@ Widget taskCard({
                               children: [
                                 TextSpan(
                                   text: isDelegated
-                                      ? '${taskModel.assignedTo?.first}'
-                                          .split('@')[0]
-                                          .toUpperCase()
-                                      : taskModel.createdBy
-                                          .toString()
-                                          .split('@')[0]
-                                          .toUpperCase(),
+                                      ? nameFormatter(
+                                          name: '${taskModel.assignedTo?.first}'
+                                              .split('@')[0],
+                                        )
+                                      : nameFormatter(
+                                          name: taskModel.createdBy
+                                              .toString()
+                                              .split('@')[0],
+                                        ),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
