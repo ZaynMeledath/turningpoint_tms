@@ -23,3 +23,8 @@ class StatusIconColor {
   static const completed = AppColors.themeGreen;
   static const overdue = Colors.red;
 }
+
+class DefaultReminder {
+  static const defaultReminderTime = 10;
+  static const defaultReminderUnit = 'Minutes';
+}

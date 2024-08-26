@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
 class AssignTaskController extends GetxController {
@@ -19,12 +20,18 @@ class AssignTaskController extends GetxController {
   Rx<DateTime> taskDate = DateTime.now().obs;
   Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
 
+//====================Reminder====================//
+  RxInt reminderTime = DefaultReminder.defaultReminderTime.obs;
+  Rx<String> reminderUnit = DefaultReminder.defaultReminderUnit.obs;
+
+  RxList<Reminder> reminderList = RxList<Reminder>();
+
 //====================Priority====================//
   Rx<String> taskPriority = TaskPriority.low.obs;
 
 //====================Repeat Frequency Segment====================//
   RxBool shouldRepeatTask = false.obs;
-  Rxn<RepeatFrequency?> taskRepeatFrequency = Rxn<RepeatFrequency>();
+  Rxn<RepeatFrequency> taskRepeatFrequency = Rxn<RepeatFrequency>();
 
 //====================Voice Recorder====================//
   RxBool isRecording = false.obs;
@@ -61,6 +68,12 @@ class AssignTaskController extends GetxController {
         taskPriority.value = TaskPriority.high;
         break;
     }
+  }
+
+//====================Reset Reminder To Default====================//
+  void resetReminderToDefault() {
+    reminderTime.value = DefaultReminder.defaultReminderTime;
+    reminderUnit.value = DefaultReminder.defaultReminderUnit;
   }
 
 //====================Reset Days Map====================//
@@ -130,7 +143,9 @@ class AssignTaskController extends GetxController {
       dueDate: dueDateString,
       reminderFrequency: null,
       reminderStartDate: null,
-      repeatFrequency: null,
+      repeatFrequency: repeatFrequencyEnumToString(
+        repeatFrequency: taskRepeatFrequency.value,
+      ),
       repeatUntil: null,
       attachments: null,
     );
@@ -149,5 +164,34 @@ class AssignTaskController extends GetxController {
     required String email,
   }) {
     assignToList.remove(email);
+  }
+}
+
+//====================create Date Map====================//
+Map<int, bool> createDateMap() {
+  Map<int, bool> datesMap = {};
+
+  for (int i = 1; i <= totalDays; i++) {
+    datesMap[i] = false;
+  }
+
+  return datesMap;
+}
+
+//====================Repeat Frequency Enum to String====================//
+String? repeatFrequencyEnumToString({
+  required RepeatFrequency? repeatFrequency,
+}) {
+  switch (repeatFrequency) {
+    case RepeatFrequency.once:
+      return null;
+    case RepeatFrequency.daily:
+      return 'Daily';
+    case RepeatFrequency.weekly:
+      return 'Weekly';
+    case RepeatFrequency.monthly:
+      return 'Monthly';
+    default:
+      return null;
   }
 }

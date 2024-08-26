@@ -11,6 +11,7 @@ import 'package:turning_point_tasks_app/controller/assign_task_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
@@ -45,6 +46,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController descriptionController;
   late final TextEditingController assignToSearchController;
   late final TextEditingController categorySearchController;
+  late final TextEditingController reminderTimeTextController;
   final filterController = FilterController();
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
@@ -57,6 +59,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     descriptionController = TextEditingController();
     assignToSearchController = TextEditingController();
     categorySearchController = TextEditingController();
+    reminderTimeTextController = TextEditingController(
+        text: DefaultReminder.defaultReminderTime.toString());
     super.initState();
   }
 
@@ -67,6 +71,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     descriptionController.dispose();
     assignToSearchController.dispose();
     categorySearchController.dispose();
+    reminderTimeTextController.dispose();
     assignTaskController.dispose();
     super.dispose();
   }
@@ -180,6 +185,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                 attatchmentSegment(
                   assignTaskController: assignTaskController,
                   recorder: recorder,
+                  reminderTimeTextController: reminderTimeTextController,
                 ).animate().slideY(
                       begin: 1,
                       delay: const Duration(milliseconds: 280),

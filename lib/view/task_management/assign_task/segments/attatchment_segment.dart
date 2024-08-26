@@ -3,6 +3,7 @@ part of '../assign_task_screen.dart';
 Widget attatchmentSegment({
   required AssignTaskController assignTaskController,
   required AudioRecorder recorder,
+  required TextEditingController reminderTimeTextController,
 }) {
   return Row(
     children: [
@@ -45,7 +46,10 @@ Widget attatchmentSegment({
       ),
       IconButton(
         onPressed: () {
-          showReminderBottomSheet();
+          showReminderBottomSheet(
+            textController: reminderTimeTextController,
+            assignTaskController: assignTaskController,
+          );
         },
         icon: Icon(
           Icons.alarm,

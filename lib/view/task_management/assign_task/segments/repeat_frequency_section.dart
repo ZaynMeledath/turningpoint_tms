@@ -46,6 +46,7 @@ Widget repeatFrequencySection({
                           child: SizedBox(
                             width: 148.w,
                             child: DropdownButtonFormField(
+                              dropdownColor: AppColors.textFieldColor,
                               elevation: 2,
                               hint: Text(
                                 'Frequency',

@@ -157,14 +157,3 @@ class TaskPriority {
   static const medium = 'Medium';
   static const high = 'High';
 }
-
-//====================create Date Map====================//
-Map<int, bool> createDateMap() {
-  Map<int, bool> datesMap = {};
-
-  for (int i = 1; i <= totalDays; i++) {
-    datesMap[i] = false;
-  }
-
-  return datesMap;
-}
