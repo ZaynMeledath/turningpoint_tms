@@ -101,6 +101,17 @@ class NotFoundException implements Exception {
   }
 }
 
+class RequestTimedOutException implements Exception {
+  final String message;
+
+  RequestTimedOutException(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
+}
+
 class ServerErrorException implements Exception {
   final String message;
 

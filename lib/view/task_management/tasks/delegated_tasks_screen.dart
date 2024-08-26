@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -27,6 +28,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
   late FilterController filterController = FilterController();
+  final AppController appController = AppController();
   int animationCounter = 0;
 
   @override
@@ -95,6 +97,25 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
         ),
         body: Obx(
           () {
+            // if (tasksController.tasksException.value != null) {
+            //   return Column(
+            //     children: [
+            //       SizedBox(height: 200.h),
+            //       errorWidget(
+            //         isLoading: appController.isLoadingObs.value,
+            //         onRefresh: () async {
+            //           try {
+            //             appController.isLoadingObs.value = true;
+            //             await getData();
+            //             appController.isLoadingObs.value = false;
+            //           } catch (_) {
+            //             appController.isLoadingObs.value = false;
+            //           }
+            //         },
+            //       ),
+            //     ],
+            //   );
+            // }
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
             final pendingDelegatedTasksList =
@@ -150,26 +171,76 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                     tasksList: allDelegatedTasksList,
                     lottieController: lottieController,
                     isDelegated: true,
+                    isLoading: appController.isLoadingObs.value,
+                    onErrorRefresh: () async {
+                      try {
+                        appController.isLoadingObs.value = true;
+                        await getData();
+                        appController.isLoadingObs.value = false;
+                      } catch (_) {
+                        appController.isLoadingObs.value = false;
+                      }
+                    },
                   ),
                   taskTabBarView(
                     tasksList: overdueDelegatedTasksList,
                     lottieController: lottieController,
                     isDelegated: true,
+                    isLoading: appController.isLoadingObs.value,
+                    onErrorRefresh: () async {
+                      try {
+                        appController.isLoadingObs.value = true;
+                        await getData();
+                        appController.isLoadingObs.value = false;
+                      } catch (_) {
+                        appController.isLoadingObs.value = false;
+                      }
+                    },
                   ),
                   taskTabBarView(
                     tasksList: pendingDelegatedTasksList,
                     lottieController: lottieController,
                     isDelegated: true,
+                    isLoading: appController.isLoadingObs.value,
+                    onErrorRefresh: () async {
+                      try {
+                        appController.isLoadingObs.value = true;
+                        await getData();
+                        appController.isLoadingObs.value = false;
+                      } catch (_) {
+                        appController.isLoadingObs.value = false;
+                      }
+                    },
                   ),
                   taskTabBarView(
                     tasksList: inProgressDelegatedTasksList,
                     lottieController: lottieController,
                     isDelegated: true,
+                    isLoading: appController.isLoadingObs.value,
+                    onErrorRefresh: () async {
+                      try {
+                        appController.isLoadingObs.value = true;
+                        await getData();
+                        appController.isLoadingObs.value = false;
+                      } catch (_) {
+                        appController.isLoadingObs.value = false;
+                      }
+                    },
                   ),
                   taskTabBarView(
                     tasksList: completedDelegatedTasksList,
                     lottieController: lottieController,
                     isDelegated: true,
+                    isLoading: appController.isLoadingObs.value,
+                    onErrorRefresh: () async {
+                      try {
+                        appController.isLoadingObs.value = true;
+                        await getData();
+                        appController.isLoadingObs.value = false;
+                      } catch (_) {
+                        appController.isLoadingObs.value = false;
+                      }
+                    },
                   ),
                 ],
               ),

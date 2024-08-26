@@ -9,6 +9,9 @@ class TasksController extends GetxController {
     getCategories();
   }
   final tasksRepository = TasksRepository();
+
+  final tasksException = Rxn<Exception>();
+
   Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
 
@@ -29,16 +32,16 @@ class TasksController extends GetxController {
   final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;
   final completedDelayedDelegatedTasksList = <TaskModel>[].obs;
 
-  final tasksException = Rxn<Exception>();
-
   Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
       Rxn<List<AllUsersPerformanceModel>>();
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
     try {
-      tasksException.value = null;
       myTasksListObs.value = await tasksRepository.getMyTasks();
+
+      tasksException.value = null;
+
       pendingTaskList.value =
           myTasksListObs.value!.where((item) => item.status == 'Open').toList();
       inProgressTaskList.value = myTasksListObs.value!
@@ -70,8 +73,9 @@ class TasksController extends GetxController {
 //====================Get Delegated Tasks====================//
   Future<void> getDelegatedTasks() async {
     try {
-      tasksException.value = null;
       delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
+
+      tasksException.value = null;
 
       pendingDelegatedTaskList.value = delegatedTasksListObs.value!
           .where((item) => item.status == 'Open')
@@ -105,11 +109,15 @@ class TasksController extends GetxController {
 
 //====================Get Categories====================//
   void getCategories() async {
-    final temp = await tasksRepository.getCategories();
-    if (temp != null) {
-      for (var item in temp) {
-        categoriesList.add(item.toString());
+    try {
+      final temp = await tasksRepository.getCategories();
+      if (temp != null) {
+        for (var item in temp) {
+          categoriesList.add(item.toString());
+        }
       }
+    } catch (e) {
+      tasksException.value = e as Exception;
     }
   }
 

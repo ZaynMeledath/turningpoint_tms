@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 Widget serverErrorWidget({
   required void Function() onRefresh,
+  required bool isLoading,
 }) {
   return Column(
     children: [
       Lottie.asset(
         'assets/lotties/server_error_animation.json',
-        width: 200.w,
+        width: 160.w,
       ),
       Text(
-        'Something Went Wrong',
+        'Something Went Wrong!',
         style: TextStyle(
-          fontSize: 20.sp,
+          fontSize: 18.sp,
         ),
       ),
-      SizedBox(height: 24.h),
+      SizedBox(height: 20.h),
       InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: onRefresh,
@@ -30,12 +32,17 @@ Widget serverErrorWidget({
             borderRadius: BorderRadius.circular(12),
           ),
           child: Center(
-            child: Text(
-              'Try Again',
-              style: TextStyle(
-                fontSize: 14.w,
-              ),
-            ),
+            child: isLoading
+                ? SpinKitWave(
+                    color: Colors.white70,
+                    size: 14.w,
+                  )
+                : Text(
+                    'Try Again',
+                    style: TextStyle(
+                      fontSize: 14.w,
+                    ),
+                  ),
           ),
         ),
       ),

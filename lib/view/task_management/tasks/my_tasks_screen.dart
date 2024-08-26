@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -27,6 +28,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
   final FilterController filterController = FilterController();
+  final AppController appController = AppController();
   int animationCounter = 0;
 
   @override
@@ -92,93 +94,150 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           implyLeading: false,
           profileAvatar: true,
         ),
-        body: FutureBuilder(
-            future: Future.delayed(
-              const Duration(milliseconds: 100),
-            ),
-            builder: (context, snapshot) {
-              return Obx(
-                () {
-                  final allTasksList = tasksController.myTasksListObs.value;
-                  final pendingTasksList =
-                      tasksController.pendingTaskList.value;
-                  final inProgressTasksList =
-                      tasksController.inProgressTaskList.value;
-                  final completedTasksList =
-                      tasksController.completedTaskList.value;
-                  final overdueTasksList =
-                      tasksController.overdueTaskList.value;
-                  return NestedScrollView(
-                    // physics: const BouncingScrollPhysics(),
-                    headerSliverBuilder: (context, innerBoxIsScrolled) {
-                      return [
-                        SliverAppBar(
-                          automaticallyImplyLeading: false,
-                          expandedHeight: 70.h,
-                          backgroundColor: Colors.transparent,
-                          flexibleSpace: FlexibleSpaceBar(
-                            background: filterSection(
-                              taskSearchController: taskSearchController,
-                              categorySearchController:
-                                  categorySearchController,
-                              assignedSearchController:
-                                  assignedSearchController,
-                              userController: userController,
-                              filterController: filterController,
-                              tasksController: tasksController,
-                            ),
-                          ),
-                        ),
-                        SliverAppBar(
-                          automaticallyImplyLeading: false,
-                          toolbarHeight: 50.h,
-                          pinned: true,
-                          backgroundColor: AppColors.scaffoldBackgroundColor,
-                          surfaceTintColor: AppColors.scaffoldBackgroundColor,
-                          flexibleSpace: FlexibleSpaceBar(
-                            background:
-                                tasksTabBar(tabController: tabController),
-                          ),
-                        ),
-                        SliverList(
-                          delegate: SliverChildListDelegate([
-                            SizedBox(height: 10.h),
-                          ]),
-                        ),
-                      ];
-                    },
-                    body: Padding(
-                      padding: EdgeInsets.only(bottom: 65.h),
-                      child: TabBarView(
-                        controller: tabController,
-                        children: [
-                          taskTabBarView(
-                            tasksList: allTasksList,
-                            lottieController: lottieController,
-                          ),
-                          taskTabBarView(
-                            tasksList: overdueTasksList,
-                            lottieController: lottieController,
-                          ),
-                          taskTabBarView(
-                            tasksList: pendingTasksList,
-                            lottieController: lottieController,
-                          ),
-                          taskTabBarView(
-                            tasksList: inProgressTasksList,
-                            lottieController: lottieController,
-                          ),
-                          taskTabBarView(
-                            tasksList: completedTasksList,
-                            lottieController: lottieController,
-                          ),
-                        ],
+        body: Obx(
+          () {
+            // if (tasksController.tasksException.value != null) {
+            //   return Column(
+            //     children: [
+            //       SizedBox(height: 200.h),
+            //       errorWidget(
+            //         isLoading: appController.isLoadingObs.value,
+            //         onRefresh: () async {
+            //           try {
+            //             appController.isLoadingObs.value = true;
+            //             await getData();
+            //             appController.isLoadingObs.value = false;
+            //           } catch (_) {
+            //             appController.isLoadingObs.value = false;
+            //           }
+            //         },
+            //       ),
+            //     ],
+            //   );
+            // }
+            final allTasksList = tasksController.myTasksListObs.value;
+            final pendingTasksList = tasksController.pendingTaskList.value;
+            final inProgressTasksList =
+                tasksController.inProgressTaskList.value;
+            final completedTasksList = tasksController.completedTaskList.value;
+            final overdueTasksList = tasksController.overdueTaskList.value;
+            return NestedScrollView(
+              // physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    expandedHeight: 70.h,
+                    backgroundColor: Colors.transparent,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: filterSection(
+                        taskSearchController: taskSearchController,
+                        categorySearchController: categorySearchController,
+                        assignedSearchController: assignedSearchController,
+                        userController: userController,
+                        filterController: filterController,
+                        tasksController: tasksController,
                       ),
                     ),
-                  );
-                },
-              );
-            }),
+                  ),
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    toolbarHeight: 50.h,
+                    pinned: true,
+                    backgroundColor: AppColors.scaffoldBackgroundColor,
+                    surfaceTintColor: AppColors.scaffoldBackgroundColor,
+                    flexibleSpace: FlexibleSpaceBar(
+                      background: tasksTabBar(tabController: tabController),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildListDelegate([
+                      SizedBox(height: 10.h),
+                    ]),
+                  ),
+                ];
+              },
+              body: Padding(
+                padding: EdgeInsets.only(bottom: 65.h),
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    taskTabBarView(
+                      tasksList: allTasksList,
+                      lottieController: lottieController,
+                      isLoading: appController.isLoadingObs.value,
+                      onErrorRefresh: () async {
+                        try {
+                          appController.isLoadingObs.value = true;
+                          await getData();
+                          appController.isLoadingObs.value = false;
+                        } catch (_) {
+                          appController.isLoadingObs.value = false;
+                        }
+                      },
+                    ),
+                    taskTabBarView(
+                      tasksList: overdueTasksList,
+                      lottieController: lottieController,
+                      isLoading: appController.isLoadingObs.value,
+                      onErrorRefresh: () async {
+                        try {
+                          appController.isLoadingObs.value = true;
+                          await getData();
+                          appController.isLoadingObs.value = false;
+                        } catch (_) {
+                          appController.isLoadingObs.value = false;
+                        }
+                      },
+                    ),
+                    taskTabBarView(
+                      tasksList: pendingTasksList,
+                      lottieController: lottieController,
+                      isLoading: appController.isLoadingObs.value,
+                      onErrorRefresh: () async {
+                        try {
+                          appController.isLoadingObs.value = true;
+                          await getData();
+                          appController.isLoadingObs.value = false;
+                        } catch (_) {
+                          appController.isLoadingObs.value = false;
+                        }
+                      },
+                    ),
+                    taskTabBarView(
+                      tasksList: inProgressTasksList,
+                      lottieController: lottieController,
+                      isLoading: appController.isLoadingObs.value,
+                      onErrorRefresh: () async {
+                        try {
+                          appController.isLoadingObs.value = true;
+                          await getData();
+                          appController.isLoadingObs.value = false;
+                        } catch (_) {
+                          appController.isLoadingObs.value = false;
+                        }
+                      },
+                    ),
+                    taskTabBarView(
+                      tasksList: completedTasksList,
+                      lottieController: lottieController,
+                      isLoading: appController.isLoadingObs.value,
+                      onErrorRefresh: () async {
+                        try {
+                          appController.isLoadingObs.value = true;
+                          await getData();
+                          appController.isLoadingObs.value = false;
+                        } catch (_) {
+                          appController.isLoadingObs.value = false;
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -13,6 +13,8 @@ import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task
 Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
+  required bool isLoading,
+  required void Function() onErrorRefresh,
   bool isDelegated = false,
 }) {
   final tasksController = Get.put(TasksController());
@@ -20,8 +22,11 @@ Widget taskTabBarView({
   if (tasksController.tasksException.value != null) {
     return Column(
       children: [
-        SizedBox(height: 60.h),
-        serverErrorWidget(onRefresh: () {}),
+        SizedBox(height: 90.h),
+        serverErrorWidget(
+          isLoading: isLoading,
+          onRefresh: onErrorRefresh,
+        ),
       ],
     );
   }

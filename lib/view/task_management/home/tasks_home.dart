@@ -40,7 +40,7 @@ class _TasksHomeState extends State<TasksHome> {
 
   @override
   void initState() {
-    getData();
+    // getData();
     super.initState();
   }
 

@@ -39,7 +39,12 @@ class ApiService {
       Response response;
       switch (requestMethod) {
         case RequestMethod.GET:
-          response = await http.get(Uri.parse(url), headers: headers);
+          response = await http.get(Uri.parse(url), headers: headers).timeout(
+            const Duration(seconds: 5),
+            onTimeout: () {
+              return http.Response('Request timed out', 408);
+            },
+          );
           break;
         case RequestMethod.POST:
           if (data is File) {
@@ -54,13 +59,25 @@ class ApiService {
 
             final streamedResponse = await multiPartRequest.send();
 
-            response = await Response.fromStream(streamedResponse);
+            response = await Response.fromStream(streamedResponse).timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
+            );
           } else {
             final requestBody = data is String ? data : json.encode(data);
-            response = await http.post(
+            response = await http
+                .post(
               Uri.parse(url),
               headers: headers,
               body: requestBody,
+            )
+                .timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
             );
           }
 
@@ -78,13 +95,25 @@ class ApiService {
 
             final streamedResponse = await multiPartRequest.send();
 
-            response = await Response.fromStream(streamedResponse);
+            response = await Response.fromStream(streamedResponse).timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
+            );
           } else {
             final requestBody = data is String ? data : json.encode(data);
-            response = await http.put(
+            response = await http
+                .put(
               Uri.parse(url),
               headers: headers,
               body: requestBody,
+            )
+                .timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
             );
           }
 
@@ -102,20 +131,38 @@ class ApiService {
 
             final streamedResponse = await multiPartRequest.send();
 
-            response = await Response.fromStream(streamedResponse);
+            response = await Response.fromStream(streamedResponse).timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
+            );
           } else {
             final requestBody = data is String ? data : json.encode(data);
 
-            response = await http.patch(
+            response = await http
+                .patch(
               Uri.parse(url),
               headers: headers,
               body: requestBody,
+            )
+                .timeout(
+              const Duration(seconds: 5),
+              onTimeout: () {
+                return http.Response('Request timed out', 408);
+              },
             );
           }
 
           break;
         case RequestMethod.DELETE:
-          response = await http.delete(Uri.parse(url), headers: headers);
+          response =
+              await http.delete(Uri.parse(url), headers: headers).timeout(
+            const Duration(seconds: 5),
+            onTimeout: () {
+              return http.Response('Request timed out', 408);
+            },
+          );
           break;
         default:
           throw ArgumentError('Invalid HTTP method: $requestMethod');
@@ -164,6 +211,8 @@ class ApiService {
         throw ForbiddenException(responseJson.toString());
       case 404:
         throw NotFoundException(responseJson.toString());
+      case 408:
+        throw RequestTimedOutException(responseJson.toString());
       case 500:
         throw ServerErrorException(responseJson.toString());
       case 700:
