@@ -26,9 +26,10 @@ class MyApp extends StatelessWidget {
     final authToken = AppPreferences.getValueShared('auth_token');
     return ScreenUtilInit(
       designSize: const Size(412, 915),
+      ensureScreenSize: true,
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'TurningPoint TMS',
         theme: ThemeData(
           fontFamily: 'Lufga',
           colorScheme: ColorScheme.fromSeed(

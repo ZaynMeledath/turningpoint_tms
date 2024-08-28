@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shimmer/shimmer.dart';
+part of '../my_team_screen.dart';
 
 Widget shimmerTeamListLoading() {
   return Shimmer.fromColors(
-    baseColor: const Color.fromRGBO(29, 36, 41, 1),
+    baseColor: const Color.fromRGBO(90, 90, 90, .2),
     highlightColor: const Color.fromRGBO(48, 78, 85, 0.8),
     child: ListView.builder(
       itemCount: 5,

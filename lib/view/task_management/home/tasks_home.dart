@@ -40,15 +40,15 @@ class _TasksHomeState extends State<TasksHome> {
 
   @override
   void initState() {
-    // getData();
+    getData();
     super.initState();
   }
 
   void getData() async {
     await userController.getAllTeamMembers();
-    await tasksController.getMyTasks();
-    await tasksController.getDelegatedTasks();
-    await tasksController.getAllUsersPerformance();
+    // await tasksController.getMyTasks();
+    // await tasksController.getDelegatedTasks();
+    // await tasksController.getAllUsersPerformance();
   }
 
   @override
@@ -78,6 +78,7 @@ class _TasksHomeState extends State<TasksHome> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+        height: 56.h,
         itemCount: titleIconMap.length,
         tabBuilder: (index, isActive) {
           return Column(

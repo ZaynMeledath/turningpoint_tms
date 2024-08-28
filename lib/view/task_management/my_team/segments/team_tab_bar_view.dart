@@ -36,9 +36,24 @@ Widget teamTabBarView({
         );
       },
     );
-  } else if (myTeamList != null && myTeamList.isEmpty) {
-    return Container();
+  } else if (myTeamList == null) {
+    return shimmerTeamListLoading();
   } else {
-    return Container();
+    return Column(
+      children: [
+        SizedBox(height: 150.h),
+        Lottie.asset(
+          'assets/lotties/team_empty_animation.json',
+          width: 180.w,
+        ),
+        Text(
+          'Add team members to\nview them here',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 18.sp,
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
@@ -14,6 +16,7 @@ part 'segments/team_card.dart';
 part 'segments/team_tab_bar.dart';
 part 'segments/team_card_action_button.dart';
 part 'segments/team_tab_bar_view.dart';
+part 'segments/shimmer_team_list_loading.dart';
 
 class MyTeamScreen extends StatefulWidget {
   const MyTeamScreen({super.key});
@@ -48,7 +51,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
     super.dispose();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     await userController.getAllTeamMembers();
   }
 
@@ -64,8 +67,8 @@ class _MyTeamScreenState extends State<MyTeamScreen>
       body: Obx(
         () {
           final myTeamList = userController.myTeamList.value;
-          if (userController.myTeamList.value != null) {
-            adminList = myTeamList!
+          if (myTeamList != null) {
+            adminList = myTeamList
                 .where((element) => element.role == Role.admin)
                 .toList();
 
@@ -78,52 +81,80 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                 .toList();
           }
           return NestedScrollView(
-            // physics: const BouncingScrollPhysics(),
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              SliverAppBar(
-                pinned: true,
-                toolbarHeight: 50.h,
-                backgroundColor: AppColors.scaffoldBackgroundColor,
-                surfaceTintColor: AppColors.scaffoldBackgroundColor,
-                flexibleSpace: FlexibleSpaceBar(
-                  background:
-                      teamTabBar(tabController: tabController).animate().slideX(
-                            begin: .4,
-                            curve: Curves.elasticOut,
-                            duration: const Duration(milliseconds: 900),
-                          ),
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate.fixed(
-                  [
-                    SizedBox(height: 12.h),
+              // physics: const BouncingScrollPhysics(),
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                    SliverAppBar(
+                      pinned: true,
+                      toolbarHeight: 50.h,
+                      backgroundColor: AppColors.scaffoldBackgroundColor,
+                      surfaceTintColor: AppColors.scaffoldBackgroundColor,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: teamTabBar(tabController: tabController)
+                            .animate()
+                            .slideX(
+                              begin: .4,
+                              curve: Curves.elasticOut,
+                              duration: const Duration(milliseconds: 900),
+                            ),
+                      ),
+                    ),
+                    SliverList(
+                      delegate: SliverChildListDelegate.fixed(
+                        [
+                          SizedBox(height: 12.h),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
-            body: TabBarView(
-              controller: tabController,
-              children: [
-                teamTabBarView(
-                  myTeamList: myTeamList!,
-                  appController: appController,
-                ),
-                teamTabBarView(
-                  myTeamList: adminList,
-                  appController: appController,
-                ),
-                teamTabBarView(
-                  myTeamList: teamLeaderList,
-                  appController: appController,
-                ),
-                teamTabBarView(
-                  myTeamList: teamMemberList,
-                  appController: appController,
-                ),
-              ],
-            ),
-          );
+              body: userController.userException.value == null
+                  ? TabBarView(
+                      controller: tabController,
+                      children: [
+                        teamTabBarView(
+                          myTeamList: myTeamList,
+                          appController: appController,
+                        ),
+                        teamTabBarView(
+                          myTeamList: adminList,
+                          appController: appController,
+                        ),
+                        teamTabBarView(
+                          myTeamList: teamLeaderList,
+                          appController: appController,
+                        ),
+                        teamTabBarView(
+                          myTeamList: teamMemberList,
+                          appController: appController,
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(height: 100.h),
+                        Lottie.asset(
+                          'assets/lotties/team_empty_animation.json',
+                          width: 180.w,
+                        ),
+                      ],
+                    )
+              // : Column(
+              //     children: [
+              //       SizedBox(height: 90.h),
+              //       serverErrorWidget(
+              //         isLoading: appController.isLoadingObs.value,
+              //         onRefresh: () async {
+              //           try {
+              //             appController.isLoadingObs.value = true;
+              //             await getData();
+              //             appController.isLoadingObs.value = false;
+              //           } catch (_) {
+              //             appController.isLoadingObs.value = false;
+              //           }
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              );
         },
       ),
     );

@@ -97,25 +97,6 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         ),
         body: Obx(
           () {
-            // if (tasksController.tasksException.value != null) {
-            //   return Column(
-            //     children: [
-            //       SizedBox(height: 200.h),
-            //       errorWidget(
-            //         isLoading: appController.isLoadingObs.value,
-            //         onRefresh: () async {
-            //           try {
-            //             appController.isLoadingObs.value = true;
-            //             await getData();
-            //             appController.isLoadingObs.value = false;
-            //           } catch (_) {
-            //             appController.isLoadingObs.value = false;
-            //           }
-            //         },
-            //       ),
-            //     ],
-            //   );
-            // }
             final allTasksList = tasksController.myTasksListObs.value;
             final pendingTasksList = tasksController.pendingTaskList.value;
             final inProgressTasksList =

@@ -32,7 +32,7 @@ Widget categoryFilterSegment({
             ),
         Expanded(
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: tasksController.categoriesList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,

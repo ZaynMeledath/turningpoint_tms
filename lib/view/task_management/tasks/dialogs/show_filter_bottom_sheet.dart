@@ -22,7 +22,7 @@ Future<Object?> showFilterBottomSheet({
   bool? isAllTasks,
   bool? isDelegated,
 }) async {
-  filterController.selectFilterOption(key: 'category');
+  filterController.selectFilterOption(filterOption: FilterOptions.category);
   return Get.bottomSheet(
     Obx(
       () => Container(
@@ -102,12 +102,13 @@ Future<Object?> showFilterBottomSheet({
                       children: [
                         InkWell(
                           onTap: () => filterController.selectFilterOption(
-                            key: 'category',
+                            filterOption: FilterOptions.category,
                           ),
                           child: filterItem(
                             title: 'Category',
-                            isActive: filterController
-                                .filterOptionSelectedMap['category']!,
+                            isActive:
+                                filterController.selectedFilterOption.value ==
+                                    FilterOptions.category,
                           ),
                         ),
                         SizedBox(height: 6.h),
@@ -115,12 +116,13 @@ Future<Object?> showFilterBottomSheet({
                             ? InkWell(
                                 onTap: () =>
                                     filterController.selectFilterOption(
-                                  key: 'assignedBy',
+                                  filterOption: FilterOptions.assignedBy,
                                 ),
                                 child: filterItem(
                                   title: 'Assigned By',
                                   isActive: filterController
-                                      .filterOptionSelectedMap['assignedBy']!,
+                                          .selectedFilterOption.value ==
+                                      FilterOptions.assignedBy,
                                 ),
                               )
                             : const SizedBox(),
@@ -128,35 +130,38 @@ Future<Object?> showFilterBottomSheet({
                             ? InkWell(
                                 onTap: () =>
                                     filterController.selectFilterOption(
-                                  key: 'assignedTo',
+                                  filterOption: FilterOptions.assignedTo,
                                 ),
                                 child: filterItem(
                                   title: 'Assigned To',
                                   isActive: filterController
-                                      .filterOptionSelectedMap['assignedTo']!,
+                                          .selectedFilterOption.value ==
+                                      FilterOptions.assignedTo,
                                 ),
                               )
                             : const SizedBox(),
                         SizedBox(height: 6.h),
                         InkWell(
                           onTap: () => filterController.selectFilterOption(
-                            key: 'frequency',
+                            filterOption: FilterOptions.frequency,
                           ),
                           child: filterItem(
                             title: 'Frequency',
-                            isActive: filterController
-                                .filterOptionSelectedMap['frequency']!,
+                            isActive:
+                                filterController.selectedFilterOption.value ==
+                                    FilterOptions.frequency,
                           ),
                         ),
                         SizedBox(height: 6.h),
                         InkWell(
                           onTap: () => filterController.selectFilterOption(
-                            key: 'priority',
+                            filterOption: FilterOptions.priority,
                           ),
                           child: filterItem(
                             title: 'Priority',
-                            isActive: filterController
-                                .filterOptionSelectedMap['priority']!,
+                            isActive:
+                                filterController.selectedFilterOption.value ==
+                                    FilterOptions.priority,
                           ),
                         ),
                       ],
@@ -166,23 +171,24 @@ Future<Object?> showFilterBottomSheet({
                   Expanded(
                     child: Column(
                       children: [
-                        filterController.selectedFilterOptionKey == 'category'
+                        filterController.selectedFilterOption.value ==
+                                FilterOptions.category
                             ? categoryFilterSegment(
                                 categorySearchController:
                                     categorySearchController,
                                 filterController: filterController,
                                 tasksController: tasksController,
                               )
-                            : filterController.selectedFilterOptionKey ==
-                                    'assignedBy'
+                            : filterController.selectedFilterOption.value ==
+                                    FilterOptions.assignedBy
                                 ? assignedFilterSegment(
                                     assignedSearchController:
                                         assignedSearchController,
                                     filterController: filterController,
                                     isAssignedBy: true,
                                   )
-                                : filterController.selectedFilterOptionKey ==
-                                        'assignedTo'
+                                : filterController.selectedFilterOption.value ==
+                                        FilterOptions.assignedTo
                                     ? assignedFilterSegment(
                                         assignedSearchController:
                                             assignedSearchController,
@@ -190,8 +196,8 @@ Future<Object?> showFilterBottomSheet({
                                         isAssignedBy: false,
                                       )
                                     : filterController
-                                                .selectedFilterOptionKey ==
-                                            'frequency'
+                                                .selectedFilterOption.value ==
+                                            FilterOptions.frequency
                                         ? frequencyFilterSegment(
                                             filterController: filterController,
                                           )

@@ -3,17 +3,17 @@ import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 
-// final categoriesList = [
-//   'IT',
-//   'Finance',
-//   'Admin',
-//   'HR',
-//   'Sales',
-// ];
-
 final priorityList = ['High', 'Medium', 'Low'];
 
 final frequencyList = ['Once', 'Daily', 'Weekly', 'Monthly'];
+
+class FilterOptions {
+  static const category = 'category';
+  static const assignedBy = 'assignedBy';
+  static const assignedTo = 'assignedTo';
+  static const frequency = 'frequency';
+  static const priority = 'priority';
+}
 
 class FilterController extends GetxController {
   final TasksController tasksController = Get.put(TasksController());
@@ -21,15 +21,24 @@ class FilterController extends GetxController {
     assignValuesToModels();
   }
 
-  RxMap<String, bool> filterOptionSelectedMap = {
-    'category': true,
-    'assignedBy': false,
-    'assignedTo': false,
-    'frequency': false,
-    'priority': false,
-  }.obs;
+  // RxMap<String, bool> filterOptionSelectedMap = {
+  //   'category': true,
+  //   'assignedBy': false,
+  //   'assignedTo': false,
+  //   'frequency': false,
+  //   'priority': false,
+  // }.obs;
 
-  String selectedFilterOptionKey = 'category';
+  RxList<String> filterOptionSelectedMap = [
+    FilterOptions.category,
+    FilterOptions.assignedBy,
+    FilterOptions.assignedTo,
+    FilterOptions.frequency,
+    FilterOptions.priority,
+  ].obs;
+
+//Defines the currently selected filter bottom sheet option
+  Rx<String> selectedFilterOption = 'category'.obs;
 
   final RxMap<String, bool> categoryFilterModel = <String, bool>{}.obs;
   final RxMap<String, bool> assignedByFilterModel = <String, bool>{}.obs;
@@ -73,10 +82,8 @@ class FilterController extends GetxController {
   }
 
 //====================Select Filter====================//
-  void selectFilterOption({required String key}) {
-    filterOptionSelectedMap[selectedFilterOptionKey] = false;
-    filterOptionSelectedMap[key] = true;
-    selectedFilterOptionKey = key;
+  void selectFilterOption({required String filterOption}) {
+    selectedFilterOption.value = filterOption;
   }
 
 //====================Select or Unselect Category Filters====================//

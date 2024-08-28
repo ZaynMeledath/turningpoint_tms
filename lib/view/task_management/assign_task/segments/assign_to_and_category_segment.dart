@@ -19,8 +19,8 @@ Widget assignToAndCategorySegment({
           assignToSearchController: assignToSearchController,
         ),
         child: Container(
-          width: 156,
-          height: 56,
+          width: 156.w,
+          height: 56.h,
           decoration: BoxDecoration(
             color: AppColors.textFieldColor,
             borderRadius: BorderRadius.circular(20),
@@ -81,8 +81,8 @@ Widget assignToAndCategorySegment({
           tasksController: tasksController,
         ),
         child: Container(
-          width: 156,
-          height: 56,
+          width: 156.w,
+          height: 56.h,
           decoration: BoxDecoration(
             color: AppColors.textFieldColor,
             borderRadius: BorderRadius.circular(20),
