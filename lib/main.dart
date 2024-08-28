@@ -25,8 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authToken = AppPreferences.getValueShared('auth_token');
     return ScreenUtilInit(
+      ///Add maxScreen width to the ScreenUtil package file to ensure UI quality
+      ///(screenWidth > 550 ? 550 : screenWidth) / _uiSize;
       designSize: const Size(412, 915),
-      ensureScreenSize: true,
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'TurningPoint TMS',
