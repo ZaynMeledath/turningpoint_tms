@@ -11,6 +11,8 @@ import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/repository/user_repository.dart';
 
 class UserController extends GetxController {
+  final userException = Rxn<Exception>();
+
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
 
@@ -32,8 +34,9 @@ class UserController extends GetxController {
         role: role,
         password: password,
       );
-    } catch (_) {
-      rethrow;
+      userException.value = null;
+    } catch (e) {
+      userException.value = e as Exception;
     }
   }
 
@@ -54,11 +57,12 @@ class UserController extends GetxController {
           key: AppConstants.authTokenKey,
           value: userModelResponse.token,
         );
+        userException.value = null;
       } else {
         throw FcmTokenNullException();
       }
     } catch (e) {
-      rethrow;
+      userException.value = e as Exception;
     }
   }
 
@@ -79,8 +83,9 @@ class UserController extends GetxController {
   Future<void> getAllTeamMembers() async {
     try {
       myTeamList.value = await UserRepository.getAllTeamMembers();
+      userException.value = null;
     } catch (e) {
-      rethrow;
+      userException.value = e as Exception;
     }
   }
 }

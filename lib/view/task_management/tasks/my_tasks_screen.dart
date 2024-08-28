@@ -7,6 +7,7 @@ import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
+import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
@@ -157,84 +158,52 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                   ),
                 ];
               },
-              body: Padding(
-                padding: EdgeInsets.only(bottom: 65.h),
-                child: TabBarView(
-                  controller: tabController,
-                  children: [
-                    taskTabBarView(
-                      tasksList: allTasksList,
-                      lottieController: lottieController,
-                      isLoading: appController.isLoadingObs.value,
-                      onErrorRefresh: () async {
-                        try {
-                          appController.isLoadingObs.value = true;
-                          await getData();
-                          appController.isLoadingObs.value = false;
-                        } catch (_) {
-                          appController.isLoadingObs.value = false;
-                        }
-                      },
+              body: tasksController.tasksException.value == null
+                  ? Padding(
+                      padding: EdgeInsets.only(bottom: 65.h),
+                      child: TabBarView(
+                        controller: tabController,
+                        children: [
+                          taskTabBarView(
+                            tasksList: allTasksList,
+                            lottieController: lottieController,
+                          ),
+                          taskTabBarView(
+                            tasksList: overdueTasksList,
+                            lottieController: lottieController,
+                          ),
+                          taskTabBarView(
+                            tasksList: pendingTasksList,
+                            lottieController: lottieController,
+                          ),
+                          taskTabBarView(
+                            tasksList: inProgressTasksList,
+                            lottieController: lottieController,
+                          ),
+                          taskTabBarView(
+                            tasksList: completedTasksList,
+                            lottieController: lottieController,
+                          ),
+                        ],
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(height: 90.h),
+                        serverErrorWidget(
+                          isLoading: appController.isLoadingObs.value,
+                          onRefresh: () async {
+                            try {
+                              appController.isLoadingObs.value = true;
+                              await getData();
+                              appController.isLoadingObs.value = false;
+                            } catch (_) {
+                              appController.isLoadingObs.value = false;
+                            }
+                          },
+                        ),
+                      ],
                     ),
-                    taskTabBarView(
-                      tasksList: overdueTasksList,
-                      lottieController: lottieController,
-                      isLoading: appController.isLoadingObs.value,
-                      onErrorRefresh: () async {
-                        try {
-                          appController.isLoadingObs.value = true;
-                          await getData();
-                          appController.isLoadingObs.value = false;
-                        } catch (_) {
-                          appController.isLoadingObs.value = false;
-                        }
-                      },
-                    ),
-                    taskTabBarView(
-                      tasksList: pendingTasksList,
-                      lottieController: lottieController,
-                      isLoading: appController.isLoadingObs.value,
-                      onErrorRefresh: () async {
-                        try {
-                          appController.isLoadingObs.value = true;
-                          await getData();
-                          appController.isLoadingObs.value = false;
-                        } catch (_) {
-                          appController.isLoadingObs.value = false;
-                        }
-                      },
-                    ),
-                    taskTabBarView(
-                      tasksList: inProgressTasksList,
-                      lottieController: lottieController,
-                      isLoading: appController.isLoadingObs.value,
-                      onErrorRefresh: () async {
-                        try {
-                          appController.isLoadingObs.value = true;
-                          await getData();
-                          appController.isLoadingObs.value = false;
-                        } catch (_) {
-                          appController.isLoadingObs.value = false;
-                        }
-                      },
-                    ),
-                    taskTabBarView(
-                      tasksList: completedTasksList,
-                      lottieController: lottieController,
-                      isLoading: appController.isLoadingObs.value,
-                      onErrorRefresh: () async {
-                        try {
-                          appController.isLoadingObs.value = true;
-                          await getData();
-                          appController.isLoadingObs.value = false;
-                        } catch (_) {
-                          appController.isLoadingObs.value = false;
-                        }
-                      },
-                    ),
-                  ],
-                ),
-              ),
             );
           },
         ),

@@ -7,6 +7,7 @@ import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
+import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
@@ -164,86 +165,54 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                   ),
                 ];
               },
-              body: TabBarView(
-                controller: tabController,
-                children: [
-                  taskTabBarView(
-                    tasksList: allDelegatedTasksList,
-                    lottieController: lottieController,
-                    isDelegated: true,
-                    isLoading: appController.isLoadingObs.value,
-                    onErrorRefresh: () async {
-                      try {
-                        appController.isLoadingObs.value = true;
-                        await getData();
-                        appController.isLoadingObs.value = false;
-                      } catch (_) {
-                        appController.isLoadingObs.value = false;
-                      }
-                    },
-                  ),
-                  taskTabBarView(
-                    tasksList: overdueDelegatedTasksList,
-                    lottieController: lottieController,
-                    isDelegated: true,
-                    isLoading: appController.isLoadingObs.value,
-                    onErrorRefresh: () async {
-                      try {
-                        appController.isLoadingObs.value = true;
-                        await getData();
-                        appController.isLoadingObs.value = false;
-                      } catch (_) {
-                        appController.isLoadingObs.value = false;
-                      }
-                    },
-                  ),
-                  taskTabBarView(
-                    tasksList: pendingDelegatedTasksList,
-                    lottieController: lottieController,
-                    isDelegated: true,
-                    isLoading: appController.isLoadingObs.value,
-                    onErrorRefresh: () async {
-                      try {
-                        appController.isLoadingObs.value = true;
-                        await getData();
-                        appController.isLoadingObs.value = false;
-                      } catch (_) {
-                        appController.isLoadingObs.value = false;
-                      }
-                    },
-                  ),
-                  taskTabBarView(
-                    tasksList: inProgressDelegatedTasksList,
-                    lottieController: lottieController,
-                    isDelegated: true,
-                    isLoading: appController.isLoadingObs.value,
-                    onErrorRefresh: () async {
-                      try {
-                        appController.isLoadingObs.value = true;
-                        await getData();
-                        appController.isLoadingObs.value = false;
-                      } catch (_) {
-                        appController.isLoadingObs.value = false;
-                      }
-                    },
-                  ),
-                  taskTabBarView(
-                    tasksList: completedDelegatedTasksList,
-                    lottieController: lottieController,
-                    isDelegated: true,
-                    isLoading: appController.isLoadingObs.value,
-                    onErrorRefresh: () async {
-                      try {
-                        appController.isLoadingObs.value = true;
-                        await getData();
-                        appController.isLoadingObs.value = false;
-                      } catch (_) {
-                        appController.isLoadingObs.value = false;
-                      }
-                    },
-                  ),
-                ],
-              ),
+              body: tasksController.tasksException.value == null
+                  ? TabBarView(
+                      controller: tabController,
+                      children: [
+                        taskTabBarView(
+                          tasksList: allDelegatedTasksList,
+                          lottieController: lottieController,
+                          isDelegated: true,
+                        ),
+                        taskTabBarView(
+                          tasksList: overdueDelegatedTasksList,
+                          lottieController: lottieController,
+                          isDelegated: true,
+                        ),
+                        taskTabBarView(
+                          tasksList: pendingDelegatedTasksList,
+                          lottieController: lottieController,
+                          isDelegated: true,
+                        ),
+                        taskTabBarView(
+                          tasksList: inProgressDelegatedTasksList,
+                          lottieController: lottieController,
+                          isDelegated: true,
+                        ),
+                        taskTabBarView(
+                          tasksList: completedDelegatedTasksList,
+                          lottieController: lottieController,
+                          isDelegated: true,
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(height: 90.h),
+                        serverErrorWidget(
+                          isLoading: appController.isLoadingObs.value,
+                          onRefresh: () async {
+                            try {
+                              appController.isLoadingObs.value = true;
+                              await getData();
+                              appController.isLoadingObs.value = false;
+                            } catch (_) {
+                              appController.isLoadingObs.value = false;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
             );
           },
         ),

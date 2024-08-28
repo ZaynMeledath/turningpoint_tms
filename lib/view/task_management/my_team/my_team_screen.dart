@@ -3,10 +3,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 
 part 'segments/team_card.dart';
 part 'segments/team_tab_bar.dart';
@@ -24,10 +26,11 @@ class _MyTeamScreenState extends State<MyTeamScreen>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
   final userController = Get.put(UserController());
+  final appController = AppController();
 
-  List<AllUsersModel> adminList = [];
-  List<AllUsersModel> teamLeaderList = [];
-  List<AllUsersModel> teamMemberList = [];
+  List<AllUsersModel>? adminList;
+  List<AllUsersModel>? teamLeaderList;
+  List<AllUsersModel>? teamMemberList;
 
   @override
   void initState() {
@@ -37,6 +40,12 @@ class _MyTeamScreenState extends State<MyTeamScreen>
     );
     getData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    appController.dispose();
+    super.dispose();
   }
 
   void getData() async {
@@ -55,8 +64,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
       body: Obx(
         () {
           final myTeamList = userController.myTeamList.value;
-          if (userController.myTeamList.value != null &&
-              userController.myTeamList.value!.isNotEmpty) {
+          if (userController.myTeamList.value != null) {
             adminList = myTeamList!
                 .where((element) => element.role == Role.admin)
                 .toList();
@@ -94,18 +102,27 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                 ),
               ),
             ],
-            body: userController.myTeamList.value != null &&
-                    userController.myTeamList.value!.isNotEmpty
-                ? TabBarView(
-                    controller: tabController,
-                    children: [
-                      teamTabBarView(myTeamList: myTeamList!),
-                      teamTabBarView(myTeamList: adminList),
-                      teamTabBarView(myTeamList: teamLeaderList),
-                      teamTabBarView(myTeamList: teamMemberList),
-                    ],
-                  )
-                : const SizedBox(),
+            body: TabBarView(
+              controller: tabController,
+              children: [
+                teamTabBarView(
+                  myTeamList: myTeamList!,
+                  appController: appController,
+                ),
+                teamTabBarView(
+                  myTeamList: adminList,
+                  appController: appController,
+                ),
+                teamTabBarView(
+                  myTeamList: teamLeaderList,
+                  appController: appController,
+                ),
+                teamTabBarView(
+                  myTeamList: teamMemberList,
+                  appController: appController,
+                ),
+              ],
+            ),
           );
         },
       ),
