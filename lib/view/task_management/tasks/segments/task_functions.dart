@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 
-class TaskFunction {
+class TaskFunctions {
   //====================Delete Task====================//
   static void deleteTask({
     required TasksController tasksController,
@@ -15,6 +16,7 @@ class TaskFunction {
       title: 'Delete Task',
       content: 'Are you sure you want to delete this task?',
       confirmationButtonColor: Colors.red,
+      iconWidth: 100.w,
       buttons: {
         'Cancel': null,
         'Delete': () async {

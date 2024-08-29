@@ -266,7 +266,7 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunction.deleteTask(
+                            onTap: () => TaskFunctions.deleteTask(
                               tasksController: tasksController,
                               taskModel: taskModel,
                             ),
@@ -313,7 +313,7 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunction.deleteTask(
+                            onTap: () => TaskFunctions.deleteTask(
                               tasksController: tasksController,
                               taskModel: taskModel,
                             ),
