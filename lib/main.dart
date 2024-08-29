@@ -42,19 +42,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
         ),
         home: authToken == null ? const LoginScreen() : const TasksHome(),
-        // home: TaskDetailsScreen(
-        //   taskModel: TaskModel(
-        //     title: 'Task Title',
-        //     createdAt: '',
-        //     createdBy: 'Zayn Meledath',
-        //     assignedTo: 'Ajay',
-        //     priority: 'High',
-        //     category: 'Business',
-        //     description:
-        //         'This is the task description which can be as long as this to test the description alignment.',
-        //   ),
-        //   dueDateString: 'Fri, 12 JUN 12:15 PM',
-        // ),
       ),
     );
   }

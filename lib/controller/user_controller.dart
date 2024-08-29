@@ -63,6 +63,7 @@ class UserController extends GetxController {
       }
     } catch (e) {
       userException.value = e as Exception;
+      rethrow;
     }
   }
 

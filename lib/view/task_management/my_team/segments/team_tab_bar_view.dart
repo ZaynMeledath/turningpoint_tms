@@ -4,19 +4,6 @@ Widget teamTabBarView({
   required List<AllUsersModel>? myTeamList,
   required AppController appController,
 }) {
-  final userController = Get.put(UserController());
-
-  if (userController.userException.value != null) {
-    return Column(
-      children: [
-        SizedBox(height: 90.h),
-        serverErrorWidget(
-          isLoading: appController.isLoadingObs.value,
-          onRefresh: () {},
-        ),
-      ],
-    );
-  }
   if (myTeamList != null && myTeamList.isNotEmpty) {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),

@@ -136,9 +136,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: passwordController.text.trim(),
                             );
                             appController.isLoadingObs.value = false;
-                            Get.offAll(
-                              () => const TasksHome(),
-                            );
+                            if (userController.userException.value == null) {
+                              Get.offAll(
+                                () => const TasksHome(),
+                              );
+                            }
                           } catch (e) {
                             appController.isLoadingObs.value = false;
                             showDialog(
