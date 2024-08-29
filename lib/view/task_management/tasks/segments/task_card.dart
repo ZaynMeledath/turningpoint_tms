@@ -3,14 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/name_formatter.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_functions.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
 Widget taskCard({
   required AnimationController lottieController,
   required TaskModel taskModel,
+  required TasksController tasksController,
   required bool isDelegated,
   bool? isAllTasks,
 }) {
@@ -263,7 +266,10 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () {},
+                            onTap: () => TaskFunction.deleteTask(
+                              tasksController: tasksController,
+                              taskModel: taskModel,
+                            ),
                           ),
                           cardActionButton(
                             title: 'Re Open',
@@ -307,7 +313,10 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () {},
+                            onTap: () => TaskFunction.deleteTask(
+                              tasksController: tasksController,
+                              taskModel: taskModel,
+                            ),
                           ),
                         ],
                       )
@@ -320,55 +329,3 @@ Widget taskCard({
     ),
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Expanded(
-//             child: Column(
-//               children: [
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.end,
-//                   children: [
-//                     cardActionButton(
-//                       title: 'In Progress',
-//                       icon: Icons.timelapse_rounded,
-//                       iconColor: Colors.orange,
-//                     ),
-//                      SizedBox(width: 4),
-//                     cardActionButton(
-//                       title: 'Complete',
-//                       icon: Icons.check_circle,
-//                       iconColor: Colors.green,
-//                     ),
-//                   ],
-//                 ),
-//                  SizedBox(height: 13.5),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.end,
-//                   children: [
-//                     cardActionButton(
-//                       title: 'Edit',
-//                       icon: Icons.edit,
-//                       iconColor: Colors.blue,
-//                     ),
-//                      SizedBox(width: 4),
-//                     cardActionButton(
-//                       title: 'Delete',
-//                       icon: Icons.delete,
-//                       iconColor: Colors.red,
-//                     ),
-//                   ],
-//                 ),
-//               ],
-//             ),
-//           ),

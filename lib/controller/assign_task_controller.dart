@@ -8,6 +8,7 @@ import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
 class AssignTaskController extends GetxController {
   final tasksRepository = TasksRepository();
+  final assignTaskException = Rxn<Exception>();
 
   //Email is the key and Name is the value
   RxMap<String, String> assignToList = RxMap<String, String>();
@@ -120,38 +121,7 @@ class AssignTaskController extends GetxController {
     resetDatesMap();
   }
 
-//====================Assign Task====================//
-  Future<void> assignTask({
-    required String title,
-    required String description,
-    // required List<dynamic>? attachments,
-  }) async {
-    final dueDate = DateTime(
-      taskDate.value.year,
-      taskDate.value.month,
-      taskDate.value.day,
-      taskTime.value.hour,
-      taskTime.value.minute,
-    );
-    final dueDateString = dueDate.toUtc().toIso8601String();
-    await tasksRepository.assignTask(
-      title: title,
-      description: description,
-      category: selectedCategory.value,
-      assignTo: assignToList.keys.toList(),
-      priority: taskPriority.value,
-      dueDate: dueDateString,
-      reminderFrequency: null,
-      reminderStartDate: null,
-      repeatFrequency: repeatFrequencyEnumToString(
-        repeatFrequency: taskRepeatFrequency.value,
-      ),
-      repeatUntil: null,
-      attachments: null,
-    );
-  }
-
-//====================Add user to AssignToList====================//
+  //====================Add user to AssignToList====================//
   void addToAssignToList({
     required String name,
     required String email,
@@ -164,6 +134,41 @@ class AssignTaskController extends GetxController {
     required String email,
   }) {
     assignToList.remove(email);
+  }
+
+//====================Assign Task====================//
+  Future<void> assignTask({
+    required String title,
+    required String description,
+    // required List<dynamic>? attachments,
+  }) async {
+    try {
+      final dueDate = DateTime(
+        taskDate.value.year,
+        taskDate.value.month,
+        taskDate.value.day,
+        taskTime.value.hour,
+        taskTime.value.minute,
+      );
+      final dueDateString = dueDate.toUtc().toIso8601String();
+      await tasksRepository.assignTask(
+        title: title,
+        description: description,
+        category: selectedCategory.value,
+        assignTo: assignToList.keys.toList(),
+        priority: taskPriority.value,
+        dueDate: dueDateString,
+        reminderFrequency: null,
+        reminderStartDate: null,
+        repeatFrequency: repeatFrequencyEnumToString(
+          repeatFrequency: taskRepeatFrequency.value,
+        ),
+        repeatUntil: null,
+        attachments: null,
+      );
+    } catch (e) {
+      assignTaskException.value = e as Exception;
+    }
   }
 }
 

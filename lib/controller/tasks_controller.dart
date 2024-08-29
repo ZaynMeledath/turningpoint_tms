@@ -117,7 +117,7 @@ class TasksController extends GetxController {
         }
       }
     } catch (e) {
-      tasksException.value = e as Exception;
+      rethrow;
     }
   }
 
@@ -126,7 +126,41 @@ class TasksController extends GetxController {
     try {
       allUsersPerformanceModelList.value =
           await tasksRepository.getAllUsersPerformanceReport();
+      tasksException.value = null;
     } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Edit Task====================//
+  Future<void> editTask({required String taskId}) async {
+    try {
+      await tasksRepository.editTask(taskId: taskId);
+      tasksException.value = null;
+      await getDelegatedTasks();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Delete Task====================//
+  Future<void> deleteTask({required String taskId}) async {
+    try {
+      await tasksRepository.deleteTask(taskId: taskId);
+      tasksException.value = null;
+      await getDelegatedTasks();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Change Task Status====================//
+  Future<void> changeTaskStatus({required String taskId}) async {
+    try {
+      await tasksRepository.changeTaskStatus(taskId: taskId);
+      tasksException.value = null;
+      await getDelegatedTasks();
+    } catch (_) {
       rethrow;
     }
   }

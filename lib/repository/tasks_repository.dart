@@ -119,13 +119,17 @@ class TasksRepository {
 
 //====================Change Task Status====================//
   Future<void> changeTaskStatus({required String taskId}) async {
-    await ApiService().sendRequest(
-      url: '${ApiEndpoints.assignTask}/$taskId',
-      requestMethod: RequestMethod.PUT,
-      data: {},
-      fieldNameForFiles: null,
-      isTokenRequired: true,
-    );
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.assignTask}/$taskId',
+        requestMethod: RequestMethod.PUT,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
 //====================Get All Users Performance Report====================//

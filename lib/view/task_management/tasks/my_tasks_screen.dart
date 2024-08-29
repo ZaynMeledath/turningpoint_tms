@@ -148,22 +148,27 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                           taskTabBarView(
                             tasksList: allTasksList,
                             lottieController: lottieController,
+                            tasksController: tasksController,
                           ),
                           taskTabBarView(
                             tasksList: overdueTasksList,
                             lottieController: lottieController,
+                            tasksController: tasksController,
                           ),
                           taskTabBarView(
                             tasksList: pendingTasksList,
                             lottieController: lottieController,
+                            tasksController: tasksController,
                           ),
                           taskTabBarView(
                             tasksList: inProgressTasksList,
                             lottieController: lottieController,
+                            tasksController: tasksController,
                           ),
                           taskTabBarView(
                             tasksList: completedTasksList,
                             lottieController: lottieController,
+                            tasksController: tasksController,
                           ),
                         ],
                       ),

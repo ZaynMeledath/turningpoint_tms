@@ -5,6 +5,7 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_functions.dart';
 
 part 'segments/title_description_container.dart';
 part 'segments/task_details_assigned_container.dart';
@@ -114,13 +115,13 @@ class TaskDetailsScreen extends StatelessWidget {
                         horizontal: 14.w,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           cardActionButton(
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () {},
+                            onTap: () => TaskFunction.deleteTask,
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,
@@ -147,7 +148,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             horizontal: 14.w,
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               cardActionButton(
                                 title: 'In Progress',
@@ -182,7 +183,7 @@ class TaskDetailsScreen extends StatelessWidget {
                         horizontal: 14.w,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           cardActionButton(
                             title: 'Edit',
@@ -199,7 +200,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () {},
+                            onTap: () => TaskFunction.deleteTask,
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,

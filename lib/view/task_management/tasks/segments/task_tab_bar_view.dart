@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/shimmer_tasks_list_loading.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
@@ -9,6 +10,7 @@ import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task
 Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
+  required TasksController tasksController,
   bool isDelegated = false,
 }) {
   // final tasksController = Get.put(TasksController());
@@ -40,6 +42,7 @@ Widget taskTabBarView({
           child: taskCard(
             lottieController: lottieController,
             taskModel: tasksList[index],
+            tasksController: tasksController,
             isDelegated: isDelegated,
           ).animate().slideX(
                 begin: index.isEven ? -.4 : .4,

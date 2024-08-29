@@ -3,25 +3,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 
 typedef ButtonFuction = void Function();
 
-Future<Object?> showAnimatedGenericDialog({
-  required BuildContext context,
+Future<Object?> showGenericDialog({
   required String iconPath,
   required String title,
   required String content,
   required Map<String, ButtonFuction?> buttons,
+  Color? confirmationButtonColor,
   double? iconWidth,
   // Size? containerSize,
 }) async {
   return Get.dialog(
     dialog(
-      context: context,
       iconPath: iconPath,
       title: title,
       content: content,
       iconWidth: iconWidth,
+      confirmationButtonColor: confirmationButtonColor,
       buttons: buttons,
     ),
     transitionDuration: const Duration(milliseconds: 300),
@@ -30,11 +31,11 @@ Future<Object?> showAnimatedGenericDialog({
 }
 
 Widget dialog({
-  required BuildContext context,
   required String iconPath,
   required String title,
   required String content,
   required Map<String, ButtonFuction?> buttons,
+  Color? confirmationButtonColor,
   double? iconWidth,
 }) {
   final isLottie = iconPath.split('.').last == 'json';
@@ -50,7 +51,7 @@ Widget dialog({
         ),
         // margin: EdgeInsets.symmetric(horizontal: 58.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(
@@ -71,7 +72,6 @@ Widget dialog({
               style: GoogleFonts.roboto(
                 fontSize: 18.5.sp,
                 fontWeight: FontWeight.w500,
-                color: Colors.black,
               ),
               child: Text(
                 title,
@@ -83,7 +83,6 @@ Widget dialog({
               style: GoogleFonts.roboto(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
-                color: Colors.black,
                 height: 1.4,
               ),
               child: Text(
@@ -98,8 +97,8 @@ Widget dialog({
                     children: [
                       for (int i = 0; i < buttons.length; i++)
                         GestureDetector(
-                          onTap: buttons.values.elementAt(i) ??
-                              () => Navigator.pop(context),
+                          onTap:
+                              buttons.values.elementAt(i) ?? () => Get.back(),
                           child: Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: 16.w,
@@ -109,11 +108,12 @@ Widget dialog({
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: i == 0
-                                  ? Colors.white
-                                  : const Color.fromRGBO(0, 99, 255, 1),
+                                  ? AppColors.scaffoldBackgroundColor
+                                  : confirmationButtonColor ??
+                                      AppColors.themeGreen,
                               border: Border.all(
                                 color: i == 0
-                                    ? const Color.fromRGBO(0, 99, 255, 1)
+                                    ? AppColors.themeGreen
                                     : Colors.transparent,
                               ),
                             ),
@@ -122,7 +122,7 @@ Widget dialog({
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                                 color: i == 0
-                                    ? const Color.fromRGBO(0, 99, 255, 1)
+                                    ? AppColors.themeGreen
                                     : Colors.white,
                               ),
                               child: Center(
@@ -137,13 +137,13 @@ Widget dialog({
                     ],
                   )
                 : GestureDetector(
-                    onTap: buttons.values.first ?? () => Navigator.pop(context),
+                    onTap: buttons.values.first ?? () => Get.back(),
                     child: Container(
                       width: 102.w,
                       height: 36.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: const Color.fromRGBO(0, 99, 255, 1),
+                        color: AppColors.themeGreen,
                       ),
                       child: DefaultTextStyle(
                         style: GoogleFonts.roboto(
