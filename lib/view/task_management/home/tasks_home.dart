@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_team/my_team_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/delegated_tasks_screen.dart';
@@ -20,46 +19,45 @@ class TasksHome extends StatefulWidget {
 }
 
 class _TasksHomeState extends State<TasksHome> {
-  int activeIndex = 3;
+  int activeIndex = 1;
   StatefulWidget? activeWidget;
 
   final tasksController = TasksController();
   final userController = UserController();
-  UserModel? userModel;
-  bool isAdminOrLeader = true;
+  bool isAdminOrLeader = false;
 
   List<StatefulWidget> widgetList = [
-    const TasksDashboard(),
     const MyTeamScreen(),
-    const DelegatedTasksScreen(),
     const MyTasksScreen(),
   ];
 
   Map<String, IconData> titleIconMap = {
-    'Dashboard': Icons.dashboard,
     'My Team': Icons.people_alt,
-    'Delegated': Icons.double_arrow,
     'My Tasks': Icons.task_alt,
   };
 
   @override
   void initState() {
     getData();
-    userModel = userController.getUserModelFromHive();
-    if (userModel != null) {
-      if (userModel!.role != Role.admin && userModel!.role != Role.teamLeader) {
-        isAdminOrLeader = false;
-        activeIndex = 1;
-        titleIconMap = {
-          'My Team': Icons.people_alt,
-          'My Tasks': Icons.task_alt,
-        };
+    final userModel = userController.getUserModelFromHive();
 
-        widgetList = [
-          const MyTeamScreen(),
-          const MyTasksScreen(),
-        ];
-      }
+    if (userModel != null &&
+        (userModel.role == Role.admin || userModel.role == Role.teamLeader)) {
+      isAdminOrLeader = true;
+      activeIndex = 3;
+      titleIconMap = {
+        'Dashboard': Icons.dashboard,
+        'My Team': Icons.people_alt,
+        'Delegated': Icons.double_arrow,
+        'My Tasks': Icons.task_alt,
+      };
+
+      widgetList = [
+        const TasksDashboard(),
+        const MyTeamScreen(),
+        const DelegatedTasksScreen(),
+        const MyTasksScreen(),
+      ];
     }
 
     super.initState();
