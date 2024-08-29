@@ -13,10 +13,12 @@ part 'segments/task_updates_section.dart';
 class TaskDetailsScreen extends StatelessWidget {
   final TaskModel taskModel;
   final String dueDateString;
+  final bool isDelegated;
 
   const TaskDetailsScreen({
     required this.taskModel,
     required this.dueDateString,
+    required this.isDelegated,
     super.key,
   });
 
@@ -106,55 +108,81 @@ class TaskDetailsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 14.h),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 14.w,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    cardActionButton(
-                      title: isTaskCompleted ? 'Delete' : 'In Progress',
-                      icon: isTaskCompleted
-                          ? Icons.delete
-                          : StatusIcons.inProgress,
-                      iconColor: isTaskCompleted
-                          ? Colors.red
-                          : StatusIconColor.inProgress,
-                      onTap: () {},
-                      containerColor: Colors.grey.withOpacity(.08),
-                      containerWidth: 150.w,
-                      containerHeight: 40,
-                      iconSize: 22.sp,
-                      textSize: 14.sp,
-                    ),
-                    cardActionButton(
-                      title: isTaskCompleted ? 'Re Open' : 'Complete',
-                      icon: isTaskCompleted
-                          ? StatusIcons.inProgress
-                          : StatusIcons.completed,
-                      iconColor: isTaskCompleted
-                          ? StatusIconColor.pending
-                          : StatusIconColor.completed,
-                      onTap: () {},
-                      containerColor: Colors.grey.withOpacity(.08),
-                      containerWidth: 150.w,
-                      containerHeight: 40,
-                      iconSize: 22.sp,
-                      textSize: 14.sp,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: isTaskCompleted ? 0 : 12.h),
-              isTaskCompleted
-                  ? const SizedBox()
-                  : Padding(
+              isTaskCompleted && isDelegated
+                  ? Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          cardActionButton(
+                            title: 'Delete',
+                            icon: Icons.delete,
+                            iconColor: Colors.red,
+                            onTap: () {},
+                            containerColor: Colors.grey.withOpacity(.08),
+                            containerWidth: 150.w,
+                            containerHeight: 40,
+                            iconSize: 22.sp,
+                            textSize: 14.sp,
+                          ),
+                          cardActionButton(
+                            title: 'Re Open',
+                            icon: StatusIcons.inProgress,
+                            iconColor: StatusIconColor.pending,
+                            onTap: () {},
+                            containerColor: Colors.grey.withOpacity(.08),
+                            containerWidth: 150.w,
+                            containerHeight: 40,
+                            iconSize: 22.sp,
+                            textSize: 14.sp,
+                          ),
+                        ],
+                      ),
+                    )
+                  : !isTaskCompleted
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.w,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              cardActionButton(
+                                title: 'In Progress',
+                                icon: StatusIcons.inProgress,
+                                iconColor: StatusIconColor.inProgress,
+                                onTap: () {},
+                                containerColor: Colors.grey.withOpacity(.08),
+                                containerWidth: 150.w,
+                                containerHeight: 40,
+                                iconSize: 22.sp,
+                                textSize: 14.sp,
+                              ),
+                              cardActionButton(
+                                title: 'Complete',
+                                icon: StatusIcons.completed,
+                                iconColor: StatusIconColor.completed,
+                                onTap: () {},
+                                containerColor: Colors.grey.withOpacity(.08),
+                                containerWidth: 150.w,
+                                containerHeight: 40,
+                                iconSize: 22.sp,
+                                textSize: 14.sp,
+                              ),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+              SizedBox(height: isTaskCompleted ? 0 : 9.h),
+              !isTaskCompleted && isDelegated
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           cardActionButton(
                             title: 'Edit',
@@ -180,7 +208,8 @@ class TaskDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
+                    )
+                  : const SizedBox(),
               SizedBox(height: 14.h),
               // Container(
               //   width: double.maxFinite,

@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const baseUrl = 'http://192.168.1.120:5001/api';
+  static const baseUrl = 'http://192.168.1.111:5001/api';
 
   static const login = '$baseUrl/auth/login';
   static const register = '$baseUrl/auth/register';

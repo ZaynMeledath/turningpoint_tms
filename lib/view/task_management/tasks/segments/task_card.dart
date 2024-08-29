@@ -78,6 +78,7 @@ Widget taskCard({
             () => TaskDetailsScreen(
               taskModel: taskModel,
               dueDateString: dueDateString,
+              isDelegated: isDelegated,
             ),
           );
         },
@@ -254,35 +255,46 @@ Widget taskCard({
                   ],
                 ),
                 SizedBox(height: 12.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    cardActionButton(
-                      title: isTaskCompleted ? 'Delete' : 'In Progress',
-                      icon: isTaskCompleted
-                          ? Icons.delete
-                          : StatusIcons.inProgress,
-                      iconColor: isTaskCompleted
-                          ? Colors.red
-                          : StatusIconColor.inProgress,
-                      onTap: () {},
-                    ),
-                    cardActionButton(
-                      title: isTaskCompleted ? 'Re Open' : 'Complete',
-                      icon: isTaskCompleted
-                          ? StatusIcons.inProgress
-                          : StatusIcons.completed,
-                      iconColor: isTaskCompleted
-                          ? StatusIconColor.pending
-                          : StatusIconColor.completed,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
+                isTaskCompleted && isDelegated
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          cardActionButton(
+                            title: 'Delete',
+                            icon: Icons.delete,
+                            iconColor: Colors.red,
+                            onTap: () {},
+                          ),
+                          cardActionButton(
+                            title: 'Re Open',
+                            icon: StatusIcons.inProgress,
+                            iconColor: StatusIconColor.pending,
+                            onTap: () {},
+                          ),
+                        ],
+                      )
+                    : !isTaskCompleted
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              cardActionButton(
+                                title: 'In Progress',
+                                icon: StatusIcons.inProgress,
+                                iconColor: StatusIconColor.inProgress,
+                                onTap: () {},
+                              ),
+                              cardActionButton(
+                                title: 'Complete',
+                                icon: StatusIcons.completed,
+                                iconColor: StatusIconColor.completed,
+                                onTap: () {},
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
                 SizedBox(height: isTaskCompleted ? 0 : 9.h),
-                isTaskCompleted
-                    ? const SizedBox()
-                    : Row(
+                !isTaskCompleted && isDelegated
+                    ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           cardActionButton(
@@ -299,6 +311,7 @@ Widget taskCard({
                           ),
                         ],
                       )
+                    : const SizedBox(),
               ],
             ),
           ),

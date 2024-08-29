@@ -26,6 +26,7 @@ class ApiService {
     required String? fieldNameForFiles,
     required bool isTokenRequired,
   }) async {
+    data ??= {};
     dynamic responseJson;
     if (isTokenRequired) {
       token = await AppPreferences.getValueShared('auth_token') ?? '';

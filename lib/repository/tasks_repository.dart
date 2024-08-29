@@ -83,6 +83,51 @@ class TasksRepository {
     );
   }
 
+//====================Edit Task====================//
+  Future<void> editTask({required String taskId}) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.assignTask}/$taskId',
+        requestMethod: RequestMethod.PATCH,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+      await getDelegatedTasks();
+      // await getMyTasks();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Delete Task====================//
+  Future<void> deleteTask({required String taskId}) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.assignTask}/$taskId',
+        requestMethod: RequestMethod.DELETE,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+      await getDelegatedTasks();
+      // await getMyTasks();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Change Task Status====================//
+  Future<void> changeTaskStatus({required String taskId}) async {
+    await ApiService().sendRequest(
+      url: '${ApiEndpoints.assignTask}/$taskId',
+      requestMethod: RequestMethod.PUT,
+      data: {},
+      fieldNameForFiles: null,
+      isTokenRequired: true,
+    );
+  }
+
 //====================Get All Users Performance Report====================//
   Future<List<AllUsersPerformanceModel>?> getAllUsersPerformanceReport() async {
     try {

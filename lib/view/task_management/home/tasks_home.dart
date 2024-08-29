@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_team/my_team_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/delegated_tasks_screen.dart';
@@ -20,18 +21,21 @@ class TasksHome extends StatefulWidget {
 
 class _TasksHomeState extends State<TasksHome> {
   int activeIndex = 3;
+  StatefulWidget? activeWidget;
 
   final tasksController = TasksController();
   final userController = UserController();
+  UserModel? userModel;
+  bool isAdminOrLeader = true;
 
-  final widgetList = [
+  List<StatefulWidget> widgetList = [
     const TasksDashboard(),
     const MyTeamScreen(),
     const DelegatedTasksScreen(),
     const MyTasksScreen(),
   ];
 
-  final titleIconMap = {
+  Map<String, IconData> titleIconMap = {
     'Dashboard': Icons.dashboard,
     'My Team': Icons.people_alt,
     'Delegated': Icons.double_arrow,
@@ -41,6 +45,23 @@ class _TasksHomeState extends State<TasksHome> {
   @override
   void initState() {
     getData();
+    userModel = userController.getUserModelFromHive();
+    if (userModel != null) {
+      if (userModel!.role != Role.admin && userModel!.role != Role.teamLeader) {
+        isAdminOrLeader = false;
+        activeIndex = 1;
+        titleIconMap = {
+          'My Team': Icons.people_alt,
+          'My Tasks': Icons.task_alt,
+        };
+
+        widgetList = [
+          const MyTeamScreen(),
+          const MyTasksScreen(),
+        ];
+      }
+    }
+
     super.initState();
   }
 
@@ -55,7 +76,7 @@ class _TasksHomeState extends State<TasksHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: widgetList[activeIndex],
+      body: activeWidget ?? widgetList[activeIndex],
       floatingActionButton: SizedBox(
         width: 50.w,
         height: 50.w,
@@ -65,13 +86,18 @@ class _TasksHomeState extends State<TasksHome> {
             borderRadius: BorderRadius.circular(100),
           ),
           onPressed: () {
-            Get.to(
-              () => const AssignTaskScreen(),
-              transition: Transition.downToUp,
-            );
+            if (isAdminOrLeader) {
+              Get.to(
+                () => const AssignTaskScreen(),
+                transition: Transition.downToUp,
+              );
+            } else {
+              activeWidget = const TasksDashboard();
+              setState(() {});
+            }
           },
           child: Icon(
-            Icons.add_task,
+            isAdminOrLeader ? Icons.add_task : Icons.dashboard,
             color: Colors.white.withOpacity(.85),
           ),
         ),
@@ -86,13 +112,17 @@ class _TasksHomeState extends State<TasksHome> {
             children: [
               Icon(
                 titleIconMap.values.elementAt(index),
-                color: isActive ? AppColors.themeGreen : Colors.grey,
+                color: isActive && activeWidget == null
+                    ? AppColors.themeGreen
+                    : Colors.grey,
               ),
               Text(
                 titleIconMap.keys.elementAt(index),
                 style: TextStyle(
                   fontSize: 12.5.sp,
-                  color: isActive ? AppColors.themeGreen : Colors.grey,
+                  color: isActive && activeWidget == null
+                      ? AppColors.themeGreen
+                      : Colors.grey,
                 ),
               )
             ],
@@ -105,6 +135,7 @@ class _TasksHomeState extends State<TasksHome> {
         rightCornerRadius: 32,
         activeIndex: activeIndex,
         onTap: (index) {
+          activeWidget = null;
           activeIndex = index;
           setState(() {});
         },

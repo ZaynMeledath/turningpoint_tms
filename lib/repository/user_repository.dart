@@ -11,6 +11,7 @@ Future<void> addUserModelToHive({
   required dynamic userModelResponseJson,
 }) async {
   final userBox = Hive.box(AppConstants.appDb);
+  userBox.delete(AppConstants.userModelStorageKey);
   userBox.put(AppConstants.userModelStorageKey, userModelResponseJson);
 }
 
