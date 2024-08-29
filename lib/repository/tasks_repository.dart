@@ -118,10 +118,13 @@ class TasksRepository {
   }
 
 //====================Change Task Status====================//
-  Future<void> changeTaskStatus({required String taskId}) async {
+  Future<void> changeTaskStatus({
+    required String taskId,
+    required String taskStatus,
+  }) async {
     try {
       await ApiService().sendRequest(
-        url: '${ApiEndpoints.assignTask}/$taskId',
+        url: '${ApiEndpoints.assignTask}/$taskId/$taskStatus',
         requestMethod: RequestMethod.PUT,
         data: {},
         fieldNameForFiles: null,

@@ -11,9 +11,9 @@ Widget dashboardStatusOverviewSection({
           tasksController.overdueDelegatedTaskList.value?.length ?? 0;
 
       final pendingMyTasksCount =
-          tasksController.pendingTaskList.value?.length ?? 0;
+          tasksController.openTaskList.value?.length ?? 0;
       final pendingDelegatedTasksCount =
-          tasksController.pendingDelegatedTaskList.value?.length ?? 0;
+          tasksController.openDelegatedTaskList.value?.length ?? 0;
 
       final inProgressMyTasksCount =
           tasksController.inProgressTaskList.value?.length ?? 0;
@@ -37,7 +37,7 @@ Widget dashboardStatusOverviewSection({
                 iconColor: Colors.red,
               ),
               dashboardStatusOverviewContainer(
-                status: Status.pending,
+                status: Status.open,
                 count: pendingMyTasksCount + pendingDelegatedTasksCount,
                 icon: StatusIcons.pending,
                 iconColor: Colors.orange,

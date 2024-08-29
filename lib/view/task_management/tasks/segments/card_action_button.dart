@@ -41,7 +41,7 @@ Widget cardActionButton({
     splashColor: splashColor,
     onTap: onTap,
     child: Container(
-      width: containerWidth ?? 108.w,
+      width: containerWidth ?? 112.w,
       height: containerHeight ?? 38.h,
       decoration: BoxDecoration(
         color: containerColor ?? Colors.black.withOpacity(.3),

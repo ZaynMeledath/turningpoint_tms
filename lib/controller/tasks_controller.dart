@@ -17,12 +17,12 @@ class TasksController extends GetxController {
 
   RxList<String> categoriesList = RxList<String>();
 
-  Rxn<List<TaskModel>?> pendingTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> openTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> inProgressTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> completedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> overdueTaskList = Rxn<List<TaskModel>>();
 
-  Rxn<List<TaskModel>?> pendingDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> openDelegatedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> inProgressDelegatedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> completedDelegatedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> overdueDelegatedTaskList = Rxn<List<TaskModel>>();
@@ -42,7 +42,7 @@ class TasksController extends GetxController {
 
       tasksException.value = null;
 
-      pendingTaskList.value =
+      openTaskList.value =
           myTasksListObs.value!.where((item) => item.status == 'Open').toList();
       inProgressTaskList.value = myTasksListObs.value!
           .where((item) => item.status == Status.inProgress)
@@ -77,8 +77,8 @@ class TasksController extends GetxController {
 
       tasksException.value = null;
 
-      pendingDelegatedTaskList.value = delegatedTasksListObs.value!
-          .where((item) => item.status == 'Open')
+      openDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.open)
           .toList();
       inProgressDelegatedTaskList.value = delegatedTasksListObs.value!
           .where((item) => item.status == Status.inProgress)
@@ -155,9 +155,15 @@ class TasksController extends GetxController {
   }
 
 //====================Change Task Status====================//
-  Future<void> changeTaskStatus({required String taskId}) async {
+  Future<void> changeTaskStatus({
+    required String taskId,
+    required String taskStatus,
+  }) async {
     try {
-      await tasksRepository.changeTaskStatus(taskId: taskId);
+      await tasksRepository.changeTaskStatus(
+        taskId: taskId,
+        taskStatus: taskStatus,
+      );
       tasksException.value = null;
       await getDelegatedTasks();
     } catch (_) {

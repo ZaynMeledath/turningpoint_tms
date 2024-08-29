@@ -5,7 +5,7 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_functions.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
 
 part 'segments/title_description_container.dart';
 part 'segments/task_details_assigned_container.dart';
@@ -121,7 +121,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunctions.deleteTask,
+                            onTap: () => TaskCrudOperations.deleteTask,
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,
@@ -162,7 +162,7 @@ class TaskDetailsScreen extends StatelessWidget {
                                 textSize: 14.sp,
                               ),
                               cardActionButton(
-                                title: 'Complete',
+                                title: 'Completed',
                                 icon: StatusIcons.completed,
                                 iconColor: StatusIconColor.completed,
                                 onTap: () {},
@@ -200,7 +200,7 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunctions.deleteTask,
+                            onTap: () => TaskCrudOperations.deleteTask,
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,

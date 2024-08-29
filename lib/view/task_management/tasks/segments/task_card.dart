@@ -7,7 +7,7 @@ import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/name_formatter.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_functions.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
 
 Widget taskCard({
@@ -266,7 +266,7 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunctions.deleteTask(
+                            onTap: () => TaskCrudOperations.deleteTask(
                               tasksController: tasksController,
                               taskModel: taskModel,
                             ),
@@ -290,10 +290,15 @@ Widget taskCard({
                                 onTap: () {},
                               ),
                               cardActionButton(
-                                title: 'Complete',
+                                title: 'Completed',
                                 icon: StatusIcons.completed,
                                 iconColor: StatusIconColor.completed,
-                                onTap: () {},
+                                onTap: () =>
+                                    TaskCrudOperations.changeTaskStatus(
+                                  taskId: taskModel.id.toString(),
+                                  taskStatus: Status.completed,
+                                  tasksController: tasksController,
+                                ),
                               ),
                             ],
                           )
@@ -313,7 +318,7 @@ Widget taskCard({
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskFunctions.deleteTask(
+                            onTap: () => TaskCrudOperations.deleteTask(
                               tasksController: tasksController,
                               taskModel: taskModel,
                             ),

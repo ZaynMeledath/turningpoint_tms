@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/show_change_status_bottom_sheet.dart';
 
-class TaskFunctions {
-  //====================Delete Task====================//
+class TaskCrudOperations {
+//====================Delete Task====================//
   static void deleteTask({
     required TasksController tasksController,
     required TaskModel taskModel,
@@ -46,5 +47,21 @@ class TaskFunctions {
         }
       },
     );
+  }
+
+//====================Edit Task====================//
+  static void editTask({required String taskId}) {}
+
+//====================Change Task Status====================//
+  static void changeTaskStatus({
+    required String taskId,
+    required String taskStatus,
+    required TasksController tasksController,
+  }) async {
+    showChangeStatusBottomSheet(taskStatus: taskStatus);
+    // await tasksController.changeTaskStatus(
+    //   taskId: taskId,
+    //   taskStatus: taskStatus,
+    // );
   }
 }

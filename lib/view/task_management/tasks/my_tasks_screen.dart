@@ -98,7 +98,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
         body: Obx(
           () {
             final allTasksList = tasksController.myTasksListObs.value;
-            final pendingTasksList = tasksController.pendingTaskList.value;
+            final pendingTasksList = tasksController.openTaskList.value;
             final inProgressTasksList =
                 tasksController.inProgressTaskList.value;
             final completedTasksList = tasksController.completedTaskList.value;

@@ -65,7 +65,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            Status.pending,
+            Status.open,
             style: TextStyle(
               fontSize: 16.sp,
             ),

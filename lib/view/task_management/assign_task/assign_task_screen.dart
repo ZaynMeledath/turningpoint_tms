@@ -33,7 +33,11 @@ part 'dialogs/show_category_dialog.dart';
 part 'dialogs/show_reminder_bottom_sheet.dart';
 
 class AssignTaskScreen extends StatefulWidget {
-  const AssignTaskScreen({super.key});
+  final String? taskId;
+  const AssignTaskScreen({
+    this.taskId,
+    super.key,
+  });
 
   @override
   State<AssignTaskScreen> createState() => _AssignTaskScreenState();

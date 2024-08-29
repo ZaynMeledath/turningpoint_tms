@@ -4,7 +4,7 @@ import 'package:turning_point_tasks_app/constants/app_constants.dart';
 const totalDays = 31;
 
 class Status {
-  static const pending = 'Pending';
+  static const open = 'Open';
   static const inProgress = 'In Progress';
   static const completed = 'Completed';
   static const overdue = 'Overdue';

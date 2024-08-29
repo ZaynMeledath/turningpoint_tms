@@ -120,7 +120,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
             final pendingDelegatedTasksList =
-                tasksController.pendingDelegatedTaskList.value;
+                tasksController.openDelegatedTaskList.value;
             final inProgressDelegatedTasksList =
                 tasksController.inProgressDelegatedTaskList.value;
             final completedDelegatedTasksList =
