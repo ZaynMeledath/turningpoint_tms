@@ -4,6 +4,7 @@ Widget monthlyFrequencySegment({
   required AssignTaskController assignTaskController,
 }) {
   const rowElementsCount = 8;
+  final totalRows = (totalDays / rowElementsCount).ceil();
   return AnimatedOpacity(
     opacity: assignTaskController.scaleMonthly.value ? 1 : 0,
     duration: const Duration(milliseconds: 400),
@@ -31,7 +32,7 @@ Widget monthlyFrequencySegment({
                 ),
               ),
               SizedBox(height: 2.h),
-              for (int i = 0; i < 4; i++)
+              for (int i = 0; i < totalRows; i++)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [

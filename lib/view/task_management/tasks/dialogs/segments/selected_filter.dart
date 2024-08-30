@@ -20,6 +20,7 @@ Widget selectedFilter({
                 color: AppColors.themeGreen,
               ),
             ),
+            SizedBox(width: 4.w),
             Flexible(
               child: SizedBox(
                 height: 35.h,
@@ -28,16 +29,23 @@ Widget selectedFilter({
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(right: 8.w),
-                    child: Chip(
-                      backgroundColor: AppColors.bottomSheetColor,
-                      side: const BorderSide(
-                        color: Colors.white12,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
                       ),
-                      padding: EdgeInsets.zero,
-                      label: Text(
-                        filterList[index],
-                        style: TextStyle(
-                          fontSize: 14.5.sp,
+                      decoration: BoxDecoration(
+                        color: AppColors.bottomSheetColor,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.white12,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          filterList[index],
+                          style: TextStyle(
+                            fontSize: 14.5.sp,
+                          ),
                         ),
                       ),
                     ),

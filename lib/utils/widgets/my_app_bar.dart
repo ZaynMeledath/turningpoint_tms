@@ -16,7 +16,7 @@ AppBar myAppBar({
   bool profileAvatar = false,
   bool implyLeading = true,
 }) {
-  final UserModel? userModel = UserController().getUserModelFromHive();
+  final UserModel? userModel = Get.put(UserController()).getUserModelFromHive();
   return AppBar(
     automaticallyImplyLeading: false,
     elevation: 10,

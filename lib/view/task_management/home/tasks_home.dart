@@ -23,7 +23,7 @@ class _TasksHomeState extends State<TasksHome> {
   StatefulWidget? activeWidget;
 
   final tasksController = TasksController();
-  final userController = UserController();
+  final userController = Get.put(UserController());
   bool isAdminOrLeader = false;
 
   List<StatefulWidget> widgetList = [
@@ -63,7 +63,7 @@ class _TasksHomeState extends State<TasksHome> {
     super.initState();
   }
 
-  void getData() async {
+  Future<void> getData() async {
     await userController.getAllTeamMembers();
     // await tasksController.getMyTasks();
     // await tasksController.getDelegatedTasks();

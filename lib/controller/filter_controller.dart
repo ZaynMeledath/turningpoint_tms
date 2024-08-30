@@ -20,6 +20,7 @@ class FilterController extends GetxController {
   FilterController() {
     assignValuesToModels();
   }
+  final userController = Get.put(UserController());
 
   // RxMap<String, bool> filterOptionSelectedMap = {
   //   'category': true,
@@ -54,7 +55,6 @@ class FilterController extends GetxController {
 
 //====================Assign Values to Models====================//
   void assignValuesToModels() {
-    final userController = Get.put(UserController());
     categoryFilterModel.value = {
       for (String element in tasksController.categoriesList)
         element.toString(): false
@@ -158,12 +158,12 @@ class FilterController extends GetxController {
     };
 
     assignedByFilterModel.value = {
-      for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+      for (AllUsersModel element in userController.myTeamList.value!)
         element.emailId.toString(): false
     }.obs;
 
     assignedToFilterModel.value = {
-      for (AllUsersModel element in Get.put(UserController()).myTeamList.value!)
+      for (AllUsersModel element in userController.myTeamList.value!)
         element.emailId.toString(): false
     }.obs;
 

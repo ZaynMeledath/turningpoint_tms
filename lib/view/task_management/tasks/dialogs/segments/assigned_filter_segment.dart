@@ -95,8 +95,10 @@ Widget assignedFilterSegment({
                       Obx(
                         () => Checkbox.adaptive(
                           value: isAssignedBy
-                              ? filterController.assignedByFilterModel[email]
-                              : filterController.assignedToFilterModel[email],
+                              ? filterController.assignedByFilterModel[email] ??
+                                  false
+                              : filterController.assignedToFilterModel[email] ??
+                                  false,
                           visualDensity: VisualDensity.compact,
                           fillColor: WidgetStatePropertyAll(
                             filterController.assignedToFilterModel[email] ==

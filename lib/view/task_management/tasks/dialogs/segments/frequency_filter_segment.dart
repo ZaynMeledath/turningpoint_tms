@@ -47,7 +47,9 @@ Widget frequencyFilterSegment({
                   children: [
                     Obx(
                       () => Checkbox.adaptive(
-                        value: filterController.frequencyFilterModel[frequency],
+                        value:
+                            filterController.frequencyFilterModel[frequency] ??
+                                false,
                         visualDensity: VisualDensity.compact,
                         fillColor: WidgetStatePropertyAll(
                             filterController.frequencyFilterModel[frequency] ==

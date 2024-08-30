@@ -34,7 +34,7 @@ Widget titleDescriptionContainer({
           children: [
             //--------------------Title Segment--------------------//
             Text(
-              'Task Title ',
+              taskModel.title.toString(),
               style: TextStyle(
                 fontSize: 17.sp,
                 fontWeight: FontWeight.w600,

@@ -46,7 +46,8 @@ Widget categoryFilterSegment({
                   children: [
                     Obx(
                       () => Checkbox.adaptive(
-                        value: filterController.categoryFilterModel[category],
+                        value: filterController.categoryFilterModel[category] ??
+                            false,
                         visualDensity: VisualDensity.compact,
                         fillColor: WidgetStatePropertyAll(
                             filterController.categoryFilterModel[category] ==

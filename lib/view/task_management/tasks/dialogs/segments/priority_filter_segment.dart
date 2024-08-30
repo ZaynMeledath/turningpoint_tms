@@ -56,7 +56,8 @@ Widget priorityFilterSegment({
                   children: [
                     Obx(
                       () => Checkbox.adaptive(
-                        value: filterController.priorityFilterModel[priority],
+                        value: filterController.priorityFilterModel[priority] ??
+                            false,
                         visualDensity: VisualDensity.compact,
                         fillColor: WidgetStatePropertyAll(
                             filterController.priorityFilterModel[priority] ==

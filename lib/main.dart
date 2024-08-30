@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final authToken = AppPreferences.getValueShared('auth_token');
     return ScreenUtilInit(
-      ///Add maxScreen width to the ScreenUtil package file to ensure UI quality
+      ///Add maxScreen width to the ScreenUtil package file to ensure UI quality (On line 216 of screen_util.dart (pub package))
       ///(screenWidth > 550 ? 550 : screenWidth) / _uiSize;
       designSize: const Size(412, 915),
       builder: (context, child) => GetMaterialApp(
