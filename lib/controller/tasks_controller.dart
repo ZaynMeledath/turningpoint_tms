@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
@@ -34,6 +36,8 @@ class TasksController extends GetxController {
 
   Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
       Rxn<List<AllUsersPerformanceModel>>();
+
+  final taskUpdateAttachments = <File>[].obs;
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks() async {
@@ -174,14 +178,28 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Filter Tasks List====================//
-  // void filterList({required List<TaskModel> list}) {
-  //   final filteredList = list.where(
-  //     (element) {
-  //       element.category =
-  //     },
-  //   );
-  // }
+//====================Fetch Image from Storage====================//
+  Future<List<File>> fetchMultipleImagesFromStorage() async {
+    final ImagePicker picker = ImagePicker();
+    try {
+      final List<XFile> imageXFileList = await picker.pickMultiImage();
+      final imageFileList = <File>[];
+
+      for (XFile imageXFile in imageXFileList) {
+        imageFileList.add(
+          File(imageXFile.path),
+        );
+      }
+      return imageFileList;
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Add Image to task update attachments====================//
+  Future<void> addImageToTaskUpdateAttachments() async {
+    taskUpdateAttachments.addAll(await fetchMultipleImagesFromStorage());
+  }
 
 //====================Reset Task Controller====================//
   void resetTasksController() {}

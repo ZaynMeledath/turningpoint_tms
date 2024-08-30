@@ -162,16 +162,23 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                         //====================Attachment====================//
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Container(
-                            width: 42.w,
-                            height: 42.w,
-                            decoration: const BoxDecoration(
-                              color: Colors.black26,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.photo_rounded,
-                              size: 24.w,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(100),
+                            onTap: () async {
+                              await tasksController
+                                  .addImageToTaskUpdateAttachments();
+                            },
+                            child: Container(
+                              width: 42.w,
+                              height: 42.w,
+                              decoration: const BoxDecoration(
+                                color: Colors.black26,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.photo_rounded,
+                                size: 24.w,
+                              ),
                             ),
                           ),
                         ),
