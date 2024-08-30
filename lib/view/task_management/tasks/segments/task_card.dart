@@ -287,14 +287,19 @@ Widget taskCard({
                                 title: 'In Progress',
                                 icon: StatusIcons.inProgress,
                                 iconColor: StatusIconColor.inProgress,
-                                onTap: () {},
+                                onTap: () =>
+                                    TaskCrudOperations.updateTaskStatus(
+                                  taskId: taskModel.id.toString(),
+                                  taskStatus: Status.inProgress,
+                                  tasksController: tasksController,
+                                ),
                               ),
                               cardActionButton(
                                 title: 'Completed',
                                 icon: StatusIcons.completed,
                                 iconColor: StatusIconColor.completed,
                                 onTap: () =>
-                                    TaskCrudOperations.changeTaskStatus(
+                                    TaskCrudOperations.updateTaskStatus(
                                   taskId: taskModel.id.toString(),
                                   taskStatus: Status.completed,
                                   tasksController: tasksController,

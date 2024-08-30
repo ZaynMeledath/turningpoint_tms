@@ -28,7 +28,7 @@ class TaskCrudOperations {
             Get.back();
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
-              title: 'Success!',
+              title: 'Task Deleted!',
               content: 'Task Successfully deleted',
               buttons: {
                 'OK': null,
@@ -53,15 +53,14 @@ class TaskCrudOperations {
   static void editTask({required String taskId}) {}
 
 //====================Change Task Status====================//
-  static void changeTaskStatus({
+  static void updateTaskStatus({
     required String taskId,
     required String taskStatus,
     required TasksController tasksController,
   }) async {
-    showChangeStatusBottomSheet(taskStatus: taskStatus);
-    // await tasksController.changeTaskStatus(
-    //   taskId: taskId,
-    //   taskStatus: taskStatus,
-    // );
+    showChangeStatusBottomSheet(
+      taskId: taskId,
+      taskStatus: taskStatus,
+    );
   }
 }

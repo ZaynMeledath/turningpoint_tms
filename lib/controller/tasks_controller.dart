@@ -155,16 +155,19 @@ class TasksController extends GetxController {
   }
 
 //====================Change Task Status====================//
-  Future<void> changeTaskStatus({
+  Future<void> updateTaskStatus({
     required String taskId,
     required String taskStatus,
+    required String note,
   }) async {
     try {
-      await tasksRepository.changeTaskStatus(
+      await tasksRepository.updateTaskStatus(
         taskId: taskId,
         taskStatus: taskStatus,
+        note: note,
       );
       tasksException.value = null;
+      await getMyTasks();
       await getDelegatedTasks();
     } catch (_) {
       rethrow;

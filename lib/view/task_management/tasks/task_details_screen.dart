@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
@@ -16,7 +18,9 @@ class TaskDetailsScreen extends StatelessWidget {
   final String dueDateString;
   final bool isDelegated;
 
-  const TaskDetailsScreen({
+  final tasksController = Get.put(TasksController());
+
+  TaskDetailsScreen({
     required this.taskModel,
     required this.dueDateString,
     required this.isDelegated,
@@ -154,7 +158,12 @@ class TaskDetailsScreen extends StatelessWidget {
                                 title: 'In Progress',
                                 icon: StatusIcons.inProgress,
                                 iconColor: StatusIconColor.inProgress,
-                                onTap: () {},
+                                onTap: () =>
+                                    TaskCrudOperations.updateTaskStatus(
+                                  taskId: taskModel.id.toString(),
+                                  taskStatus: Status.inProgress,
+                                  tasksController: tasksController,
+                                ),
                                 containerColor: Colors.grey.withOpacity(.08),
                                 containerWidth: 150.w,
                                 containerHeight: 40,
@@ -165,7 +174,12 @@ class TaskDetailsScreen extends StatelessWidget {
                                 title: 'Completed',
                                 icon: StatusIcons.completed,
                                 iconColor: StatusIconColor.completed,
-                                onTap: () {},
+                                onTap: () =>
+                                    TaskCrudOperations.updateTaskStatus(
+                                  taskId: taskModel.id.toString(),
+                                  taskStatus: Status.completed,
+                                  tasksController: tasksController,
+                                ),
                                 containerColor: Colors.grey.withOpacity(.08),
                                 containerWidth: 150.w,
                                 containerHeight: 40,
