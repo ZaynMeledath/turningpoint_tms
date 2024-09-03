@@ -16,7 +16,7 @@ class TasksRepository {
       );
       return TasksModelResponse.fromJson(response).tasks;
     } catch (e) {
-      throw Exception;
+      rethrow;
     }
   }
 
@@ -31,21 +31,25 @@ class TasksRepository {
         isTokenRequired: true,
       );
       return TasksModelResponse.fromJson(response).tasks;
-    } catch (e) {
-      throw Exception;
+    } catch (_) {
+      rethrow;
     }
   }
 
 //====================Assign Task====================//
   Future<List<dynamic>?> getCategories() async {
-    final response = await ApiService().sendRequest(
-      url: ApiEndpoints.getCategories,
-      requestMethod: RequestMethod.GET,
-      data: {},
-      isTokenRequired: true,
-      fieldNameForFiles: null,
-    );
-    return response['categories'];
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.getCategories,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        isTokenRequired: true,
+        fieldNameForFiles: null,
+      );
+      return response['categories'];
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Assign Task====================//
@@ -62,25 +66,29 @@ class TasksRepository {
     required String? repeatUntil,
     required List<dynamic>? attachments,
   }) async {
-    await ApiService().sendRequest(
-      url: ApiEndpoints.assignTask,
-      requestMethod: RequestMethod.POST,
-      data: {
-        'title': title,
-        'description': description,
-        'category': category,
-        'assignTo': assignTo,
-        'priority': priority,
-        'dueDate': dueDate,
-        'reminderFrequency': reminderFrequency,
-        'reminderStartDate': reminderStartDate,
-        'repeatFrequency': repeatFrequency,
-        'repeatUntil': repeatUntil,
-        'attachments': attachments,
-      },
-      fieldNameForFiles: 'attachments',
-      isTokenRequired: true,
-    );
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.assignTask,
+        requestMethod: RequestMethod.POST,
+        data: {
+          'title': title,
+          'description': description,
+          'category': category,
+          'assignTo': assignTo,
+          'priority': priority,
+          'dueDate': dueDate,
+          'reminderFrequency': reminderFrequency,
+          'reminderStartDate': reminderStartDate,
+          'repeatFrequency': repeatFrequency,
+          'repeatUntil': repeatUntil,
+          'attachments': attachments,
+        },
+        fieldNameForFiles: 'attachments',
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Edit Task====================//

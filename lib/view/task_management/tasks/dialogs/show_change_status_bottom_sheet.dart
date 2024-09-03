@@ -208,7 +208,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                   iconWidth: 55.w,
                                   title: 'Task Status Updated',
                                   content:
-                                      'Task status updated to ${widget.taskStatus}',
+                                      'Task status updated to "${widget.taskStatus}"',
                                   buttons: {
                                     'OK': null,
                                   },

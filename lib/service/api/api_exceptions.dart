@@ -29,9 +29,9 @@ class FetechDataException extends ApiExceptions {
 }
 
 class BadRequestException extends ApiExceptions {
-  BadRequestException([dynamic message])
+  BadRequestException([String? message])
       : super(
-          message: message['message'],
+          message: message,
           prefix: 'Invalid Request',
         );
 }
@@ -101,16 +101,7 @@ class NotFoundException implements Exception {
   }
 }
 
-class RequestTimedOutException implements Exception {
-  final String message;
-
-  RequestTimedOutException(this.message);
-
-  @override
-  String toString() {
-    return message;
-  }
-}
+class RequestTimedOutException implements Exception {}
 
 class ServerErrorException implements Exception {
   final String message;

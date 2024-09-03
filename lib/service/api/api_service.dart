@@ -195,7 +195,10 @@ class ApiService {
 
   dynamic returnResponse(http.Response response) {
     final statusCode = response.statusCode;
-    final responseJson = jsonDecode(response.body);
+    dynamic responseJson;
+    try {
+      responseJson = jsonDecode(response.body);
+    } catch (_) {}
 
     switch (statusCode) {
       case 200:
@@ -205,7 +208,7 @@ class ApiService {
       case 204:
         throw NoContentException(responseJson.toString());
       case 400:
-        throw BadRequestException(responseJson);
+        throw BadRequestException(responseJson.toString());
       case 401:
         throw UnauthenticatedException(responseJson.toString());
       case 403:
@@ -213,7 +216,7 @@ class ApiService {
       case 404:
         throw NotFoundException(responseJson.toString());
       case 408:
-        throw RequestTimedOutException(responseJson.toString());
+        throw RequestTimedOutException();
       case 500:
         throw ServerErrorException(responseJson.toString());
       case 700:
