@@ -8,8 +8,8 @@ class TasksModelResponse {
     message = json['message'];
     if (json['tasks'] != null) {
       tasks = <TaskModel>[];
-      json['tasks'].forEach((v) {
-        tasks!.add(TaskModel.fromJson(v));
+      json['tasks'].forEach((item) {
+        tasks!.add(TaskModel.fromJson(item));
       });
     }
   }
@@ -19,49 +19,49 @@ class TasksModelResponse {
 
     data['message'] = message;
     if (tasks != null) {
-      data['tasks'] = tasks!.map((v) => v.toJson()).toList();
+      data['tasks'] = tasks!.map((item) => item.toJson()).toList();
     }
     return data;
   }
 }
 
 class TaskModel {
-  List<Reminder>? reminders;
   String? id;
   String? title;
   String? description;
   String? category;
   String? createdBy;
-  String? currentUser;
   List<dynamic>? assignedTo;
+  String? currentUser;
   String? priority;
   String? dueDate;
   String? status;
-  List<dynamic>? attachments;
   bool? isDelayed;
+  List<dynamic>? attachments;
+  List<Reminder>? reminders;
+  List<StatusChanges>? statusChanges;
   String? closedAt;
   String? createdAt;
   String? updatedAt;
-  List<dynamic>? statusChanges;
 
   TaskModel({
-    this.reminders,
     this.id,
     this.title,
     this.description,
     this.category,
     this.createdBy,
-    this.currentUser,
     this.assignedTo,
+    this.currentUser,
     this.priority,
     this.dueDate,
     this.status,
-    this.attachments,
     this.isDelayed,
+    this.attachments,
+    this.reminders,
+    this.statusChanges,
     this.closedAt,
     this.createdAt,
     this.updatedAt,
-    this.statusChanges,
   });
 
   TaskModel.fromJson(Map<String, dynamic> json) {
@@ -94,18 +94,17 @@ class TaskModel {
     updatedAt = json['updatedAt'];
     if (json['statusChanges'] != null) {
       statusChanges = [];
-      json['statusChanges'].forEach((v) {
-        statusChanges!.add(v);
+      json['statusChanges'].forEach((item) {
+        statusChanges!.add(StatusChanges.fromJson(item));
       });
     }
-    statusChanges = json['statusChanges'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     if (reminders != null) {
-      data['reminders'] = reminders!.map((v) => v.toJson()).toList();
+      data['reminders'] = reminders!.map((item) => item.toJson()).toList();
     }
     data['_id'] = id;
     data['title'] = title;
@@ -118,7 +117,7 @@ class TaskModel {
     data['dueDate'] = dueDate;
     data['status'] = status;
     if (attachments != null) {
-      data['attachments'] = attachments!.map((v) => v.toJson()).toList();
+      data['attachments'] = attachments!.map((item) => item.toJson()).toList();
     }
     data['attachments'] = attachments;
     data['isDelayed'] = isDelayed;
@@ -126,7 +125,8 @@ class TaskModel {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (statusChanges != null) {
-      data['statusChanges'] = statusChanges!.map((v) => v.toJson()).toList();
+      data['statusChanges'] =
+          statusChanges!.map((item) => item.toJson()).toList();
     }
     data['statusChanges'] = statusChanges;
     return data;
@@ -158,6 +158,47 @@ class Reminder {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['time'] = time;
     data['unit'] = unit;
+    return data;
+  }
+}
+
+class StatusChanges {
+  String? id;
+  String? status;
+  String? reason;
+  String? taskUpdatedBy;
+  List<dynamic>? changesAttachments;
+  String? changedAt;
+
+  StatusChanges({
+    this.id,
+    this.status,
+    this.reason,
+    this.taskUpdatedBy,
+    this.changesAttachments,
+    this.changedAt,
+  });
+
+  StatusChanges.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    status = json['status'];
+    reason = json['reason'];
+    taskUpdatedBy = json['taskUpdatedBy'];
+    changesAttachments = json['changesAttachments'];
+    changedAt = json['changedAt'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['status'] = status;
+    data['reason'] = reason;
+    data['taskUpdatedBy'] = taskUpdatedBy;
+    if (changesAttachments != null) {
+      data['attachments'] =
+          changesAttachments!.map((item) => item.toJson()).toList();
+    }
+    data['changedAt'] = changedAt;
     return data;
   }
 }

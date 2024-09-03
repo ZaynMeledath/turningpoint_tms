@@ -226,11 +226,13 @@ class TaskDetailsScreen extends StatelessWidget {
                     )
                   : const SizedBox(),
               SizedBox(height: 14.h),
-              // Container(
-              //   width: double.maxFinite,
-              //   height: 1,
-              //   color: Colors.grey.withOpacity(.3),
-              // ),
+              Container(
+                width: double.maxFinite,
+                height: 1,
+                color: Colors.white12,
+              ),
+              SizedBox(height: 10.h),
+              taskUpdateSection(taskModel: taskModel),
             ],
           ),
         ),

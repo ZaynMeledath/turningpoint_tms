@@ -148,7 +148,7 @@ Widget titleDescriptionContainer({
             Container(
               width: double.maxFinite,
               height: 1,
-              color: Colors.grey,
+              color: Colors.white24,
             ),
             SizedBox(height: 14.h),
 
