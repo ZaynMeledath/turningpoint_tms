@@ -12,7 +12,6 @@ Future<Object?> showReminderBottomSheet({
         assignTaskController: assignTaskController,
       );
     }),
-    isDismissible: false,
   );
 }
 
@@ -61,7 +60,7 @@ Widget bottomSheet({
                       ),
                     ],
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: reminderList.isEmpty ? 25.h : 20.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -76,19 +75,24 @@ Widget bottomSheet({
                       InkWell(
                         borderRadius: BorderRadius.circular(100),
                         onTap: () {
-                          reminderList.add(
-                            Reminder(
-                              time: int.parse(textController.text),
-                              unit: assignTaskController.reminderUnit.value,
-                            ),
+                          final reminder = Reminder(
+                            time: int.parse(textController.text),
+                            unit: assignTaskController.reminderUnit.value,
                           );
+                          if (!reminderList.contains(reminder)) {
+                            reminderList.add(reminder);
+                          }
                         },
                         child: Container(
                           width: 40.w,
                           height: 40.w,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.themeGreen,
+                            color: Colors.green.shade900,
+                            border: Border.all(
+                              color: AppColors.themeGreen,
+                              width: 1.5,
+                            ),
                           ),
                           child: Icon(
                             Icons.add,
@@ -98,35 +102,13 @@ Widget bottomSheet({
                       ),
                     ],
                   ),
-                  SizedBox(height: reminderList.isNotEmpty ? 10.h : 30.h),
+                  SizedBox(height: reminderList.isEmpty ? 35.h : 15.h),
                   for (int i = 0; i < reminderList.length; i++)
-                    addedReminderSegment(),
-
-                  SizedBox(height: 10.h),
-                  //====================Add Reminders Button====================//
-                  InkWell(
-                    borderRadius: BorderRadius.circular(12),
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 10.h,
-                      ),
-                      margin: EdgeInsets.only(
-                        bottom: 18.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.themeGreen,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Text(
-                        'Save Reminders',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                    addedReminderSegment(
+                      assignTaskController: assignTaskController,
+                      reminderIndex: i,
                     ),
-                  ),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ],
@@ -221,7 +203,11 @@ Widget reminderDropdown({
   );
 }
 
-Widget addedReminderSegment() {
+Widget addedReminderSegment({
+  required AssignTaskController assignTaskController,
+  required int reminderIndex,
+}) {
+  final reminder = assignTaskController.reminderList[reminderIndex];
   return Padding(
     padding: EdgeInsets.only(bottom: 4.h),
     child: Row(
@@ -229,23 +215,41 @@ Widget addedReminderSegment() {
       children: [
         Container(
           width: 50.w,
-          height: 40.h,
+          height: 42.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: AppColors.textFieldColor,
+          ),
+          child: Center(
+            child: Text(
+              reminder.time.toString(),
+              style: TextStyle(
+                fontSize: 15.sp,
+              ),
+            ),
           ),
         ),
         SizedBox(width: 10.w),
         Container(
           width: 100.w,
-          height: 40.h,
+          height: 42.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: AppColors.textFieldColor,
           ),
+          child: Center(
+            child: Text(
+              reminder.unit.toString(),
+              style: TextStyle(
+                fontSize: 15.sp,
+              ),
+            ),
+          ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            assignTaskController.reminderList.removeAt(reminderIndex);
+          },
           icon: Icon(
             Icons.close_rounded,
             size: 26.w,

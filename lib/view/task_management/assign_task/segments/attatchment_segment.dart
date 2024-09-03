@@ -17,46 +17,71 @@ Widget attatchmentSegment({
       //     size: 24.w,
       //   ),
       // ),
-      IconButton(
-        onPressed: () {},
-        icon: Icon(
-          Icons.upload_file,
-          color: Colors.white,
-          size: 24.w,
+      SizedBox(width: 10.w),
+      Icon(
+        Icons.upload_file,
+        color: Colors.white,
+        size: 25.w,
+      ),
+      SizedBox(width: 18.w),
+
+      Icon(
+        Icons.mic,
+        color: Colors.white,
+        size: 25.w,
+      ),
+      SizedBox(width: 18.w),
+      Obx(
+        () => InkWell(
+          borderRadius: BorderRadius.circular(100),
+          onTap: () {
+            showReminderBottomSheet(
+              textController: reminderTimeTextController,
+              assignTaskController: assignTaskController,
+            );
+          },
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Icon(
+                Icons.alarm,
+                color: Colors.white,
+                size: 25.w,
+              ),
+              assignTaskController.reminderList.isNotEmpty
+                  ? Positioned(
+                      bottom: 0.w,
+                      right: 0.w,
+                      child: Container(
+                        width: 15.w,
+                        height: 15.w,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        child: Center(
+                          child: Text(
+                            assignTaskController.reminderList.length.toString(),
+                            style: TextStyle(
+                              fontSize: 10.w,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+            ],
+          ),
         ),
       ),
-      IconButton(
-        onPressed: () async {
-          // final appDir = await getApplicationDocumentsDirectory();
-          // if (assignTaskController.isRecording.value) {
-          //   assignTaskController.voiceRecordPath.value =
-          //       await recorder.stop() ?? '';
-          // } else {
-          //   recorder.start(
-          //     const RecordConfig(),
-          //     path: '${appDir.path}/myRecording.wav',
-          //   );
-          // }
-        },
-        icon: Icon(
-          Icons.mic,
-          color: Colors.white,
-          size: 24.w,
-        ),
-      ),
-      IconButton(
-        onPressed: () {
-          showReminderBottomSheet(
-            textController: reminderTimeTextController,
-            assignTaskController: assignTaskController,
-          );
-        },
-        icon: Icon(
-          Icons.alarm,
-          color: Colors.white,
-          size: 24.w,
-        ),
-      ),
+      // assignTaskController.reminderList.isNotEmpty
+      //     ? Text(
+      //         '${assignTaskController.reminderList.length} Reminder added',
+      //         style: TextStyle(
+      //           fontSize: 14.sp,
+      //         ),
+      //       )
+      //     : const SizedBox(),
     ],
   );
 }

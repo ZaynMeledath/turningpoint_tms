@@ -142,6 +142,13 @@ class Reminder {
     this.unit,
   });
 
+  @override
+  bool operator ==(other) =>
+      other is Reminder && other.time == time && other.unit == unit;
+
+  @override
+  int get hashCode => time.hashCode ^ unit.hashCode;
+
   Reminder.fromJson(Map<String, dynamic> json) {
     time = json['time'];
     unit = json['unit'];
