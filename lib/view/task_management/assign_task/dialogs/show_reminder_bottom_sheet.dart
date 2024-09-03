@@ -66,7 +66,7 @@ Widget bottomSheet({
                     children: [
                       //====================TextField and Dropdown====================//
                       reminderTextField(textController: textController),
-                      SizedBox(width: 8.w),
+                      SizedBox(width: 10.w),
                       reminderDropdown(
                         assignTaskController: assignTaskController,
                       ),
@@ -102,7 +102,15 @@ Widget bottomSheet({
                       ),
                     ],
                   ),
-                  SizedBox(height: reminderList.isEmpty ? 35.h : 15.h),
+                  SizedBox(height: 10.h),
+                  reminderList.isNotEmpty
+                      ? Container(
+                          width: double.maxFinite,
+                          height: 1,
+                          color: Colors.white12,
+                        )
+                      : SizedBox(height: 10.h),
+                  SizedBox(height: 10.h),
                   for (int i = 0; i < reminderList.length; i++)
                     addedReminderSegment(
                       assignTaskController: assignTaskController,
@@ -126,6 +134,7 @@ Widget reminderTextField({
     width: 70.w,
     child: TextField(
       controller: textController,
+      textAlign: TextAlign.center,
       maxLength: 2,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -214,8 +223,8 @@ Widget addedReminderSegment({
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: 50.w,
-          height: 42.h,
+          width: 70.w,
+          height: 45.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: AppColors.textFieldColor,
@@ -224,15 +233,16 @@ Widget addedReminderSegment({
             child: Text(
               reminder.time.toString(),
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 16.sp,
+                height: 1,
               ),
             ),
           ),
         ),
         SizedBox(width: 10.w),
         Container(
-          width: 100.w,
-          height: 42.h,
+          width: 110.w,
+          height: 45.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color: AppColors.textFieldColor,
@@ -241,11 +251,13 @@ Widget addedReminderSegment({
             child: Text(
               reminder.unit.toString(),
               style: TextStyle(
-                fontSize: 15.sp,
+                fontSize: 16.sp,
+                height: 1,
               ),
             ),
           ),
         ),
+        SizedBox(width: 5.w),
         IconButton(
           onPressed: () {
             assignTaskController.reminderList.removeAt(reminderIndex);
