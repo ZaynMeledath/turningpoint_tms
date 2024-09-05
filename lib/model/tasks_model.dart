@@ -165,7 +165,7 @@ class Reminder {
 class StatusChanges {
   String? id;
   String? status;
-  String? reason;
+  String? note;
   String? taskUpdatedBy;
   List<dynamic>? changesAttachments;
   String? changedAt;
@@ -173,7 +173,7 @@ class StatusChanges {
   StatusChanges({
     this.id,
     this.status,
-    this.reason,
+    this.note,
     this.taskUpdatedBy,
     this.changesAttachments,
     this.changedAt,
@@ -182,7 +182,7 @@ class StatusChanges {
   StatusChanges.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     status = json['status'];
-    reason = json['reason'];
+    note = json['reason'];
     taskUpdatedBy = json['taskUpdatedBy'];
     changesAttachments = json['changesAttachments'];
     changedAt = json['changedAt'];
@@ -192,7 +192,7 @@ class StatusChanges {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = id;
     data['status'] = status;
-    data['reason'] = reason;
+    data['reason'] = note;
     data['taskUpdatedBy'] = taskUpdatedBy;
     if (changesAttachments != null) {
       data['attachments'] =

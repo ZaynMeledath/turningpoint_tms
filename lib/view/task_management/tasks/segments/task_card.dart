@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
-import 'package:turning_point_tasks_app/utils/name_formatter.dart';
+import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
@@ -21,31 +21,6 @@ Widget taskCard({
 
   final isTaskCompleted = taskModel.status == Status.completed;
 
-  final weekList = [
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
-  ];
-
-  final monthList = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-
   switch (taskModel.priority) {
     case 'High':
       priorityFlagColor = Colors.red;
@@ -57,18 +32,7 @@ Widget taskCard({
       break;
   }
 
-  final dueDate = DateTime.parse(taskModel.dueDate.toString());
-  final month = monthList[dueDate.month - 1];
-  final weekDay = weekList[dueDate.weekday - 1];
-  final date = dueDate.day;
-
-  final hour24 = dueDate.hour;
-  final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
-  final minute = dueDate.minute;
-  final period = hour24 >= 12 ? 'PM' : 'AM';
-  final time = '$hour:$minute $period';
-
-  final dueDateString = '$weekDay, $date $month $time';
+  final dueDateString = '${taskModel.dueDate?.dateFormat()}';
 
   return Hero(
     tag: 'task_card${taskModel.id}',
@@ -137,15 +101,13 @@ Widget taskCard({
                               children: [
                                 TextSpan(
                                   text: isDelegated
-                                      ? nameFormatter(
-                                          name: '${taskModel.assignedTo?.first}'
-                                              .split('@')[0],
-                                        )
-                                      : nameFormatter(
-                                          name: taskModel.createdBy
-                                              .toString()
-                                              .split('@')[0],
-                                        ),
+                                      ? '${taskModel.assignedTo?.first}'
+                                          .split('@')[0]
+                                          .nameFormat()
+                                      : taskModel.createdBy
+                                          .toString()
+                                          .split('@')[0]
+                                          .nameFormat(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
@@ -274,7 +236,7 @@ Widget taskCard({
                           cardActionButton(
                             title: 'Re Open',
                             icon: StatusIcons.inProgress,
-                            iconColor: StatusIconColor.pending,
+                            iconColor: StatusColor.open,
                             onTap: () {},
                           ),
                         ],
@@ -286,7 +248,7 @@ Widget taskCard({
                               cardActionButton(
                                 title: 'In Progress',
                                 icon: StatusIcons.inProgress,
-                                iconColor: StatusIconColor.inProgress,
+                                iconColor: StatusColor.inProgress,
                                 onTap: () =>
                                     TaskCrudOperations.updateTaskStatus(
                                   taskId: taskModel.id.toString(),
@@ -297,7 +259,7 @@ Widget taskCard({
                               cardActionButton(
                                 title: 'Completed',
                                 icon: StatusIcons.completed,
-                                iconColor: StatusIconColor.completed,
+                                iconColor: StatusColor.completed,
                                 onTap: () =>
                                     TaskCrudOperations.updateTaskStatus(
                                   taskId: taskModel.id.toString(),

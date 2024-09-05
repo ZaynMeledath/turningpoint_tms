@@ -57,10 +57,10 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   void changeTaskStatusColor() {
     switch (widget.taskStatus) {
       case Status.completed:
-        taskStatusColor = StatusIconColor.completed;
+        taskStatusColor = StatusColor.completed;
         break;
       case Status.inProgress:
-        taskStatusColor = StatusIconColor.inProgress;
+        taskStatusColor = StatusColor.inProgress;
         break;
       default:
         break;
@@ -142,7 +142,9 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                         TextFormField(
                           controller: textController,
                           maxLines: 5,
+                          maxLength: 100,
                           decoration: InputDecoration(
+                            counterText: '',
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 12.w,
                               vertical: 12.h,

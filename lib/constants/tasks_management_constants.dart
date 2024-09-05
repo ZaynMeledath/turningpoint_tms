@@ -17,12 +17,19 @@ class StatusIcons {
   static const overdue = Icons.circle;
 }
 
-class StatusIconColor {
-  static const pending = Colors.orange;
+class StatusColor {
+  static const open = Colors.orange;
   static const inProgress = Colors.blue;
   static const completed = AppColors.themeGreen;
   static const overdue = Colors.red;
 }
+
+final statusAndColorMap = {
+  Status.open: StatusColor.open,
+  Status.inProgress: StatusColor.inProgress,
+  Status.completed: StatusColor.completed,
+  Status.overdue: StatusColor.overdue,
+};
 
 class DefaultReminder {
   static const defaultReminderTime = 10;
