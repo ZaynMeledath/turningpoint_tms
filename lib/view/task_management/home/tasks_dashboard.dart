@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
+import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 
 part 'segments/dashboard_status_overview_container.dart';
 part 'segments/dashboard_status_overview_section.dart';
 part 'segments/dashboard_tab_bar.dart';
+part 'segments/staff_wise_tab_bar_view.dart';
 
 class TasksDashboard extends StatefulWidget {
   const TasksDashboard({super.key});
@@ -66,11 +69,11 @@ class _TasksDashboardState extends State<TasksDashboard>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: const [
-                  Text('Demo'),
-                  Text('Demo'),
-                  Text('Demo'),
-                  Text('Demo'),
+                children: [
+                  staffWiseTabBarView(tasksController: tasksController),
+                  const Text('Demo'),
+                  const Text('Demo'),
+                  const Text('Demo'),
                 ],
               ),
             ),

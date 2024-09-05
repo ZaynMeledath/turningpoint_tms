@@ -10,8 +10,9 @@ Widget dashboardTabBar({
     labelPadding: EdgeInsets.only(
       top: 4.h,
       right: 20.h,
+      bottom: 4.h,
     ),
-    // padding: EdgeInsets.zero,
+    padding: EdgeInsets.only(bottom: 14.h),
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     indicatorColor: AppColors.themeGreen,
