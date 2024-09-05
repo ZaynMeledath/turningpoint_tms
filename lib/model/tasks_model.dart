@@ -182,7 +182,7 @@ class StatusChanges {
   StatusChanges.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     status = json['status'];
-    note = json['reason'];
+    note = json['note'];
     taskUpdatedBy = json['taskUpdatedBy'];
     changesAttachments = json['changesAttachments'];
     changedAt = json['changedAt'];
@@ -192,7 +192,7 @@ class StatusChanges {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = id;
     data['status'] = status;
-    data['reason'] = note;
+    data['note'] = note;
     data['taskUpdatedBy'] = taskUpdatedBy;
     if (changesAttachments != null) {
       data['attachments'] =

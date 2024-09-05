@@ -237,7 +237,11 @@ Widget taskCard({
                             title: 'Re Open',
                             icon: StatusIcons.inProgress,
                             iconColor: StatusColor.open,
-                            onTap: () {},
+                            onTap: () => TaskCrudOperations.updateTaskStatus(
+                              taskId: taskModel.id.toString(),
+                              taskStatus: Status.open,
+                              tasksController: tasksController,
+                            ),
                           ),
                         ],
                       )

@@ -133,7 +133,7 @@ class TasksRepository {
         requestMethod: RequestMethod.PUT,
         data: {
           'newStatus': taskStatus,
-          'reason': note,
+          'note': note,
           'changesAttachments': null,
         },
         fieldNameForFiles: null,

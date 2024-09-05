@@ -142,7 +142,11 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Re Open',
                             icon: StatusIcons.inProgress,
                             iconColor: StatusColor.open,
-                            onTap: () {},
+                            onTap: () => TaskCrudOperations.updateTaskStatus(
+                              taskId: taskModel.id.toString(),
+                              taskStatus: Status.open,
+                              tasksController: tasksController,
+                            ),
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,

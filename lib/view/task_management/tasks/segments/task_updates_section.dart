@@ -106,12 +106,12 @@ Widget taskUpdateSection({
                                   child: Center(
                                     child: Text(
                                       statusChangesModel.status == Status.open
-                                          ? 'Re-Open'
+                                          ? 'Re-Opened'
                                           : statusChangesModel.status
                                               .toString(),
                                       style: TextStyle(
                                         fontSize: 14.sp,
-                                        height: 1,
+                                        height: 1.2,
                                       ),
                                     ),
                                   ),
@@ -119,38 +119,42 @@ Widget taskUpdateSection({
                               ],
                             ),
 //====================Note and Photo Section====================//
-                            Text(
-                              statusChangesModel.note ?? '',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                height: 1.2,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: 6.w,
+                                  top: 11.h,
+                                ),
+                                child: Text(
+                                  statusChangesModel.note ?? '',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
                               ),
                             ),
 
                             statusChangesModel.changesAttachments != null &&
                                     statusChangesModel
                                         .changesAttachments!.isNotEmpty
-                                ? Column(
-                                    children: [
-                                      SizedBox(height: 4.h),
-                                      SizedBox(
-                                        height: 100.h,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: statusChangesModel
-                                              .changesAttachments?.length,
-                                          itemBuilder: (context, index) {
-                                            return AspectRatio(
-                                              aspectRatio: 16 / 9,
-                                              child: CachedNetworkImage(
-                                                imageUrl: statusChangesModel
-                                                    .changesAttachments![index],
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                ? Container(
+                                    height: 100.h,
+                                    margin: EdgeInsets.only(top: 4.h),
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: statusChangesModel
+                                          .changesAttachments?.length,
+                                      itemBuilder: (context, index) {
+                                        return AspectRatio(
+                                          aspectRatio: 16 / 9,
+                                          child: CachedNetworkImage(
+                                            imageUrl: statusChangesModel
+                                                .changesAttachments![index],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   )
                                 : const SizedBox(),
                           ],
