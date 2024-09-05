@@ -205,6 +205,12 @@ class TasksController extends GetxController {
   void resetTasksController() {}
 }
 
+class TaskPriority {
+  static const low = 'Low';
+  static const medium = 'Medium';
+  static const high = 'High';
+}
+
 //====================ENUMS====================//
 enum RepeatFrequency {
   once,
@@ -213,8 +219,19 @@ enum RepeatFrequency {
   monthly,
 }
 
-class TaskPriority {
-  static const low = 'Low';
-  static const medium = 'Medium';
-  static const high = 'High';
+extension RepeatFrequencyExtension on RepeatFrequency {
+  String? enumToString() {
+    switch (this) {
+      case RepeatFrequency.once:
+        return null;
+      case RepeatFrequency.daily:
+        return 'Daily';
+      case RepeatFrequency.weekly:
+        return 'Weekly';
+      case RepeatFrequency.monthly:
+        return 'Monthly';
+      default:
+        return null;
+    }
+  }
 }

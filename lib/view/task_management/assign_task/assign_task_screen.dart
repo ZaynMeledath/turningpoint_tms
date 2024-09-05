@@ -33,9 +33,9 @@ part 'dialogs/show_category_dialog.dart';
 part 'dialogs/show_reminder_bottom_sheet.dart';
 
 class AssignTaskScreen extends StatefulWidget {
-  final String? taskId;
+  final TaskModel? taskModel;
   const AssignTaskScreen({
-    this.taskId,
+    this.taskModel,
     super.key,
   });
 
@@ -59,12 +59,20 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   @override
   void initState() {
     tabController = TabController(length: 3, vsync: this);
+
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     assignToSearchController = TextEditingController();
     categorySearchController = TextEditingController();
     reminderTimeTextController = TextEditingController(
         text: DefaultReminder.defaultReminderTime.toString());
+
+    if (widget.taskModel != null) {
+      titleController.text = widget.taskModel!.title ?? '';
+      descriptionController.text = widget.taskModel!.description ?? '';
+      // assignTaskController.assignToList = widget.taskModel!.assignedTo ?? [];
+    }
+
     super.initState();
   }
 

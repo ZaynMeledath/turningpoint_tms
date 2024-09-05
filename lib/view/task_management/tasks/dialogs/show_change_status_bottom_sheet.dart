@@ -13,6 +13,7 @@ Future<Object?> showChangeStatusBottomSheet({
   required String taskStatus,
 }) {
   return Get.bottomSheet(
+    isScrollControlled: true,
     ChangeStatusBottomSheet(
       taskId: taskId,
       taskStatus: taskStatus,

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
@@ -127,7 +128,10 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Delete',
                             icon: Icons.delete,
                             iconColor: Colors.red,
-                            onTap: () => TaskCrudOperations.deleteTask,
+                            onTap: () => TaskCrudOperations.deleteTask(
+                              tasksController: tasksController,
+                              taskModel: taskModel,
+                            ),
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,

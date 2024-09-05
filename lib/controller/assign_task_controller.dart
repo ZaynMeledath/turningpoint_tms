@@ -151,6 +151,17 @@ class AssignTaskController extends GetxController {
         taskTime.value.minute,
       );
       final dueDateString = dueDate.toUtc().toIso8601String();
+
+      // final taskModel = TaskModel(
+      //       title: title,
+      //   description: description,
+      //   category: selectedCategory.value,
+      //   assignedTo: assignToList.keys.toList(),
+      //   priority: taskPriority.value,
+      //   dueDate: dueDateString,
+      //   attachments: null,
+      // );
+
       await tasksRepository.assignTask(
         title: title,
         description: description,
@@ -158,11 +169,7 @@ class AssignTaskController extends GetxController {
         assignTo: assignToList.keys.toList(),
         priority: taskPriority.value,
         dueDate: dueDateString,
-        reminderFrequency: null,
-        reminderStartDate: null,
-        repeatFrequency: repeatFrequencyEnumToString(
-          repeatFrequency: taskRepeatFrequency.value,
-        ),
+        repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
         attachments: null,
       );
@@ -183,20 +190,20 @@ Map<int, bool> createDateMap() {
   return datesMap;
 }
 
-//====================Repeat Frequency Enum to String====================//
-String? repeatFrequencyEnumToString({
-  required RepeatFrequency? repeatFrequency,
-}) {
-  switch (repeatFrequency) {
-    case RepeatFrequency.once:
-      return null;
-    case RepeatFrequency.daily:
-      return 'Daily';
-    case RepeatFrequency.weekly:
-      return 'Weekly';
-    case RepeatFrequency.monthly:
-      return 'Monthly';
-    default:
-      return null;
-  }
-}
+// //====================Repeat Frequency Enum to String====================//
+// String? repeatFrequencyEnumToString({
+//   required RepeatFrequency? repeatFrequency,
+// }) {
+//   switch (repeatFrequency) {
+//     case RepeatFrequency.once:
+//       return null;
+//     case RepeatFrequency.daily:
+//       return 'Daily';
+//     case RepeatFrequency.weekly:
+//       return 'Weekly';
+//     case RepeatFrequency.monthly:
+//       return 'Monthly';
+//     default:
+//       return null;
+//   }
+// }
