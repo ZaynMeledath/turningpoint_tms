@@ -26,7 +26,7 @@ class _TasksDashboardState extends State<TasksDashboard>
   @override
   void initState() {
     tabController = TabController(
-      length: 2,
+      length: 4,
       vsync: this,
     );
     super.initState();
@@ -67,6 +67,8 @@ class _TasksDashboardState extends State<TasksDashboard>
               child: TabBarView(
                 controller: tabController,
                 children: const [
+                  Text('Demo'),
+                  Text('Demo'),
                   Text('Demo'),
                   Text('Demo'),
                 ],

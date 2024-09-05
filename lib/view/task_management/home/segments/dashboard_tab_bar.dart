@@ -5,19 +5,16 @@ Widget dashboardTabBar({
 }) {
   return TabBar(
     controller: tabController,
-    // isScrollable: true,
+    isScrollable: true,
     physics: const BouncingScrollPhysics(),
-    indicatorSize: TabBarIndicatorSize.tab,
-    labelPadding: EdgeInsets.symmetric(
-      vertical: 4.h,
-      horizontal: 25.w,
+    labelPadding: EdgeInsets.only(
+      top: 4.h,
+      right: 20.h,
     ),
+    // padding: EdgeInsets.zero,
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
-    indicator: BoxDecoration(
-      color: AppColors.themeGreen,
-      borderRadius: BorderRadius.circular(16),
-    ),
+    indicatorColor: AppColors.themeGreen,
     unselectedLabelColor: Colors.white60,
     labelColor: Colors.white,
     dividerColor: Colors.transparent,
@@ -30,6 +27,18 @@ Widget dashboardTabBar({
       ),
       Text(
         'Category Wise',
+        style: TextStyle(
+          fontSize: 16.sp,
+        ),
+      ),
+      Text(
+        'My Report',
+        style: TextStyle(
+          fontSize: 16.sp,
+        ),
+      ),
+      Text(
+        'Delegated',
         style: TextStyle(
           fontSize: 16.sp,
         ),

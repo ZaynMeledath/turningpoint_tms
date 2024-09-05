@@ -55,6 +55,13 @@ class ProfileScreen extends StatelessWidget {
                   color: Colors.white70,
                 ),
               ),
+              // Container(
+              //   width: 250.w,
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(8),
+              //     gradient:
+              //   ),
+              // ),
               // SizedBox(height: 6.h),
               sectionTitleContainer(title: 'Account Management'),
               profileOption(title: 'Edit Profile'),
