@@ -39,7 +39,7 @@ Widget dashboardStatusOverviewSection({
               dashboardStatusOverviewContainer(
                 status: Status.open,
                 count: pendingMyTasksCount + pendingDelegatedTasksCount,
-                icon: StatusIcons.pending,
+                icon: StatusIcons.open,
                 iconColor: Colors.orange,
               ),
               dashboardStatusOverviewContainer(
@@ -50,7 +50,8 @@ Widget dashboardStatusOverviewSection({
               ),
             ],
           ).animate().slideY(
-                begin: .5,
+                begin: -.5,
+                delay: const Duration(milliseconds: 40),
                 duration: const Duration(milliseconds: 1000),
                 curve: Curves.elasticOut,
               ),
@@ -80,8 +81,7 @@ Widget dashboardStatusOverviewSection({
               )
             ],
           ).animate().slideY(
-                begin: .5,
-                delay: const Duration(milliseconds: 40),
+                begin: -.5,
                 duration: const Duration(milliseconds: 1000),
                 curve: Curves.elasticOut,
               ),

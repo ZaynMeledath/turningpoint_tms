@@ -61,15 +61,16 @@ class Stats {
   int? delayedTasks;
   int? completionRate;
 
-  Stats(
-      {this.totalTasks,
-      this.completedTasks,
-      this.openTasks,
-      this.inProgressTasks,
-      this.overdueTasks,
-      this.onTimeTasks,
-      this.delayedTasks,
-      this.completionRate});
+  Stats({
+    this.totalTasks,
+    this.completedTasks,
+    this.openTasks,
+    this.inProgressTasks,
+    this.overdueTasks,
+    this.onTimeTasks,
+    this.delayedTasks,
+    this.completionRate,
+  });
 
   Stats.fromJson(Map<String, dynamic> json) {
     totalTasks = json['totalTasks'];

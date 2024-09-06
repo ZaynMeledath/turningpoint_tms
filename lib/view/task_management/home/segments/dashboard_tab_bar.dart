@@ -12,7 +12,7 @@ Widget dashboardTabBar({
       right: 20.h,
       bottom: 4.h,
     ),
-    padding: EdgeInsets.only(bottom: 14.h),
+    padding: EdgeInsets.only(bottom: 6.h),
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     indicatorColor: AppColors.themeGreen,
@@ -45,5 +45,9 @@ Widget dashboardTabBar({
         ),
       ),
     ],
-  );
+  ).animate().slideX(
+        begin: .4,
+        curve: Curves.elasticOut,
+        duration: const Duration(milliseconds: 900),
+      );
 }

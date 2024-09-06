@@ -11,7 +11,7 @@ class Status {
 }
 
 class StatusIcons {
-  static const pending = Icons.circle;
+  static const open = Icons.circle;
   static const inProgress = Icons.incomplete_circle;
   static const completed = Icons.check_circle;
   static const overdue = Icons.circle;
