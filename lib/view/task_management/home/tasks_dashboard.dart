@@ -47,7 +47,8 @@ class _TasksDashboardState extends State<TasksDashboard>
   }
 
   Future<void> getData() async {
-    await tasksController.getAllUsersPerformance();
+    await tasksController.getAllUsersPerformanceReport();
+    await tasksController.getAllCategoriesPerformanceReport();
   }
 
   @override
@@ -83,10 +84,7 @@ class _TasksDashboardState extends State<TasksDashboard>
             dashboardTabBar(tabController: tabController),
             Obx(
               () => Expanded(
-                child: tasksController.allUsersPerformanceModelList.value !=
-                            null &&
-                        tasksController
-                            .allUsersPerformanceModelList.value!.isNotEmpty
+                child: tasksController.tasksException.value == null
                     ? TabBarView(
                         controller: tabController,
                         children: [
@@ -99,32 +97,23 @@ class _TasksDashboardState extends State<TasksDashboard>
                           const Text('Demo'),
                         ],
                       )
-                    : tasksController.allUsersPerformanceModelList.value ==
-                                null &&
-                            tasksController.tasksException.value == null
-                        ? shimmerListLoading()
-                        : tasksController.tasksException.value != null
-                            ? serverErrorWidget(
-                                isLoading: appController.isLoadingObs.value,
-                                onRefresh: () async {
-                                  try {
-                                    appController.isLoadingObs.value = true;
-                                    await getData();
-                                    appController.isLoadingObs.value = false;
-                                  } catch (_) {
-                                    appController.isLoadingObs.value = false;
-                                  }
-                                },
-                              )
-                            : Column(
-                                children: [
-                                  SizedBox(height: 50.h),
-                                  Lottie.asset(
-                                    'assets/lotties/empty_list_animation.json',
-                                    width: 150.w,
-                                  ),
-                                ],
-                              ),
+                    : Column(
+                        children: [
+                          SizedBox(height: 50.h),
+                          serverErrorWidget(
+                            isLoading: appController.isLoadingObs.value,
+                            onRefresh: () async {
+                              try {
+                                appController.isLoadingObs.value = true;
+                                await getData();
+                                appController.isLoadingObs.value = false;
+                              } catch (_) {
+                                appController.isLoadingObs.value = false;
+                              }
+                            },
+                          ),
+                        ],
+                      ),
               ),
             ),
           ],

@@ -1,4 +1,5 @@
-import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
+import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
 import 'package:turning_point_tasks_app/service/api/api_service.dart';
@@ -145,7 +146,8 @@ class TasksRepository {
   }
 
 //====================Get All Users Performance Report====================//
-  Future<List<AllUsersPerformanceModel>?> getAllUsersPerformanceReport() async {
+  Future<List<AllUsersPerformanceReportModel>?>
+      getAllUsersPerformanceReport() async {
     try {
       final response = await ApiService().sendRequest(
         url: ApiEndpoints.allUsersPerformanceReport,
@@ -156,8 +158,28 @@ class TasksRepository {
       );
 
       final allUsersPerformanceModelResponse =
-          AllUsersPerformanceModelResponse.fromJson(response);
+          AllUsersPerformanceReportModelResponse.fromJson(response);
       return allUsersPerformanceModelResponse.usersPerformanceModel;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get All Categories Performance Report====================//
+  Future<List<AllCategoriesPerformanceReportModel>?>
+      getAllCategoriesPerformanceReport() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.allCategoriesPerformanceReport,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final allUsersPerformanceModelResponse =
+          AllCategoriesPerformanceReportModelResponse.fromJson(response);
+      return allUsersPerformanceModelResponse.categoriesPerformanceReportModel;
     } catch (e) {
       rethrow;
     }

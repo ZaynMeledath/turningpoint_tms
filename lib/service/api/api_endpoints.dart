@@ -10,4 +10,6 @@ class ApiEndpoints {
   static const getCategories = '$baseUrl/category/getCategories';
   static const allUsersPerformanceReport =
       '$baseUrl/dashboard/allusersperformance';
+  static const allCategoriesPerformanceReport =
+      '$baseUrl/dashboard/allcategoryperformance';
 }

@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/model/all_users_performance_model.dart';
+import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
@@ -36,8 +37,12 @@ class TasksController extends GetxController {
 
   final dashboardTabIndexObs = 0.obs;
 
-  Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
-      Rxn<List<AllUsersPerformanceModel>>();
+  Rxn<List<AllUsersPerformanceReportModel>> allUsersPerformanceReportModelList =
+      Rxn<List<AllUsersPerformanceReportModel>>();
+
+  Rxn<List<AllCategoriesPerformanceReportModel>>
+      allCategoriesPerformanceReportModelList =
+      Rxn<List<AllCategoriesPerformanceReportModel>>();
 
   final taskUpdateAttachments = <File>[].obs;
 
@@ -128,10 +133,21 @@ class TasksController extends GetxController {
   }
 
 //====================Get All Users Performance====================//
-  Future<void> getAllUsersPerformance() async {
+  Future<void> getAllUsersPerformanceReport() async {
     try {
-      allUsersPerformanceModelList.value =
+      allUsersPerformanceReportModelList.value =
           await tasksRepository.getAllUsersPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get All Users Performance====================//
+  Future<void> getAllCategoriesPerformanceReport() async {
+    try {
+      allCategoriesPerformanceReportModelList.value =
+          await tasksRepository.getAllCategoriesPerformanceReport();
       tasksException.value = null;
     } catch (e) {
       tasksException.value = e as Exception;
