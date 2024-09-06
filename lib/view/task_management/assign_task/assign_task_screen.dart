@@ -193,7 +193,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: 4.5.h),
+                SizedBox(height: 16.h),
                 attatchmentSegment(
                   assignTaskController: assignTaskController,
                   recorder: recorder,

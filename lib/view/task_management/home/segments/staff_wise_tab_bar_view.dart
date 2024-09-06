@@ -3,16 +3,17 @@ part of '../tasks_dashboard.dart';
 Widget staffWiseTabBarView({
   required TasksController tasksController,
 }) {
-  final userController = Get.put(UserController());
-  final userModel = userController.getUserModelFromHive();
+  final performanceModelList =
+      tasksController.allUsersPerformanceModelList.value!;
   return ListView.builder(
-    itemCount: 5,
     physics: const BouncingScrollPhysics(),
     padding: EdgeInsets.only(
       top: 8.h,
       bottom: 66.h,
     ),
+    itemCount: performanceModelList.length,
     itemBuilder: (context, index) {
+      final performanceModel = performanceModelList[index];
       return Container(
         width: double.maxFinite,
         margin: EdgeInsets.only(bottom: 10.h),
@@ -37,19 +38,49 @@ Widget staffWiseTabBarView({
             Row(
               children: [
                 nameLetterAvatar(
-                  name: '${userModel?.name}',
+                  name: '${performanceModel.userName}',
                   circleDiameter: 34.w,
                 ),
-                SizedBox(width: 6.w),
-                Text(
-                  '${userModel?.name}',
-                  style: TextStyle(
-                    fontSize: 15.sp,
+                SizedBox(width: 7.w),
+                SizedBox(
+                  width: 220.w,
+                  child: Text(
+                    '${performanceModel.userName}',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                  width: 52.w,
+                  height: 52.w,
+                  child: CircularPercentIndicator(
+                    radius: 20.w,
+                    progressColor: (performanceModel.stats?.completionRate ??
+                                0) <=
+                            30
+                        ? StatusColor.overdue
+                        : (performanceModel.stats?.completionRate ?? 0) > 30 &&
+                                (performanceModel.stats?.completionRate ?? 0) <=
+                                    60
+                            ? StatusColor.open
+                            : StatusColor.completed,
+                    percent:
+                        (performanceModel.stats?.completionRate ?? 0) / 100,
+                    center: Text(
+                      '${performanceModel.stats?.completionRate ?? '-'}%',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
-            SizedBox(height: 14.h),
+            SizedBox(height: 10.h),
 
 //====================Overdue, Pending and In Progress Row====================//
             Row(
@@ -70,7 +101,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.overdueTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -93,7 +124,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.openTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -116,7 +147,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.inProgressTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -147,7 +178,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.completedTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -170,7 +201,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.onTimeTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -193,7 +224,7 @@ Widget staffWiseTabBarView({
                       ),
                     ),
                     Text(
-                      '1',
+                      '${performanceModel.stats?.delayedTasks ?? '-'}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
@@ -203,6 +234,7 @@ Widget staffWiseTabBarView({
                 ),
               ],
             ),
+            SizedBox(height: 10.h),
           ],
         ),
       ).animate().slideX(

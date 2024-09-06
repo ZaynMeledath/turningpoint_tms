@@ -9,7 +9,7 @@ Widget dashboardTabBar({
     physics: const BouncingScrollPhysics(),
     labelPadding: EdgeInsets.only(
       top: 4.h,
-      right: 20.h,
+      right: 22.h,
       bottom: 4.h,
     ),
     padding: EdgeInsets.only(bottom: 6.h),
@@ -39,7 +39,7 @@ Widget dashboardTabBar({
         ),
       ),
       Text(
-        'Delegated',
+        'Delegated Report',
         style: TextStyle(
           fontSize: 16.sp,
         ),

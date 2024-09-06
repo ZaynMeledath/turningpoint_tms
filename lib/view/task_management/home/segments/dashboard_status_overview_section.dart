@@ -5,14 +5,20 @@ Widget dashboardStatusOverviewSection({
 }) {
   return Obx(
     () {
+      int overdueTasksCount;
+      int openTasksCount;
+      int inProgressTasksCount;
+      int completedTasksCount;
+      int onTimeTasksCount;
+      int delayedTasksCount;
+
       final overdueMyTasksCount =
           tasksController.overdueTaskList.value?.length ?? 0;
       final overdueDelegatedTasksCount =
           tasksController.overdueDelegatedTaskList.value?.length ?? 0;
 
-      final pendingMyTasksCount =
-          tasksController.openTaskList.value?.length ?? 0;
-      final pendingDelegatedTasksCount =
+      final openMyTasksCount = tasksController.openTaskList.value?.length ?? 0;
+      final openDelegatedTasksCount =
           tasksController.openDelegatedTaskList.value?.length ?? 0;
 
       final inProgressMyTasksCount =
@@ -25,6 +31,37 @@ Widget dashboardStatusOverviewSection({
       final completedDelegatedTasksCount =
           tasksController.completedDelegatedTaskList.value?.length ?? 0;
 
+      if (tasksController.dashboardTabIndexObs.value == 2) {
+        //When My Report tab is selected
+        overdueTasksCount = overdueMyTasksCount;
+        openTasksCount = openMyTasksCount;
+        inProgressTasksCount = inProgressMyTasksCount;
+        completedTasksCount = completedMyTasksCount;
+        onTimeTasksCount = tasksController.completedOnTimeMyTasksList.length;
+        delayedTasksCount = tasksController.completedDelayedMyTasksList.length;
+      } else if (tasksController.dashboardTabIndexObs.value == 3) {
+        //When Delegated Report tab is selected
+        overdueTasksCount = overdueDelegatedTasksCount;
+        openTasksCount = openDelegatedTasksCount;
+        inProgressTasksCount = inProgressDelegatedTasksCount;
+        completedTasksCount = completedDelegatedTasksCount;
+        onTimeTasksCount =
+            tasksController.completedOnTimeDelegatedTasksList.length;
+        delayedTasksCount =
+            tasksController.completedDelayedDelegatedTasksList.length;
+      } else {
+        overdueTasksCount = overdueMyTasksCount + overdueDelegatedTasksCount;
+        openTasksCount = openMyTasksCount + openDelegatedTasksCount;
+        inProgressTasksCount =
+            inProgressMyTasksCount + inProgressDelegatedTasksCount;
+        completedTasksCount =
+            completedMyTasksCount + completedDelegatedTasksCount;
+        onTimeTasksCount = tasksController.completedOnTimeMyTasksList.length +
+            tasksController.completedOnTimeDelegatedTasksList.length;
+        delayedTasksCount = tasksController.completedDelayedMyTasksList.length +
+            tasksController.completedDelayedDelegatedTasksList.length;
+      }
+
       return Column(
         children: [
           Row(
@@ -32,19 +69,19 @@ Widget dashboardStatusOverviewSection({
             children: [
               dashboardStatusOverviewContainer(
                 status: Status.overdue,
-                count: overdueMyTasksCount + overdueDelegatedTasksCount,
+                count: overdueTasksCount,
                 icon: StatusIcons.overdue,
                 iconColor: Colors.red,
               ),
               dashboardStatusOverviewContainer(
                 status: Status.open,
-                count: pendingMyTasksCount + pendingDelegatedTasksCount,
+                count: openTasksCount,
                 icon: StatusIcons.open,
                 iconColor: Colors.orange,
               ),
               dashboardStatusOverviewContainer(
                 status: Status.inProgress,
-                count: inProgressMyTasksCount + inProgressDelegatedTasksCount,
+                count: inProgressTasksCount,
                 icon: StatusIcons.inProgress,
                 iconColor: Colors.blue,
               ),
@@ -61,21 +98,19 @@ Widget dashboardStatusOverviewSection({
             children: [
               dashboardStatusOverviewContainer(
                 status: Status.completed,
-                count: completedMyTasksCount + completedDelegatedTasksCount,
+                count: completedTasksCount,
                 icon: StatusIcons.completed,
                 iconColor: AppColors.themeGreen,
               ),
               dashboardStatusOverviewContainer(
                 status: 'On Time',
-                count: tasksController.completedOnTimeMyTasksList.length +
-                    tasksController.completedOnTimeDelegatedTasksList.length,
+                count: onTimeTasksCount,
                 icon: Icons.schedule,
                 iconColor: AppColors.themeGreen,
               ),
               dashboardStatusOverviewContainer(
                 status: 'Delayed',
-                count: tasksController.completedDelayedMyTasksList.length +
-                    tasksController.completedDelayedDelegatedTasksList.length,
+                count: delayedTasksCount,
                 icon: Icons.schedule,
                 iconColor: Colors.red,
               )

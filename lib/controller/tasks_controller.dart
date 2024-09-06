@@ -34,6 +34,8 @@ class TasksController extends GetxController {
   final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;
   final completedDelayedDelegatedTasksList = <TaskModel>[].obs;
 
+  final dashboardTabIndexObs = 0.obs;
+
   Rxn<List<AllUsersPerformanceModel>> allUsersPerformanceModelList =
       Rxn<List<AllUsersPerformanceModel>>();
 
