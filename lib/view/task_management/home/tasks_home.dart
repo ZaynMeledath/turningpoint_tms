@@ -44,7 +44,7 @@ class _TasksHomeState extends State<TasksHome> {
     if (userModel != null &&
         (userModel.role == Role.admin || userModel.role == Role.teamLeader)) {
       isAdminOrLeader = true;
-      activeIndex = 3;
+      activeIndex = 0;
       titleIconMap = {
         'Dashboard': Icons.dashboard,
         'My Team': Icons.people_alt,

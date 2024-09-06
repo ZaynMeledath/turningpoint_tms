@@ -101,6 +101,38 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                 delegate: SliverChildListDelegate.fixed(
                   [
                     SizedBox(height: 12.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'New Member?',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(width: 8.w),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(14),
+                          onTap: () {},
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 4.h,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: AppColors.themeGreen.withOpacity(.7),
+                              border: Border.all(
+                                color: AppColors.themeGreen,
+                                width: 1.5,
+                              ),
+                            ),
+                            child: const Text('Add to Team'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
                   ],
                 ),
               ),
@@ -147,6 +179,21 @@ class _MyTeamScreenState extends State<MyTeamScreen>
           );
         },
       ),
+      // floatingActionButton: Container(
+      //     width: 50.h,
+      //     height: 50.h,
+      //     margin: EdgeInsets.only(bottom: 50.h),
+      //     decoration: BoxDecoration(
+      //       shape: BoxShape.circle,
+      //       color: const Color.fromARGB(255, 7, 88, 155),
+      //       border: Border.all(
+      //         color: Colors.blue,
+      //         width: 1.5,
+      //       ),
+      //     ),
+      //     child: const Center(
+      //       child: Icon(Icons.add),
+      //     )),
     );
   }
 }

@@ -112,149 +112,184 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                   ),
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      children: [
-                        //====================Instruction and TextField====================//
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: RichText(
-                            text: TextSpan(
-                              text:
-                                  'Please add a note before marking the task as ',
-                              style: TextStyle(
-                                fontFamily: 'Lufga',
-                                fontSize: 13.sp,
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: widget.taskStatus,
-                                  style: TextStyle(
-                                    fontFamily: 'Lufga',
-                                    fontSize: 13.5.sp,
-                                    color: taskStatusColor,
-                                  ),
+                    child: Obx(
+                      () => Column(
+                        children: [
+                          //====================Instruction and TextField====================//
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: RichText(
+                              text: TextSpan(
+                                text:
+                                    'Please add a note before marking the task as ',
+                                style: TextStyle(
+                                  fontFamily: 'Lufga',
+                                  fontSize: 13.sp,
                                 ),
-                              ],
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: widget.taskStatus,
+                                    style: TextStyle(
+                                      fontFamily: 'Lufga',
+                                      fontSize: 13.5.sp,
+                                      color: taskStatusColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
 
-                        SizedBox(height: 10.h),
-                        TextFormField(
-                          controller: textController,
-                          maxLines: 5,
-                          maxLength: 100,
-                          decoration: InputDecoration(
-                            counterText: '',
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 12.h,
+                          SizedBox(height: 10.h),
+                          TextFormField(
+                            controller: textController,
+                            maxLines: 5,
+                            maxLength: 100,
+                            decoration: InputDecoration(
+                              counterText: '',
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12.w,
+                                vertical: 12.h,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Note cannot be blank';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 12.h),
+                          //====================Attachment====================//
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(100),
+                              onTap: () async {
+                                await tasksController
+                                    .addImageToTaskUpdateAttachments();
+                              },
+                              child: Container(
+                                width: 42.w,
+                                height: 42.w,
+                                decoration: const BoxDecoration(
+                                  color: Colors.black26,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.photo_rounded,
+                                  size: 24.w,
+                                ),
+                              ),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Note cannot be blank';
-                            }
-                            return null;
-                          },
-                        ),
-                        SizedBox(height: 12.h),
-                        //====================Attachment====================//
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(100),
-                            onTap: () async {
-                              await tasksController
-                                  .addImageToTaskUpdateAttachments();
-                            },
-                            child: Container(
-                              width: 42.w,
-                              height: 42.w,
-                              decoration: const BoxDecoration(
-                                color: Colors.black26,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.photo_rounded,
-                                size: 24.w,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 28.h),
-                        //====================Update Button====================//
-                        Obx(
-                          () => InkWell(
-                            borderRadius: BorderRadius.circular(12),
-                            onTap: () async {
-                              if (_formKey.currentState?.validate() != true) {
-                                return;
-                              }
-                              try {
-                                appController.isLoadingObs.value = true;
-                                await tasksController.updateTaskStatus(
-                                  taskId: widget.taskId,
-                                  taskStatus: widget.taskStatus,
-                                  note: textController.text.trim(),
-                                );
-                                appController.isLoadingObs.value = false;
-                                Get.back();
-                                showGenericDialog(
-                                  iconPath: widget.taskStatus ==
-                                          Status.completed
-                                      ? 'assets/lotties/task_Completed_animation.json'
-                                      : 'assets/lotties/task_In Progress_animation.json',
-                                  iconWidth: 55.w,
-                                  title: 'Task Status Updated',
-                                  content:
-                                      'Task status updated to "${widget.taskStatus}"',
-                                  buttons: {
-                                    'OK': null,
-                                  },
-                                );
-                              } catch (e) {
-                                showGenericDialog(
-                                  iconPath:
-                                      'assets/lotties/server_error_animation.json',
-                                  title: 'Something Went Wrong',
-                                  content:
-                                      'Something went wrong while updating task status',
-                                  buttons: {
-                                    'OK': null,
-                                  },
-                                );
-                                appController.isLoadingObs.value = false;
-                              }
-                            },
-                            child: Container(
-                              width: double.maxFinite,
-                              height: 48.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: AppColors.themeGreen,
-                              ),
-                              child: Center(
-                                child: appController.isLoadingObs.value
-                                    ? SpinKitWave(
-                                        size: 18.w,
-                                        color: Colors.white,
-                                      )
-                                    : Text(
-                                        'Update Status',
-                                        style: TextStyle(
-                                          fontSize: 18.sp,
+                          SizedBox(height: 10.h),
+                          tasksController.taskUpdateAttachments.isNotEmpty
+                              ? SizedBox(
+                                  height: 150.h,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: tasksController
+                                        .taskUpdateAttachments.length,
+                                    itemBuilder: (context, index) {
+                                      return Stack(
+                                        children: [
+                                          AspectRatio(
+                                            aspectRatio: 4 / 3,
+                                            child: Image.file(
+                                              tasksController
+                                                  .taskUpdateAttachments[index],
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              tasksController
+                                                  .taskUpdateAttachments
+                                                  .removeAt(index);
+                                            },
+                                            icon: const Icon(Icons.close),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                )
+                              : const SizedBox(),
+
+                          SizedBox(height: 28.h),
+                          //====================Update Button====================//
+                          Obx(
+                            () => InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () async {
+                                if (_formKey.currentState?.validate() != true) {
+                                  return;
+                                }
+                                try {
+                                  appController.isLoadingObs.value = true;
+                                  await tasksController.updateTaskStatus(
+                                    taskId: widget.taskId,
+                                    taskStatus: widget.taskStatus,
+                                    note: textController.text.trim(),
+                                  );
+                                  appController.isLoadingObs.value = false;
+                                  Get.back();
+                                  showGenericDialog(
+                                    iconPath: widget.taskStatus ==
+                                            Status.completed
+                                        ? 'assets/lotties/task_Completed_animation.json'
+                                        : 'assets/lotties/task_In Progress_animation.json',
+                                    iconWidth: 55.w,
+                                    title: 'Task Status Updated',
+                                    content:
+                                        'Task status updated to "${widget.taskStatus}"',
+                                    buttons: {
+                                      'OK': null,
+                                    },
+                                  );
+                                } catch (e) {
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/server_error_animation.json',
+                                    title: 'Something Went Wrong',
+                                    content:
+                                        'Something went wrong while updating task status',
+                                    buttons: {
+                                      'OK': null,
+                                    },
+                                  );
+                                  appController.isLoadingObs.value = false;
+                                }
+                              },
+                              child: Container(
+                                width: double.maxFinite,
+                                height: 48.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColors.themeGreen,
+                                ),
+                                child: Center(
+                                  child: appController.isLoadingObs.value
+                                      ? SpinKitWave(
+                                          size: 18.w,
+                                          color: Colors.white,
+                                        )
+                                      : Text(
+                                          'Update Status',
+                                          style: TextStyle(
+                                            fontSize: 18.sp,
+                                          ),
                                         ),
-                                      ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(height: 18.h),
-                      ],
+                          SizedBox(height: 18.h),
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -9,14 +9,18 @@ Widget teamTabBar({
     physics: const BouncingScrollPhysics(),
     indicatorSize: TabBarIndicatorSize.tab,
     labelPadding: EdgeInsets.symmetric(
-      vertical: 2.h,
+      vertical: 3.h,
       horizontal: 25.w,
     ),
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     indicator: BoxDecoration(
-      color: AppColors.themeGreen,
-      borderRadius: BorderRadius.circular(16),
+      color: AppColors.themeGreen.withOpacity(.7),
+      borderRadius: BorderRadius.circular(30),
+      border: Border.all(
+        width: 1.5,
+        color: AppColors.themeGreen,
+      ),
     ),
     unselectedLabelColor: Colors.white60,
     labelColor: Colors.white,
