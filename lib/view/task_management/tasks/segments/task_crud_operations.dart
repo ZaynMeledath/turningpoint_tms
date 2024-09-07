@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
@@ -12,6 +13,7 @@ class TaskCrudOperations {
     required TasksController tasksController,
     required TaskModel taskModel,
   }) async {
+    final appController = Get.put(AppController());
     await showGenericDialog(
       iconPath: 'assets/lotties/delete_animation.json',
       title: 'Delete Task',
@@ -22,6 +24,7 @@ class TaskCrudOperations {
         'Cancel': null,
         'Delete': () async {
           try {
+            appController.isLoadingObs.value = true;
             await tasksController.deleteTask(
               taskId: taskModel.id.toString(),
             );
@@ -34,6 +37,8 @@ class TaskCrudOperations {
                 'OK': null,
               },
             );
+
+            appController.isLoadingObs.value = false;
           } catch (_) {
             showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',

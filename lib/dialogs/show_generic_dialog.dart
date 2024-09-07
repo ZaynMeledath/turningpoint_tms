@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 
 typedef ButtonFuction = void Function();
 
@@ -38,6 +40,7 @@ Widget dialog({
   double? iconWidth,
 }) {
   final isLottie = iconPath.split('.').last == 'json';
+  final appController = Get.put(AppController());
 
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,39 +101,51 @@ Widget dialog({
                         GestureDetector(
                           onTap:
                               buttons.values.elementAt(i) ?? () => Get.back(),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 16.w,
-                              vertical: 8.h,
-                            ),
-                            margin: EdgeInsets.only(left: 12.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: i == 0
-                                  ? AppColors.scaffoldBackgroundColor
-                                  : confirmationButtonColor ??
-                                      AppColors.themeGreen,
-                              border: Border.all(
-                                color: i == 0
-                                    ? AppColors.themeGreen
-                                    : Colors.transparent,
-                              ),
-                            ),
-                            child: DefaultTextStyle(
-                              style: GoogleFonts.roboto(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: i == 0
-                                    ? AppColors.themeGreen
-                                    : Colors.white,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  buttons.keys.elementAt(i),
-                                  textAlign: TextAlign.center,
+                          child: Obx(
+                            () {
+                              final isLoading =
+                                  appController.isLoadingObs.value;
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 16.w,
+                                  vertical: 8.h,
                                 ),
-                              ),
-                            ),
+                                margin: EdgeInsets.only(left: 12.w),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: i == 0
+                                      ? AppColors.scaffoldBackgroundColor
+                                      : confirmationButtonColor ??
+                                          AppColors.themeGreen,
+                                  border: Border.all(
+                                    color: i == 0
+                                        ? AppColors.themeGreen
+                                        : Colors.transparent,
+                                  ),
+                                ),
+                                child: DefaultTextStyle(
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: i == 0
+                                        ? AppColors.themeGreen
+                                        : Colors.white,
+                                  ),
+                                  child: Center(
+                                    child:
+                                        i == (buttons.length - 1) && isLoading
+                                            ? SpinKitWave(
+                                                color: Colors.white,
+                                                size: 12.w,
+                                              )
+                                            : Text(
+                                                buttons.keys.elementAt(i),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                     ],
