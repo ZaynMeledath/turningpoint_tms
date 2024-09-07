@@ -161,18 +161,23 @@ Widget attatchmentSegment({
                                 onTap: () async {
                                   if (audioPlayer.playing) {
                                     audioPlayer.stop();
+                                    assignTaskController.isPlaying.value =
+                                        false;
                                   } else {
                                     await audioPlayer.setFilePath(
                                       assignTaskController
                                           .voiceRecordPath.value,
                                     );
                                     audioPlayer.play();
+                                    assignTaskController.isPlaying.value = true;
                                   }
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(4),
                                   child: Icon(
-                                    Icons.play_arrow,
+                                    assignTaskController.isPlaying.value
+                                        ? Icons.pause
+                                        : Icons.play_arrow,
                                     size: 24.w,
                                   ),
                                 ),
@@ -199,8 +204,11 @@ Widget attatchmentSegment({
                   !assignTaskController.isRecording.value
                       ? InkWell(
                           borderRadius: BorderRadius.circular(100),
-                          onTap: () {
+                          onTap: () async {
                             assignTaskController.voiceRecordPath.value = '';
+                            await audioPlayer.seek(
+                              const Duration(seconds: 0),
+                            );
                           },
                           child: Container(
                             padding: const EdgeInsets.all(4),

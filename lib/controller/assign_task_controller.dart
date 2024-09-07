@@ -36,6 +36,7 @@ class AssignTaskController extends GetxController {
 
 //====================Voice Recorder====================//
   RxBool isRecording = false.obs;
+  RxBool isPlaying = false.obs;
   RxString voiceRecordPath = ''.obs;
   RxInt voiceRecordPosition = 0.obs;
 
