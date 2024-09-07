@@ -4,6 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -16,6 +20,7 @@ import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:record/record.dart';
+import 'package:path_provider/path_provider.dart' as path;
 
 part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
@@ -55,6 +60,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
   final recorder = AudioRecorder();
+  final audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -73,6 +79,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
       // assignTaskController.assignToList = widget.taskModel!.assignedTo ?? [];
     }
 
+    audioPlayer.positionStream.listen((stream) {
+      assignTaskController.voiceRecordPosition.value = stream.inSeconds;
+    });
+
     super.initState();
   }
 
@@ -85,6 +95,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     categorySearchController.dispose();
     reminderTimeTextController.dispose();
     assignTaskController.dispose();
+    recorder.dispose();
+    audioPlayer.dispose();
     super.dispose();
   }
 
@@ -193,10 +205,11 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       duration: const Duration(milliseconds: 1000),
                       curve: Curves.elasticOut,
                     ),
-                SizedBox(height: 16.h),
+                SizedBox(height: 12.h),
                 attatchmentSegment(
                   assignTaskController: assignTaskController,
                   recorder: recorder,
+                  audioPlayer: audioPlayer,
                   reminderTimeTextController: reminderTimeTextController,
                 ).animate().slideY(
                       begin: 1,

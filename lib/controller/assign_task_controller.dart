@@ -37,6 +37,7 @@ class AssignTaskController extends GetxController {
 //====================Voice Recorder====================//
   RxBool isRecording = false.obs;
   RxString voiceRecordPath = ''.obs;
+  RxInt voiceRecordPosition = 0.obs;
 
   RxMap<String, bool> daysMap = {
     'Sun': false,
