@@ -119,7 +119,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             // }
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
-            final pendingDelegatedTasksList =
+            final openDelegatedTasksList =
                 tasksController.openDelegatedTaskList.value;
             final inProgressDelegatedTasksList =
                 tasksController.inProgressDelegatedTaskList.value;
@@ -182,7 +182,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                           tasksController: tasksController,
                         ),
                         taskTabBarView(
-                          tasksList: pendingDelegatedTasksList,
+                          tasksList: openDelegatedTasksList,
                           lottieController: lottieController,
                           isDelegated: true,
                           tasksController: tasksController,

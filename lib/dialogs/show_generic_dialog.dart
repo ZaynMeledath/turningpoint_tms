@@ -25,8 +25,7 @@ Future<Object?> showGenericDialog({
       confirmationButtonColor: confirmationButtonColor,
       buttons: buttons,
     ),
-    transitionDuration: const Duration(milliseconds: 300),
-    transitionCurve: Curves.easeInOut,
+    scaleAnimation: true,
   );
 }
 
