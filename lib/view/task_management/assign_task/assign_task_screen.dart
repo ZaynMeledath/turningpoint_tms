@@ -11,10 +11,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/assign_task_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
@@ -61,6 +63,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   final tasksController = TasksController();
   final recorder = AudioRecorder();
   final audioPlayer = AudioPlayer();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -79,8 +82,16 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
       // assignTaskController.assignToList = widget.taskModel!.assignedTo ?? [];
     }
 
-    audioPlayer.positionStream.listen((stream) {
-      assignTaskController.voiceRecordPosition.value = stream.inSeconds;
+    audioPlayer.positionStream.listen((position) {
+      assignTaskController.voiceRecordPosition.value = position.inSeconds;
+
+      if (position.inMilliseconds > 0 &&
+          position.inMilliseconds == audioPlayer.duration?.inMilliseconds) {
+        audioPlayer.stop();
+        audioPlayer.seek(const Duration(seconds: 0));
+
+        assignTaskController.isPlaying.value = false;
+      }
     });
 
     super.initState();
@@ -112,113 +123,116 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: [
-                SizedBox(height: 4.5.h),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text.rich(
-                    TextSpan(
-                      text: 'Create\nNew ',
-                      style: TextStyle(
-                        fontFamily: 'Lufga',
-                        fontSize: 32.sp,
-                        color: Colors.white,
-                        height: 1.2,
-                      ),
-                      children: [
-                        TextSpan(
-                          text: 'Task',
-                          style: TextStyle(
-                            fontFamily: 'Lufga',
-                            fontSize: 32.sp,
-                            color: Colors.grey,
-                          ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(height: 4.5.h),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text.rich(
+                      TextSpan(
+                        text: 'Create\nNew ',
+                        style: TextStyle(
+                          fontFamily: 'Lufga',
+                          fontSize: 32.sp,
+                          color: Colors.white,
+                          height: 1.2,
                         ),
-                      ],
-                    ),
+                        children: [
+                          TextSpan(
+                            text: 'Task',
+                            style: TextStyle(
+                              fontFamily: 'Lufga',
+                              fontSize: 32.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).animate().slideY(
+                          begin: 1,
+                          duration: const Duration(milliseconds: 1000),
+                          curve: Curves.elasticOut,
+                        ),
+                  ),
+                  SizedBox(height: 30.h),
+                  titleTextField(
+                    titleController: titleController,
+                    assignTaskController: assignTaskController,
                   ).animate().slideY(
                         begin: 1,
+                        delay: const Duration(milliseconds: 40),
                         duration: const Duration(milliseconds: 1000),
                         curve: Curves.elasticOut,
                       ),
-                ),
-                SizedBox(height: 30.h),
-                titleTextField(
-                  titleController: titleController,
-                  assignTaskController: assignTaskController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 40),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 32.h),
-                descriptionTextField(
-                  descriptionController: descriptionController,
-                  assingTaskController: assignTaskController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 80),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 28.h),
-                assignToAndCategorySegment(
-                  assignTaskController: assignTaskController,
-                  tasksController: tasksController,
-                  filterController: filterController,
-                  assignToSearchController: assignToSearchController,
-                  categorySearchController: categorySearchController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 120),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 28.h),
-                priorityTabBar(
-                  tabController: tabController,
-                  assignTaskController: assignTaskController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 160),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 28.h),
-                dateAndTimeSegment(
-                  context: context,
-                  assignTaskController: assignTaskController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 200),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 15.h),
-                repeatFrequencySection(
-                  assignTaskController: assignTaskController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 240),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 12.h),
-                attatchmentSegment(
-                  assignTaskController: assignTaskController,
-                  recorder: recorder,
-                  audioPlayer: audioPlayer,
-                  reminderTimeTextController: reminderTimeTextController,
-                ).animate().slideY(
-                      begin: 1,
-                      delay: const Duration(milliseconds: 280),
-                      duration: const Duration(milliseconds: 1000),
-                      curve: Curves.elasticOut,
-                    ),
-                SizedBox(height: 85.h),
-              ],
+                  SizedBox(height: 32.h),
+                  descriptionTextField(
+                    descriptionController: descriptionController,
+                    assingTaskController: assignTaskController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 80),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 28.h),
+                  assignToAndCategorySegment(
+                    assignTaskController: assignTaskController,
+                    tasksController: tasksController,
+                    filterController: filterController,
+                    assignToSearchController: assignToSearchController,
+                    categorySearchController: categorySearchController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 120),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 28.h),
+                  priorityTabBar(
+                    tabController: tabController,
+                    assignTaskController: assignTaskController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 160),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 28.h),
+                  dateAndTimeSegment(
+                    context: context,
+                    assignTaskController: assignTaskController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 200),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 15.h),
+                  repeatFrequencySection(
+                    assignTaskController: assignTaskController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 240),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 12.h),
+                  attatchmentSegment(
+                    assignTaskController: assignTaskController,
+                    recorder: recorder,
+                    audioPlayer: audioPlayer,
+                    reminderTimeTextController: reminderTimeTextController,
+                  ).animate().slideY(
+                        begin: 1,
+                        delay: const Duration(milliseconds: 280),
+                        duration: const Duration(milliseconds: 1000),
+                        curve: Curves.elasticOut,
+                      ),
+                  SizedBox(height: 85.h),
+                ],
+              ),
             ),
           ),
         ),
@@ -226,6 +240,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           assignTaskController: assignTaskController,
           taskTitle: titleController.text.trim(),
           taskDescription: descriptionController.text.trim(),
+          formKey: _formKey,
         ).animate().slideY(
               begin: 1,
               delay: const Duration(milliseconds: 280),

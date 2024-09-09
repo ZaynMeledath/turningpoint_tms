@@ -6,6 +6,7 @@ Widget attatchmentSegment({
   required AudioPlayer audioPlayer,
   required TextEditingController reminderTimeTextController,
 }) {
+  final appController = Get.put(AppController());
   return Row(
     children: [
       // IconButton(
@@ -102,10 +103,6 @@ Widget attatchmentSegment({
               if (!await recorder.hasPermission()) {
                 await Permission.microphone.request();
               }
-              // if (!await Permission.storage.isGranted) {
-              //   await Permission.camera.request();
-              //   log('Executed123');
-              // }
             }
           } catch (e) {
             throw Exception(e);
@@ -173,7 +170,7 @@ Widget attatchmentSegment({
                                   }
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.all(4),
+                                  padding: EdgeInsets.all(4.w),
                                   child: Icon(
                                     assignTaskController.isPlaying.value
                                         ? Icons.pause
@@ -205,9 +202,34 @@ Widget attatchmentSegment({
                       ? InkWell(
                           borderRadius: BorderRadius.circular(100),
                           onTap: () async {
-                            assignTaskController.voiceRecordPath.value = '';
-                            await audioPlayer.seek(
-                              const Duration(seconds: 0),
+                            showGenericDialog(
+                              iconPath: 'assets/lotties/delete_animation.json',
+                              title: 'Delete Recording?',
+                              content:
+                                  'Are you sure you want to delete this recording?',
+                              buttons: {
+                                'Cancel': null,
+                                'Delete': () async {
+                                  appController.isLoadingObs.value = true;
+                                  assignTaskController.voiceRecordPath.value =
+                                      '';
+                                  await audioPlayer.seek(
+                                    const Duration(seconds: 0),
+                                  );
+                                  audioPlayer.stop();
+                                  appController.isLoadingObs.value = false;
+                                  Get.back();
+
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/deleted_animation.json',
+                                    title: 'Deleted',
+                                    content:
+                                        'Recording has been successfully deleted',
+                                    buttons: {'OK': null},
+                                  );
+                                }
+                              },
                             );
                           },
                           child: Container(
@@ -222,9 +244,7 @@ Widget attatchmentSegment({
                       : const SizedBox(),
                 ],
               )
-            : SizedBox(
-                height: 52.h,
-              ),
+            : SizedBox(height: 52.h),
       ),
     ],
   );

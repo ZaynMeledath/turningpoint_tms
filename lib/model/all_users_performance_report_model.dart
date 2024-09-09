@@ -1,13 +1,13 @@
 class AllUsersPerformanceReportModelResponse {
-  List<AllUsersPerformanceReportModel>? usersPerformanceModel;
+  List<AllUsersPerformanceReportModel>? usersPerformanceModelList;
 
-  AllUsersPerformanceReportModelResponse({this.usersPerformanceModel});
+  AllUsersPerformanceReportModelResponse({this.usersPerformanceModelList});
 
   AllUsersPerformanceReportModelResponse.fromJson(List<dynamic>? json) {
     if (json != null) {
-      usersPerformanceModel = <AllUsersPerformanceReportModel>[];
+      usersPerformanceModelList = <AllUsersPerformanceReportModel>[];
       for (var item in json) {
-        usersPerformanceModel!
+        usersPerformanceModelList!
             .add(AllUsersPerformanceReportModel.fromJson(item));
       }
     }
@@ -15,9 +15,9 @@ class AllUsersPerformanceReportModelResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (usersPerformanceModel != null) {
+    if (usersPerformanceModelList != null) {
       data['tasks'] =
-          usersPerformanceModel!.map((item) => item.toJson()).toList();
+          usersPerformanceModelList!.map((item) => item.toJson()).toList();
     }
     return data;
   }

@@ -1,5 +1,7 @@
 import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/my_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
 import 'package:turning_point_tasks_app/service/api/api_service.dart';
@@ -159,7 +161,7 @@ class TasksRepository {
 
       final allUsersPerformanceModelResponse =
           AllUsersPerformanceReportModelResponse.fromJson(response);
-      return allUsersPerformanceModelResponse.usersPerformanceModel;
+      return allUsersPerformanceModelResponse.usersPerformanceModelList;
     } catch (e) {
       rethrow;
     }
@@ -177,9 +179,50 @@ class TasksRepository {
         isTokenRequired: true,
       );
 
-      final allUsersPerformanceModelResponse =
+      final allCategoriesPerformanceModelResponse =
           AllCategoriesPerformanceReportModelResponse.fromJson(response);
-      return allUsersPerformanceModelResponse.categoriesPerformanceReportModel;
+      return allCategoriesPerformanceModelResponse
+          .categoriesPerformanceReportModelList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get My Performance Report====================//
+  Future<List<MyPerformanceReportModel>?> getMyPerformanceReport() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.myPerformanceReport,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final myPerformanceModelResponse =
+          MyPerformanceReportModelResponse.fromJson(response);
+      return myPerformanceModelResponse.myPerformanceModelList;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get Delegated Performance Report====================//
+  Future<List<DelegatedPerformanceReportModel>?>
+      getDelegatedPerformanceReport() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.delegatedPerformanceReport,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final delegatedPerformanceModelResponse =
+          DelegatedPerformanceReportModelResponse.fromJson(response);
+      return delegatedPerformanceModelResponse
+          .delegatedPerformanceReportModelList;
     } catch (e) {
       rethrow;
     }

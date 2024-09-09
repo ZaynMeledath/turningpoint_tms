@@ -3,15 +3,14 @@ part of '../tasks_dashboard.dart';
 Widget dashboardStatusOverviewSection({
   required TasksController tasksController,
 }) {
+  int overdueTasksCount;
+  int openTasksCount;
+  int inProgressTasksCount;
+  int completedTasksCount;
+  int onTimeTasksCount;
+  int delayedTasksCount;
   return Obx(
     () {
-      int overdueTasksCount;
-      int openTasksCount;
-      int inProgressTasksCount;
-      int completedTasksCount;
-      int onTimeTasksCount;
-      int delayedTasksCount;
-
       final overdueMyTasksCount =
           tasksController.overdueTaskList.value?.length ?? 0;
       final overdueDelegatedTasksCount =

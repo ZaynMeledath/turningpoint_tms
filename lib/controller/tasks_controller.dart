@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
+import 'package:turning_point_tasks_app/model/my_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
 
@@ -43,6 +45,13 @@ class TasksController extends GetxController {
   Rxn<List<AllCategoriesPerformanceReportModel>>
       allCategoriesPerformanceReportModelList =
       Rxn<List<AllCategoriesPerformanceReportModel>>();
+
+  Rxn<List<MyPerformanceReportModel>> myPerformanceReportModelList =
+      Rxn<List<MyPerformanceReportModel>>();
+
+  Rxn<List<DelegatedPerformanceReportModel>>
+      delegatedPerformanceReportModelList =
+      Rxn<List<DelegatedPerformanceReportModel>>();
 
   final taskUpdateAttachments = <File>[].obs;
 
@@ -132,7 +141,7 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Get All Users Performance====================//
+//====================Get All Users Performance Report====================//
   Future<void> getAllUsersPerformanceReport() async {
     try {
       allUsersPerformanceReportModelList.value =
@@ -143,11 +152,33 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Get All Users Performance====================//
+//====================Get All Categories Performance Report====================//
   Future<void> getAllCategoriesPerformanceReport() async {
     try {
       allCategoriesPerformanceReportModelList.value =
           await tasksRepository.getAllCategoriesPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get My Performance Report====================//
+  Future<void> getMyPerformanceReport() async {
+    try {
+      myPerformanceReportModelList.value =
+          await tasksRepository.getMyPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get Delegated Performance Report====================//
+  Future<void> getDelegatedPerformanceReport() async {
+    try {
+      delegatedPerformanceReportModelList.value =
+          await tasksRepository.getDelegatedPerformanceReport();
       tasksException.value = null;
     } catch (e) {
       tasksException.value = e as Exception;

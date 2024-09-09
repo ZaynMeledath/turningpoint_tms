@@ -4,6 +4,7 @@ Widget swipeToAdd({
   required AssignTaskController assignTaskController,
   required String taskTitle,
   required String taskDescription,
+  required GlobalKey<FormState> formKey,
 }) {
   return Container(
     height: 85.h,
@@ -26,14 +27,31 @@ Widget swipeToAdd({
       ),
       elevation: 2,
       onSubmit: () async {
-        try {
-          await assignTaskController.assignTask(
-            title: taskTitle,
-            description: taskDescription,
-          );
-          Get.back();
-        } catch (e) {
-          Get.back();
+        if (formKey.currentState!.validate()) {
+          if (assignTaskController.assignToList.isEmpty ||
+              assignTaskController.selectedCategory.value.isEmpty) {
+            return showGenericDialog(
+              iconPath: 'assets/lotties/fill_details_animation.json',
+              title: 'Fill Details',
+              content: 'Please fill all the details before creating the task',
+              buttons: {'OK': null},
+            );
+          }
+
+          try {
+            await assignTaskController.assignTask(
+              title: taskTitle,
+              description: taskDescription,
+            );
+            Get.back();
+          } catch (e) {
+            showGenericDialog(
+              iconPath: 'assets/lotties/server_error_animation.json',
+              title: 'Something went wrong',
+              content: 'Something went wrong while creating the task',
+              buttons: {'Dismiss': null},
+            );
+          }
         }
       },
     ),

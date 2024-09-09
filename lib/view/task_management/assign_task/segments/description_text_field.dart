@@ -38,5 +38,17 @@ Widget descriptionTextField({
         ),
       ),
     ),
+    validator: (value) {
+      if (value == null) {
+        return 'Invalid value';
+      }
+      if (value.trim().isEmpty) {
+        return 'Description cannot be empty';
+      }
+      if (value.length < 3) {
+        return 'Decription length should be atleast 3 characters';
+      }
+      return null;
+    },
   );
 }

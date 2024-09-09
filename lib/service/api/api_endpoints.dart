@@ -12,4 +12,7 @@ class ApiEndpoints {
       '$baseUrl/dashboard/allusersperformance';
   static const allCategoriesPerformanceReport =
       '$baseUrl/dashboard/allcategoryperformance';
+  static const myPerformanceReport = '$baseUrl/dashboard/my-report';
+  static const delegatedPerformanceReport =
+      '$baseUrl/dashboard/delegated-tasks-performance';
 }

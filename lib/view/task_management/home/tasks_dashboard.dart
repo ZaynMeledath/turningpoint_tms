@@ -9,16 +9,19 @@ import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 
 part 'segments/dashboard_status_overview_container.dart';
 part 'segments/dashboard_status_overview_section.dart';
+part 'segments/shimmer_list_loading.dart';
 part 'segments/dashboard_tab_bar.dart';
 part 'segments/staff_wise_tab_bar_view.dart';
 part 'segments/category_wise_tab_bar_view.dart';
-part 'segments/shimmer_list_loading.dart';
+part 'segments/my_report_tab_bar_view.dart';
+part 'segments/delegated_report_tab_bar_view.dart';
 
 class TasksDashboard extends StatefulWidget {
   const TasksDashboard({super.key});
@@ -47,8 +50,12 @@ class _TasksDashboardState extends State<TasksDashboard>
   }
 
   Future<void> getData() async {
+    await tasksController.getMyTasks();
+    await tasksController.getDelegatedTasks();
     await tasksController.getAllUsersPerformanceReport();
     await tasksController.getAllCategoriesPerformanceReport();
+    await tasksController.getMyPerformanceReport();
+    await tasksController.getDelegatedPerformanceReport();
   }
 
   @override
@@ -92,9 +99,14 @@ class _TasksDashboardState extends State<TasksDashboard>
                             tasksController: tasksController,
                           ),
                           categoryWiseTabBarView(
-                              tasksController: tasksController),
-                          const Text('Demo'),
-                          const Text('Demo'),
+                            tasksController: tasksController,
+                          ),
+                          myReportTabBarView(
+                            tasksController: tasksController,
+                          ),
+                          delegatedReportTabBarView(
+                            tasksController: tasksController,
+                          ),
                         ],
                       )
                     : Column(

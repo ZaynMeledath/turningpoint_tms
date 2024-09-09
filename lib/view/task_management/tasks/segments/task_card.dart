@@ -207,9 +207,7 @@ Widget taskCard({
                         ),
                         SizedBox(width: 3.w),
                         Text(
-                          taskModel.status == 'Open'
-                              ? 'Pending'
-                              : taskModel.status.toString(),
+                          taskModel.status.toString(),
                           style: TextStyle(
                             fontSize: 13.5.sp,
                             fontWeight: FontWeight.w600,

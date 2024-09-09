@@ -1,17 +1,18 @@
 // ignore_for_file: prefer_collection_literals
 
 class AllCategoriesPerformanceReportModelResponse {
-  List<AllCategoriesPerformanceReportModel>? categoriesPerformanceReportModel;
+  List<AllCategoriesPerformanceReportModel>?
+      categoriesPerformanceReportModelList;
 
   AllCategoriesPerformanceReportModelResponse(
-      {this.categoriesPerformanceReportModel});
+      {this.categoriesPerformanceReportModelList});
 
   AllCategoriesPerformanceReportModelResponse.fromJson(List<dynamic>? json) {
     if (json != null) {
-      categoriesPerformanceReportModel =
+      categoriesPerformanceReportModelList =
           <AllCategoriesPerformanceReportModel>[];
       for (var item in json) {
-        categoriesPerformanceReportModel!
+        categoriesPerformanceReportModelList!
             .add(AllCategoriesPerformanceReportModel.fromJson(item));
       }
     }
@@ -19,8 +20,8 @@ class AllCategoriesPerformanceReportModelResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (categoriesPerformanceReportModel != null) {
-      data['tasks'] = categoriesPerformanceReportModel!
+    if (categoriesPerformanceReportModelList != null) {
+      data['tasks'] = categoriesPerformanceReportModelList!
           .map((item) => item.toJson())
           .toList();
     }

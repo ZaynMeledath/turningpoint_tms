@@ -37,5 +37,17 @@ Widget titleTextField({
         ),
       ),
     ),
+    validator: (value) {
+      if (value == null) {
+        return 'Invalid value';
+      }
+      if (value.trim().isEmpty) {
+        return 'Title cannot be empty';
+      }
+      if (value.length < 3) {
+        return 'Title length should be atleast 3 characters';
+      }
+      return null;
+    },
   );
 }
