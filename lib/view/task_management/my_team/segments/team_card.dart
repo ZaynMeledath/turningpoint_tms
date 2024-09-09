@@ -4,6 +4,7 @@ Widget teamCard({
   required AllUsersModel allUsersModel,
 }) {
   final userController = Get.put(UserController());
+  final appController = Get.put(AppController());
   final userModel = userController.getUserModelFromHive();
   return Container(
     padding: EdgeInsets.symmetric(
@@ -163,7 +164,30 @@ Widget teamCard({
                     icon: Icons.delete,
                     title: 'Delete',
                     iconColor: Colors.red,
-                    onTap: () {},
+                    onTap: () => showGenericDialog(
+                      iconPath: 'assets/lotties/delete_animation.json',
+                      title: 'Delete User?',
+                      content:
+                          'Are you sure you want to delete this team member?',
+                      confirmationButtonColor: Colors.red,
+                      buttons: {
+                        'Cancel': null,
+                        'Delete': () async {
+                          appController.isLoadingObs.value = true;
+                          userController.deleteTeamMember(
+                              memberId: allUsersModel.id!);
+                          appController.isLoadingObs.value = false;
+                          Get.back();
+
+                          showGenericDialog(
+                            iconPath: 'assets/lotties/deleted_animation.json',
+                            title: 'Deleted',
+                            content: 'User has been successfully deleted',
+                            buttons: {'OK': null},
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ],
               )

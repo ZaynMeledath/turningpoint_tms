@@ -89,4 +89,25 @@ class UserRepository {
       rethrow;
     }
   }
+
+//====================Delete a Team Member====================//
+  static Future<List<AllUsersModel>?> deleteTeamMember({
+    required String memberId,
+  }) async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: '${ApiEndpoints.getAllTeamMembers}/$memberId',
+        requestMethod: RequestMethod.DELETE,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final allUsersModelResponse = AllUsersModelResponse.fromJson(response);
+
+      return allUsersModelResponse.users;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

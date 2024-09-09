@@ -207,6 +207,7 @@ Widget attatchmentSegment({
                               title: 'Delete Recording?',
                               content:
                                   'Are you sure you want to delete this recording?',
+                              confirmationButtonColor: Colors.red,
                               buttons: {
                                 'Cancel': null,
                                 'Delete': () async {

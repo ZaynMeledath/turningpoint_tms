@@ -80,7 +80,7 @@ class UserController extends GetxController {
     }
   }
 
-//====================Get user from Hive Box====================//
+//====================Get All Team Members====================//
   Future<void> getAllTeamMembers() async {
     try {
       myTeamList.value = await UserRepository.getAllTeamMembers();
@@ -89,6 +89,17 @@ class UserController extends GetxController {
       userException.value = e as Exception;
     }
   }
-}
 
-// final userController = Get.put(UserController());
+//====================Delete Team Member====================//
+  Future<void> deleteTeamMember({
+    required String memberId,
+  }) async {
+    try {
+      await UserRepository.deleteTeamMember(memberId: memberId);
+      userException.value = null;
+    } catch (e) {
+      userException.value = e as Exception;
+    }
+    await getAllTeamMembers();
+  }
+}
