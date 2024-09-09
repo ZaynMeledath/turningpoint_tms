@@ -9,6 +9,7 @@ import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
 
@@ -213,7 +214,11 @@ class TaskDetailsScreen extends StatelessWidget {
                             title: 'Edit',
                             icon: Icons.edit,
                             iconColor: Colors.blueGrey,
-                            onTap: () {},
+                            onTap: () => Get.to(
+                              () => AssignTaskScreen(
+                                taskModel: taskModel,
+                              ),
+                            ),
                             containerColor: Colors.grey.withOpacity(.08),
                             containerWidth: 150.w,
                             containerHeight: 40,

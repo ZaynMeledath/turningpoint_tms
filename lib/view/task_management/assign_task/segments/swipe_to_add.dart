@@ -28,7 +28,7 @@ Widget swipeToAdd({
       elevation: 2,
       onSubmit: () async {
         if (formKey.currentState!.validate()) {
-          if (assignTaskController.assignToList.isEmpty ||
+          if (assignTaskController.assignToMap.isEmpty ||
               assignTaskController.selectedCategory.value.isEmpty) {
             return showGenericDialog(
               iconPath: 'assets/lotties/fill_details_animation.json',

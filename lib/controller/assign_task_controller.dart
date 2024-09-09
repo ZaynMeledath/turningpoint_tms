@@ -13,7 +13,7 @@ class AssignTaskController extends GetxController {
   final assignTaskException = Rxn<Exception>();
 
   //Email is the key and Name is the value
-  RxMap<String, String> assignToList = RxMap<String, String>();
+  RxMap<String, String> assignToMap = RxMap<String, String>();
   RxString selectedCategory = RxString('');
 
   RxList<AllUsersModel> assignToSearchList = RxList<AllUsersModel>();
@@ -130,14 +130,14 @@ class AssignTaskController extends GetxController {
     required String name,
     required String email,
   }) {
-    assignToList.addAll({email: name});
+    assignToMap.addAll({email: name});
   }
 
 //====================Delete user from AssignToList====================//
   void removeFromAssignToList({
     required String email,
   }) {
-    assignToList.remove(email);
+    assignToMap.remove(email);
   }
 
 //====================Assign Task====================//
@@ -159,7 +159,7 @@ class AssignTaskController extends GetxController {
         title: title,
         description: description,
         category: selectedCategory.value,
-        assignTo: assignToList.keys.toList(),
+        assignTo: assignToMap.keys.toList(),
         priority: taskPriority.value,
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),

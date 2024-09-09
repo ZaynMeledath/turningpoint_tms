@@ -65,14 +65,14 @@ Widget categoryDialog({
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            gradient: const LinearGradient(
-                              colors: [
-                                Color.fromRGBO(72, 73, 73, 0.4),
-                                Color.fromRGBO(40, 45, 49, 0.8),
-                              ],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
+                            // gradient: const LinearGradient(
+                            //   colors: [
+                            //     Color.fromRGBO(72, 73, 73, 0.4),
+                            //     Color.fromRGBO(40, 45, 49, 0.8),
+                            //   ],
+                            //   begin: Alignment.topLeft,
+                            //   end: Alignment.bottomRight,
+                            // ),
                             border: Border.all(
                               color: Colors.blueGrey.withOpacity(.4),
                             ),

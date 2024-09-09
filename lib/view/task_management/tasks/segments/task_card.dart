@@ -6,6 +6,7 @@ import 'package:turning_point_tasks_app/constants/tasks_management_constants.dar
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
+import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
@@ -281,7 +282,11 @@ Widget taskCard({
                             title: 'Edit',
                             icon: Icons.edit,
                             iconColor: Colors.blueGrey,
-                            onTap: () {},
+                            onTap: () => Get.to(
+                              () => AssignTaskScreen(
+                                taskModel: taskModel,
+                              ),
+                            ),
                           ),
                           cardActionButton(
                             title: 'Delete',

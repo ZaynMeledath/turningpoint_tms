@@ -77,9 +77,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         text: DefaultReminder.defaultReminderTime.toString());
 
     if (widget.taskModel != null) {
-      titleController.text = widget.taskModel!.title ?? '';
-      descriptionController.text = widget.taskModel!.description ?? '';
-      // assignTaskController.assignToList = widget.taskModel!.assignedTo ?? [];
+      assignPreviousValues();
     }
 
     audioPlayer.positionStream.listen((position) {
@@ -95,6 +93,27 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     });
 
     super.initState();
+  }
+
+  void assignPreviousValues() {
+    titleController.text = widget.taskModel!.title ?? '';
+    descriptionController.text = widget.taskModel!.description ?? '';
+    for (String item in widget.taskModel!.assignedTo!) {
+      assignTaskController.assignToMap.addAll({
+        item: item.split('@').first,
+      });
+    }
+    assignTaskController.selectedCategory.value =
+        widget.taskModel?.category ?? '';
+    assignTaskController.taskPriority.value =
+        widget.taskModel!.priority ?? TaskPriority.low;
+    assignTaskController.taskDate.value =
+        DateTime.parse(widget.taskModel!.dueDate!);
+    assignTaskController.taskTime.value =
+        TimeOfDay.fromDateTime(assignTaskController.taskDate.value);
+
+    //### Add Repeat and attachments also ###//
+    assignTaskController.reminderList.value = widget.taskModel!.reminders ?? [];
   }
 
   @override
