@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -144,26 +146,15 @@ class AssignTaskController extends GetxController {
     required String description,
     // required List<dynamic>? attachments,
   }) async {
+    final dueDate = DateTime(
+      taskDate.value.year,
+      taskDate.value.month,
+      taskDate.value.day,
+      taskTime.value.hour,
+      taskTime.value.minute,
+    );
+    final dueDateString = dueDate.toUtc().toIso8601String();
     try {
-      final dueDate = DateTime(
-        taskDate.value.year,
-        taskDate.value.month,
-        taskDate.value.day,
-        taskTime.value.hour,
-        taskTime.value.minute,
-      );
-      final dueDateString = dueDate.toUtc().toIso8601String();
-
-      // final taskModel = TaskModel(
-      //       title: title,
-      //   description: description,
-      //   category: selectedCategory.value,
-      //   assignedTo: assignToList.keys.toList(),
-      //   priority: taskPriority.value,
-      //   dueDate: dueDateString,
-      //   attachments: null,
-      // );
-
       await tasksRepository.assignTask(
         title: title,
         description: description,
@@ -173,10 +164,12 @@ class AssignTaskController extends GetxController {
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
-        attachments: null,
+        attachments: [
+          File(voiceRecordPath.value),
+        ],
       );
     } catch (e) {
-      assignTaskException.value = e as Exception;
+      rethrow;
     }
   }
 }

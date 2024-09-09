@@ -36,6 +36,12 @@ Widget titleTextField({
           color: Colors.red,
         ),
       ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        ),
+      ),
     ),
     validator: (value) {
       if (value == null) {

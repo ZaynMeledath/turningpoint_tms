@@ -48,18 +48,34 @@ class ApiService {
           );
           break;
         case RequestMethod.POST:
-          if (data is File) {
-            final multiPartRequest = http.MultipartRequest(
-              'POST',
-              Uri.parse(url),
-            );
+          if (fieldNameForFiles != null) {
+            final multiPartRequest =
+                http.MultipartRequest('POST', Uri.parse(url));
+            // Iterate through the map
+            data.forEach((key, value) async {
+              if (value is File) {
+                // If the value is a File, add it as a file part
+                multiPartRequest.files
+                    .add(await http.MultipartFile.fromPath(key, value.path));
+              } else if (value is List<File>) {
+                for (File item in value) {
+                  multiPartRequest.files
+                      .add(await http.MultipartFile.fromPath(key, item.path));
+                }
+              } else if (value is List) {
+                // If the value is a List, encode it as a JSON string
+                multiPartRequest.fields[key] = json.encode(value);
+              } else {
+                // If the value is anything else, add it as a normal field
+                multiPartRequest.fields[key] = value.toString();
+              }
+            });
 
-            multiPartRequest.files.add(
-                await MultipartFile.fromPath(fieldNameForFiles!, data.path));
+            // Add headers if provided
             multiPartRequest.headers.addAll(headers);
 
+            // Send the request
             final streamedResponse = await multiPartRequest.send();
-
             response = await Response.fromStream(streamedResponse).timeout(
               const Duration(seconds: 5),
               onTimeout: () {
@@ -81,7 +97,6 @@ class ApiService {
               },
             );
           }
-
           break;
         case RequestMethod.PUT:
           if (data is File) {
@@ -229,4 +244,16 @@ class ApiService {
   }
 
   void sendUserToLoginScreen() async {}
+
+  List<dynamic> flattenList(List<dynamic> list) {
+    return list.expand((element) {
+      if (element is List) {
+        // If the element is a list, recursively flatten it
+        return flattenList(element);
+      } else {
+        // Otherwise, return the element itself
+        return [element];
+      }
+    }).toList();
+  }
 }

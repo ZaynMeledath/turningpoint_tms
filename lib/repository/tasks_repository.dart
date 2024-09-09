@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
@@ -65,7 +67,7 @@ class TasksRepository {
     required String dueDate,
     required String? repeatFrequency,
     required String? repeatUntil,
-    required List<dynamic>? attachments,
+    required List<File>? attachments,
   }) async {
     try {
       await ApiService().sendRequest(
@@ -101,7 +103,6 @@ class TasksRepository {
         isTokenRequired: true,
       );
       await getDelegatedTasks();
-      // await getMyTasks();
     } catch (e) {
       rethrow;
     }
