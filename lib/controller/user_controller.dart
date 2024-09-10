@@ -19,6 +19,7 @@ class UserController extends GetxController {
 //====================My Team====================//
   final roleObs = RxnString();
   final reportingManagerObs = RxnString();
+  final departmentObs = RxnString();
 
 //====================User Register====================//
   Future<void> register({
@@ -91,6 +92,19 @@ class UserController extends GetxController {
       userException.value = null;
     } catch (e) {
       userException.value = e as Exception;
+    }
+  }
+
+//====================Add Team Member====================//
+  Future<void> addTeamMember({
+    required AllUsersModel userModel,
+  }) async {
+    try {
+      await UserRepository.addTeamMember(userModel: userModel);
+      userException.value = null;
+      await getAllTeamMembers();
+    } catch (e) {
+      rethrow;
     }
   }
 

@@ -31,6 +31,7 @@ class AllUsersModel {
   String? reportingTo;
   String? createdStamp;
   String? updatedStamp;
+  String? password;
 
   AllUsersModel({
     this.id,
@@ -42,6 +43,7 @@ class AllUsersModel {
     this.reportingTo,
     this.createdStamp,
     this.updatedStamp,
+    this.password,
   });
 
   AllUsersModel.fromJson(Map<String, dynamic> json) {
@@ -67,6 +69,7 @@ class AllUsersModel {
     data['reportingTo'] = reportingTo;
     data['createdStamp'] = createdStamp;
     data['updatedStamp'] = updatedStamp;
+    data['password'] = password;
     return data;
   }
 }

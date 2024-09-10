@@ -24,6 +24,7 @@ part 'segments/shimmer_team_list_loading.dart';
 part 'dialogs/show_add_team_member_bottom_sheet.dart';
 part 'segments/role_drop_down.dart';
 part 'segments/reporting_manager_drop_down.dart';
+part 'segments/department_drop_down.dart';
 
 class MyTeamScreen extends StatefulWidget {
   const MyTeamScreen({super.key});

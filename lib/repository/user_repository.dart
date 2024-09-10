@@ -90,6 +90,23 @@ class UserRepository {
     }
   }
 
+//====================Add a Team Member====================//
+  static Future<void> addTeamMember({
+    required AllUsersModel userModel,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.getAllTeamMembers,
+        requestMethod: RequestMethod.POST,
+        data: userModel.toJson(),
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //====================Delete a Team Member====================//
   static Future<List<AllUsersModel>?> deleteTeamMember({
     required String memberId,

@@ -116,6 +116,12 @@ Widget textField({
           color: Colors.red,
         ),
       ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(
+          color: AppColors.themeGreen.withOpacity(.3),
+        ),
+      ),
     ),
     onChanged: onChanged,
     validator: (value) {
