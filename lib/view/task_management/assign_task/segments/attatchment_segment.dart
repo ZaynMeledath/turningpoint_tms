@@ -103,6 +103,17 @@ Widget attatchmentSegment({
               if (!await recorder.hasPermission()) {
                 await Permission.microphone.request();
               }
+              if (await Permission.microphone.isDenied) {
+                showGenericDialog(
+                  iconPath: 'assets/lotties/microphone_animation.json',
+                  title: 'Permission Required!',
+                  content:
+                      'Please allow the microphone permission in settings to record audio',
+                  buttons: {
+                    'OK': null,
+                  },
+                );
+              }
             }
           } catch (e) {
             throw Exception(e);

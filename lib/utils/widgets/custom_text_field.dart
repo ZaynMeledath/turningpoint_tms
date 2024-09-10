@@ -57,6 +57,7 @@ Widget textField({
     controller: controller,
     style: GoogleFonts.roboto(),
     maxLines: 1,
+    maxLength: isNum == true ? 10 : null,
     obscureText:
         userController != null ? userController.isObScure.value : false,
     keyboardAppearance: Brightness.dark,
@@ -67,6 +68,7 @@ Widget textField({
             ? TextInputType.phone
             : null,
     decoration: InputDecoration(
+      counterText: '',
       suffixIcon: userController != null
           ? IconButton(
               icon: Icon(
@@ -111,5 +113,24 @@ Widget textField({
       ),
     ),
     onChanged: onChanged,
+    validator: (value) {
+      if (value == null) {
+        return 'Invalid value';
+      }
+      if (value.trim().isEmpty) {
+        return '$hintText Cannot be empty';
+      }
+
+      if (isNum == true) {
+        if (value.length != 10) {
+          return 'Enter a valid phone number';
+        }
+      }
+      if (value.length < 3) {
+        return '$hintText cannot be less than 3 letters';
+      }
+
+      return null;
+    },
   );
 }

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 Future<Object?> addTeamMemberBottomSheet() {
   return Get.bottomSheet(
@@ -23,21 +25,27 @@ class AddTeamMemberBottomSheet extends StatefulWidget {
 }
 
 class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
-  late final TextEditingController textController;
   final tasksController = Get.put(TasksController());
   final appController = Get.put(AppController());
+  final userController = Get.put(UserController());
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
   Color? taskStatusColor;
 
   @override
   void initState() {
-    textController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    textController.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -87,8 +95,22 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: textController,
+                        customTextField(
+                          controller: nameController,
+                          hintText: 'Name',
+                        ),
+                        customTextField(
+                          controller: nameController,
+                          hintText: 'WhatsApp Number',
+                          isNum: true,
+                        ),
+                        customTextField(
+                          controller: nameController,
+                          hintText: 'Email',
+                        ),
+                        customTextField(
+                          controller: nameController,
+                          hintText: 'Password',
                         ),
                       ],
                     ),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -164,9 +162,7 @@ class AssignTaskController extends GetxController {
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
-        attachments: [
-          File(voiceRecordPath.value),
-        ],
+        attachments: [''],
       );
     } catch (e) {
       rethrow;
