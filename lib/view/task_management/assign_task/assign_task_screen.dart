@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -22,7 +22,6 @@ import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:record/record.dart';
-import 'package:path_provider/path_provider.dart' as path;
 
 part 'segments/title_text_field.dart';
 part 'segments/description_text_field.dart';
@@ -32,7 +31,7 @@ part 'segments/date_and_time_segment.dart';
 part 'segments/repeat_frequency_section.dart';
 part 'segments/weekly_frequency_segment.dart';
 part 'segments/monthly_frequency_segment.dart';
-part 'segments/attatchment_segment.dart';
+part 'segments/attachment_segment.dart';
 part 'segments/swipe_to_add.dart';
 // part 'dialogs/show_link_dialog.dart';
 part 'dialogs/show_assign_to_dialog.dart';
@@ -81,14 +80,14 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     }
 
     audioPlayer.positionStream.listen((position) {
-      assignTaskController.voiceRecordPosition.value = position.inSeconds;
+      assignTaskController.voiceRecordPositionObs.value = position.inSeconds;
 
       if (position.inMilliseconds > 0 &&
           position.inMilliseconds == audioPlayer.duration?.inMilliseconds) {
         audioPlayer.stop();
         audioPlayer.seek(const Duration(seconds: 0));
 
-        assignTaskController.isPlaying.value = false;
+        assignTaskController.isPlayingObs.value = false;
       }
     });
 
@@ -238,7 +237,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                         curve: Curves.elasticOut,
                       ),
                   SizedBox(height: 12.h),
-                  attatchmentSegment(
+                  attachmentSegment(
                     assignTaskController: assignTaskController,
                     recorder: recorder,
                     audioPlayer: audioPlayer,

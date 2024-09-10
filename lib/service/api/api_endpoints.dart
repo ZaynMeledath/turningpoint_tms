@@ -15,4 +15,5 @@ class ApiEndpoints {
   static const myPerformanceReport = '$baseUrl/dashboard/my-report';
   static const delegatedPerformanceReport =
       '$baseUrl/dashboard/delegated-tasks-performance';
+  static const uploadFile = '$baseUrl/upload';
 }

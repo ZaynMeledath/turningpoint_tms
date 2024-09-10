@@ -129,7 +129,7 @@ Widget textField({
         return 'Invalid value';
       }
       if (value.trim().isEmpty) {
-        return '$hintText Cannot be empty';
+        return '$hintText cannot be empty';
       }
 
       if (isNum == true) {

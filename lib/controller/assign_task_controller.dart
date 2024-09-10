@@ -1,10 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
+import 'package:path_provider/path_provider.dart' as path;
 
 class AssignTaskController extends GetxController {
   final tasksRepository = TasksRepository();
@@ -35,10 +42,12 @@ class AssignTaskController extends GetxController {
   Rxn<RepeatFrequency> taskRepeatFrequency = Rxn<RepeatFrequency>();
 
 //====================Voice Recorder====================//
-  RxBool isRecording = false.obs;
-  RxBool isPlaying = false.obs;
-  RxString voiceRecordPath = ''.obs;
-  RxInt voiceRecordPosition = 0.obs;
+  RxBool isRecordingObs = false.obs;
+  RxBool isPlayingObs = false.obs;
+  RxString voiceRecordPathObs = ''.obs;
+  RxInt voiceRecordPositionObs = 0.obs;
+
+  final attachmentsListObs = RxList<String>();
 
   RxMap<String, bool> daysMap = {
     'Sun': false,
@@ -136,6 +145,58 @@ class AssignTaskController extends GetxController {
     required String email,
   }) {
     assignToMap.remove(email);
+  }
+
+//====================Record Audio====================//
+  Future<void> recordAudio({
+    required AudioRecorder recorder,
+    required AppController appController,
+  }) async {
+    try {
+      if (isRecordingObs.value) {
+        voiceRecordPathObs.value = await recorder.stop() ?? '';
+        isRecordingObs.value = false;
+        appController.isLoadingObs.value = true;
+        attachmentsListObs.add(
+          await tasksRepository.uploadAttachment(
+            file: File(voiceRecordPathObs.value),
+          ),
+        );
+        appController.isLoadingObs.value = false;
+      } else {
+        if (await recorder.hasPermission()) {
+          final appDir = await path.getApplicationDocumentsDirectory();
+          recorder.start(
+            const RecordConfig(),
+            path: '${appDir.path}/voice_note.wav',
+          );
+          isRecordingObs.value = true;
+        }
+        if (!await recorder.hasPermission()) {
+          await Permission.microphone.request();
+        }
+        if (await Permission.microphone.isDenied) {
+          showGenericDialog(
+            iconPath: 'assets/lotties/microphone_animation.json',
+            title: 'Permission Required!',
+            content:
+                'Please allow the microphone permission in settings to record audio',
+            buttons: {
+              'OK': null,
+            },
+          );
+        }
+      }
+    } catch (_) {
+      showGenericDialog(
+        iconPath: 'assets/lotties/microphone_animation.json',
+        title: 'Something went wrong',
+        content: 'Something went wrong while recording audio',
+        buttons: {
+          'OK': null,
+        },
+      );
+    }
   }
 
 //====================Assign Task====================//

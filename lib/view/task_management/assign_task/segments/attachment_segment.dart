@@ -1,6 +1,6 @@
 part of '../assign_task_screen.dart';
 
-Widget attatchmentSegment({
+Widget attachmentSegment({
   required AssignTaskController assignTaskController,
   required AudioRecorder recorder,
   required AudioPlayer audioPlayer,
@@ -19,6 +19,8 @@ Widget attatchmentSegment({
       //     size: 24.w,
       //   ),
       // ),
+
+//====================Reminder====================//
       Obx(
         () => InkWell(
           borderRadius: BorderRadius.circular(100),
@@ -70,6 +72,8 @@ Widget attatchmentSegment({
         ),
       ),
       SizedBox(width: 18.w),
+
+//====================Upload File====================//
       Container(
         padding: const EdgeInsets.all(5),
         decoration: const BoxDecoration(
@@ -83,41 +87,14 @@ Widget attatchmentSegment({
       ),
       SizedBox(width: 18.w),
 
+//====================Record Audio Icon====================//
       InkWell(
         borderRadius: BorderRadius.circular(100),
         onTap: () async {
-          try {
-            if (assignTaskController.isRecording.value) {
-              assignTaskController.voiceRecordPath.value =
-                  await recorder.stop() ?? '';
-              assignTaskController.isRecording.value = false;
-            } else {
-              if (await recorder.hasPermission()) {
-                final appDir = await path.getApplicationDocumentsDirectory();
-                recorder.start(
-                  const RecordConfig(),
-                  path: '${appDir.path}/voice_note.wav',
-                );
-                assignTaskController.isRecording.value = true;
-              }
-              if (!await recorder.hasPermission()) {
-                await Permission.microphone.request();
-              }
-              if (await Permission.microphone.isDenied) {
-                showGenericDialog(
-                  iconPath: 'assets/lotties/microphone_animation.json',
-                  title: 'Permission Required!',
-                  content:
-                      'Please allow the microphone permission in settings to record audio',
-                  buttons: {
-                    'OK': null,
-                  },
-                );
-              }
-            }
-          } catch (e) {
-            throw Exception(e);
-          }
+          await assignTaskController.recordAudio(
+            recorder: recorder,
+            appController: appController,
+          );
         },
         child: Obx(
           () => Container(
@@ -127,7 +104,7 @@ Widget attatchmentSegment({
             ),
             child: Icon(
               Icons.mic,
-              color: assignTaskController.isRecording.value
+              color: assignTaskController.isRecordingObs.value
                   ? AppColors.themeGreen
                   : Colors.white,
               size: 25.w,
@@ -137,8 +114,8 @@ Widget attatchmentSegment({
       ),
       SizedBox(width: 12.w),
       Obx(
-        () => assignTaskController.isRecording.value ||
-                assignTaskController.voiceRecordPath.isNotEmpty
+        () => assignTaskController.isRecordingObs.value ||
+                assignTaskController.voiceRecordPathObs.isNotEmpty
             ? Row(
                 children: [
                   Container(
@@ -155,61 +132,79 @@ Widget attatchmentSegment({
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    child: assignTaskController.isRecording.value
+                    child: assignTaskController.isRecordingObs.value
+
+                        //--------------------Recording Animation--------------------//
                         ? Center(
                             child: Lottie.asset(
                               'assets/lotties/voice_recording_animation.json',
                             ),
                           )
-                        : Row(
-                            children: [
-                              SizedBox(width: 4.w),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(100),
-                                onTap: () async {
-                                  if (audioPlayer.playing) {
-                                    audioPlayer.stop();
-                                    assignTaskController.isPlaying.value =
-                                        false;
-                                  } else {
-                                    await audioPlayer.setFilePath(
-                                      assignTaskController
-                                          .voiceRecordPath.value,
-                                    );
-                                    audioPlayer.play();
-                                    assignTaskController.isPlaying.value = true;
-                                  }
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(4.w),
-                                  child: Icon(
-                                    assignTaskController.isPlaying.value
-                                        ? Icons.pause
-                                        : Icons.play_arrow,
-                                    size: 24.w,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: LinearPercentIndicator(
-                                  padding: EdgeInsets.only(
-                                    left: 2.w,
-                                    right: 12.w,
-                                  ),
-                                  lineHeight: 8.h,
-                                  percent: assignTaskController
-                                          .voiceRecordPosition.value /
-                                      (audioPlayer.duration?.inSeconds ?? 1),
-                                  backgroundColor: Colors.white24,
-                                  barRadius: const Radius.circular(16),
-                                  progressColor:
-                                      AppColors.themeGreen.withOpacity(.9),
+                        : appController.isLoadingObs.value
+                            ? Center(
+                                child: SpinKitThreeBounce(
+                                  size: 21.h,
+                                  color: AppColors.themeGreen.withOpacity(.7),
                                 ),
                               )
-                            ],
-                          ),
+
+                            //--------------------Play Voice Record Container--------------------//
+                            : Row(
+                                children: [
+                                  SizedBox(width: 4.w),
+                                  InkWell(
+                                    borderRadius: BorderRadius.circular(100),
+                                    onTap: () async {
+                                      if (audioPlayer.playing) {
+                                        audioPlayer.stop();
+                                        assignTaskController
+                                            .isPlayingObs.value = false;
+                                      } else {
+                                        await audioPlayer.setFilePath(
+                                          assignTaskController
+                                              .voiceRecordPathObs.value,
+                                        );
+                                        audioPlayer.play();
+                                        assignTaskController
+                                            .isPlayingObs.value = true;
+                                      }
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(4.w),
+                                      child: Icon(
+                                        assignTaskController.isPlayingObs.value
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                        size: 24.w,
+                                        color: AppColors.themeGreen
+                                            .withOpacity(.8),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: LinearPercentIndicator(
+                                      padding: EdgeInsets.only(
+                                        left: 2.w,
+                                        right: 12.w,
+                                      ),
+                                      lineHeight: 8.h,
+                                      percent: assignTaskController
+                                              .voiceRecordPositionObs.value /
+                                          (audioPlayer.duration?.inSeconds ??
+                                              1),
+                                      backgroundColor: Colors.white24,
+                                      barRadius: const Radius.circular(16),
+                                      progressColor:
+                                          AppColors.themeGreen.withOpacity(.9),
+                                    ),
+                                  )
+                                ],
+                              ),
                   ),
-                  !assignTaskController.isRecording.value
+
+                  //--------------------Delete Icon--------------------//
+                  !assignTaskController.isRecordingObs.value &&
+                          !appController.isLoadingObs.value
                       ? InkWell(
                           borderRadius: BorderRadius.circular(100),
                           onTap: () async {
@@ -223,8 +218,8 @@ Widget attatchmentSegment({
                                 'Cancel': null,
                                 'Delete': () async {
                                   appController.isLoadingObs.value = true;
-                                  assignTaskController.voiceRecordPath.value =
-                                      '';
+                                  assignTaskController
+                                      .voiceRecordPathObs.value = '';
                                   await audioPlayer.seek(
                                     const Duration(seconds: 0),
                                   );

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
@@ -39,7 +41,7 @@ class TasksRepository {
     }
   }
 
-//====================Assign Task====================//
+//====================Get Categories====================//
   Future<List<dynamic>?> getCategories() async {
     try {
       final response = await ApiService().sendRequest(
@@ -53,6 +55,18 @@ class TasksRepository {
     } catch (_) {
       rethrow;
     }
+  }
+
+//====================Upload Attachment====================//
+  Future<String> uploadAttachment({required File file}) async {
+    final response = await ApiService().sendRequest(
+      url: ApiEndpoints.uploadFile,
+      requestMethod: RequestMethod.POST,
+      data: file,
+      fieldNameForFiles: 'attachments',
+      isTokenRequired: true,
+    );
+    return response;
   }
 
 //====================Assign Task====================//
