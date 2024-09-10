@@ -86,7 +86,12 @@ Widget textField({
               },
             )
           : null,
-      label: Text(hintText),
+      label: Text(
+        hintText,
+        style: TextStyle(
+          fontSize: 16.sp,
+        ),
+      ),
       contentPadding: EdgeInsets.symmetric(
         horizontal: 14.w,
         vertical: 13.5.h,
@@ -101,8 +106,8 @@ Widget textField({
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(
-          color: Color.fromRGBO(52, 228, 140, .18),
+        borderSide: BorderSide(
+          color: AppColors.themeGreen.withOpacity(.3),
         ),
       ),
       errorBorder: OutlineInputBorder(

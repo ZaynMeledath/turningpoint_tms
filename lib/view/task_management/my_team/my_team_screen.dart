@@ -2,22 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
+import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
+import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/team_card.dart';
 part 'segments/team_tab_bar.dart';
 part 'segments/team_card_action_button.dart';
 part 'segments/team_tab_bar_view.dart';
 part 'segments/shimmer_team_list_loading.dart';
+part 'dialogs/show_add_team_member_bottom_sheet.dart';
+part 'segments/role_drop_down.dart';
+part 'segments/reporting_manager_drop_down.dart';
 
 class MyTeamScreen extends StatefulWidget {
   const MyTeamScreen({super.key});
@@ -114,7 +120,9 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                         SizedBox(width: 8.w),
                         InkWell(
                           borderRadius: BorderRadius.circular(14),
-                          onTap: () {},
+                          onTap: () {
+                            showAddTeamMemberBottomSheet();
+                          },
                           child: Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: 10.w,

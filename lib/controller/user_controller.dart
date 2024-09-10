@@ -16,6 +16,10 @@ class UserController extends GetxController {
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
 
+//====================My Team====================//
+  final roleObs = RxnString();
+  final reportingManagerObs = RxnString();
+
 //====================User Register====================//
   Future<void> register({
     required String name,
