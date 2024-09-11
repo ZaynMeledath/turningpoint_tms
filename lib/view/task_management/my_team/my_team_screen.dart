@@ -65,6 +65,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = userController.getUserModelFromHive();
     return Scaffold(
       appBar: myAppBar(
         context: context,
@@ -109,39 +110,41 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                 delegate: SliverChildListDelegate.fixed(
                   [
                     SizedBox(height: 12.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'New Member?',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        InkWell(
-                          borderRadius: BorderRadius.circular(14),
-                          onTap: () {
-                            showAddTeamMemberBottomSheet();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10.w,
-                              vertical: 4.h,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              color: AppColors.themeGreen.withOpacity(.7),
-                              border: Border.all(
-                                color: AppColors.themeGreen,
-                                width: 1.5,
+                    user?.role == Role.admin || user?.role == Role.teamLeader
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'New Member?',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
                               ),
-                            ),
-                            child: const Text('Add to Team'),
-                          ),
-                        ),
-                      ],
-                    ),
+                              SizedBox(width: 8.w),
+                              InkWell(
+                                borderRadius: BorderRadius.circular(14),
+                                onTap: () {
+                                  showAddTeamMemberBottomSheet();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 10.w,
+                                    vertical: 4.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: AppColors.themeGreen.withOpacity(.7),
+                                    border: Border.all(
+                                      color: AppColors.themeGreen,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: const Text('Add to Team'),
+                                ),
+                              ),
+                            ],
+                          )
+                        : const SizedBox(),
                     SizedBox(height: 12.h),
                   ],
                 ),

@@ -64,6 +64,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final user = userController.getUserModelFromHive();
     return SafeArea(
       child: SingleChildScrollView(
         child: GestureDetector(
@@ -163,46 +164,61 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                 duration: const Duration(milliseconds: 1000),
                               ),
                           SizedBox(height: 22.h),
-                          departmentDropDown(
-                            tasksController: tasksController,
-                            userController: userController,
-                          ).animate().slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 220),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          roleDropDown(userController: userController)
-                              .animate()
-                              .slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 260),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          reportingManagerDropDown(
-                                  userController: userController)
-                              .animate()
-                              .slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 300),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          customTextField(
-                            controller: passwordController,
-                            hintText: 'Password',
-                            userController: userController,
-                            isPassword: true,
-                          ).animate().slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 340),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
+                          user != null && user.role == Role.admin
+                              ? Column(
+                                  children: [
+                                    departmentDropDown(
+                                      tasksController: tasksController,
+                                      userController: userController,
+                                    ).animate().slideY(
+                                          begin: .7,
+                                          delay:
+                                              const Duration(milliseconds: 220),
+                                          curve: Curves.elasticOut,
+                                          duration: const Duration(
+                                              milliseconds: 1000),
+                                        ),
+                                    SizedBox(height: 22.h),
+                                    roleDropDown(userController: userController)
+                                        .animate()
+                                        .slideY(
+                                          begin: .7,
+                                          delay:
+                                              const Duration(milliseconds: 260),
+                                          curve: Curves.elasticOut,
+                                          duration: const Duration(
+                                              milliseconds: 1000),
+                                        ),
+                                    SizedBox(height: 22.h),
+                                    reportingManagerDropDown(
+                                            userController: userController)
+                                        .animate()
+                                        .slideY(
+                                          begin: .7,
+                                          delay:
+                                              const Duration(milliseconds: 300),
+                                          curve: Curves.elasticOut,
+                                          duration: const Duration(
+                                              milliseconds: 1000),
+                                        ),
+                                    SizedBox(height: 22.h),
+                                  ],
+                                )
+                              : const SizedBox(),
+                          widget.userModel != null
+                              ? const SizedBox()
+                              : customTextField(
+                                  controller: passwordController,
+                                  hintText: 'Password',
+                                  userController: userController,
+                                  isPassword: true,
+                                ).animate().slideY(
+                                    begin: .7,
+                                    delay: const Duration(milliseconds: 340),
+                                    curve: Curves.elasticOut,
+                                    duration:
+                                        const Duration(milliseconds: 1000),
+                                  ),
                           SizedBox(height: 26.h),
                           InkWell(
                             borderRadius: BorderRadius.circular(12),
@@ -229,14 +245,24 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                     phone: phoneController.text.trim(),
                                     emailId: emailController.text.trim(),
                                     department:
-                                        userController.departmentObs.value,
-                                    role: userController.roleObs.value,
+                                        userController.departmentObs.value ??
+                                            user?.department,
+                                    role: userController.roleObs.value ??
+                                        Role.teamMember,
                                     reportingTo: userController
-                                        .reportingManagerObs.value,
-                                    password: passwordController.text.trim(),
+                                            .reportingManagerObs.value ??
+                                        user?.name,
+                                    password: widget.userModel != null
+                                        ? null
+                                        : passwordController.text.trim(),
                                   );
-                                  await userController.addTeamMember(
-                                      userModel: userModel);
+                                  if (widget.userModel != null) {
+                                    await userController.updateTeamMember(
+                                        userModel: userModel);
+                                  } else {
+                                    await userController.addTeamMember(
+                                        userModel: userModel);
+                                  }
                                   Get.back();
 
                                   showGenericDialog(

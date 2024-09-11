@@ -108,6 +108,19 @@ class UserController extends GetxController {
     }
   }
 
+//====================Update Team Member====================//
+  Future<void> updateTeamMember({
+    required AllUsersModel userModel,
+  }) async {
+    try {
+      await UserRepository.updateTeamMember(userModel: userModel);
+      userException.value = null;
+      await getAllTeamMembers();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //====================Delete Team Member====================//
   Future<void> deleteTeamMember({
     required String memberId,

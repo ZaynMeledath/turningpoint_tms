@@ -75,7 +75,7 @@ class UserRepository {
   static Future<List<AllUsersModel>?> getAllTeamMembers() async {
     try {
       final response = await ApiService().sendRequest(
-        url: ApiEndpoints.getAllTeamMembers,
+        url: ApiEndpoints.users,
         requestMethod: RequestMethod.GET,
         data: {},
         fieldNameForFiles: null,
@@ -96,8 +96,25 @@ class UserRepository {
   }) async {
     try {
       await ApiService().sendRequest(
-        url: ApiEndpoints.getAllTeamMembers,
+        url: ApiEndpoints.users,
         requestMethod: RequestMethod.POST,
+        data: userModel.toJson(),
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Update Team Member====================//
+  static Future<void> updateTeamMember({
+    required AllUsersModel userModel,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.users}/${userModel.id}',
+        requestMethod: RequestMethod.PUT,
         data: userModel.toJson(),
         fieldNameForFiles: null,
         isTokenRequired: true,
@@ -113,7 +130,7 @@ class UserRepository {
   }) async {
     try {
       final response = await ApiService().sendRequest(
-        url: '${ApiEndpoints.getAllTeamMembers}/$memberId',
+        url: '${ApiEndpoints.users}/$memberId',
         requestMethod: RequestMethod.DELETE,
         data: {},
         fieldNameForFiles: null,
