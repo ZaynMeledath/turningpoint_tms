@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
@@ -62,23 +63,50 @@ class ProfileScreen extends StatelessWidget {
               //     gradient:
               //   ),
               // ),
-              // SizedBox(height: 6.h),
+              SizedBox(height: 8.h),
               sectionTitleContainer(title: 'Account Management'),
               profileOption(title: 'Edit Profile'),
               profileOption(title: 'Change Password'),
               sectionTitleContainer(title: 'Support'),
-              profileOption(title: 'My Tickets'),
-              profileOption(title: 'Raise a Ticket'),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  Get.snackbar(
+                    'Feature Unavailable',
+                    'Feature not accessible right now',
+                  );
+                },
+                child: profileOption(title: 'My Tickets'),
+              ),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  Get.snackbar(
+                    'Feature Unavailable',
+                    'Feature not accessible right now',
+                  );
+                },
+                child: profileOption(title: 'Raise a Ticket'),
+              ),
               SizedBox(height: 40.h),
               Expanded(
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
-                      // tasksController.resetTasksController();
-                      Get.off(
-                        () => const LoginScreen(),
-                      );
+                      showGenericDialog(
+                          iconPath: 'assets/lotties/logout_animation.json',
+                          title: 'Log Out?',
+                          content: 'Are you sure you want to log out?',
+                          iconWidth: 85.w,
+                          buttons: {
+                            'Cancel': null,
+                            'Log Out': () {
+                              Get.off(
+                                () => const LoginScreen(),
+                              );
+                            }
+                          });
                     },
                     child: Container(
                       width: 100.w,

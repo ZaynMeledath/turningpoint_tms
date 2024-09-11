@@ -157,7 +157,9 @@ Widget teamCard({
                     icon: Icons.edit,
                     title: 'Edit',
                     iconColor: Colors.blue,
-                    onTap: () {},
+                    onTap: () {
+                      showAddTeamMemberBottomSheet(userModel: allUsersModel);
+                    },
                   ),
                   SizedBox(width: 30.w),
                   teamCardActionButton(

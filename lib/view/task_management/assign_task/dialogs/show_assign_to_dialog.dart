@@ -68,7 +68,7 @@ Widget assignToDialog({
                         assignTaskController.assignToSearchList;
                     return ListView.builder(
                       itemCount: assignToSearchList.isEmpty &&
-                              searchController.text.isEmpty
+                              searchController.text.trim().isEmpty
                           ? allUsers?.length ?? 0
                           : assignToSearchList.length,
                       padding: EdgeInsets.symmetric(

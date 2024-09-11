@@ -1,11 +1,14 @@
 part of '../profile_screen.dart';
 
-Widget profileOption({required String title}) {
+Widget profileOption({
+  required String title,
+}) {
   return Padding(
     padding: EdgeInsets.only(
       left: 12.w,
       right: 12.w,
-      top: 18.h,
+      top: 9.h,
+      bottom: 9.h,
     ),
     child: Row(
       children: [

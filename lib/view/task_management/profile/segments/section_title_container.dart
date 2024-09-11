@@ -7,7 +7,10 @@ Widget sectionTitleContainer({required String title}) {
       horizontal: 12.w,
       vertical: 12.h,
     ),
-    margin: EdgeInsets.only(top: 24.h),
+    margin: EdgeInsets.only(
+      top: 16.h,
+      bottom: 12.h,
+    ),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),
       color: Colors.black.withOpacity(.3),

@@ -6,14 +6,16 @@ Future<Object?> showAddTeamMemberBottomSheet({
   return Get.bottomSheet(
     isScrollControlled: true,
     isDismissible: false,
-    const AddTeamMemberBottomSheet(),
+    AddTeamMemberBottomSheet(
+      userModel: userModel,
+    ),
   );
 }
 
 class AddTeamMemberBottomSheet extends StatefulWidget {
-  final AllUsersModel? teamModel;
+  final AllUsersModel? userModel;
   const AddTeamMemberBottomSheet({
-    this.teamModel,
+    this.userModel,
     super.key,
   });
 
@@ -36,10 +38,11 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
   @override
   void initState() {
     userController.roleObs.value = null;
+    userController.departmentObs.value = null;
     userController.reportingManagerObs.value = null;
 
-    if (widget.teamModel != null) {
-      final userModel = widget.teamModel!;
+    if (widget.userModel != null) {
+      final userModel = widget.userModel!;
       nameController.text = userModel.userName ?? '';
       phoneController.text = userModel.phone ?? '';
       emailController.text = userModel.emailId ?? '';
@@ -63,7 +66,6 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-        reverse: true,
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -235,6 +237,16 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                   );
                                   await userController.addTeamMember(
                                       userModel: userModel);
+                                  Get.back();
+
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/success_animation.json',
+                                    title: 'Team Member Added',
+                                    content:
+                                        'New team member has been successfully added',
+                                    buttons: {'OK': null},
+                                  );
                                 } catch (_) {
                                   showGenericDialog(
                                     iconPath:
@@ -260,7 +272,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                               ),
                               child: Center(
                                 child: Text(
-                                  widget.teamModel != null
+                                  widget.userModel != null
                                       ? 'Submit'
                                       : 'Add to Team',
                                   style: TextStyle(
