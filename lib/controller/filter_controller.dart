@@ -47,6 +47,10 @@ class FilterController extends GetxController {
   final RxMap<String, bool> frequencyFilterModel = <String, bool>{}.obs;
   final RxMap<String, bool> priorityFilterModel = <String, bool>{}.obs;
 
+//To filter with search in filter bottom sheet
+  RxList<String> categoriesSearchList = RxList<String>();
+  RxList<AllUsersModel> assignedSearchList = RxList<AllUsersModel>();
+
   final RxList selectedCategoryList = [].obs;
   final RxList selectedAssignedByList = [].obs;
   final RxList selectedAssignedToList = [].obs;

@@ -17,28 +17,42 @@ Widget categoryFilterSegment({
       children: [
         SizedBox(height: 8.h),
         Transform.scale(
-                scale: .94,
-                child: customTextField(
-                  controller: categorySearchController,
-                  hintText: 'Search Category',
-                ))
-            .animate(
-              key: GlobalKey(),
-            )
-            .slideX(
-              begin: -.06,
-              duration: const Duration(milliseconds: 700),
-              curve: Curves.elasticOut,
-            ),
+          scale: .94,
+          child: customTextField(
+              controller: categorySearchController,
+              hintText: 'Search Category',
+              onChanged: (value) {
+                filterController.categoriesSearchList.clear();
+                filterController.categoriesSearchList.value = tasksController
+                    .categoriesList
+                    .where((category) =>
+                        category.toLowerCase().contains(value.toLowerCase()))
+                    .toList();
+              }),
+        ),
+        // .animate(
+        //   key: GlobalKey(),
+        // )
+        // .slideX(
+        //   begin: -.06,
+        //   duration: const Duration(milliseconds: 700),
+        //   curve: Curves.elasticOut,
+        // ),
         Expanded(
           child: ListView.builder(
-            itemCount: tasksController.categoriesList.length,
+            itemCount: filterController.categoriesSearchList.isEmpty &&
+                    categorySearchController.text.trim().isEmpty
+                ? tasksController.categoriesList.length
+                : filterController.categoriesSearchList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              final category = tasksController.categoriesList[index];
+              final category = filterController.categoriesSearchList.isEmpty &&
+                      categorySearchController.text.trim().isEmpty
+                  ? tasksController.categoriesList[index]
+                  : filterController.categoriesSearchList[index];
               return InkWell(
                 onTap: () => filterController.selectOrUnselectCategoryFilter(
                     filterKey: category),

@@ -14,7 +14,7 @@ Widget assignedFilterSegment({
   required bool isAssignedBy,
 }) {
   final userController = Get.put(UserController());
-  final allUsers = userController.myTeamList.value;
+  final allUsers = userController.myTeamList.value ?? [];
   return Expanded(
     child: Column(
       children: [
@@ -22,32 +22,46 @@ Widget assignedFilterSegment({
         Transform.scale(
           scale: .94,
           child: customTextField(
-            controller: assignedSearchController,
-            hintText: 'Search by Name/Email',
-          ),
-        )
-            .animate(
-              key: GlobalKey(),
-            )
-            .slideX(
-              begin: -.06,
-              duration: const Duration(milliseconds: 700),
-              curve: Curves.elasticOut,
-            ),
+              controller: assignedSearchController,
+              hintText: 'Search by Name/Email',
+              onChanged: (value) {
+                filterController.assignedSearchList.clear();
+                filterController.assignedSearchList.value = allUsers
+                    .where((userModel) => userModel.userName!
+                        .toLowerCase()
+                        .contains(value.toLowerCase()))
+                    .toList();
+              }),
+        ),
+        // .animate(
+        //   key: GlobalKey(),
+        // )
+        // .slideX(
+        //   begin: -.06,
+        //   duration: const Duration(milliseconds: 700),
+        //   curve: Curves.elasticOut,
+        // ),
         SizedBox(height: 4.h),
         Expanded(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: allUsers?.length ?? 0,
+            itemCount: filterController.assignedSearchList.isEmpty &&
+                    assignedSearchController.text.trim().isEmpty
+                ? allUsers.length
+                : filterController.assignedSearchList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              final name =
-                  userController.myTeamList.value?[index].userName ?? '';
-              final email =
-                  userController.myTeamList.value?[index].emailId ?? '';
+              final name = filterController.assignedSearchList.isEmpty &&
+                      assignedSearchController.text.trim().isEmpty
+                  ? (userController.myTeamList.value?[index].userName ?? '')
+                  : filterController.assignedSearchList[index].userName ?? '';
+              final email = filterController.assignedSearchList.isEmpty &&
+                      assignedSearchController.text.trim().isEmpty
+                  ? (userController.myTeamList.value?[index].emailId ?? '')
+                  : filterController.assignedSearchList[index].emailId ?? '';
               return InkWell(
                 onTap: () {
                   if (isAssignedBy) {
