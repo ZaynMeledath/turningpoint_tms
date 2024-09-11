@@ -62,7 +62,6 @@ class _TasksDashboardState extends State<TasksDashboard>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(
-        context: context,
         title: 'Dashboard',
         implyLeading: false,
         profileAvatar: true,

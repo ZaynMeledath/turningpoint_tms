@@ -9,7 +9,6 @@ import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/task_management/profile/profile_screen.dart';
 
 AppBar myAppBar({
-  required BuildContext context,
   required String title,
   Color? backgroundColor,
   Color? foregroundColor,
@@ -37,7 +36,7 @@ AppBar myAppBar({
                 color: foregroundColor,
               ),
               onPressed: () {
-                FocusScopeNode currentFocus = FocusScope.of(context);
+                FocusScopeNode currentFocus = FocusScope.of(Get.context!);
                 if (!currentFocus.hasPrimaryFocus) {
                   currentFocus.unfocus();
                 }

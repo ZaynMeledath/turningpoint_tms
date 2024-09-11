@@ -72,7 +72,6 @@ class TaskDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: myAppBar(
-        context: context,
         title: 'Task Details',
       ),
       body: SingleChildScrollView(

@@ -6,6 +6,7 @@ import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
+import 'package:turning_point_tasks_app/view/edit_profile/edit_profile_screen.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/section_title_container.dart';
@@ -21,7 +22,6 @@ class ProfileScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: myAppBar(
-        context: context,
         title: 'Profile',
       ),
       body: Center(
@@ -65,7 +65,14 @@ class ProfileScreen extends StatelessWidget {
               // ),
               SizedBox(height: 8.h),
               sectionTitleContainer(title: 'Account Management'),
-              profileOption(title: 'Edit Profile'),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => Get.to(
+                  () => const EditProfileScreen(),
+                  transition: Transition.rightToLeft,
+                ),
+                child: profileOption(title: 'Edit Profile'),
+              ),
               profileOption(title: 'Change Password'),
               sectionTitleContainer(title: 'Support'),
               InkWell(

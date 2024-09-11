@@ -137,7 +137,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
       },
       child: Scaffold(
         extendBody: true,
-        appBar: myAppBar(context: context, title: ''),
+        appBar: myAppBar(title: ''),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),

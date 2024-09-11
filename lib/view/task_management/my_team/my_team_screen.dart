@@ -68,7 +68,6 @@ class _MyTeamScreenState extends State<MyTeamScreen>
     final user = userController.getUserModelFromHive();
     return Scaffold(
       appBar: myAppBar(
-        context: context,
         title: 'My Team',
         implyLeading: false,
         profileAvatar: true,

@@ -92,7 +92,6 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
       },
       child: Scaffold(
         appBar: myAppBar(
-          context: context,
           title: 'Delegated Tasks',
           implyLeading: false,
           profileAvatar: true,

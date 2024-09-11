@@ -91,7 +91,6 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       },
       child: Scaffold(
         appBar: myAppBar(
-          context: context,
           title: 'My Tasks',
           implyLeading: false,
           profileAvatar: true,
