@@ -42,7 +42,7 @@ Widget priorityFilterSegment({
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: priorityList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 4.h,

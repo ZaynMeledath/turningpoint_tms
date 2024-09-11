@@ -33,7 +33,7 @@ Widget frequencyFilterSegment({
         ),
         Expanded(
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: frequencyList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,
