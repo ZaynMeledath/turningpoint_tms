@@ -168,7 +168,7 @@ class FilterController extends GetxController {
                 ? selectedCategoryList.contains(item.category)
                 : true) &&
             (selectedAssignedToList.isNotEmpty
-                ? selectedAssignedToList.contains(item.assignedTo)
+                ? selectedAssignedToList.contains(item.assignedTo?.first)
                 : true) &&
             (selectedAssignedByList.isNotEmpty
                 ? selectedAssignedByList.contains(item.createdBy)
