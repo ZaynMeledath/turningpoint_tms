@@ -20,14 +20,12 @@ part 'segments/task_updates_section.dart';
 class TaskDetailsScreen extends StatelessWidget {
   final TaskModel taskModel;
   final String dueDateString;
-  final bool isDelegated;
 
   final tasksController = Get.put(TasksController());
 
   TaskDetailsScreen({
     required this.taskModel,
     required this.dueDateString,
-    required this.isDelegated,
     super.key,
   });
 
@@ -117,7 +115,7 @@ class TaskDetailsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 14.h),
-              isTaskCompleted && isDelegated
+              isTaskCompleted && tasksController.isDelegatedObs.value
                   ? Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,
@@ -202,7 +200,7 @@ class TaskDetailsScreen extends StatelessWidget {
                         )
                       : const SizedBox(),
               SizedBox(height: isTaskCompleted ? 0 : 9.h),
-              !isTaskCompleted && isDelegated
+              !isTaskCompleted && tasksController.isDelegatedObs.value
                   ? Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,

@@ -34,6 +34,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   void initState() {
+    tasksController.isDelegatedObs.value = false;
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),

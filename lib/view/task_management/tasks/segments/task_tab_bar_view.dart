@@ -11,7 +11,6 @@ Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
   required TasksController tasksController,
-  bool isDelegated = false,
 }) {
   // final tasksController = Get.put(TasksController());
 
@@ -43,7 +42,6 @@ Widget taskTabBarView({
             lottieController: lottieController,
             taskModel: tasksList[index],
             tasksController: tasksController,
-            isDelegated: isDelegated,
           ).animate().slideX(
                 begin: index.isEven ? -.4 : .4,
                 duration: const Duration(milliseconds: 1000),

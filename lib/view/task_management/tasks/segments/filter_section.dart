@@ -15,7 +15,6 @@ Widget filterSection({
   required UserController userController,
   required FilterController filterController,
   required TasksController tasksController,
-  bool? isDelegated,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -32,7 +31,6 @@ Widget filterSection({
                   assignedSearchController: assignedSearchController,
                   filterController: filterController,
                   tasksController: tasksController,
-                  isDelegated: isDelegated,
                 );
               },
               child: Container(

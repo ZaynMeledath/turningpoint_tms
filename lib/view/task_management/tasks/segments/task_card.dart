@@ -15,7 +15,6 @@ Widget taskCard({
   required AnimationController lottieController,
   required TaskModel taskModel,
   required TasksController tasksController,
-  required bool isDelegated,
   bool? isAllTasks,
 }) {
   Color priorityFlagColor = Colors.white.withOpacity(.9);
@@ -46,7 +45,6 @@ Widget taskCard({
             () => TaskDetailsScreen(
               taskModel: taskModel,
               dueDateString: dueDateString,
-              isDelegated: isDelegated,
             ),
           );
         },
@@ -94,14 +92,15 @@ Widget taskCard({
                           Text.rich(
                             overflow: TextOverflow.ellipsis,
                             TextSpan(
-                              text:
-                                  isDelegated ? 'Assigned To ' : 'Assigned By ',
+                              text: tasksController.isDelegatedObs.value
+                                  ? 'Assigned To '
+                                  : 'Assigned By ',
                               style: TextStyle(
                                 color: Colors.white.withOpacity(.6),
                               ),
                               children: [
                                 TextSpan(
-                                  text: isDelegated
+                                  text: tasksController.isDelegatedObs.value
                                       ? '${taskModel.assignedTo?.first}'
                                           .split('@')[0]
                                           .nameFormat()
@@ -219,7 +218,7 @@ Widget taskCard({
                   ],
                 ),
                 SizedBox(height: 12.h),
-                isTaskCompleted && isDelegated
+                isTaskCompleted && tasksController.isDelegatedObs.value
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -274,7 +273,7 @@ Widget taskCard({
                           )
                         : const SizedBox(),
                 SizedBox(height: isTaskCompleted ? 0 : 9.h),
-                !isTaskCompleted && isDelegated
+                !isTaskCompleted && tasksController.isDelegatedObs.value
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

@@ -16,10 +16,10 @@ class FilterOptions {
 }
 
 class FilterController extends GetxController {
-  final TasksController tasksController = Get.put(TasksController());
   FilterController() {
     assignValuesToModels();
   }
+  final TasksController tasksController = Get.put(TasksController());
   final userController = Get.put(UserController());
 
   // RxMap<String, bool> filterOptionSelectedMap = {
@@ -97,6 +97,7 @@ class FilterController extends GetxController {
     } else {
       selectedCategoryList.remove(filterKey);
     }
+    filterTasks();
   }
 
 //====================Select or Unselect Assigned By Filters====================//
@@ -110,6 +111,7 @@ class FilterController extends GetxController {
     } else {
       selectedAssignedByList.remove(filterKey);
     }
+    filterTasks();
   }
 
 //====================Select or Unselect Assigned To Filters====================//
@@ -123,6 +125,7 @@ class FilterController extends GetxController {
     } else {
       selectedAssignedToList.remove(filterKey);
     }
+    filterTasks();
   }
 
 //====================Select or Unselect Frequency Filters====================//
@@ -136,6 +139,7 @@ class FilterController extends GetxController {
     } else {
       selectedFrequencyList.remove(filterKey);
     }
+    filterTasks();
   }
 
 //====================Select or Unselect Filters====================//
@@ -148,6 +152,56 @@ class FilterController extends GetxController {
       selectedPriorityList.add(filterKey);
     } else {
       selectedPriorityList.remove(filterKey);
+    }
+    filterTasks();
+  }
+
+  void filterTasks() {
+    if (tasksController.isDelegatedObs.value) {
+      tasksController.delegatedTasksListObs.value =
+          tasksController.tempDelegatedTasksListObs.value?.where((item) {
+        if ((selectedCategoryList.isNotEmpty
+                ? selectedCategoryList.contains(item.category)
+                : true) &&
+            (selectedAssignedToList.isNotEmpty
+                ? selectedAssignedToList.contains(item.assignedTo)
+                : true) &&
+            (selectedAssignedByList.isNotEmpty
+                ? selectedAssignedByList.contains(item.createdBy)
+                : true) &&
+// (filterController.selectedFrequencyList.isNotEmpty ? filterController.selectedFrequencyList.contains(item.)) &&
+            (selectedPriorityList.isNotEmpty
+                ? selectedPriorityList.contains(item.priority)
+                : true)) {
+          return true;
+        } else {
+          return false;
+        }
+      }).toList();
+      tasksController.getDelegatedTasks(filter: true);
+    } else {
+      tasksController.myTasksListObs.value =
+          tasksController.tempMyTasksListObs.value?.where((item) {
+        if ((selectedCategoryList.isNotEmpty
+                ? selectedCategoryList.contains(item.category)
+                : true) &&
+            (selectedAssignedToList.isNotEmpty
+                ? selectedAssignedToList.contains(item.assignedTo)
+                : true) &&
+            (selectedAssignedByList.isNotEmpty
+                ? selectedAssignedByList.contains(item.createdBy)
+                : true) &&
+// (filterController.selectedFrequencyList.isNotEmpty ? filterController.selectedFrequencyList.contains(item.)) &&
+            (selectedPriorityList.isNotEmpty
+                ? selectedPriorityList.contains(item.priority)
+                : true)) {
+          return true;
+        } else {
+          return false;
+        }
+      }).toList();
+
+      tasksController.getMyTasks(filter: true);
     }
   }
 
@@ -180,5 +234,8 @@ class FilterController extends GetxController {
     selectedAssignedToList.value = [];
     selectedFrequencyList.value = [];
     selectedPriorityList.value = [];
+    tasksController.isDelegatedObs.value
+        ? tasksController.getDelegatedTasks()
+        : tasksController.getMyTasks();
   }
 }

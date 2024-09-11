@@ -51,7 +51,8 @@ Widget priorityFilterSegment({
               final priority = priorityList[index];
               return InkWell(
                 onTap: () => filterController.selectOrUnselectPriorityFilter(
-                    filterKey: priority),
+                  filterKey: priority,
+                ),
                 child: Row(
                   children: [
                     Obx(

@@ -41,7 +41,7 @@ class ApiService {
       switch (requestMethod) {
         case RequestMethod.GET:
           response = await http.get(Uri.parse(url), headers: headers).timeout(
-            const Duration(seconds: 5),
+            const Duration(seconds: 8),
             onTimeout: () {
               return http.Response('Request timed out', 408);
             },
@@ -61,7 +61,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -75,7 +75,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -96,7 +96,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -110,7 +110,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -132,7 +132,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -147,7 +147,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 5),
+              const Duration(seconds: 8),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -158,7 +158,7 @@ class ApiService {
         case RequestMethod.DELETE:
           response =
               await http.delete(Uri.parse(url), headers: headers).timeout(
-            const Duration(seconds: 5),
+            const Duration(seconds: 8),
             onTimeout: () {
               return http.Response('Request timed out', 408);
             },
@@ -216,7 +216,7 @@ class ApiService {
         throw NotFoundException(responseJson.toString());
       case 408:
         throw RequestTimedOutException();
-      case 500:
+      case 800:
         throw ServerErrorException(responseJson.toString());
       case 700:
         throw CustomException(responseJson['message']);

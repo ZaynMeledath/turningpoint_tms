@@ -34,6 +34,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
 
   @override
   void initState() {
+    tasksController.isDelegatedObs.value = true;
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -144,7 +145,6 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                         userController: userController,
                         filterController: filterController,
                         tasksController: tasksController,
-                        isDelegated: true,
                       ),
                     ),
                   ),
@@ -172,31 +172,26 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                         taskTabBarView(
                           tasksList: allDelegatedTasksList,
                           lottieController: lottieController,
-                          isDelegated: true,
                           tasksController: tasksController,
                         ),
                         taskTabBarView(
                           tasksList: overdueDelegatedTasksList,
                           lottieController: lottieController,
-                          isDelegated: true,
                           tasksController: tasksController,
                         ),
                         taskTabBarView(
                           tasksList: openDelegatedTasksList,
                           lottieController: lottieController,
-                          isDelegated: true,
                           tasksController: tasksController,
                         ),
                         taskTabBarView(
                           tasksList: inProgressDelegatedTasksList,
                           lottieController: lottieController,
-                          isDelegated: true,
                           tasksController: tasksController,
                         ),
                         taskTabBarView(
                           tasksList: completedDelegatedTasksList,
                           lottieController: lottieController,
-                          isDelegated: true,
                           tasksController: tasksController,
                         ),
                       ],

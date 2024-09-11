@@ -17,8 +17,12 @@ class TasksController extends GetxController {
 
   final tasksException = Rxn<Exception>();
 
-  Rxn<List<TaskModel>?> myTasksListObs = Rxn<List<TaskModel>>();
+  final RxBool isDelegatedObs = false.obs;
+
+  Rxn<List<TaskModel>> myTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>> tempMyTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> tempDelegatedTasksListObs = Rxn<List<TaskModel>>();
 
   RxList<String> categoriesList = RxList<String>();
 
@@ -56,11 +60,22 @@ class TasksController extends GetxController {
   final taskUpdateAttachments = <File>[].obs;
 
 //====================Get My Tasks====================//
-  Future<void> getMyTasks() async {
+  Future<void> getMyTasks({
+    bool? getFromLocalStorage,
+    bool? filter,
+  }) async {
     try {
-      myTasksListObs.value = await tasksRepository.getMyTasks();
+      //Executes if it's not run for the filter function
+      if (filter != true) {
+        if (getFromLocalStorage != true) {
+          myTasksListObs.value = await tasksRepository.getMyTasks();
+          tempMyTasksListObs.value = myTasksListObs.value;
 
-      tasksException.value = null;
+          tasksException.value = null;
+        } else {
+          myTasksListObs.value = tempMyTasksListObs.value;
+        }
+      }
 
       openTaskList.value =
           myTasksListObs.value!.where((item) => item.status == 'Open').toList();
@@ -91,11 +106,23 @@ class TasksController extends GetxController {
   }
 
 //====================Get Delegated Tasks====================//
-  Future<void> getDelegatedTasks() async {
+  Future<void> getDelegatedTasks({
+    bool? getFromLocalStorage,
+    bool? filter,
+  }) async {
     try {
-      delegatedTasksListObs.value = await tasksRepository.getDelegatedTasks();
+      //Executes if it's not run for the filter function
+      if (filter != true) {
+        if (getFromLocalStorage != true) {
+          delegatedTasksListObs.value =
+              await tasksRepository.getDelegatedTasks();
+          tempDelegatedTasksListObs.value = delegatedTasksListObs.value;
 
-      tasksException.value = null;
+          tasksException.value = null;
+        } else {
+          delegatedTasksListObs.value = tempDelegatedTasksListObs.value;
+        }
+      }
 
       openDelegatedTaskList.value = delegatedTasksListObs.value!
           .where((item) => item.status == Status.open)

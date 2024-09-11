@@ -38,21 +38,28 @@ Widget filterResetSegment({
             ),
           ),
           //--------------------Filter Button--------------------//
-          Container(
-            width: 100.w,
-            height: 38.h,
-            margin: EdgeInsets.only(
-              right: 14.w,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: AppColors.themeGreen,
-            ),
-            child: Center(
-              child: Text(
-                'Filter',
-                style: TextStyle(
-                  fontSize: 16.sp,
+          InkWell(
+            borderRadius: BorderRadius.circular(12),
+            onTap: () {
+              filterController.filterTasks();
+              Get.back();
+            },
+            child: Container(
+              width: 100.w,
+              height: 38.h,
+              margin: EdgeInsets.only(
+                right: 14.w,
+              ),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: AppColors.themeGreen,
+              ),
+              child: Center(
+                child: Text(
+                  'Filter',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
                 ),
               ),
             ),

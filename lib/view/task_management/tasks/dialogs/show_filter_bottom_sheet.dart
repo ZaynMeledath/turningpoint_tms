@@ -20,7 +20,6 @@ Future<Object?> showFilterBottomSheet({
   required FilterController filterController,
   required TasksController tasksController,
   bool? isAllTasks,
-  bool? isDelegated,
 }) async {
   filterController.selectFilterOption(filterOption: FilterOptions.category);
   return Get.bottomSheet(
@@ -112,7 +111,8 @@ Future<Object?> showFilterBottomSheet({
                           ),
                         ),
                         SizedBox(height: 6.h),
-                        isAllTasks != true && isDelegated != true
+                        isAllTasks != true &&
+                                tasksController.isDelegatedObs.value != true
                             ? InkWell(
                                 onTap: () =>
                                     filterController.selectFilterOption(
@@ -126,7 +126,8 @@ Future<Object?> showFilterBottomSheet({
                                 ),
                               )
                             : const SizedBox(),
-                        isAllTasks == true || isDelegated == true
+                        isAllTasks == true ||
+                                tasksController.isDelegatedObs.value == true
                             ? InkWell(
                                 onTap: () =>
                                     filterController.selectFilterOption(
@@ -204,7 +205,9 @@ Future<Object?> showFilterBottomSheet({
                                         : priorityFilterSegment(
                                             filterController: filterController,
                                           ),
-                        filterResetSegment(filterController: filterController),
+                        filterResetSegment(
+                          filterController: filterController,
+                        ),
                       ],
                     ),
                   ),
