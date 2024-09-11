@@ -33,26 +33,78 @@ Widget filterSection({
                   tasksController: tasksController,
                 );
               },
-              child: Container(
-                width: 45.w,
-                height: 42.w,
-                decoration: const BoxDecoration(
-                  color: AppColors.textFieldColor,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.filter_list,
-                  color: AppColors.themeGreen,
-                ),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 45.w,
+                    height: 42.w,
+                    decoration: const BoxDecoration(
+                      color: AppColors.textFieldColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.filter_list,
+                      color: AppColors.themeGreen,
+                    ),
+                  ),
+                  filterController.selectedCategoryList.isNotEmpty ||
+                          filterController.selectedAssignedByList.isNotEmpty ||
+                          filterController.selectedAssignedToList.isNotEmpty ||
+                          filterController.selectedFrequencyList.isNotEmpty ||
+                          filterController.selectedPriorityList.isNotEmpty
+                      ? Positioned(
+                          right: 2.w,
+                          top: 2.w,
+                          child: Container(
+                            width: 11.w,
+                            height: 11.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.themeGreen,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
             SizedBox(width: 8.w),
             Flexible(
               child: customTextField(
-                controller: taskSearchController,
-                hintText: 'Search Task',
-                userController: userController,
-              ),
+                  controller: taskSearchController,
+                  hintText: 'Search Task',
+                  onChanged: (value) {
+                    filterController.filterTasks();
+                    if (tasksController.isDelegatedObs.value) {
+                      if (tasksController.delegatedTasksListObs.value != null) {
+                        tasksController.delegatedTasksListObs.value =
+                            tasksController.delegatedTasksListObs.value!
+                                .where((taskModel) =>
+                                    taskModel.title!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    taskModel.description!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+                        tasksController.getDelegatedTasks(filter: true);
+                      }
+                    } else {
+                      if (tasksController.myTasksListObs.value != null) {
+                        tasksController.myTasksListObs.value = tasksController
+                            .myTasksListObs.value!
+                            .where((taskModel) =>
+                                taskModel.title!
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()) ||
+                                taskModel.description!
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()))
+                            .toList();
+                        tasksController.getMyTasks(filter: true);
+                      }
+                    }
+                  }),
             ),
           ],
         ),

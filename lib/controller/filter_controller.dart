@@ -239,7 +239,7 @@ class FilterController extends GetxController {
     selectedFrequencyList.value = [];
     selectedPriorityList.value = [];
     tasksController.isDelegatedObs.value
-        ? tasksController.getDelegatedTasks()
-        : tasksController.getMyTasks();
+        ? tasksController.getDelegatedTasks(getFromLocalStorage: true)
+        : tasksController.getMyTasks(getFromLocalStorage: true);
   }
 }

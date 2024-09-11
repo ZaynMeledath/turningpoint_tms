@@ -58,8 +58,9 @@ Widget textField({
     style: GoogleFonts.roboto(),
     maxLines: 1,
     maxLength: isNum == true ? 10 : null,
-    obscureText:
-        userController != null ? userController.isObScure.value : false,
+    obscureText: userController != null && isPassword == true
+        ? userController.isObScure.value
+        : false,
     keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     keyboardType: isEmail == true
