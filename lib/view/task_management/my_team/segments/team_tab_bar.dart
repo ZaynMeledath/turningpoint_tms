@@ -12,6 +12,7 @@ Widget teamTabBar({
       vertical: 3.h,
       horizontal: 25.w,
     ),
+    padding: EdgeInsets.only(bottom: 10.h),
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     indicator: BoxDecoration(

@@ -60,12 +60,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.blueGrey.withOpacity(.35),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 1),
+                  color: Colors.black45,
+                  blurRadius: 1.5,
+                ),
+              ],
             ),
             child: Column(
               children: [
                 nameLetterAvatar(
                   name: user?.name ?? '',
-                  circleDiameter: 85.w,
+                  circleDiameter: 80.w,
                 ),
                 SizedBox(height: 32.h),
                 customTextField(

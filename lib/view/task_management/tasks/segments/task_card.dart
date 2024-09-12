@@ -285,6 +285,7 @@ Widget taskCard({
                               () => AssignTaskScreen(
                                 taskModel: taskModel,
                               ),
+                              transition: Transition.downToUp,
                             ),
                           ),
                           cardActionButton(

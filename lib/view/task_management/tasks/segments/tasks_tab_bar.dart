@@ -17,6 +17,7 @@ Widget tasksTabBar({
       left: 15.w,
       top: 10.h,
     ),
+    padding: EdgeInsets.only(bottom: 4.h),
     splashBorderRadius: BorderRadius.circular(16),
     indicatorPadding: EdgeInsets.only(bottom: 2.h),
     // dividerColor: AppColor.themeGreen.withOpacity(.2),

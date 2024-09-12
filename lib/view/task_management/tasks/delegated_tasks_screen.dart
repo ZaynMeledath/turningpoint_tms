@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
@@ -98,25 +97,6 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
         ),
         body: Obx(
           () {
-            // if (tasksController.tasksException.value != null) {
-            //   return Column(
-            //     children: [
-            //       SizedBox(height: 200.h),
-            //       errorWidget(
-            //         isLoading: appController.isLoadingObs.value,
-            //         onRefresh: () async {
-            //           try {
-            //             appController.isLoadingObs.value = true;
-            //             await getData();
-            //             appController.isLoadingObs.value = false;
-            //           } catch (_) {
-            //             appController.isLoadingObs.value = false;
-            //           }
-            //         },
-            //       ),
-            //     ],
-            //   );
-            // }
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
             final openDelegatedTasksList =
@@ -127,101 +107,81 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                 tasksController.completedDelegatedTaskList.value;
             final overdueDelegatedTasksList =
                 tasksController.overdueDelegatedTaskList.value;
-            return NestedScrollView(
+            return Column(
               // physics: const BouncingScrollPhysics(),
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    // expandedHeight: 106.h,
-                    expandedHeight: 70.h,
-                    backgroundColor: Colors.transparent,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: filterSection(
-                        taskSearchController: taskSearchController,
-                        categorySearchController: categorySearchController,
-                        assignedSearchController: assignedSearchController,
-                        userController: userController,
-                        filterController: filterController,
-                        tasksController: tasksController,
+              children: [
+                filterSection(
+                  taskSearchController: taskSearchController,
+                  categorySearchController: categorySearchController,
+                  assignedSearchController: assignedSearchController,
+                  userController: userController,
+                  filterController: filterController,
+                  tasksController: tasksController,
+                ),
+                SizedBox(height: 10.h),
+                tasksTabBar(tabController: tabController),
+                SizedBox(height: 10.h),
+                tasksController.tasksException.value == null
+                    ? Expanded(
+                        child: TabBarView(
+                          controller: tabController,
+                          children: [
+                            taskTabBarView(
+                              tasksList: allDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              filterController: filterController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: overdueDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              filterController: filterController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: openDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              filterController: filterController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: inProgressDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              filterController: filterController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: completedDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              filterController: filterController,
+                              taskSearchController: taskSearchController,
+                            ),
+                          ],
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          SizedBox(height: 90.h),
+                          serverErrorWidget(
+                            isLoading: appController.isLoadingObs.value,
+                            onRefresh: () async {
+                              try {
+                                appController.isLoadingObs.value = true;
+                                await getData();
+                                appController.isLoadingObs.value = false;
+                              } catch (_) {
+                                appController.isLoadingObs.value = false;
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  SliverAppBar(
-                    automaticallyImplyLeading: false,
-                    toolbarHeight: 50.h,
-                    pinned: true,
-                    backgroundColor: AppColors.scaffoldBackgroundColor,
-                    surfaceTintColor: AppColors.scaffoldBackgroundColor,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: tasksTabBar(tabController: tabController),
-                    ),
-                  ),
-                  SliverList(
-                    delegate: SliverChildListDelegate([
-                      SizedBox(height: 10.h),
-                    ]),
-                  ),
-                ];
-              },
-              body: tasksController.tasksException.value == null
-                  ? TabBarView(
-                      controller: tabController,
-                      children: [
-                        taskTabBarView(
-                          tasksList: allDelegatedTasksList,
-                          lottieController: lottieController,
-                          tasksController: tasksController,
-                          filterController: filterController,
-                          taskSearchController: taskSearchController,
-                        ),
-                        taskTabBarView(
-                          tasksList: overdueDelegatedTasksList,
-                          lottieController: lottieController,
-                          tasksController: tasksController,
-                          filterController: filterController,
-                          taskSearchController: taskSearchController,
-                        ),
-                        taskTabBarView(
-                          tasksList: openDelegatedTasksList,
-                          lottieController: lottieController,
-                          tasksController: tasksController,
-                          filterController: filterController,
-                          taskSearchController: taskSearchController,
-                        ),
-                        taskTabBarView(
-                          tasksList: inProgressDelegatedTasksList,
-                          lottieController: lottieController,
-                          tasksController: tasksController,
-                          filterController: filterController,
-                          taskSearchController: taskSearchController,
-                        ),
-                        taskTabBarView(
-                          tasksList: completedDelegatedTasksList,
-                          lottieController: lottieController,
-                          tasksController: tasksController,
-                          filterController: filterController,
-                          taskSearchController: taskSearchController,
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        SizedBox(height: 90.h),
-                        serverErrorWidget(
-                          isLoading: appController.isLoadingObs.value,
-                          onRefresh: () async {
-                            try {
-                              appController.isLoadingObs.value = true;
-                              await getData();
-                              appController.isLoadingObs.value = false;
-                            } catch (_) {
-                              appController.isLoadingObs.value = false;
-                            }
-                          },
-                        ),
-                      ],
-                    ),
+              ],
             );
           },
         ),
@@ -229,9 +189,3 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     );
   }
 }
-
-        // .animate().slideY(
-        //       begin: .2,
-        //       duration: const Duration(milliseconds: 1200),
-        //       curve: Curves.elasticOut,
-        //     ),

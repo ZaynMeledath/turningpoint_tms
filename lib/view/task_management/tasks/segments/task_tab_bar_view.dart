@@ -15,20 +15,6 @@ Widget taskTabBarView({
   required FilterController filterController,
   required TextEditingController taskSearchController,
 }) {
-  // final tasksController = Get.put(TasksController());
-
-  // if (tasksController.tasksException.value != null) {
-  //   return Column(
-  //     children: [
-  //       SizedBox(height: 90.h),
-  //       serverErrorWidget(
-  //         isLoading: isLoading,
-  //         onRefresh: onErrorRefresh,
-  //       ),
-  //     ],
-  //   );
-  // }
-
   if (tasksList != null && tasksList.isNotEmpty) {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
@@ -41,7 +27,7 @@ Widget taskTabBarView({
           padding: EdgeInsets.only(
             left: 10.w,
             right: 10.w,
-            bottom: index == (tasksList.length - 1) ? 70.h : 10.h,
+            bottom: index == (tasksList.length - 1) ? 18.h : 10.h,
           ),
           child: taskCard(
             lottieController: lottieController,
