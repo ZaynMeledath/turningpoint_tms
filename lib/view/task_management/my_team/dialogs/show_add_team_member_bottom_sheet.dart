@@ -205,9 +205,8 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                   ],
                                 )
                               : const SizedBox(),
-                          widget.userModel != null
-                              ? const SizedBox()
-                              : customTextField(
+                          widget.userModel == null || user?.role == Role.admin
+                              ? customTextField(
                                   controller: passwordController,
                                   hintText: 'Password',
                                   userController: userController,
@@ -218,72 +217,21 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                     curve: Curves.elasticOut,
                                     duration:
                                         const Duration(milliseconds: 1000),
-                                  ),
+                                  )
+                              : const SizedBox(),
                           SizedBox(height: 26.h),
                           InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                if (userController.departmentObs.value ==
-                                        null ||
-                                    userController.roleObs.value == null ||
-                                    userController.reportingManagerObs.value ==
-                                        null) {
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/fill_details_animation.json',
-                                    title: 'Fill Details',
-                                    content: 'User details cannot be blank',
-                                    buttons: {'Dismiss': null},
-                                  );
-                                  return;
-                                }
-
-                                try {
-                                  final userModel = AllUsersModel(
-                                    userName: nameController.text.trim(),
-                                    phone: phoneController.text.trim(),
-                                    emailId: emailController.text.trim(),
-                                    department:
-                                        userController.departmentObs.value ??
-                                            user?.department,
-                                    role: userController.roleObs.value ??
-                                        Role.teamMember,
-                                    reportingTo: userController
-                                            .reportingManagerObs.value ??
-                                        user?.name,
-                                    password: widget.userModel != null
-                                        ? null
-                                        : passwordController.text.trim(),
-                                  );
-                                  if (widget.userModel != null) {
-                                    await userController.updateTeamMember(
-                                        userModel: userModel);
-                                  } else {
-                                    await userController.addTeamMember(
-                                        userModel: userModel);
-                                  }
-                                  Get.back();
-
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/success_animation.json',
-                                    title: 'Team Member Added',
-                                    content:
-                                        'New team member has been successfully added',
-                                    buttons: {'OK': null},
-                                  );
-                                } catch (_) {
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/server_error_animation.json',
-                                    title: 'Something went wrong',
-                                    content:
-                                        'Something went wrong while adding the user',
-                                    buttons: {'Dismiss': null},
-                                  );
-                                }
-                              }
+                              await onSubmit(
+                                userController: userController,
+                                formKey: _formKey,
+                                nameController: nameController,
+                                phoneController: phoneController,
+                                emailController: emailController,
+                                passwordController: passwordController,
+                                user: user!,
+                              );
                             },
                             child: Container(
                               width: 140.w,
@@ -324,5 +272,79 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
         ),
       ),
     );
+  }
+}
+
+Future<void> onSubmit({
+  required UserController userController,
+  required GlobalKey<FormState> formKey,
+  required TextEditingController nameController,
+  required TextEditingController phoneController,
+  required TextEditingController emailController,
+  required TextEditingController passwordController,
+  required UserModel user,
+  AllUsersModel? userModel,
+}) async {
+  if (formKey.currentState!.validate()) {
+    if (userController.departmentObs.value == null ||
+        userController.roleObs.value == null ||
+        userController.reportingManagerObs.value == null) {
+      showGenericDialog(
+        iconPath: 'assets/lotties/fill_details_animation.json',
+        title: 'Fill Details',
+        content: 'User details cannot be blank',
+        buttons: {'Dismiss': null},
+      );
+      return;
+    }
+
+    try {
+      if (userModel != null) {
+        userModel.userName = nameController.text.trim();
+        userModel.phone = phoneController.text.trim();
+        userModel.emailId = emailController.text.trim();
+        userModel.department =
+            userController.departmentObs.value ?? user.department;
+        userModel.role = userController.roleObs.value ?? Role.teamMember;
+        userModel.reportingTo =
+            userController.reportingManagerObs.value ?? user.name;
+        userModel.password = null;
+        await userController.updateTeamMember(userModel: userModel);
+        Get.back();
+
+        showGenericDialog(
+          iconPath: 'assets/lotties/success_animation.json',
+          title: 'Member Updated',
+          content: 'Team member details has bee successfully updated',
+          buttons: {'OK': null},
+        );
+      } else {
+        final userModel = AllUsersModel(
+          userName: nameController.text.trim(),
+          phone: phoneController.text.trim(),
+          emailId: emailController.text.trim(),
+          department: userController.departmentObs.value ?? user.department,
+          role: userController.roleObs.value ?? Role.teamMember,
+          reportingTo: userController.reportingManagerObs.value ?? user.name,
+          password: passwordController.text.trim(),
+        );
+        await userController.addTeamMember(userModel: userModel);
+        Get.back();
+
+        showGenericDialog(
+          iconPath: 'assets/lotties/success_animation.json',
+          title: 'Team Member Added',
+          content: 'New team member has been successfully added',
+          buttons: {'OK': null},
+        );
+      }
+    } catch (_) {
+      showGenericDialog(
+        iconPath: 'assets/lotties/server_error_animation.json',
+        title: 'Something went wrong',
+        content: 'Something went wrong while adding the user',
+        buttons: {'Dismiss': null},
+      );
+    }
   }
 }
