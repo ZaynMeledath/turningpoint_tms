@@ -104,6 +104,42 @@ class TasksRepository {
     }
   }
 
+//====================Update Task====================//
+  Future<void> updateTask({
+    required String taskId,
+    required String title,
+    required String description,
+    required String category,
+    required List<String> assignTo,
+    required String priority,
+    required String dueDate,
+    required String? repeatFrequency,
+    required String? repeatUntil,
+    required List<String>? attachments,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.assignTask}/$taskId',
+        requestMethod: RequestMethod.POST,
+        data: {
+          'title': title,
+          'description': description,
+          'category': category,
+          'assignTo': assignTo,
+          'priority': priority,
+          'dueDate': dueDate,
+          'repeatFrequency': repeatFrequency,
+          'repeatUntil': repeatUntil,
+          'attachments': attachments,
+        },
+        fieldNameForFiles: 'attachments',
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Edit Task====================//
   Future<void> editTask({required String taskId}) async {
     try {

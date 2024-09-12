@@ -66,7 +66,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
 
   @override
   Widget build(BuildContext context) {
-    final user = userController.getUserModelFromHive();
+    final user = getUserModelFromHive();
     return Scaffold(
       appBar: myAppBar(
         title: 'My Team',

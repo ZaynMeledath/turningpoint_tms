@@ -5,7 +5,7 @@ Widget teamCard({
 }) {
   final userController = Get.put(UserController());
   final appController = Get.put(AppController());
-  final userModel = userController.getUserModelFromHive();
+  final userModel = getUserModelFromHive();
   return Container(
     padding: EdgeInsets.symmetric(
       horizontal: 14.w,

@@ -64,7 +64,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final user = userController.getUserModelFromHive();
+    final user = getUserModelFromHive();
     return SafeArea(
       child: SingleChildScrollView(
         child: GestureDetector(

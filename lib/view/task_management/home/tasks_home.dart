@@ -39,7 +39,7 @@ class _TasksHomeState extends State<TasksHome> {
   @override
   void initState() {
     getData();
-    final userModel = userController.getUserModelFromHive();
+    final userModel = getUserModelFromHive();
 
     if (userModel != null &&
         (userModel.role == Role.admin || userModel.role == Role.teamLeader)) {
@@ -64,6 +64,7 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   Future<void> getData() async {
+    await userController.getUserById();
     await userController.getAllTeamMembers();
     // await tasksController.getMyTasks();
     // await tasksController.getDelegatedTasks();

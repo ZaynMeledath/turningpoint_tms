@@ -17,8 +17,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? userModel =
-        Get.put(UserController()).getUserModelFromHive();
+    final UserModel? userModel = getUserModelFromHive();
 
     return Scaffold(
       appBar: myAppBar(

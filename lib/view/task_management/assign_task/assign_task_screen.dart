@@ -259,6 +259,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           taskTitle: titleController.text.trim(),
           taskDescription: descriptionController.text.trim(),
           formKey: _formKey,
+          isUpdating: widget.taskModel != null,
+          taskId: widget.taskModel?.id,
         ).animate().slideY(
               begin: 1,
               delay: const Duration(milliseconds: 280),

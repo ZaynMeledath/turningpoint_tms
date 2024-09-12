@@ -68,20 +68,17 @@ class UserController extends GetxController {
       }
     } catch (e) {
       userException.value = e as Exception;
-      rethrow;
+      // rethrow;
     }
   }
 
-//====================Get user from Hive Box====================//
-  UserModel? getUserModelFromHive() {
-    final userBox = Hive.box(AppConstants.appDb);
-    final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
-    if (userModelResponseJson != null) {
-      final userModelResponse =
-          UserModelResponse.fromJson(jsonDecode(userModelResponseJson));
-      return userModelResponse.user;
-    } else {
-      return null;
+//====================Get User By ID====================//
+  Future<void> getUserById() async {
+    final user = getUserModelFromHive();
+    try {
+      await UserRepository.getUserById(userId: user!.id!);
+    } catch (e) {
+      userException.value = e as Exception;
     }
   }
 
@@ -132,5 +129,26 @@ class UserController extends GetxController {
       userException.value = e as Exception;
     }
     await getAllTeamMembers();
+  }
+}
+
+Future<void> addUserModelToHive({
+  required dynamic userModelResponseJson,
+}) async {
+  final userBox = Hive.box(AppConstants.appDb);
+  userBox.delete(AppConstants.userModelStorageKey);
+  userBox.put(AppConstants.userModelStorageKey, userModelResponseJson);
+}
+
+//====================Get user from Hive Box====================//
+UserModel? getUserModelFromHive() {
+  final userBox = Hive.box(AppConstants.appDb);
+  final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
+  if (userModelResponseJson != null) {
+    final userModelResponse =
+        UserModelResponse.fromJson(jsonDecode(userModelResponseJson));
+    return userModelResponse.user;
+  } else {
+    return null;
   }
 }

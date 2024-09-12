@@ -65,7 +65,8 @@ extension StringExtensions on String {
     final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
     final minute = dueDate.minute;
     final period = hour24 >= 12 ? 'PM' : 'AM';
-    final time = '$hour:$minute $period';
+    final time =
+        '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
 
     final dueDateString = '$weekDay, $date $month $time';
 

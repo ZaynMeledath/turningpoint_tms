@@ -35,7 +35,7 @@ Widget taskCard({
   }
 
   final dueDateString = '${taskModel.dueDate?.dateFormat()}';
-  final user = Get.put(UserController()).getUserModelFromHive();
+  final user = getUserModelFromHive();
 
   return Hero(
     tag: 'task_card${taskModel.id}',

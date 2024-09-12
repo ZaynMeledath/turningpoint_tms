@@ -5,6 +5,8 @@ Widget swipeToAdd({
   required String taskTitle,
   required String taskDescription,
   required GlobalKey<FormState> formKey,
+  required bool isUpdating,
+  required String? taskId,
 }) {
   return Container(
     height: 85.h,
@@ -39,11 +41,31 @@ Widget swipeToAdd({
           }
 
           try {
-            await assignTaskController.assignTask(
-              title: taskTitle,
-              description: taskDescription,
-            );
-            Get.back();
+            if (isUpdating) {
+              await assignTaskController.updateTask(
+                taskId: taskId!,
+                title: taskTitle,
+                description: taskDescription,
+              );
+              showGenericDialog(
+                iconPath: 'assets/lotties/success_animation.json',
+                title: 'Task Updated!',
+                content: 'Task updated successfully',
+                buttons: {'OK': null},
+              );
+            } else {
+              await assignTaskController.assignTask(
+                title: taskTitle,
+                description: taskDescription,
+              );
+              Get.back();
+              showGenericDialog(
+                iconPath: 'assets/lotties/success_animation.json',
+                title: 'Task Created!',
+                content: 'Task created successfully',
+                buttons: {'OK': null},
+              );
+            }
           } catch (e) {
             showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',

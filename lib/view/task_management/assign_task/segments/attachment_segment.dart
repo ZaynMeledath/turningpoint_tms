@@ -73,16 +73,22 @@ Widget attachmentSegment({
       ),
       SizedBox(width: 18.w),
 
-//====================Upload File====================//
-      Container(
-        padding: const EdgeInsets.all(5),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          Icons.upload_file,
-          color: Colors.white,
-          size: 25.w,
+//====================Add File====================//
+      InkWell(
+        borderRadius: BorderRadius.circular(100),
+        onTap: () async {
+          await assignTaskController.addFileAttachment();
+        },
+        child: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.upload_file,
+            color: Colors.white,
+            size: 25.w,
+          ),
         ),
       ),
       SizedBox(width: 18.w),

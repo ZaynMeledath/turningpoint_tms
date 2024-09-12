@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -16,6 +17,8 @@ import 'package:path_provider/path_provider.dart' as path;
 class AssignTaskController extends GetxController {
   final tasksRepository = TasksRepository();
   final assignTaskException = Rxn<Exception>();
+
+  final appController = Get.put(AppController());
 
   //Email is the key and Name is the value
   RxMap<String, String> assignToMap = RxMap<String, String>();
@@ -147,6 +150,27 @@ class AssignTaskController extends GetxController {
     assignToMap.remove(email);
   }
 
+//====================Add File Attachments====================//
+  Future<void> addFileAttachment() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        appController.isLoadingObs.value = true;
+
+        attachmentsListObs.add(
+          await tasksRepository.uploadAttachment(
+            file: file,
+          ),
+        );
+        appController.isLoadingObs.value = false;
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Record Audio====================//
   Future<void> recordAudio({
     required AudioRecorder recorder,
@@ -223,7 +247,40 @@ class AssignTaskController extends GetxController {
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
-        attachments: [''],
+        attachments: null,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Update Task====================//
+  Future<void> updateTask({
+    required String taskId,
+    required String title,
+    required String description,
+    // required List<dynamic>? attachments,
+  }) async {
+    final dueDate = DateTime(
+      taskDate.value.year,
+      taskDate.value.month,
+      taskDate.value.day,
+      taskTime.value.hour,
+      taskTime.value.minute,
+    );
+    final dueDateString = dueDate.toUtc().toIso8601String();
+    try {
+      await tasksRepository.updateTask(
+        taskId: taskId,
+        title: title,
+        description: description,
+        category: selectedCategory.value,
+        assignTo: assignToMap.keys.toList(),
+        priority: taskPriority.value,
+        dueDate: dueDateString,
+        repeatFrequency: taskRepeatFrequency.value?.enumToString(),
+        repeatUntil: null,
+        attachments: null,
       );
     } catch (e) {
       rethrow;

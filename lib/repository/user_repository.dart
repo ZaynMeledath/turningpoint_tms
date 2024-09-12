@@ -1,19 +1,9 @@
 import 'dart:convert';
-
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
 import 'package:turning_point_tasks_app/service/api/api_service.dart';
-
-Future<void> addUserModelToHive({
-  required dynamic userModelResponseJson,
-}) async {
-  final userBox = Hive.box(AppConstants.appDb);
-  userBox.delete(AppConstants.userModelStorageKey);
-  userBox.put(AppConstants.userModelStorageKey, userModelResponseJson);
-}
 
 class UserRepository {
 //====================User Register====================//
@@ -66,6 +56,28 @@ class UserRepository {
 
       addUserModelToHive(userModelResponseJson: jsonEncode(response));
       return UserModelResponse.fromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Get User By ID====================//
+  static Future<UserModel?> getUserById({
+    required String userId,
+  }) async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: '${ApiEndpoints.users}/$userId',
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      addUserModelToHive(userModelResponseJson: jsonEncode(response));
+      final userModelResponse = UserModelResponse.fromJson(response);
+
+      return userModelResponse.user;
     } catch (e) {
       rethrow;
     }

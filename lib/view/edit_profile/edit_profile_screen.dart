@@ -25,7 +25,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    user = userController.getUserModelFromHive();
+    user = getUserModelFromHive();
     nameController.text = user?.name ?? '';
     phoneController.text = user?.phone ?? '';
     emailController.text = user?.emailId ?? '';
