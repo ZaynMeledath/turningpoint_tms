@@ -211,6 +211,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                   hintText: 'Password',
                                   userController: userController,
                                   isPassword: true,
+                                  ignoreValidations: widget.userModel != null,
                                 ).animate().slideY(
                                     begin: .7,
                                     delay: const Duration(milliseconds: 340),
@@ -231,6 +232,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                 emailController: emailController,
                                 passwordController: passwordController,
                                 user: user!,
+                                userModel: widget.userModel,
                               );
                             },
                             child: Container(

@@ -63,7 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               boxShadow: const [
                 BoxShadow(
                   offset: Offset(0, 1),
-                  color: Colors.black45,
+                  color: Colors.black,
                   blurRadius: 1.5,
                 ),
               ],
@@ -95,7 +95,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   height: 45.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: AppColors.themeGreen,
+                    color: AppColors.themeGreen.withOpacity(.7),
+                    border: Border.all(
+                      color: AppColors.themeGreen,
+                      width: 1.5,
+                    ),
                   ),
                   child: Center(
                     child: Text(

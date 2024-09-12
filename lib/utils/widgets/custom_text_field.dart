@@ -11,6 +11,7 @@ Widget customTextField({
   bool? isPassword,
   bool? isNum,
   bool? isEmail,
+  bool? ignoreValidations,
   void Function(String)? onChanged,
 }) {
   if (userController != null) {
@@ -24,6 +25,7 @@ Widget customTextField({
         isPassword: isPassword,
         isNum: isNum,
         isEmail: isEmail,
+        ignoreValidations: ignoreValidations,
         onChanged: onChanged,
       ),
     );
@@ -37,6 +39,7 @@ Widget customTextField({
       isPassword: isPassword,
       isNum: isNum,
       isEmail: isEmail,
+      ignoreValidations: ignoreValidations,
       onChanged: onChanged,
     );
   }
@@ -51,6 +54,7 @@ Widget textField({
   bool? isPassword,
   bool? isNum,
   bool? isEmail,
+  bool? ignoreValidations,
   void Function(String)? onChanged,
 }) {
   return TextFormField(
@@ -126,6 +130,9 @@ Widget textField({
     ),
     onChanged: onChanged,
     validator: (value) {
+      if (ignoreValidations == true) {
+        return null;
+      }
       if (value == null) {
         return 'Invalid value';
       }
