@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
@@ -70,6 +72,8 @@ class TaskDetailsScreen extends StatelessWidget {
 
     final creationDateString = '$weekDay, $date $month $time';
 
+    final user = Get.put(UserController()).getUserModelFromHive();
+
     return Scaffold(
       appBar: myAppBar(
         title: 'Task Details',
@@ -114,7 +118,9 @@ class TaskDetailsScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 14.h),
-              isTaskCompleted && tasksController.isDelegatedObs.value
+              isTaskCompleted &&
+                      (tasksController.isDelegatedObs.value ||
+                          user?.role == Role.admin)
                   ? Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,
@@ -199,7 +205,9 @@ class TaskDetailsScreen extends StatelessWidget {
                         )
                       : const SizedBox(),
               SizedBox(height: isTaskCompleted ? 0 : 9.h),
-              !isTaskCompleted && tasksController.isDelegatedObs.value
+              !isTaskCompleted &&
+                      (tasksController.isDelegatedObs.value ||
+                          user?.role == Role.admin)
                   ? Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 14.w,
