@@ -19,6 +19,7 @@ class AssignTaskController extends GetxController {
   final assignTaskException = Rxn<Exception>();
 
   final appController = Get.put(AppController());
+  final tasksController = Get.put(TasksController());
 
   //Email is the key and Name is the value
   RxMap<String, String> assignToMap = RxMap<String, String>();
@@ -236,7 +237,7 @@ class AssignTaskController extends GetxController {
       taskTime.value.hour,
       taskTime.value.minute,
     );
-    final dueDateString = dueDate.toUtc().toIso8601String();
+    final dueDateString = dueDate.toIso8601String();
     try {
       await tasksRepository.assignTask(
         title: title,
@@ -249,6 +250,7 @@ class AssignTaskController extends GetxController {
         repeatUntil: null,
         attachments: null,
       );
+      await tasksController.getDelegatedTasks();
     } catch (e) {
       rethrow;
     }

@@ -50,9 +50,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   void initState() {
     isTaskCompleted = widget.taskModel.status == Status.completed;
     creationDateString = '${widget.taskModel.createdAt?.dateFormat()}';
-    audioList = widget.taskModel.attachments!
-        .where((item) => item.split('.').last == 'wav')
-        .toList();
+    if (widget.taskModel.attachments != null) {
+      audioList = widget.taskModel.attachments!
+          .where((item) => item.split('.').last == 'wav')
+          .toList();
+    }
     if (audioList.isNotEmpty) {
       audioPlayer.setAudioSource(
         AudioSource.uri(
@@ -93,7 +95,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               SizedBox(height: 14.h),
 
               //====================Attachments Section====================//
-              widget.taskModel.attachments!.isNotEmpty
+              widget.taskModel.attachments != null &&
+                      widget.taskModel.attachments!.isNotEmpty
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
