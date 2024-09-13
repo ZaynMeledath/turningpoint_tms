@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_team/my_team_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/delegated_tasks_screen.dart';
@@ -21,6 +22,7 @@ class TasksHome extends StatefulWidget {
 class _TasksHomeState extends State<TasksHome> {
   int activeIndex = 1;
   StatefulWidget? activeWidget;
+  UserModel? userModel;
 
   final tasksController = TasksController();
   final userController = Get.put(UserController());
@@ -38,11 +40,11 @@ class _TasksHomeState extends State<TasksHome> {
 
   @override
   void initState() {
+    userModel = getUserModelFromHive();
     getData();
-    final userModel = getUserModelFromHive();
 
     if (userModel != null &&
-        (userModel.role == Role.admin || userModel.role == Role.teamLeader)) {
+        (userModel!.role == Role.admin || userModel!.role == Role.teamLeader)) {
       isAdminOrLeader = true;
       activeIndex = 0;
       titleIconMap = {
@@ -64,7 +66,7 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   Future<void> getData() async {
-    await userController.getUserById();
+    await userController.getUserById(userId: userModel!.id!);
     await userController.getAllTeamMembers();
     // await tasksController.getMyTasks();
     // await tasksController.getDelegatedTasks();

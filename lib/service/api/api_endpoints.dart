@@ -1,9 +1,10 @@
 class ApiEndpoints {
-  static const baseUrl = 'http://192.168.1.127:5001/api';
+  static const baseUrl = 'http://192.168.1.129:5001/api';
 
   static const login = '$baseUrl/auth/login';
   static const register = '$baseUrl/auth/register';
   static const users = '$baseUrl/users';
+  static const updateProfile = '$baseUrl/users/profile';
   static const getMyTasks = '$baseUrl/tasks/mytasks';
   static const getDelegatedTasks = '$baseUrl/tasks/delegatedtasks';
   static const assignTask = '$baseUrl/tasks';

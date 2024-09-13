@@ -83,6 +83,23 @@ class UserRepository {
     }
   }
 
+//====================Update Profile====================//
+  static Future<void> updateProfile({
+    required UserModel userModel,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.updateProfile,
+        requestMethod: RequestMethod.PUT,
+        data: userModel.toJson(),
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Get All Team Members====================//
   static Future<List<AllUsersModel>?> getAllTeamMembers() async {
     try {

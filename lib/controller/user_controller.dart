@@ -73,12 +73,28 @@ class UserController extends GetxController {
   }
 
 //====================Get User By ID====================//
-  Future<void> getUserById() async {
-    final user = getUserModelFromHive();
+  Future<void> getUserById({required String userId}) async {
     try {
-      await UserRepository.getUserById(userId: user!.id!);
+      await UserRepository.getUserById(userId: userId);
     } catch (e) {
       userException.value = e as Exception;
+    }
+  }
+
+//====================Update Profile====================//
+  Future<void> updateProfile({
+    required String name,
+    required String phone,
+    required String email,
+  }) async {
+    try {
+      final userModel = getUserModelFromHive()!;
+      userModel.name = name;
+      userModel.phone = phone;
+      userModel.emailId = email;
+      await UserRepository.updateProfile(userModel: userModel);
+    } catch (_) {
+      rethrow;
     }
   }
 
