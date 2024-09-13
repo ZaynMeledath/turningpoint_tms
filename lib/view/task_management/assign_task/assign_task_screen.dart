@@ -237,7 +237,13 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                         duration: const Duration(milliseconds: 1000),
                         curve: Curves.elasticOut,
                       ),
-                  SizedBox(height: 12.h),
+                  Obx(
+                    () => SizedBox(
+                      height: assignTaskController.shouldRepeatTask.value
+                          ? 12.h
+                          : 0,
+                    ),
+                  ),
                   attachmentSegment(
                     assignTaskController: assignTaskController,
                     recorder: recorder,
@@ -261,7 +267,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           taskDescription: descriptionController.text.trim(),
           formKey: _formKey,
           isUpdating: widget.taskModel != null,
-          taskId: widget.taskModel?.id,
+          taskModel: widget.taskModel,
         ).animate().slideY(
               begin: 1,
               delay: const Duration(milliseconds: 280),

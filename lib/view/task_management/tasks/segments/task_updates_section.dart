@@ -150,7 +150,8 @@ Widget taskUpdateSection({
                                           aspectRatio: 16 / 9,
                                           child: CachedNetworkImage(
                                             imageUrl: statusChangesModel
-                                                .changesAttachments![index],
+                                                    .changesAttachments![index]
+                                                ['path'],
                                           ),
                                         );
                                       },

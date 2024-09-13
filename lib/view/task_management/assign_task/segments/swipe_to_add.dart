@@ -6,7 +6,7 @@ Widget swipeToAdd({
   required String taskDescription,
   required GlobalKey<FormState> formKey,
   required bool isUpdating,
-  required String? taskId,
+  required TaskModel? taskModel,
 }) {
   return Container(
     height: 85.h,
@@ -43,7 +43,7 @@ Widget swipeToAdd({
           try {
             if (isUpdating) {
               await assignTaskController.updateTask(
-                taskId: taskId!,
+                taskModel: taskModel!,
                 title: taskTitle,
                 description: taskDescription,
               );

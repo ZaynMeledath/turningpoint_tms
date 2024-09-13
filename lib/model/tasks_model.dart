@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals
+
 class TasksModelResponse {
   String? message;
   List<TaskModel>? tasks;
@@ -37,6 +39,7 @@ class TaskModel {
   String? dueDate;
   String? status;
   bool? isDelayed;
+  Repeat? repeat;
   List<dynamic>? attachments;
   List<Reminder>? reminders;
   List<StatusChanges>? statusChanges;
@@ -56,6 +59,7 @@ class TaskModel {
     this.dueDate,
     this.status,
     this.isDelayed,
+    this.repeat,
     this.attachments,
     this.reminders,
     this.statusChanges,
@@ -88,6 +92,7 @@ class TaskModel {
       });
     }
     attachments = json['attachments'];
+    repeat = Repeat.fromJson(json);
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
     createdAt = json['createdAt'];
@@ -120,6 +125,7 @@ class TaskModel {
       data['attachments'] = attachments!.map((item) => item.toJson()).toList();
     }
     data['attachments'] = attachments;
+    data['repeat'] = repeat?.toJson();
     data['isDelayed'] = isDelayed;
     data['closedAt'] = closedAt;
     data['createdAt'] = createdAt;
@@ -199,6 +205,28 @@ class StatusChanges {
           changesAttachments!.map((item) => item.toJson()).toList();
     }
     data['changedAt'] = changedAt;
+    return data;
+  }
+}
+
+class Repeat {
+  String? frequency;
+  List<int>? days;
+  String? startDate;
+
+  Repeat({this.frequency, this.days, this.startDate});
+
+  Repeat.fromJson(Map<String, dynamic> json) {
+    frequency = json['frequency'];
+    days = json['days'];
+    startDate = json['startDate'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['frequency'] = frequency;
+    data['days'] = days;
+    data['startDate'] = startDate;
     return data;
   }
 }

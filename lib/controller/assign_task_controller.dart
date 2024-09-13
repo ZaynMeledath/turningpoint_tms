@@ -242,17 +242,49 @@ class AssignTaskController extends GetxController {
     }
 
     final dueDateString = dueDate.toIso8601String();
+
+    List<int>? days;
+
+    switch (taskRepeatFrequency.value) {
+      case RepeatFrequency.daily:
+        break;
+
+      case RepeatFrequency.weekly:
+        days = weekDaysToIndex(
+            weekDays: daysMap.keys.where((key) {
+          return daysMap[key] == true;
+        }).toList());
+        break;
+
+      case RepeatFrequency.monthly:
+        days = datesMap.keys.where((key) => datesMap[key] == true).toList();
+        break;
+
+      default:
+        break;
+    }
+
+    final taskModel = TaskModel(
+      title: title,
+      description: description,
+      category: selectedCategory.value,
+      assignedTo: assignToMap.keys.toList(),
+      priority: taskPriority.value,
+      dueDate: shouldRepeatTask.value ? null : dueDateString,
+      repeat: shouldRepeatTask.value
+          ? Repeat(
+              startDate:
+                  dueDateString, //due date acts as start date when repeat is turned ON
+              frequency: repeatFrequencyEnumToString(
+                  repeatFrequency: taskRepeatFrequency.value),
+              days: days)
+          : null,
+      attachments: attachmentsListObs,
+    );
+
     try {
       await tasksRepository.assignTask(
-        title: title,
-        description: description,
-        category: selectedCategory.value,
-        assignTo: assignToMap.keys.toList(),
-        priority: taskPriority.value,
-        dueDate: dueDateString,
-        repeatFrequency: taskRepeatFrequency.value?.enumToString(),
-        repeatUntil: null,
-        attachments: attachmentsListObs,
+        taskModel: taskModel,
       );
       await tasksController.getDelegatedTasks();
     } catch (e) {
@@ -262,7 +294,7 @@ class AssignTaskController extends GetxController {
 
 //====================Update Task====================//
   Future<void> updateTask({
-    required String taskId,
+    required TaskModel taskModel,
     required String title,
     required String description,
     // required List<dynamic>? attachments,
@@ -274,20 +306,49 @@ class AssignTaskController extends GetxController {
       taskTime.value.hour,
       taskTime.value.minute,
     );
-    final dueDateString = dueDate.toUtc().toIso8601String();
+    if (!dueDate.isAfter(DateTime.now())) {
+      throw DateTimeErrorException();
+    }
+    final dueDateString = dueDate.toIso8601String();
     try {
-      await tasksRepository.updateTask(
-        taskId: taskId,
-        title: title,
-        description: description,
-        category: selectedCategory.value,
-        assignTo: assignToMap.keys.toList(),
-        priority: taskPriority.value,
-        dueDate: dueDateString,
-        repeatFrequency: taskRepeatFrequency.value?.enumToString(),
-        repeatUntil: null,
-        attachments: attachmentsListObs,
-      );
+      List<int>? days;
+
+      switch (taskRepeatFrequency.value) {
+        case RepeatFrequency.daily:
+          break;
+
+        case RepeatFrequency.weekly:
+          days = weekDaysToIndex(
+              weekDays: daysMap.keys.where((key) {
+            return daysMap[key] == true;
+          }).toList());
+          break;
+
+        case RepeatFrequency.monthly:
+          days = datesMap.keys.where((key) => datesMap[key] == true).toList();
+          break;
+
+        default:
+          break;
+      }
+
+      taskModel.title = title;
+      taskModel.description = description;
+      taskModel.category = selectedCategory.value;
+      taskModel.assignedTo = assignToMap.keys.toList();
+      taskModel.priority = taskPriority.value;
+      taskModel.dueDate = shouldRepeatTask.value ? null : dueDateString;
+      taskModel.repeat = shouldRepeatTask.value
+          ? Repeat(
+              startDate:
+                  dueDateString, //due date acts as start date when repeat is turned ON
+              frequency: repeatFrequencyEnumToString(
+                  repeatFrequency: taskRepeatFrequency.value),
+              days: days)
+          : null;
+      taskModel.attachments = attachmentsListObs;
+
+      await tasksRepository.updateTask(taskModel: taskModel);
     } catch (e) {
       rethrow;
     }
@@ -305,20 +366,53 @@ Map<int, bool> createDateMap() {
   return datesMap;
 }
 
-// //====================Repeat Frequency Enum to String====================//
-// String? repeatFrequencyEnumToString({
-//   required RepeatFrequency? repeatFrequency,
-// }) {
-//   switch (repeatFrequency) {
-//     case RepeatFrequency.once:
-//       return null;
-//     case RepeatFrequency.daily:
-//       return 'Daily';
-//     case RepeatFrequency.weekly:
-//       return 'Weekly';
-//     case RepeatFrequency.monthly:
-//       return 'Monthly';
-//     default:
-//       return null;
-//   }
-// }
+//====================Week Days to Index====================//
+List<int> weekDaysToIndex({required List<String> weekDays}) {
+  final weekDaysIndexList = <int>[];
+  for (String day in weekDays) {
+    switch (day) {
+      case 'Sun':
+        weekDaysIndexList.add(0);
+        break;
+      case 'Mon':
+        weekDaysIndexList.add(1);
+        break;
+      case 'Tue':
+        weekDaysIndexList.add(2);
+        break;
+      case 'Wed':
+        weekDaysIndexList.add(3);
+        break;
+      case 'Thu':
+        weekDaysIndexList.add(4);
+        break;
+      case 'Fri':
+        weekDaysIndexList.add(5);
+        break;
+      case 'Sat':
+        weekDaysIndexList.add(6);
+        break;
+      default:
+        break;
+    }
+  }
+  return weekDaysIndexList;
+}
+
+//====================Repeat Frequency Enum to String====================//
+String? repeatFrequencyEnumToString({
+  required RepeatFrequency? repeatFrequency,
+}) {
+  switch (repeatFrequency) {
+    case RepeatFrequency.once:
+      return null;
+    case RepeatFrequency.daily:
+      return 'Daily';
+    case RepeatFrequency.weekly:
+      return 'Weekly';
+    case RepeatFrequency.monthly:
+      return 'Monthly';
+    default:
+      return null;
+  }
+}
