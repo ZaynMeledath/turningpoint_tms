@@ -178,6 +178,41 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                               )
                             : const SizedBox(),
                         SizedBox(height: 14.h),
+                        SizedBox(
+                          height: 110.h,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                widget.taskModel.attachments?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                    vertical: 8.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.textFieldColor,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/file_icon.png',
+                                          width: 70.w,
+                                        ),
+                                        Text('Attachment-${index + 1}')
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
                       ],
                     )
                   : const SizedBox(),

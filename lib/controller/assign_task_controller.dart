@@ -248,7 +248,7 @@ class AssignTaskController extends GetxController {
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
-        attachments: null,
+        attachments: attachmentsListObs,
       );
       await tasksController.getDelegatedTasks();
     } catch (e) {
@@ -282,7 +282,7 @@ class AssignTaskController extends GetxController {
         dueDate: dueDateString,
         repeatFrequency: taskRepeatFrequency.value?.enumToString(),
         repeatUntil: null,
-        attachments: null,
+        attachments: attachmentsListObs,
       );
     } catch (e) {
       rethrow;

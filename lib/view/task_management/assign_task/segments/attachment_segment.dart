@@ -228,6 +228,7 @@ Widget attachmentSegment({
                                   content:
                                       'Are you sure you want to delete this recording?',
                                   confirmationButtonColor: Colors.red,
+                                  iconWidth: 100.w,
                                   buttons: {
                                     'Cancel': null,
                                     'Delete': () async {
@@ -276,28 +277,103 @@ Widget attachmentSegment({
           final attachmentsList = assignTaskController.attachmentsListObs
               .where((item) => item.split('.').last != 'wav')
               .toList();
-          return SizedBox(
-            height: 100.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: attachmentsList.length,
-              itemBuilder: (context, index) {
-                final attachment = attachmentsList[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.textFieldColor,
-                    borderRadius: BorderRadius.circular(12),
+          if (attachmentsList.isNotEmpty) {
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  height: 110.h,
+                  width: double.maxFinite,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: attachmentsList.length,
+                    itemBuilder: (context, index) {
+                      return Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 8.h,
+                            ),
+                            margin: EdgeInsets.only(right: 12.w),
+                            decoration: BoxDecoration(
+                              color: AppColors.textFieldColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/file_icon.png',
+                                    width: 70.w,
+                                  ),
+                                  Text('Attachment-${index + 1}')
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 12.w,
+                            top: 0,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(100),
+                              onTap: () {
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/delete_animation.json',
+                                  title: 'Delete File?',
+                                  content:
+                                      'Are you sure you want to delete this file?',
+                                  confirmationButtonColor: Colors.red,
+                                  iconWidth: 100.w,
+                                  buttons: {
+                                    'Cancel': null,
+                                    'Delete': () async {
+                                      appController.isLoadingObs.value = true;
+
+                                      assignTaskController.attachmentsListObs
+                                          .removeAt(index);
+                                      //Delete Attachment
+
+                                      appController.isLoadingObs.value = false;
+                                      Get.back();
+
+                                      showGenericDialog(
+                                        iconPath:
+                                            'assets/lotties/deleted_animation.json',
+                                        title: 'Deleted',
+                                        content:
+                                            'Recording has been successfully deleted',
+                                        buttons: {'OK': null},
+                                      );
+                                    }
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.close,
+                                size: 24.w,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/icons/file_icon.png'),
-                      Text(attachment.split('/').last)
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
+                ),
+                appController.isLoadingObs.value
+                    ? SpinKitWave(
+                        size: 25.w,
+                        color: AppColors.themeGreen,
+                      )
+                    : const SizedBox()
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
         },
       ),
     ],

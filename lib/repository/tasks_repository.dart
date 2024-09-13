@@ -66,7 +66,7 @@ class TasksRepository {
       fieldNameForFiles: 'attachments',
       isTokenRequired: true,
     );
-    return response;
+    return response.first as String;
   }
 
 //====================Assign Task====================//
