@@ -118,13 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           delay: const Duration(milliseconds: 150),
                           curve: Curves.fastLinearToSlowEaseIn,
                         ),
-                    SizedBox(height: 10.h),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        child: const Text('Forgot Password'),
-                      ),
-                    ),
+                    // SizedBox(height: 10.h),
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: GestureDetector(
+                    //     child: const Text('Forgot Password'),
+                    //   ),
+                    // ),
                     SizedBox(height: 20.h),
                     Obx(
                       () => GestureDetector(
