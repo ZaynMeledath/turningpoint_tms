@@ -2,6 +2,7 @@ part of '../tasks_dashboard.dart';
 
 Widget dashboardStatusOverviewSection({
   required TasksController tasksController,
+  required bool isAdminOrLeader,
 }) {
   int overdueTasksCount;
   int openTasksCount;
@@ -30,7 +31,14 @@ Widget dashboardStatusOverviewSection({
       final completedDelegatedTasksCount =
           tasksController.completedDelegatedTaskList.value?.length ?? 0;
 
-      if (tasksController.dashboardTabIndexObs.value == 2) {
+      if (!isAdminOrLeader) {
+        overdueTasksCount = overdueMyTasksCount;
+        openTasksCount = openMyTasksCount;
+        inProgressTasksCount = inProgressMyTasksCount;
+        completedTasksCount = completedMyTasksCount;
+        onTimeTasksCount = tasksController.completedOnTimeMyTasksList.length;
+        delayedTasksCount = tasksController.completedDelayedMyTasksList.length;
+      } else if (tasksController.dashboardTabIndexObs.value == 2) {
         //When My Report tab is selected
         overdueTasksCount = overdueMyTasksCount;
         openTasksCount = openMyTasksCount;

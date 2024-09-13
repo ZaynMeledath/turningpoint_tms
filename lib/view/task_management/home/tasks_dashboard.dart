@@ -82,7 +82,10 @@ class _TasksDashboardState extends State<TasksDashboard>
         child: Column(
           children: [
             SizedBox(height: 10.h),
-            dashboardStatusOverviewSection(tasksController: tasksController),
+            dashboardStatusOverviewSection(
+              tasksController: tasksController,
+              isAdminOrLeader: isAdminOrLeader,
+            ),
             SizedBox(height: 18.h),
             Align(
               alignment: Alignment.centerLeft,
