@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
 import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
@@ -16,6 +17,8 @@ class TasksController extends GetxController {
   final tasksRepository = TasksRepository();
 
   final tasksException = Rxn<Exception>();
+
+  final appController = Get.put(AppController());
 
   final RxBool isDelegatedObs = false.obs;
 
@@ -58,6 +61,7 @@ class TasksController extends GetxController {
       Rxn<List<DelegatedPerformanceReportModel>>();
 
   final taskUpdateAttachments = <File>[].obs;
+  final taskUpdateAttachmentsUrl = RxList<String>();
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks({
@@ -255,18 +259,17 @@ class TasksController extends GetxController {
   }
 
 //====================Fetch Image from Storage====================//
-  Future<List<File>> fetchMultipleImagesFromStorage() async {
+  Future<File?> fetchImageFromStorage() async {
     final ImagePicker picker = ImagePicker();
     try {
-      final List<XFile> imageXFileList = await picker.pickMultiImage();
-      final imageFileList = <File>[];
-
-      for (XFile imageXFile in imageXFileList) {
-        imageFileList.add(
-          File(imageXFile.path),
-        );
+      final XFile? imageXFile = await picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      if (imageXFile != null) {
+        return File(imageXFile.path);
+      } else {
+        return null;
       }
-      return imageFileList;
     } catch (_) {
       rethrow;
     }
@@ -274,7 +277,17 @@ class TasksController extends GetxController {
 
 //====================Add Image to task update attachments====================//
   Future<void> addImageToTaskUpdateAttachments() async {
-    taskUpdateAttachments.addAll(await fetchMultipleImagesFromStorage());
+    final imageFile = await fetchImageFromStorage();
+    if (imageFile != null) {
+      taskUpdateAttachments.add(imageFile);
+      appController.isLoadingObs.value = true;
+
+      for (File file in taskUpdateAttachments) {
+        taskUpdateAttachmentsUrl
+            .add(await tasksRepository.uploadAttachment(file: file));
+      }
+      appController.isLoadingObs.value = false;
+    }
   }
 
 //====================Reset Task Controller====================//

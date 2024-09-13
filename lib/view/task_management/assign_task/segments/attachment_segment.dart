@@ -278,98 +278,93 @@ Widget attachmentSegment({
               .where((item) => item.split('.').last != 'wav')
               .toList();
           if (attachmentsList.isNotEmpty) {
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: 110.h,
-                  width: double.maxFinite,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: attachmentsList.length,
-                    itemBuilder: (context, index) {
-                      return Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 8.h,
-                            ),
-                            margin: EdgeInsets.only(right: 12.w),
-                            decoration: BoxDecoration(
-                              color: AppColors.textFieldColor,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/file_icon.png',
-                                    width: 70.w,
-                                  ),
-                                  Text('Attachment-${index + 1}')
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            right: 12.w,
-                            top: 0,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(100),
-                              onTap: () {
-                                showGenericDialog(
-                                  iconPath:
-                                      'assets/lotties/delete_animation.json',
-                                  title: 'Delete File?',
-                                  content:
-                                      'Are you sure you want to delete this file?',
-                                  confirmationButtonColor: Colors.red,
-                                  iconWidth: 100.w,
-                                  buttons: {
-                                    'Cancel': null,
-                                    'Delete': () async {
-                                      appController.isLoadingObs.value = true;
+            return SizedBox(
+              height: 110.h,
+              width: double.maxFinite,
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: attachmentsList.length,
+                itemBuilder: (context, index) {
+                  return Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 8.h,
+                        ),
+                        margin: EdgeInsets.only(right: 12.w),
+                        decoration: BoxDecoration(
+                          color: AppColors.textFieldColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: appController.isLoadingObs.value &&
+                                  index == (attachmentsList.length - 1)
+                              ? SpinKitWave(
+                                  size: 25.w,
+                                  color: AppColors.themeGreen,
+                                )
+                              : Column(
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/file_icon.png',
+                                      width: 70.w,
+                                    ),
+                                    Text('Attachment-${index + 1}')
+                                  ],
+                                ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 12.w,
+                        top: 0,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(100),
+                          onTap: () {
+                            showGenericDialog(
+                              iconPath: 'assets/lotties/delete_animation.json',
+                              title: 'Delete File?',
+                              content:
+                                  'Are you sure you want to delete this file?',
+                              confirmationButtonColor: Colors.red,
+                              iconWidth: 100.w,
+                              buttons: {
+                                'Cancel': null,
+                                'Delete': () async {
+                                  appController.isLoadingObs.value = true;
 
-                                      assignTaskController.attachmentsListObs
-                                          .removeAt(index);
-                                      //Delete Attachment
+                                  assignTaskController.attachmentsListObs
+                                      .removeAt(index);
+                                  //Delete Attachment
 
-                                      appController.isLoadingObs.value = false;
-                                      Get.back();
+                                  appController.isLoadingObs.value = false;
+                                  Get.back();
 
-                                      showGenericDialog(
-                                        iconPath:
-                                            'assets/lotties/deleted_animation.json',
-                                        title: 'Deleted',
-                                        content:
-                                            'Recording has been successfully deleted',
-                                        buttons: {'OK': null},
-                                      );
-                                    }
-                                  },
-                                );
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/deleted_animation.json',
+                                    title: 'Deleted',
+                                    content:
+                                        'Recording has been successfully deleted',
+                                    buttons: {'OK': null},
+                                  );
+                                }
                               },
-                              child: Icon(
-                                Icons.close,
-                                size: 24.w,
-                                color: Colors.red,
-                              ),
-                            ),
+                            );
+                          },
+                          child: Icon(
+                            Icons.close,
+                            size: 24.w,
+                            color: Colors.red,
                           ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                appController.isLoadingObs.value
-                    ? SpinKitWave(
-                        size: 25.w,
-                        color: AppColors.themeGreen,
-                      )
-                    : const SizedBox()
-              ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             );
           } else {
             return const SizedBox();

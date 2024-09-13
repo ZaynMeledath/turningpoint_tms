@@ -159,13 +159,11 @@ class AssignTaskController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
+        attachmentsListObs.add('');
         appController.isLoadingObs.value = true;
-
-        attachmentsListObs.add(
-          await tasksRepository.uploadAttachment(
-            file: file,
-          ),
-        );
+        final url = await tasksRepository.uploadAttachment(file: file);
+        attachmentsListObs.removeLast();
+        attachmentsListObs.add(url);
         appController.isLoadingObs.value = false;
       }
     } catch (_) {

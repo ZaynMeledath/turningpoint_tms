@@ -52,6 +52,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   @override
   void dispose() {
     textController.dispose();
+    tasksController.taskUpdateAttachments.clear();
     super.dispose();
   }
 
@@ -189,19 +190,23 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                           SizedBox(height: 10.h),
                           tasksController.taskUpdateAttachments.isNotEmpty
                               ? SizedBox(
-                                  height: 150.h,
+                                  height: 170.h,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: tasksController
                                         .taskUpdateAttachments.length,
                                     itemBuilder: (context, index) {
-                                      return Stack(
+                                      return Column(
                                         children: [
-                                          AspectRatio(
-                                            aspectRatio: 4 / 3,
-                                            child: Image.file(
-                                              tasksController
-                                                  .taskUpdateAttachments[index],
+                                          SizedBox(
+                                            height: 120.h,
+                                            child: AspectRatio(
+                                              aspectRatio: 4 / 4,
+                                              child: Image.file(
+                                                tasksController
+                                                        .taskUpdateAttachments[
+                                                    index],
+                                              ),
                                             ),
                                           ),
                                           IconButton(
@@ -210,7 +215,11 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                                   .taskUpdateAttachments
                                                   .removeAt(index);
                                             },
-                                            icon: const Icon(Icons.close),
+                                            icon: Icon(
+                                              Icons.delete,
+                                              size: 24.h,
+                                              color: Colors.red,
+                                            ),
                                           )
                                         ],
                                       );
@@ -219,7 +228,12 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                 )
                               : const SizedBox(),
 
-                          SizedBox(height: 28.h),
+                          SizedBox(
+                            height:
+                                tasksController.taskUpdateAttachments.isNotEmpty
+                                    ? 12.h
+                                    : 24.h,
+                          ),
                           //====================Update Button====================//
                           Obx(
                             () => InkWell(
