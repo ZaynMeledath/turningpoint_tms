@@ -1,0 +1,1 @@
+class DateTimeErrorException implements Exception {}

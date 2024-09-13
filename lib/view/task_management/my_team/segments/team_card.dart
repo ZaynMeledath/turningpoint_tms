@@ -6,6 +6,21 @@ Widget teamCard({
   final userController = Get.put(UserController());
   final appController = Get.put(AppController());
   final userModel = getUserModelFromHive();
+  Color roleBadgeColor = Colors.teal;
+
+  switch (allUsersModel.role) {
+    case Role.admin:
+      roleBadgeColor = const Color(0xffDC143C);
+      break;
+
+    case Role.teamLeader:
+      roleBadgeColor = const Color(0xffDAA520);
+      break;
+
+    default:
+      break;
+  }
+
   return Container(
     padding: EdgeInsets.symmetric(
       horizontal: 14.w,
@@ -40,23 +55,32 @@ Widget teamCard({
                   backgroundColor: Colors.blue,
                 ),
                 SizedBox(width: 8.w),
-                Text(
-                  allUsersModel.userName.toString(),
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w600,
+                SizedBox(
+                  width: 200.w,
+                  child: Text(
+                    allUsersModel.userName.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ],
             ),
             Container(
+              width: 105.w,
               padding: EdgeInsets.symmetric(
-                horizontal: 8.w,
-                vertical: 4.h,
+                // horizontal: 8.w,
+                vertical: 4.5.h,
               ),
               decoration: BoxDecoration(
-                color: Colors.teal,
-                borderRadius: BorderRadius.circular(12),
+                color: roleBadgeColor.withOpacity(.45),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: roleBadgeColor.withOpacity(.8),
+                  width: 1.5.w,
+                ),
               ),
               child: Center(
                 child: Text(

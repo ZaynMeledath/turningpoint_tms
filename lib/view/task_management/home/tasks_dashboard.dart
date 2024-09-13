@@ -9,7 +9,9 @@ import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
+import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
+import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
@@ -35,11 +37,16 @@ class _TasksDashboardState extends State<TasksDashboard>
   final tasksController = Get.put(TasksController());
   final appController = Get.put(AppController());
   late final TabController tabController;
+  UserModel? userModel;
+  bool isAdminOrLeader = false;
 
   @override
   void initState() {
+    userModel = getUserModelFromHive();
+    isAdminOrLeader =
+        userModel?.role == Role.admin || userModel?.role == Role.teamLeader;
     tabController = TabController(
-      length: 4,
+      length: isAdminOrLeader ? 4 : 1,
       vsync: this,
     );
     getData();
@@ -52,10 +59,14 @@ class _TasksDashboardState extends State<TasksDashboard>
   Future<void> getData() async {
     await tasksController.getMyTasks();
     await tasksController.getDelegatedTasks();
-    await tasksController.getAllUsersPerformanceReport();
-    await tasksController.getAllCategoriesPerformanceReport();
-    await tasksController.getMyPerformanceReport();
-    await tasksController.getDelegatedPerformanceReport();
+    if (isAdminOrLeader) {
+      await tasksController.getAllUsersPerformanceReport();
+      await tasksController.getAllCategoriesPerformanceReport();
+      await tasksController.getMyPerformanceReport();
+      await tasksController.getDelegatedPerformanceReport();
+    } else {
+      await tasksController.getMyPerformanceReport();
+    }
   }
 
   @override
@@ -87,27 +98,39 @@ class _TasksDashboardState extends State<TasksDashboard>
               ),
             ),
             SizedBox(height: 9.h),
-            dashboardTabBar(tabController: tabController),
+            dashboardTabBar(
+              tabController: tabController,
+              isAdminOrLeader: isAdminOrLeader,
+            ),
             Obx(
               () => Expanded(
                 child: tasksController.tasksException.value == null
-                    ? TabBarView(
-                        controller: tabController,
-                        children: [
-                          staffWiseTabBarView(
-                            tasksController: tasksController,
-                          ),
-                          categoryWiseTabBarView(
-                            tasksController: tasksController,
-                          ),
-                          myReportTabBarView(
-                            tasksController: tasksController,
-                          ),
-                          delegatedReportTabBarView(
-                            tasksController: tasksController,
-                          ),
-                        ],
-                      )
+                    ? isAdminOrLeader
+                        ? TabBarView(
+                            controller: tabController,
+                            children: [
+                              staffWiseTabBarView(
+                                tasksController: tasksController,
+                              ),
+                              categoryWiseTabBarView(
+                                tasksController: tasksController,
+                              ),
+                              myReportTabBarView(
+                                tasksController: tasksController,
+                              ),
+                              delegatedReportTabBarView(
+                                tasksController: tasksController,
+                              ),
+                            ],
+                          )
+                        : TabBarView(
+                            controller: tabController,
+                            children: [
+                              myReportTabBarView(
+                                tasksController: tasksController,
+                              ),
+                            ],
+                          )
                     : Column(
                         children: [
                           SizedBox(height: 50.h),

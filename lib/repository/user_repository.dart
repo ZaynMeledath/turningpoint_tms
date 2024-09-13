@@ -1,3 +1,4 @@
+import 'dart:developer' show log;
 import 'dart:convert';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
@@ -41,6 +42,7 @@ class UserRepository {
     required String password,
     required String fcmToken,
   }) async {
+    log('FCM TOKEN: $fcmToken');
     try {
       final response = await ApiService().sendRequest(
         url: ApiEndpoints.login,
@@ -48,7 +50,7 @@ class UserRepository {
         data: {
           'emailID': email,
           'password': password,
-          // 'fcmToken': fcmToken,
+          'fcmToken': fcmToken,
         },
         fieldNameForFiles: null,
         isTokenRequired: false,

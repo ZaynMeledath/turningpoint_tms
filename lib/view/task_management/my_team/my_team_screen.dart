@@ -86,7 +86,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                 .toList();
 
             teamMemberList = myTeamList
-                .where((element) => element.role == Role.teamMember)
+                .where((element) => element.role == Role.user)
                 .toList();
           }
           return Column(

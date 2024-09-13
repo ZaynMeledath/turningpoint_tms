@@ -4,7 +4,7 @@ Widget roleDropDown({
   required UserController userController,
 }) {
   final roles = [
-    Role.teamMember,
+    Role.user,
     Role.teamLeader,
     Role.admin,
   ];

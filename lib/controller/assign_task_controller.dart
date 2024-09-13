@@ -9,6 +9,7 @@ import 'package:turning_point_tasks_app/constants/tasks_management_constants.dar
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
+import 'package:turning_point_tasks_app/exceptions/tms_exceptions.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
@@ -237,6 +238,11 @@ class AssignTaskController extends GetxController {
       taskTime.value.hour,
       taskTime.value.minute,
     );
+
+    if (!dueDate.isAfter(DateTime.now())) {
+      throw DateTimeErrorException();
+    }
+
     final dueDateString = dueDate.toIso8601String();
     try {
       await tasksRepository.assignTask(

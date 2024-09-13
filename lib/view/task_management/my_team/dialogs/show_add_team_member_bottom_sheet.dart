@@ -307,7 +307,7 @@ Future<void> onSubmit({
         userModel.emailId = emailController.text.trim();
         userModel.department =
             userController.departmentObs.value ?? user.department;
-        userModel.role = userController.roleObs.value ?? Role.teamMember;
+        userModel.role = userController.roleObs.value ?? Role.user;
         userModel.reportingTo =
             userController.reportingManagerObs.value ?? user.name;
         userModel.password = null;
@@ -326,7 +326,7 @@ Future<void> onSubmit({
           phone: phoneController.text.trim(),
           emailId: emailController.text.trim(),
           department: userController.departmentObs.value ?? user.department,
-          role: userController.roleObs.value ?? Role.teamMember,
+          role: userController.roleObs.value ?? Role.user,
           reportingTo: userController.reportingManagerObs.value ?? user.name,
           password: passwordController.text.trim(),
         );

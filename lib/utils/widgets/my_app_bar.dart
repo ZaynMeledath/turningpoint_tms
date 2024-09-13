@@ -77,6 +77,7 @@ AppBar myAppBar({
                       ),
                       child: nameLetterAvatar(
                         name: '${userModel?.name}',
+                        circleDiameter: 40.h,
                       ),
                     ),
                   ),
