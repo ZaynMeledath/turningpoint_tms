@@ -57,6 +57,23 @@ class TasksRepository {
     }
   }
 
+//====================Add Categories====================//
+  Future<void> addCategory({required String categoryName}) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.addCategory,
+        requestMethod: RequestMethod.POST,
+        data: {
+          'name': categoryName,
+        },
+        isTokenRequired: true,
+        fieldNameForFiles: null,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Upload Attachment====================//
   Future<String> uploadAttachment({required File file}) async {
     final response = await ApiService().sendRequest(

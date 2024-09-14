@@ -159,7 +159,7 @@ class TasksController extends GetxController {
   }
 
 //====================Get Categories====================//
-  void getCategories() async {
+  Future<void> getCategories() async {
     try {
       final temp = await tasksRepository.getCategories();
       if (temp != null) {
@@ -168,6 +168,16 @@ class TasksController extends GetxController {
         }
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Add Categories====================//
+  Future<void> addCategory({required String categoryName}) async {
+    try {
+      await tasksRepository.addCategory(categoryName: categoryName);
+      await getCategories();
+    } catch (_) {
       rethrow;
     }
   }

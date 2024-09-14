@@ -38,6 +38,7 @@ part 'segments/swipe_to_add.dart';
 part 'dialogs/show_assign_to_dialog.dart';
 part 'dialogs/show_category_dialog.dart';
 part 'dialogs/show_reminder_bottom_sheet.dart';
+part 'dialogs/show_add_category_bottom_sheet.dart';
 
 class AssignTaskScreen extends StatefulWidget {
   final TaskModel? taskModel;
@@ -56,8 +57,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
   late final TextEditingController assignToSearchController;
-  late final TextEditingController categorySearchController;
+  // late final TextEditingController categorySearchController;
   late final TextEditingController reminderTimeTextController;
+  late final TextEditingController categoryNameController;
   final filterController = FilterController();
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
@@ -72,7 +74,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     assignToSearchController = TextEditingController();
-    categorySearchController = TextEditingController();
+    // categorySearchController = TextEditingController();
+    categoryNameController = TextEditingController();
     reminderTimeTextController = TextEditingController(
         text: DefaultReminder.defaultReminderTime.toString());
 
@@ -122,7 +125,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     titleController.dispose();
     descriptionController.dispose();
     assignToSearchController.dispose();
-    categorySearchController.dispose();
+    // categorySearchController.dispose();
     reminderTimeTextController.dispose();
     assignTaskController.dispose();
     recorder.dispose();
@@ -201,7 +204,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     tasksController: tasksController,
                     filterController: filterController,
                     assignToSearchController: assignToSearchController,
-                    categorySearchController: categorySearchController,
+                    categoryNameController: categoryNameController,
+                    // categorySearchController: categorySearchController,
                   ).animate().slideY(
                         begin: 1,
                         delay: const Duration(milliseconds: 120),

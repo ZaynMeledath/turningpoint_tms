@@ -5,7 +5,8 @@ Widget assignToAndCategorySegment({
   required TasksController tasksController,
   required FilterController filterController,
   required TextEditingController assignToSearchController,
-  required TextEditingController categorySearchController,
+  required TextEditingController categoryNameController,
+  // required TextEditingController categorySearchController,
 }) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,6 +80,7 @@ Widget assignToAndCategorySegment({
           filterController: filterController,
           assignTaskController: assignTaskController,
           tasksController: tasksController,
+          categoryNameController: categoryNameController,
         ),
         child: Container(
           width: 156.w,

@@ -4,6 +4,7 @@ Future<Object?> showCategoryDialog({
   required FilterController filterController,
   required AssignTaskController assignTaskController,
   required TasksController tasksController,
+  required TextEditingController categoryNameController,
 }) async {
   return Get.dialog(
     useSafeArea: true,
@@ -12,6 +13,7 @@ Future<Object?> showCategoryDialog({
       filterController: filterController,
       assignTaskController: assignTaskController,
       tasksController: tasksController,
+      categoryNameController: categoryNameController,
     ),
     transitionCurve: Curves.easeInOut,
   );
@@ -21,18 +23,22 @@ Widget categoryDialog({
   required FilterController filterController,
   required AssignTaskController assignTaskController,
   required TasksController tasksController,
+  required TextEditingController categoryNameController,
 }) {
   return Container(
-      margin: EdgeInsets.only(
-        left: 180.w,
-        right: 14.w,
-        top: 398.h,
-        bottom: 78.h,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: AppColors.textFieldColor,
-      ),
+    margin: EdgeInsets.only(
+      left: 180.w,
+      right: 14.w,
+      top: 398.h,
+      bottom: 75.h,
+    ),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(16),
+      color: AppColors.textFieldColor,
+    ),
+    child: Material(
+      borderRadius: BorderRadius.circular(16),
+      color: Colors.transparent,
       child: Column(
         children: [
           SizedBox(height: 4.h),
@@ -65,14 +71,6 @@ Widget categoryDialog({
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
-                            // gradient: const LinearGradient(
-                            //   colors: [
-                            //     Color.fromRGBO(72, 73, 73, 0.4),
-                            //     Color.fromRGBO(40, 45, 49, 0.8),
-                            //   ],
-                            //   begin: Alignment.topLeft,
-                            //   end: Alignment.bottomRight,
-                            // ),
                             border: Border.all(
                               color: Colors.blueGrey.withOpacity(.4),
                             ),
@@ -89,25 +87,29 @@ Widget categoryDialog({
                                 ),
                               ),
                               SizedBox(width: 8.w),
-                              DefaultTextStyle(
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                ),
-                                child: Text(
-                                  category,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )
-                                  .animate(
-                                    key: GlobalKey(),
-                                  )
-                                  .slideX(
-                                    begin: -.06,
-                                    delay: Duration(
-                                        milliseconds: 30 * (index + 1)),
-                                    duration: const Duration(milliseconds: 700),
-                                    curve: Curves.elasticOut,
+                              SizedBox(
+                                width: 150.w,
+                                child: DefaultTextStyle(
+                                  style: TextStyle(
+                                    fontSize: 18.sp,
                                   ),
+                                  child: Text(
+                                    category,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                                    .animate(
+                                      key: GlobalKey(),
+                                    )
+                                    .slideX(
+                                      begin: -.06,
+                                      delay: Duration(
+                                          milliseconds: 30 * (index + 1)),
+                                      duration:
+                                          const Duration(milliseconds: 700),
+                                      curve: Curves.elasticOut,
+                                    ),
+                              ),
                             ],
                           ),
                         ),
@@ -118,6 +120,40 @@ Widget categoryDialog({
               );
             },
           ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 8.h),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(12),
+              onTap: () => showAddCategoryBottomSheet(
+                categoryNameController: categoryNameController,
+                tasksController: tasksController,
+              ),
+              child: Container(
+                width: 120.w,
+                height: 38.h,
+                decoration: BoxDecoration(
+                  color: AppColors.themeGreen.withOpacity(.65),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    width: 1.5.w,
+                    color: AppColors.themeGreen,
+                  ),
+                ),
+                child: Center(
+                  child: DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                    ),
+                    child: const Text(
+                      'Add Category',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
-      ));
+      ),
+    ),
+  );
 }

@@ -344,7 +344,8 @@ class AssignTaskController extends GetxController {
                   dueDateString, //due date acts as start date when repeat is turned ON
               frequency: repeatFrequencyEnumToString(
                   repeatFrequency: taskRepeatFrequency.value),
-              days: days)
+              days: days,
+            )
           : null;
       taskModel.attachments = attachmentsListObs;
 

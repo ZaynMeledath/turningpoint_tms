@@ -17,4 +17,5 @@ class ApiEndpoints {
   static const delegatedPerformanceReport =
       '$baseUrl/dashboard/delegated-tasks-performance';
   static const uploadFile = '$baseUrl/upload';
+  static const addCategory = '$baseUrl/category';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
@@ -11,9 +12,24 @@ import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 
 part 'segments/section_title_container.dart';
 part 'segments/profile_option.dart';
+part 'dialogs/show_change_password_bottom_sheet.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  final passwordController = TextEditingController();
+  final userController = Get.put(UserController());
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +88,16 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: profileOption(title: 'Edit Profile'),
               ),
-              profileOption(title: 'Change Password'),
+
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () => showChangePasswordBottomSheet(
+                  passwordController: passwordController,
+                  userController: userController,
+                ),
+                child: profileOption(title: 'Change Password'),
+              ),
+
               sectionTitleContainer(title: 'Support'),
               InkWell(
                 borderRadius: BorderRadius.circular(12),

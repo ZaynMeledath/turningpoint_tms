@@ -98,6 +98,8 @@ class UserController extends GetxController {
     }
   }
 
+//====================Change Password====================//
+
 //====================Get All Team Members====================//
   Future<void> getAllTeamMembers() async {
     try {
