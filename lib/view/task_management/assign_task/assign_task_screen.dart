@@ -19,6 +19,7 @@ import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/exceptions/tms_exceptions.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
+import 'package:turning_point_tasks_app/service/api/api_exceptions.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';

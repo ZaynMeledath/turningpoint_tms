@@ -76,6 +76,15 @@ Widget addCategoryBottomSheet({
                     content: 'New category has been added successfully',
                     buttons: {'OK': null},
                   );
+                } on BadRequestException {
+                  showGenericDialog(
+                    iconPath: 'assets/lotties/server_error_animation.json',
+                    title: 'Category Exists',
+                    content:
+                        'Category already exists. Try with a new name or select the existing category',
+                    buttons: {'OK': null},
+                  );
+                  return;
                 } catch (_) {
                   showGenericDialog(
                     iconPath: 'assets/lotties/server_error_animation.json',

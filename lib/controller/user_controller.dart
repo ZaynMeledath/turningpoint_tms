@@ -99,6 +99,9 @@ class UserController extends GetxController {
   }
 
 //====================Change Password====================//
+  Future<void> changePassword({required String newPassword}) async {
+    try {} catch (_) {}
+  }
 
 //====================Get All Team Members====================//
   Future<void> getAllTeamMembers() async {
