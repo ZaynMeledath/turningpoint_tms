@@ -138,7 +138,7 @@ Widget teamCard({
               size: 16.sp,
               color: AppColors.themeGreen.withOpacity(.8),
             ),
-            SizedBox(width: 6.w),
+            SizedBox(width: 5.w),
             Text(
               allUsersModel.department != null &&
                       allUsersModel.department!.isNotEmpty
@@ -149,19 +149,19 @@ Widget teamCard({
                 color: Colors.white60,
               ),
             ),
-            SizedBox(width: 30.w),
+            SizedBox(width: 25.w),
             Icon(
               Icons.manage_accounts_rounded,
               size: 16.sp,
               color: AppColors.themeGreen.withOpacity(.8),
             ),
-            SizedBox(width: 6.w),
+            SizedBox(width: 5.w),
             Expanded(
               child: Text(
                 allUsersModel.reportingTo != null &&
                         allUsersModel.reportingTo!.isNotEmpty
                     ? allUsersModel.reportingTo.toString()
-                    : '-',
+                    : 'Self',
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 14.5.sp,
