@@ -144,6 +144,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         extendBody: true,
         appBar: myAppBar(title: ''),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Form(

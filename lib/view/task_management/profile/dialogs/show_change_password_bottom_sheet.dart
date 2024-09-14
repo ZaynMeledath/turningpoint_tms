@@ -66,6 +66,9 @@ Widget changePasswordBottomSheet({
               borderRadius: BorderRadius.circular(12),
               onTap: () async {
                 try {
+                  await userController.changePassword(
+                    newPassword: passwordController.text.trim(),
+                  );
                   Get.back();
                   showGenericDialog(
                     iconPath: 'assets/lotties/success_animation.json',
@@ -83,7 +86,7 @@ Widget changePasswordBottomSheet({
                 }
               },
               child: Container(
-                width: 120.w,
+                width: 135.w,
                 height: 38.h,
                 decoration: BoxDecoration(
                   color: AppColors.themeGreen.withOpacity(.65),
@@ -99,7 +102,7 @@ Widget changePasswordBottomSheet({
                       fontSize: 14.sp,
                     ),
                     child: const Text(
-                      'Add Category',
+                      'Change Password',
                     ),
                   ),
                 ),

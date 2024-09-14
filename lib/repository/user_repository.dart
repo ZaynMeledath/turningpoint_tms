@@ -102,6 +102,25 @@ class UserRepository {
     }
   }
 
+//====================Change Password====================//
+  static Future<void> changePassword({
+    required String newPassword,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.updateProfile,
+        requestMethod: RequestMethod.PUT,
+        data: {
+          'password': newPassword,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Get All Team Members====================//
   static Future<List<AllUsersModel>?> getAllTeamMembers() async {
     try {

@@ -100,7 +100,11 @@ class UserController extends GetxController {
 
 //====================Change Password====================//
   Future<void> changePassword({required String newPassword}) async {
-    try {} catch (_) {}
+    try {
+      await UserRepository.changePassword(newPassword: newPassword);
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Get All Team Members====================//
