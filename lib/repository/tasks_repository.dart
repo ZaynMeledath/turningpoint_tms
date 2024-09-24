@@ -104,32 +104,12 @@ class TasksRepository {
 
 //====================Assign Task====================//
   Future<void> assignTask({
-    // required String title,
-    // required String description,
-    // required String category,
-    // required List<String> assignTo,
-    // required String priority,
-    // required String dueDate,
-    // required String? repeatFrequency,
-    // required String? repeatUntil,
-    // required List<String>? attachments,
     required TaskModel taskModel,
   }) async {
     try {
       await ApiService().sendRequest(
         url: ApiEndpoints.assignTask,
         requestMethod: RequestMethod.POST,
-        // data: {
-        //   'title': title,
-        //   'description': description,
-        //   'category': category,
-        //   'assignTo': assignTo,
-        //   'priority': priority,
-        //   'dueDate': dueDate,
-        //   'repeatFrequency': repeatFrequency,
-        //   'repeatUntil': repeatUntil,
-        //   'attachments': attachments,
-        // },
         data: taskModel.toJson(),
         fieldNameForFiles: 'attachments',
         isTokenRequired: true,

@@ -57,16 +57,34 @@ Widget dashboardStatusOverviewSection({
         delayedTasksCount =
             tasksController.completedDelayedDelegatedTasksList.length;
       } else {
-        overdueTasksCount = overdueMyTasksCount + overdueDelegatedTasksCount;
-        openTasksCount = openMyTasksCount + openDelegatedTasksCount;
-        inProgressTasksCount =
-            inProgressMyTasksCount + inProgressDelegatedTasksCount;
-        completedTasksCount =
-            completedMyTasksCount + completedDelegatedTasksCount;
-        onTimeTasksCount = tasksController.completedOnTimeMyTasksList.length +
-            tasksController.completedOnTimeDelegatedTasksList.length;
-        delayedTasksCount = tasksController.completedDelayedMyTasksList.length +
-            tasksController.completedDelayedDelegatedTasksList.length;
+        overdueTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) => taskModel.status == Status.overdue)
+                .length ??
+            0;
+        openTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) => taskModel.status == Status.open)
+                .length ??
+            0;
+        inProgressTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) => taskModel.status == Status.inProgress)
+                .length ??
+            0;
+        completedTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) => taskModel.status == Status.completed)
+                .length ??
+            0;
+        onTimeTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) =>
+                    taskModel.status == Status.completed &&
+                    taskModel.isDelayed != true)
+                .length ??
+            0;
+        delayedTasksCount = tasksController.allTasksListObs.value
+                ?.where((taskModel) =>
+                    taskModel.status == Status.completed &&
+                    taskModel.isDelayed == true)
+                .length ??
+            0;
       }
 
       return Column(
@@ -74,23 +92,73 @@ Widget dashboardStatusOverviewSection({
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              dashboardStatusOverviewContainer(
-                status: Status.overdue,
-                count: overdueTasksCount,
-                icon: StatusIcons.overdue,
-                iconColor: Colors.red,
+//====================OverDue Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where(
+                              (taskModel) => taskModel.status == Status.overdue)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'Overdue Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: Status.overdue,
+                  count: overdueTasksCount,
+                  icon: StatusIcons.overdue,
+                  iconColor: Colors.red,
+                ),
               ),
-              dashboardStatusOverviewContainer(
-                status: Status.open,
-                count: openTasksCount,
-                icon: StatusIcons.open,
-                iconColor: Colors.orange,
+
+//====================Open Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where(
+                              (taskModel) => taskModel.status == Status.open)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'Open Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: Status.open,
+                  count: openTasksCount,
+                  icon: StatusIcons.open,
+                  iconColor: Colors.orange,
+                ),
               ),
-              dashboardStatusOverviewContainer(
-                status: Status.inProgress,
-                count: inProgressTasksCount,
-                icon: StatusIcons.inProgress,
-                iconColor: Colors.blue,
+
+//====================In Progress Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where((taskModel) =>
+                              taskModel.status == Status.inProgress)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'In Progress Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: Status.inProgress,
+                  count: inProgressTasksCount,
+                  icon: StatusIcons.inProgress,
+                  iconColor: Colors.blue,
+                ),
               ),
             ],
           ).animate().slideY(
@@ -103,23 +171,75 @@ Widget dashboardStatusOverviewSection({
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              dashboardStatusOverviewContainer(
-                status: Status.completed,
-                count: completedTasksCount,
-                icon: StatusIcons.completed,
-                iconColor: AppColors.themeGreen,
+//====================Completed Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where((taskModel) =>
+                              taskModel.status == Status.completed)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'Completed Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: Status.completed,
+                  count: completedTasksCount,
+                  icon: StatusIcons.completed,
+                  iconColor: AppColors.themeGreen,
+                ),
               ),
-              dashboardStatusOverviewContainer(
-                status: 'On Time',
-                count: onTimeTasksCount,
-                icon: Icons.schedule,
-                iconColor: AppColors.themeGreen,
+
+//====================On Time Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where((taskModel) =>
+                              taskModel.status == Status.completed &&
+                              taskModel.isDelayed != true)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'On Time Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: 'On Time',
+                  count: onTimeTasksCount,
+                  icon: Icons.schedule,
+                  iconColor: AppColors.themeGreen,
+                ),
               ),
-              dashboardStatusOverviewContainer(
-                status: 'Delayed',
-                count: delayedTasksCount,
-                icon: Icons.schedule,
-                iconColor: Colors.red,
+
+//====================Delayed Tasks====================//
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  final tasksList = tasksController.allTasksListObs.value
+                          ?.where((taskModel) =>
+                              taskModel.status == Status.completed &&
+                              taskModel.isDelayed == true)
+                          .toList() ??
+                      [];
+                  Get.to(() => TasksScreen(
+                        title: 'Delayed Tasks',
+                        tasksList: tasksList,
+                        avoidTabBar: true,
+                      ));
+                },
+                child: dashboardStatusOverviewContainer(
+                  status: 'Delayed',
+                  count: delayedTasksCount,
+                  icon: Icons.schedule,
+                  iconColor: Colors.red,
+                ),
               )
             ],
           ).animate().slideY(

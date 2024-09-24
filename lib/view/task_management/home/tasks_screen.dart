@@ -9,17 +9,18 @@ import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
 class TasksScreen extends StatefulWidget {
   final String title;
   final List<TaskModel> tasksList;
+  final bool? avoidTabBar;
 
   const TasksScreen({
     required this.title,
     required this.tasksList,
+    this.avoidTabBar,
     super.key,
   });
 
@@ -123,7 +124,9 @@ class _TasksScreenState extends State<TasksScreen>
                 //   avoidFilterButton: true,
                 // ),
                 // SizedBox(height: 10.h),
-                tasksTabBar(tabController: tabController),
+                widget.avoidTabBar == true
+                    ? const SizedBox()
+                    : tasksTabBar(tabController: tabController),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
                     ? Expanded(

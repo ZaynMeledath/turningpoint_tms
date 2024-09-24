@@ -69,7 +69,6 @@ class TasksController extends GetxController {
   Future<void> getAllTasks() async {
     try {
       allTasksListObs.value = await tasksRepository.getAllTasks();
-      print('Something');
     } catch (e) {
       tasksException.value = e as Exception;
     }
