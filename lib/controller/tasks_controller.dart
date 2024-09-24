@@ -92,8 +92,9 @@ class TasksController extends GetxController {
         }
       }
 
-      openTaskList.value =
-          myTasksListObs.value!.where((item) => item.status == 'Open').toList();
+      openTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.open)
+          .toList();
       inProgressTaskList.value = myTasksListObs.value!
           .where((item) => item.status == Status.inProgress)
           .toList();
