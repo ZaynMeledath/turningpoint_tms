@@ -9,6 +9,22 @@ import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
 import 'package:turning_point_tasks_app/service/api/api_service.dart';
 
 class TasksRepository {
+//====================Get All Tasks====================//
+  Future<List<TaskModel>?> getAllTasks() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.getAllTasks,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+      return TasksModelResponse.fromJson(response).tasks;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //====================Get My Tasks====================//
   Future<List<TaskModel>?> getMyTasks() async {
     try {

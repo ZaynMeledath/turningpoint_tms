@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/shimmer_tasks_list_loading.dart';
@@ -12,7 +11,6 @@ Widget taskTabBarView({
   required List<TaskModel>? tasksList,
   required AnimationController lottieController,
   required TasksController tasksController,
-  required FilterController filterController,
   required TextEditingController taskSearchController,
 }) {
   if (tasksList != null && tasksList.isNotEmpty) {

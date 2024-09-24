@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
+import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/my_team/my_team_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/delegated_tasks_screen.dart';
@@ -41,6 +44,8 @@ class _TasksHomeState extends State<TasksHome> {
   @override
   void initState() {
     userModel = getUserModelFromHive();
+    final token = AppPreferences.getValueShared(AppConstants.authTokenKey);
+    log('TOKEN : $token');
     getData();
 
     if (userModel != null &&

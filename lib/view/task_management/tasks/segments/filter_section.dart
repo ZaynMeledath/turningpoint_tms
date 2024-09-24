@@ -15,6 +15,7 @@ Widget filterSection({
   required UserController userController,
   required FilterController filterController,
   required TasksController tasksController,
+  bool? avoidFilterButton,
 }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -23,52 +24,62 @@ Widget filterSection({
         const SizedBox(height: 6),
         Row(
           children: [
-            InkWell(
-              borderRadius: BorderRadius.circular(100),
-              onTap: () async {
-                await showFilterBottomSheet(
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  filterController: filterController,
-                  tasksController: tasksController,
-                );
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    width: 45.w,
-                    height: 42.w,
-                    decoration: const BoxDecoration(
-                      color: AppColors.textFieldColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.filter_list,
-                      color: AppColors.themeGreen,
-                    ),
-                  ),
-                  filterController.selectedCategoryList.isNotEmpty ||
-                          filterController.selectedAssignedByList.isNotEmpty ||
-                          filterController.selectedAssignedToList.isNotEmpty ||
-                          filterController.selectedFrequencyList.isNotEmpty ||
-                          filterController.selectedPriorityList.isNotEmpty
-                      ? Positioned(
-                          right: 2.w,
-                          top: 2.w,
-                          child: Container(
-                            width: 11.w,
-                            height: 11.w,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.themeGreen,
+            avoidFilterButton == true
+                ? const SizedBox()
+                : Row(
+                    children: [
+                      InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () async {
+                          await showFilterBottomSheet(
+                            categorySearchController: categorySearchController,
+                            assignedSearchController: assignedSearchController,
+                            filterController: filterController,
+                            tasksController: tasksController,
+                          );
+                        },
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 45.w,
+                              height: 42.w,
+                              decoration: const BoxDecoration(
+                                color: AppColors.textFieldColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.filter_list,
+                                color: AppColors.themeGreen,
+                              ),
                             ),
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
-              ),
-            ),
-            SizedBox(width: 8.w),
+                            filterController.selectedCategoryList.isNotEmpty ||
+                                    filterController
+                                        .selectedAssignedByList.isNotEmpty ||
+                                    filterController
+                                        .selectedAssignedToList.isNotEmpty ||
+                                    filterController
+                                        .selectedFrequencyList.isNotEmpty ||
+                                    filterController
+                                        .selectedPriorityList.isNotEmpty
+                                ? Positioned(
+                                    right: 2.w,
+                                    top: 2.w,
+                                    child: Container(
+                                      width: 11.w,
+                                      height: 11.w,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.themeGreen,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                    ],
+                  ),
             Flexible(
               child: customTextField(
                   controller: taskSearchController,

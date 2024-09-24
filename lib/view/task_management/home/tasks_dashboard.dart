@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +17,7 @@ import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
+import 'package:turning_point_tasks_app/view/task_management/home/tasks_screen.dart';
 
 part 'segments/dashboard_status_overview_container.dart';
 part 'segments/dashboard_status_overview_section.dart';
@@ -60,6 +63,7 @@ class _TasksDashboardState extends State<TasksDashboard>
     await tasksController.getMyTasks();
     await tasksController.getDelegatedTasks();
     if (isAdminOrLeader) {
+      await tasksController.getAllTasks();
       await tasksController.getAllUsersPerformanceReport();
       await tasksController.getAllCategoriesPerformanceReport();
       await tasksController.getMyPerformanceReport();
@@ -77,84 +81,84 @@ class _TasksDashboardState extends State<TasksDashboard>
         implyLeading: false,
         profileAvatar: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w),
-        child: Column(
-          children: [
-            SizedBox(height: 10.h),
-            dashboardStatusOverviewSection(
+      body: Column(
+        children: [
+          SizedBox(height: 10.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: dashboardStatusOverviewSection(
               tasksController: tasksController,
               isAdminOrLeader: isAdminOrLeader,
             ),
-            SizedBox(height: 18.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 14.w),
-                child: Text(
-                  'Report',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+          ),
+          SizedBox(height: 18.h),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 14.w),
+              child: Text(
+                'Report',
+                style: TextStyle(
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            SizedBox(height: 9.h),
-            dashboardTabBar(
-              tabController: tabController,
-              isAdminOrLeader: isAdminOrLeader,
+          ),
+          SizedBox(height: 9.h),
+          dashboardTabBar(
+            tabController: tabController,
+            isAdminOrLeader: isAdminOrLeader,
+          ),
+          Obx(
+            () => Expanded(
+              child: tasksController.tasksException.value == null
+                  ? isAdminOrLeader
+                      ? TabBarView(
+                          controller: tabController,
+                          children: [
+                            staffWiseTabBarView(
+                              tasksController: tasksController,
+                            ),
+                            categoryWiseTabBarView(
+                              tasksController: tasksController,
+                            ),
+                            myReportTabBarView(
+                              tasksController: tasksController,
+                            ),
+                            delegatedReportTabBarView(
+                              tasksController: tasksController,
+                            ),
+                          ],
+                        )
+                      : TabBarView(
+                          controller: tabController,
+                          children: [
+                            myReportTabBarView(
+                              tasksController: tasksController,
+                            ),
+                          ],
+                        )
+                  : Column(
+                      children: [
+                        SizedBox(height: 50.h),
+                        serverErrorWidget(
+                          isLoading: appController.isLoadingObs.value,
+                          onRefresh: () async {
+                            try {
+                              appController.isLoadingObs.value = true;
+                              await getData();
+                              appController.isLoadingObs.value = false;
+                            } catch (_) {
+                              appController.isLoadingObs.value = false;
+                            }
+                          },
+                        ),
+                      ],
+                    ),
             ),
-            Obx(
-              () => Expanded(
-                child: tasksController.tasksException.value == null
-                    ? isAdminOrLeader
-                        ? TabBarView(
-                            controller: tabController,
-                            children: [
-                              staffWiseTabBarView(
-                                tasksController: tasksController,
-                              ),
-                              categoryWiseTabBarView(
-                                tasksController: tasksController,
-                              ),
-                              myReportTabBarView(
-                                tasksController: tasksController,
-                              ),
-                              delegatedReportTabBarView(
-                                tasksController: tasksController,
-                              ),
-                            ],
-                          )
-                        : TabBarView(
-                            controller: tabController,
-                            children: [
-                              myReportTabBarView(
-                                tasksController: tasksController,
-                              ),
-                            ],
-                          )
-                    : Column(
-                        children: [
-                          SizedBox(height: 50.h),
-                          serverErrorWidget(
-                            isLoading: appController.isLoadingObs.value,
-                            onRefresh: () async {
-                              try {
-                                appController.isLoadingObs.value = true;
-                                await getData();
-                                appController.isLoadingObs.value = false;
-                              } catch (_) {
-                                appController.isLoadingObs.value = false;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

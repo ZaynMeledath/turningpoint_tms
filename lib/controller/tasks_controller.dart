@@ -22,6 +22,8 @@ class TasksController extends GetxController {
 
   final RxBool isDelegatedObs = false.obs;
 
+  Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
+
   Rxn<List<TaskModel>> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>> tempMyTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
@@ -62,6 +64,16 @@ class TasksController extends GetxController {
 
   final taskUpdateAttachments = <File>[].obs;
   final taskUpdateAttachmentsUrl = RxList<String>();
+
+//====================Get All Tasks====================//
+  Future<void> getAllTasks() async {
+    try {
+      allTasksListObs.value = await tasksRepository.getAllTasks();
+      print('Something');
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
 
 //====================Get My Tasks====================//
   Future<void> getMyTasks({

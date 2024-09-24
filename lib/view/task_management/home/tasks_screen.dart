@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
-class DelegatedTasksScreen extends StatefulWidget {
-  const DelegatedTasksScreen({super.key});
+class TasksScreen extends StatefulWidget {
+  final String title;
+  final List<TaskModel> tasksList;
+
+  const TasksScreen({
+    required this.title,
+    required this.tasksList,
+    super.key,
+  });
 
   @override
-  State<DelegatedTasksScreen> createState() => _DelegatedTasksScreenState();
+  State<TasksScreen> createState() => _TasksScreenState();
 }
 
-class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
+class _TasksScreenState extends State<TasksScreen>
     with TickerProviderStateMixin {
   late AnimationController lottieController;
   late TextEditingController taskSearchController;
@@ -27,7 +36,8 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   late TabController tabController;
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
-  late FilterController filterController = FilterController();
+  final FilterController filterController = Get.put(FilterController());
+
   final AppController appController = AppController();
   int animationCounter = 0;
 
@@ -45,7 +55,6 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
     assignedSearchController = TextEditingController();
-    getData();
     animateLottie();
     super.initState();
   }
@@ -67,20 +76,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     }
   }
 
-  Future<void> getData() async {
-    try {
-      await tasksController.getDelegatedTasks();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
     lottieController.dispose();
     taskSearchController.dispose();
-    filterController.dispose();
   }
 
   @override
@@ -91,34 +91,38 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
       },
       child: Scaffold(
         appBar: myAppBar(
-          title: 'Delegated Tasks',
+          title: widget.title,
           implyLeading: false,
           profileAvatar: true,
         ),
         body: Obx(
           () {
-            final allDelegatedTasksList =
-                tasksController.delegatedTasksListObs.value;
-            final openDelegatedTasksList =
-                tasksController.openDelegatedTaskList.value;
-            final inProgressDelegatedTasksList =
-                tasksController.inProgressDelegatedTaskList.value;
-            final completedDelegatedTasksList =
-                tasksController.completedDelegatedTaskList.value;
-            final overdueDelegatedTasksList =
-                tasksController.overdueDelegatedTaskList.value;
+            final allTasksList = widget.tasksList;
+            final openTasksList = widget.tasksList
+                .where((taskModel) => taskModel.status == Status.open)
+                .toList();
+            final inProgressTasksList = widget.tasksList
+                .where((taskModel) => taskModel.status == Status.inProgress)
+                .toList();
+            final completedTasksList = widget.tasksList
+                .where((taskModel) => taskModel.status == Status.completed)
+                .toList();
+            final overdueTasksList = widget.tasksList
+                .where((taskModel) => taskModel.status == Status.overdue)
+                .toList();
+
             return Column(
-              // physics: const BouncingScrollPhysics(),
               children: [
-                filterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
-                  tasksController: tasksController,
-                ),
-                SizedBox(height: 10.h),
+                // filterSection(
+                //   taskSearchController: taskSearchController,
+                //   categorySearchController: categorySearchController,
+                //   assignedSearchController: assignedSearchController,
+                //   userController: userController,
+                //   filterController: filterController,
+                //   tasksController: tasksController,
+                //   avoidFilterButton: true,
+                // ),
+                // SizedBox(height: 10.h),
                 tasksTabBar(tabController: tabController),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
@@ -127,31 +131,31 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                           controller: tabController,
                           children: [
                             taskTabBarView(
-                              tasksList: allDelegatedTasksList,
+                              tasksList: allTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
                             ),
                             taskTabBarView(
-                              tasksList: overdueDelegatedTasksList,
+                              tasksList: overdueTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
                             ),
                             taskTabBarView(
-                              tasksList: openDelegatedTasksList,
+                              tasksList: openTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
                             ),
                             taskTabBarView(
-                              tasksList: inProgressDelegatedTasksList,
+                              tasksList: inProgressTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
                             ),
                             taskTabBarView(
-                              tasksList: completedDelegatedTasksList,
+                              tasksList: completedTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
@@ -167,7 +171,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                             onRefresh: () async {
                               try {
                                 appController.isLoadingObs.value = true;
-                                await getData();
+                                // await getData();
                                 appController.isLoadingObs.value = false;
                               } catch (_) {
                                 appController.isLoadingObs.value = false;
