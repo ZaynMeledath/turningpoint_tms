@@ -137,6 +137,55 @@ class TaskModel {
     data['statusChanges'] = statusChanges;
     return data;
   }
+
+// Overriding the == operator
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is TaskModel &&
+        other.id == id &&
+        other.title == title &&
+        other.description == description &&
+        other.category == category &&
+        other.createdBy == createdBy &&
+        other.assignedTo == assignedTo &&
+        other.currentUser == currentUser &&
+        other.priority == priority &&
+        other.dueDate == dueDate &&
+        other.status == status &&
+        other.isDelayed == isDelayed &&
+        other.repeat == repeat &&
+        other.attachments == attachments &&
+        other.reminders == reminders &&
+        other.statusChanges == statusChanges &&
+        other.closedAt == closedAt &&
+        other.createdAt == createdAt &&
+        other.updatedAt == updatedAt;
+  }
+
+  // Overriding the hashCode method
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        description.hashCode ^
+        category.hashCode ^
+        createdBy.hashCode ^
+        assignedTo.hashCode ^
+        currentUser.hashCode ^
+        priority.hashCode ^
+        dueDate.hashCode ^
+        status.hashCode ^
+        isDelayed.hashCode ^
+        repeat.hashCode ^
+        attachments.hashCode ^
+        reminders.hashCode ^
+        statusChanges.hashCode ^
+        closedAt.hashCode ^
+        createdAt.hashCode ^
+        updatedAt.hashCode;
+  }
 }
 
 class Reminder {

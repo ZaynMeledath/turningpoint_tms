@@ -12,9 +12,10 @@ class TaskCrudOperations {
   static void deleteTask({
     required TasksController tasksController,
     required TaskModel taskModel,
-  }) async {
+    bool? shouldDoubleBack,
+  }) {
     final appController = Get.put(AppController());
-    await showGenericDialog(
+    showGenericDialog(
       iconPath: 'assets/lotties/delete_animation.json',
       title: 'Delete Task',
       content: 'Are you sure you want to delete this task?',
@@ -29,20 +30,18 @@ class TaskCrudOperations {
               taskId: taskModel.id.toString(),
             );
             Get.back();
+            if (shouldDoubleBack == true) {
+              Get.back();
+            }
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
               title: 'Task Deleted!',
               content: 'Task Successfully deleted',
-              buttons: {
-                'OK': () {
-                  Get.back();
-                  Get.back();
-                },
-              },
+              buttons: {'OK': null},
             );
-
             appController.isLoadingObs.value = false;
           } catch (_) {
+            Get.back();
             showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',
               title: 'Something Went Wrong',

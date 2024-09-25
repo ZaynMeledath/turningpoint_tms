@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,12 +40,12 @@ class TaskDetailsScreen extends StatefulWidget {
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final tasksController = Get.put(TasksController());
+  final assignTaskController = AssignTaskController();
   bool isTaskCompleted = false;
   String creationDateString = '';
   List<dynamic> audioList = [];
 
   final user = getUserModelFromHive();
-  final assignTaskController = AssignTaskController();
   final audioPlayer = AudioPlayer();
   late TaskModel taskModel;
 
@@ -86,15 +85,22 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       body: Obx(
         () {
           if (tasksController.isDelegatedObs.value == true) {
-            taskModel = tasksController.delegatedTasksListObs.value!
-                .firstWhere((taskModel) => taskModel.id == widget.taskModel.id);
+            taskModel = tasksController.delegatedTasksListObs.value!.firstWhere(
+              (taskModel) => taskModel.id == widget.taskModel.id,
+              orElse: () => TaskModel(),
+            );
           } else if (tasksController.isDelegatedObs.value == false) {
-            taskModel = tasksController.myTasksListObs.value!
-                .firstWhere((taskModel) => taskModel.id == widget.taskModel.id);
+            taskModel = tasksController.myTasksListObs.value!.firstWhere(
+              (taskModel) => taskModel.id == widget.taskModel.id,
+              orElse: () => TaskModel(),
+            );
           } else {
-            taskModel = tasksController.allTasksListObs.value!
-                .firstWhere((taskModel) => taskModel.id == widget.taskModel.id);
+            taskModel = tasksController.allTasksListObs.value!.firstWhere(
+              (taskModel) => taskModel.id == widget.taskModel.id,
+              orElse: () => TaskModel(),
+            );
           }
+
           return SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -283,8 +289,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                   TaskCrudOperations.deleteTask(
                                     tasksController: tasksController,
                                     taskModel: taskModel,
+                                    shouldDoubleBack: true,
                                   );
-                                  Get.back();
                                 },
                                 containerColor: Colors.grey.withOpacity(.08),
                                 containerWidth: 150.w,
@@ -396,6 +402,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                   TaskCrudOperations.deleteTask(
                                     tasksController: tasksController,
                                     taskModel: taskModel,
+                                    shouldDoubleBack: true,
                                   );
                                 },
                                 containerColor: Colors.grey.withOpacity(.08),
