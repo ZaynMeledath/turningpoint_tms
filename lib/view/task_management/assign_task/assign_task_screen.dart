@@ -234,7 +234,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                         duration: const Duration(milliseconds: 1000),
                         curve: Curves.elasticOut,
                       ),
-                  SizedBox(height: 15.h),
+                  SizedBox(height: 12.h),
                   repeatFrequencySection(
                     assignTaskController: assignTaskController,
                   ).animate().slideY(

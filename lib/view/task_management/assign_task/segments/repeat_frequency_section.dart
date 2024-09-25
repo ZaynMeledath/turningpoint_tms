@@ -7,7 +7,6 @@ Widget repeatFrequencySection({
     children: [
       Obx(
         () => Container(
-          height: 68.h,
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Center(
             child: Row(
@@ -21,6 +20,7 @@ Widget repeatFrequencySection({
                   'Repeat',
                   style: TextStyle(
                     fontSize: 20.sp,
+                    height: 1,
                   ),
                 ),
                 Checkbox(
@@ -37,6 +37,7 @@ Widget repeatFrequencySection({
                     borderRadius: BorderRadius.circular(4),
                   ),
                   visualDensity: VisualDensity.compact,
+                  splashRadius: 5,
                   onChanged: assignTaskController.repeatCheckBoxOnChanged,
                 ),
                 assignTaskController.shouldRepeatTask.value
