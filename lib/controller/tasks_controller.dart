@@ -175,6 +175,7 @@ class TasksController extends GetxController {
     try {
       final temp = await tasksRepository.getCategories();
       if (temp != null) {
+        categoriesList.clear();
         for (var item in temp) {
           categoriesList.add(item.toString());
         }

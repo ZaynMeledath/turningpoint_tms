@@ -127,7 +127,7 @@ class _TasksScreenState extends State<TasksScreen>
                 widget.avoidTabBar == true
                     ? const SizedBox()
                     : tasksTabBar(tabController: tabController),
-                SizedBox(height: 10.h),
+                SizedBox(height: 12.h),
                 tasksController.tasksException.value == null
                     ? Expanded(
                         child: TabBarView(
