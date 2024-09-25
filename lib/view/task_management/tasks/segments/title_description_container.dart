@@ -63,7 +63,7 @@ Widget titleDescriptionContainer({
                 ),
                 SizedBox(width: 3.w),
                 Text(
-                  dueDateString,
+                  creationDateString,
                   style: TextStyle(
                     fontSize: 14.w,
                     color: Colors.white70,

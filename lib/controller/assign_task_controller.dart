@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
@@ -227,7 +226,6 @@ class AssignTaskController extends GetxController {
   Future<void> assignTask({
     required String title,
     required String description,
-    // required List<dynamic>? attachments,
   }) async {
     final dueDate = DateTime(
       taskDate.value.year,
@@ -297,7 +295,6 @@ class AssignTaskController extends GetxController {
     required TaskModel taskModel,
     required String title,
     required String description,
-    // required List<dynamic>? attachments,
   }) async {
     final dueDate = DateTime(
       taskDate.value.year,

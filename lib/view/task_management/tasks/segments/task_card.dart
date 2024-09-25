@@ -75,24 +75,24 @@ Widget taskCard({
                 Row(
                   children: [
                     //--------------------Name and details column--------------------//
-                    SizedBox(
-                      width: 200.w,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: 210.w,
-                            child: Text(
-                              taskModel.title.toString(),
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18.sp,
-                              ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 192.w,
+                          child: Text(
+                            taskModel.title.toString(),
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18.sp,
                             ),
                           ),
-                          SizedBox(height: 2.w),
-                          Text.rich(
+                        ),
+                        SizedBox(height: 2.w),
+                        SizedBox(
+                          width: 192.w,
+                          child: Text.rich(
                             overflow: TextOverflow.ellipsis,
                             TextSpan(
                               text: tasksController.isDelegatedObs.value
@@ -119,61 +119,61 @@ Widget taskCard({
                               ],
                             ),
                           ),
-                          SizedBox(height: 8.h),
-                          Row(
-                            children: [
-                              isAllTasks == true
-                                  ? Row(
-                                      children: [
-                                        Icon(
-                                          Icons.person,
-                                          size: 19.sp,
-                                          color: Colors.white70,
+                        ),
+                        SizedBox(height: 8.h),
+                        Row(
+                          children: [
+                            isAllTasks == true
+                                ? Row(
+                                    children: [
+                                      Icon(
+                                        Icons.person,
+                                        size: 19.sp,
+                                        color: Colors.white70,
+                                      ),
+                                      SizedBox(width: 2.w),
+                                      Text(
+                                        taskModel.assignedTo.toString(),
+                                        style: TextStyle(
+                                          fontSize: 13.5.sp,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        SizedBox(width: 2.w),
-                                        Text(
-                                          taskModel.assignedTo.toString(),
-                                          style: TextStyle(
-                                            fontSize: 13.5.sp,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        SizedBox(width: 12.w),
-                                      ],
-                                    )
-                                  : const SizedBox(),
-                              Icon(
-                                Icons.sell,
-                                size: 16.sp,
-                                color: Colors.white70,
+                                      ),
+                                      SizedBox(width: 12.w),
+                                    ],
+                                  )
+                                : const SizedBox(),
+                            Icon(
+                              Icons.sell,
+                              size: 16.sp,
+                              color: Colors.white70,
+                            ),
+                            SizedBox(width: 2.w),
+                            Text(
+                              taskModel.category.toString(),
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
-                              SizedBox(width: 2.w),
-                              Text(
-                                taskModel.category.toString(),
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            ),
+                            SizedBox(width: 14.w),
+                            Icon(
+                              Icons.flag,
+                              size: 17.sp,
+                              color: priorityFlagColor,
+                            ),
+                            SizedBox(width: 2.w),
+                            Text(
+                              taskModel.priority.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
-                              SizedBox(width: 14.w),
-                              Icon(
-                                Icons.flag,
-                                size: 17.sp,
-                                color: priorityFlagColor,
-                              ),
-                              SizedBox(width: 2.w),
-                              Text(
-                                taskModel.priority.toString(),
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     const Expanded(
                       child: SizedBox(),

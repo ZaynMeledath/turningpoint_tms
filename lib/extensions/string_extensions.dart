@@ -1,19 +1,5 @@
 import 'package:flutter/material.dart';
 
-// String nameFormatter({
-//   required String name,
-// }) {
-//   String result = '';
-//   final nameList = name.split(' ');
-//   for (int index = 0; index < nameList.length; index++) {
-//     final firstLetter = nameList[index].characters.first.toUpperCase();
-//     final splittedString = nameList[index].substring(1);
-//     result += '$firstLetter$splittedString ';
-//   }
-
-//   return result;
-// }
-
 extension StringExtensions on String {
   String nameFormat() {
     String result = '';
@@ -56,19 +42,19 @@ extension StringExtensions on String {
       'Nov',
       'Dec',
     ];
-    final dueDate = DateTime.parse(this);
-    final month = monthList[dueDate.month - 1];
-    final weekDay = weekList[dueDate.weekday - 1];
-    final date = dueDate.day;
+    final DateTime dueDate = DateTime.parse(this).toLocal();
+    final String month = monthList[dueDate.month - 1];
+    final String weekDay = weekList[dueDate.weekday - 1];
+    final int date = dueDate.day;
 
-    final hour24 = dueDate.hour;
-    final hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
-    final minute = dueDate.minute;
-    final period = hour24 >= 12 ? 'PM' : 'AM';
-    final time =
+    final int hour24 = dueDate.hour;
+    final int hour = hour24 % 12 == 0 ? 12 : hour24 % 12;
+    final int minute = dueDate.minute;
+    final String period = hour24 >= 12 ? 'PM' : 'AM';
+    final String time =
         '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
 
-    final dueDateString = '$weekDay, $date $month $time';
+    final String dueDateString = '$weekDay, $date $month $time';
 
     return dueDateString;
   }
