@@ -86,7 +86,7 @@ Widget filterSection({
                   hintText: 'Search Task',
                   onChanged: (value) {
                     filterController.filterTasks();
-                    if (tasksController.isDelegatedObs.value) {
+                    if (tasksController.isDelegatedObs.value == true) {
                       if (tasksController.delegatedTasksListObs.value != null) {
                         tasksController.delegatedTasksListObs.value =
                             tasksController.delegatedTasksListObs.value!

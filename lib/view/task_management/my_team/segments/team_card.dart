@@ -173,7 +173,7 @@ Widget teamCard({
         ),
         SizedBox(height: 15.h),
 //====================Buttons====================//
-        userModel?.role == Role.admin
+        userModel!.role == Role.admin && allUsersModel.id != userModel.id
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

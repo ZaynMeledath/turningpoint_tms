@@ -9,7 +9,14 @@ Widget taskDetailsAssignedContainer({
       isAssignedBy ? const Color(0xcc00ACAC) : const Color(0xcc0079D1);
   return InkWell(
     borderRadius: BorderRadius.circular(10),
-    onTap: () {},
+    onTap: () {
+      showTaskDetailsAssignedContainerDialog(
+        name: name,
+        email: email,
+        isAssignedBy: isAssignedBy,
+        subContainersColor: color,
+      );
+    },
     child: Container(
       width: 175.w,
       padding: EdgeInsets.symmetric(
@@ -41,24 +48,25 @@ Widget taskDetailsAssignedContainer({
                 backgroundColor: color,
               ),
               SizedBox(width: 6.w),
-              Container(
-                width: 120.w,
-                height: 32.h,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 8.w,
-                ),
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    overflow: TextOverflow.ellipsis,
-                    name,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.1,
+              Expanded(
+                child: Container(
+                  height: 32.h,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8.w,
+                  ),
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      name,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.1,
+                      ),
                     ),
                   ),
                 ),

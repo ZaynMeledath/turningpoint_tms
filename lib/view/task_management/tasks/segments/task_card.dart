@@ -95,7 +95,7 @@ Widget taskCard({
                           child: Text.rich(
                             overflow: TextOverflow.ellipsis,
                             TextSpan(
-                              text: tasksController.isDelegatedObs.value
+                              text: tasksController.isDelegatedObs.value == true
                                   ? 'Assigned To '
                                   : 'Assigned By ',
                               style: TextStyle(
@@ -103,7 +103,8 @@ Widget taskCard({
                               ),
                               children: [
                                 TextSpan(
-                                  text: tasksController.isDelegatedObs.value
+                                  text: tasksController.isDelegatedObs.value ==
+                                          true
                                       ? '${taskModel.assignedTo?.first}'
                                           .split('@')[0]
                                           .nameFormat()
@@ -222,7 +223,7 @@ Widget taskCard({
                 ),
                 SizedBox(height: 12.h),
                 isTaskCompleted &&
-                        (tasksController.isDelegatedObs.value ||
+                        (tasksController.isDelegatedObs.value == true ||
                             user?.role == Role.admin)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -279,7 +280,7 @@ Widget taskCard({
                         : const SizedBox(),
                 SizedBox(height: isTaskCompleted ? 0 : 9.h),
                 !isTaskCompleted &&
-                        (tasksController.isDelegatedObs.value ||
+                        (tasksController.isDelegatedObs.value == true ||
                             user?.role == Role.admin)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

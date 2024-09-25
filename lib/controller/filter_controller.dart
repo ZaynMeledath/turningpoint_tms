@@ -161,7 +161,7 @@ class FilterController extends GetxController {
   }
 
   void filterTasks() {
-    if (tasksController.isDelegatedObs.value) {
+    if (tasksController.isDelegatedObs.value == true) {
       tasksController.delegatedTasksListObs.value =
           tasksController.tempDelegatedTasksListObs.value?.where((item) {
         if ((selectedCategoryList.isNotEmpty
@@ -238,7 +238,7 @@ class FilterController extends GetxController {
     selectedAssignedToList.value = [];
     selectedFrequencyList.value = [];
     selectedPriorityList.value = [];
-    tasksController.isDelegatedObs.value
+    tasksController.isDelegatedObs.value == true
         ? tasksController.getDelegatedTasks(getFromLocalStorage: true)
         : tasksController.getMyTasks(getFromLocalStorage: true);
   }

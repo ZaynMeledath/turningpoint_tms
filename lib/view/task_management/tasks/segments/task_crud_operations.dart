@@ -34,7 +34,10 @@ class TaskCrudOperations {
               title: 'Task Deleted!',
               content: 'Task Successfully deleted',
               buttons: {
-                'OK': null,
+                'OK': () {
+                  Get.back();
+                  Get.back();
+                },
               },
             );
 

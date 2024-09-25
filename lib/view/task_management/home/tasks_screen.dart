@@ -93,7 +93,7 @@ class _TasksScreenState extends State<TasksScreen>
       child: Scaffold(
         appBar: myAppBar(
           title: widget.title,
-          implyLeading: false,
+          implyLeading: true,
           profileAvatar: true,
         ),
         body: Obx(

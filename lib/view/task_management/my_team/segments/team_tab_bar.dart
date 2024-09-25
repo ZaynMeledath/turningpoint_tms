@@ -46,7 +46,7 @@ Widget teamTabBar({
         ),
       ),
       Text(
-        'Team Member',
+        'User',
         style: TextStyle(
           fontSize: 16.sp,
         ),

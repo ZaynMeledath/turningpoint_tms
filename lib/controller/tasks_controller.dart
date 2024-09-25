@@ -20,7 +20,7 @@ class TasksController extends GetxController {
 
   final appController = Get.put(AppController());
 
-  final RxBool isDelegatedObs = false.obs;
+  final RxnBool isDelegatedObs = RxnBool();
 
   Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
 

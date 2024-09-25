@@ -344,7 +344,8 @@ class AssignTaskController extends GetxController {
               days: days,
             )
           : null;
-      taskModel.attachments = attachmentsListObs;
+      taskModel.attachments =
+          attachmentsListObs.isEmpty ? null : attachmentsListObs;
 
       await tasksRepository.updateTask(taskModel: taskModel);
     } catch (e) {
