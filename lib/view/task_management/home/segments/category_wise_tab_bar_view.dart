@@ -273,7 +273,10 @@ Widget categoryWiseTabBarView({
       },
     );
   } else if (performanceReportModelList == null) {
-    return shimmerListLoading();
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
+      child: shimmerListLoading(),
+    );
   } else {
     return Column(
       children: [
