@@ -42,6 +42,7 @@ Widget staffWiseTabBarView({
                   title: '$name\'s Tasks',
                   tasksList: tasksList,
                 ),
+                transition: Transition.zoom,
               );
             },
             child: Container(

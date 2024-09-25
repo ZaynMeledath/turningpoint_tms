@@ -33,10 +33,13 @@ Widget categoryWiseTabBarView({
                       taskModel.category == performanceReportModel.category)
                   .toList();
 
-              Get.to(() => TasksScreen(
-                    title: '${performanceReportModel.category} Tasks',
-                    tasksList: tasksList,
-                  ));
+              Get.to(
+                () => TasksScreen(
+                  title: '${performanceReportModel.category} Tasks',
+                  tasksList: tasksList,
+                ),
+                transition: Transition.zoom,
+              );
             },
             child: Container(
               width: double.maxFinite,
