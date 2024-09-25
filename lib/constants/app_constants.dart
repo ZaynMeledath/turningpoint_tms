@@ -16,6 +16,6 @@ class AppConstants {
 
 class Role {
   static const admin = 'Admin';
-  static const teamLeader = 'TeamLeader';
+  static const teamLeader = 'Team Leader';
   static const user = 'User';
 }
