@@ -7,7 +7,7 @@ import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
@@ -33,6 +33,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   void initState() {
+    tasksController.isDelegatedObs.value = false;
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -73,6 +74,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   void dispose() {
+    tasksController.isDelegatedObs.value = null;
     lottieController.dispose();
     taskSearchController.dispose();
     categorySearchController.dispose();
@@ -103,7 +105,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             final overdueTasksList = tasksController.overdueTaskList.value;
             return Column(
               children: [
-                filterSection(
+                tasksFilterSection(
                   taskSearchController: taskSearchController,
                   categorySearchController: categorySearchController,
                   assignedSearchController: assignedSearchController,

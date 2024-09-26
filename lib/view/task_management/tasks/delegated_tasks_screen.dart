@@ -7,7 +7,7 @@ import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/filter_section.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
@@ -111,7 +111,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
             return Column(
               // physics: const BouncingScrollPhysics(),
               children: [
-                filterSection(
+                tasksFilterSection(
                   taskSearchController: taskSearchController,
                   categorySearchController: categorySearchController,
                   assignedSearchController: assignedSearchController,

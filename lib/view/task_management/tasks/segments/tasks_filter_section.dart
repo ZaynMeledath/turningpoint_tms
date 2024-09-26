@@ -8,7 +8,7 @@ import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/view/login/login_screen.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/show_filter_bottom_sheet.dart';
 
-Widget filterSection({
+Widget tasksFilterSection({
   required TextEditingController taskSearchController,
   required TextEditingController categorySearchController,
   required TextEditingController assignedSearchController,
@@ -100,7 +100,7 @@ Widget filterSection({
                                 .toList();
                         tasksController.getDelegatedTasks(filter: true);
                       }
-                    } else {
+                    } else if (tasksController.isDelegatedObs.value == false) {
                       if (tasksController.myTasksListObs.value != null) {
                         tasksController.myTasksListObs.value = tasksController
                             .myTasksListObs.value!
@@ -114,6 +114,18 @@ Widget filterSection({
                             .toList();
                         tasksController.getMyTasks(filter: true);
                       }
+                    } else {
+                      tasksController.allTasksListObs.value = tasksController
+                          .allTasksListObs.value!
+                          .where((taskModel) =>
+                              taskModel.title!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              taskModel.description!
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()))
+                          .toList();
+                      tasksController.getAllTasks(getFromLocalStorage: true);
                     }
                   }),
             ),

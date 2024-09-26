@@ -23,9 +23,11 @@ class TasksController extends GetxController {
   final RxnBool isDelegatedObs = RxnBool();
 
   Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> tempAllTasksListObs = Rxn<List<TaskModel>>();
 
   Rxn<List<TaskModel>> myTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>> tempMyTasksListObs = Rxn<List<TaskModel>>();
+
   Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> tempDelegatedTasksListObs = Rxn<List<TaskModel>>();
 
@@ -66,9 +68,16 @@ class TasksController extends GetxController {
   final taskUpdateAttachmentsUrl = RxList<String>();
 
 //====================Get All Tasks====================//
-  Future<void> getAllTasks() async {
+  Future<void> getAllTasks({bool? getFromLocalStorage}) async {
     try {
-      allTasksListObs.value = await tasksRepository.getAllTasks();
+      if (getFromLocalStorage != true) {
+        allTasksListObs.value = await tasksRepository.getAllTasks();
+        tempMyTasksListObs.value = myTasksListObs.value;
+
+        tasksException.value = null;
+      } else {
+        myTasksListObs.value = tempMyTasksListObs.value;
+      }
     } catch (e) {
       tasksException.value = e as Exception;
     }
@@ -127,7 +136,7 @@ class TasksController extends GetxController {
     bool? filter,
   }) async {
     try {
-      //Executes if it's not run for the filter function
+      //Executes if it's not executed for the filter function.If executed for the filter function, it just filter tasks into respective variables
       if (filter != true) {
         if (getFromLocalStorage != true) {
           delegatedTasksListObs.value =
