@@ -27,6 +27,7 @@ Future<Object?> showGenericDialog({
       confirmationButtonColor: confirmationButtonColor,
       buttons: buttons,
     ),
+    barrierDismissible: false,
     scaleAnimation: true,
   );
 }

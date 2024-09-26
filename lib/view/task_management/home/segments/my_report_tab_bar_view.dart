@@ -111,157 +111,16 @@ Widget myReportTabBarView({
                   ),
                   SizedBox(height: 8.h),
 
-                  //====================Overdue, Pending and In Progress Row====================//
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            StatusIcons.overdue,
-                            size: 18.w,
-                            color: StatusColor.overdue,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'Overdue: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.overdueTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            StatusIcons.open,
-                            size: 18.w,
-                            color: StatusColor.open,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'Open: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.openTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            StatusIcons.inProgress,
-                            size: 18.w,
-                            color: StatusColor.inProgress,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'In Progress: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.inProgressTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 10.h),
-                  //====================Completed, In Time, and Delayed Row====================//
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            StatusIcons.completed,
-                            size: 18.w,
-                            color: StatusColor.completed,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'Completed: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.completedTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.schedule,
-                            size: 18.w,
-                            color: StatusColor.completed,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'On Time: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.onTimeTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.schedule,
-                            size: 18.w,
-                            color: StatusColor.overdue,
-                          ),
-                          SizedBox(width: 2.w),
-                          Text(
-                            'Delayed: ',
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                            ),
-                          ),
-                          Text(
-                            '${performanceReportModel.stats?.delayedTasks ?? 0}',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  //====================Tasks Status Counter Section====================//
+                  tasksStatusCounterSection(
+                    overdueCount: performanceReportModel.stats?.overdueTasks,
+                    openCount: performanceReportModel.stats?.openTasks,
+                    inProgressCount:
+                        performanceReportModel.stats?.inProgressTasks,
+                    completedCount:
+                        performanceReportModel.stats?.completedTasks,
+                    onTimeCount: performanceReportModel.stats?.onTimeTasks,
+                    delayedCount: performanceReportModel.stats?.delayedTasks,
                   ),
                   SizedBox(height: 10.h),
                 ],

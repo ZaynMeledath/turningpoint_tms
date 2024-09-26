@@ -93,6 +93,8 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
   switch (message.data['type']) {
     case 'task':
       await tasksController.getMyTasks();
+      await tasksController.getDelegatedTasks();
+      await tasksController.getAllTasks();
       if (isAdminOrLeader) {
         await tasksController.getAllUsersPerformanceReport();
         await tasksController.getAllCategoriesPerformanceReport();

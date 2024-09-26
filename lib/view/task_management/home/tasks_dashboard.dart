@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +25,7 @@ part 'segments/staff_wise_tab_bar_view.dart';
 part 'segments/category_wise_tab_bar_view.dart';
 part 'segments/my_report_tab_bar_view.dart';
 part 'segments/delegated_report_tab_bar_view.dart';
+part 'segments/tasks_status_counter_section.dart';
 
 class TasksDashboard extends StatefulWidget {
   const TasksDashboard({super.key});
@@ -63,11 +62,11 @@ class _TasksDashboardState extends State<TasksDashboard>
     await tasksController.getMyTasks();
     await tasksController.getDelegatedTasks();
     if (isAdminOrLeader) {
+      await tasksController.getMyPerformanceReport();
+      await tasksController.getDelegatedPerformanceReport();
       await tasksController.getAllTasks();
       await tasksController.getAllUsersPerformanceReport();
       await tasksController.getAllCategoriesPerformanceReport();
-      await tasksController.getMyPerformanceReport();
-      await tasksController.getDelegatedPerformanceReport();
     } else {
       await tasksController.getMyPerformanceReport();
     }

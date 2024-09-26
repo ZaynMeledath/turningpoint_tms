@@ -1,12 +1,13 @@
 import 'dart:developer';
-
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_enable_notification_permission_dialog.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
 import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
@@ -73,13 +74,17 @@ class _TasksHomeState extends State<TasksHome> {
   Future<void> getData() async {
     await userController.getUserById(userId: userModel!.id!);
     await userController.getAllTeamMembers();
-    // await tasksController.getMyTasks();
-    // await tasksController.getDelegatedTasks();
-    // await tasksController.getAllUsersPerformance();
+  }
+
+  void handleNotificationDialog() async {
+    if (!await Permission.notification.isGranted) {
+      showEnableNotificationPermissionDialog();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    // handleNotificationDialog();
     return Scaffold(
       extendBody: true,
       body: activeWidget ?? widgetList[activeIndex],
