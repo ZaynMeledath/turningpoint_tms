@@ -42,7 +42,6 @@ class _TasksScreenState extends State<TasksScreen>
 
   @override
   void initState() {
-    tasksController.isDelegatedObs.value = true;
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
@@ -78,6 +77,7 @@ class _TasksScreenState extends State<TasksScreen>
   @override
   void dispose() {
     super.dispose();
+    filterController.resetFilters();
     lottieController.dispose();
     taskSearchController.dispose();
   }

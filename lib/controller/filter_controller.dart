@@ -208,6 +208,7 @@ class FilterController extends GetxController {
 
       tasksController.getMyTasks(filter: true);
     } else {
+      tasksController.getDashboardTasksFromStorage();
       tasksController.allTasksListObs.value =
           tasksController.tempAllTasksListObs.value?.where((item) {
         if ((selectedCategoryList.isNotEmpty
@@ -263,6 +264,8 @@ class FilterController extends GetxController {
     selectedPriorityList.value = [];
     tasksController.isDelegatedObs.value == true
         ? tasksController.getDelegatedTasks(getFromLocalStorage: true)
-        : tasksController.getMyTasks(getFromLocalStorage: true);
+        : tasksController.isDelegatedObs.value == false
+            ? tasksController.getMyTasks(getFromLocalStorage: true)
+            : tasksController.getAllTasks(getFromLocalStorage: true);
   }
 }

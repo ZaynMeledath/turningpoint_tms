@@ -85,9 +85,8 @@ Widget tasksFilterSection({
                   controller: taskSearchController,
                   hintText: 'Search Task',
                   onChanged: (value) {
-                    if (avoidFilterButton != true) {
-                      filterController.filterTasks();
-                    }
+                    //FilterTasks() also helps to reset the tasksList to ensure seamless search result
+                    filterController.filterTasks();
 
                     if (tasksController.isDelegatedObs.value == true) {
                       if (tasksController.delegatedTasksListObs.value != null) {

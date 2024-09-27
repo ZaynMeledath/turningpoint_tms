@@ -81,6 +81,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   void dispose() {
     super.dispose();
     tasksController.isDelegatedObs.value = null;
+    filterController.resetFilters();
     lottieController.dispose();
     taskSearchController.dispose();
     filterController.dispose();
