@@ -96,14 +96,13 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where(
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where(
                               (taskModel) => taskModel.status == Status.overdue)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'Overdue Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },
@@ -119,14 +118,12 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where(
-                              (taskModel) => taskModel.status == Status.open)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where((taskModel) => taskModel.status == Status.open)
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'Open Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },
@@ -142,14 +139,13 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where((taskModel) =>
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where((taskModel) =>
                               taskModel.status == Status.inProgress)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'In Progress Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },
@@ -175,14 +171,13 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where((taskModel) =>
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where((taskModel) =>
                               taskModel.status == Status.completed)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'Completed Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },
@@ -198,15 +193,14 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where((taskModel) =>
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where((taskModel) =>
                               taskModel.status == Status.completed &&
                               taskModel.isDelayed != true)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'On Time Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },
@@ -222,15 +216,14 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  final tasksList = tasksController.allTasksListObs.value
-                          ?.where((taskModel) =>
+                  tasksController.addToDashboardTasksList(
+                      tasksList: tasksController.allTasksListObs.value!
+                          .where((taskModel) =>
                               taskModel.status == Status.completed &&
                               taskModel.isDelayed == true)
-                          .toList() ??
-                      [];
-                  Get.to(() => TasksScreen(
+                          .toList());
+                  Get.to(() => const TasksScreen(
                         title: 'Delayed Tasks',
-                        tasksList: tasksList,
                         avoidTabBar: true,
                       ));
                 },

@@ -22,6 +22,9 @@ class TasksController extends GetxController {
 
   final RxnBool isDelegatedObs = RxnBool();
 
+  RxList<TaskModel> dashboardTasksListObs = RxList<TaskModel>();
+  RxList<TaskModel> tempDashboardTasksListObs = RxList<TaskModel>();
+
   Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> tempAllTasksListObs = Rxn<List<TaskModel>>();
 
@@ -72,15 +75,24 @@ class TasksController extends GetxController {
     try {
       if (getFromLocalStorage != true) {
         allTasksListObs.value = await tasksRepository.getAllTasks();
-        tempMyTasksListObs.value = myTasksListObs.value;
+        tempAllTasksListObs.value = allTasksListObs.value;
 
         tasksException.value = null;
       } else {
-        myTasksListObs.value = tempMyTasksListObs.value;
+        myTasksListObs.value = tempAllTasksListObs.value;
       }
     } catch (e) {
       tasksException.value = e as Exception;
     }
+  }
+
+  void addToDashboardTasksList({required List<TaskModel> tasksList}) {
+    dashboardTasksListObs.value = tasksList;
+    tempDashboardTasksListObs.value = tasksList;
+  }
+
+  void getDashboardTasksFromStorage() {
+    dashboardTasksListObs = tempDashboardTasksListObs;
   }
 
 //====================Get My Tasks====================//

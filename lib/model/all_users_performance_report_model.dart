@@ -1,23 +1,29 @@
+// ignore_for_file: prefer_collection_literals
+
 class AllUsersPerformanceReportModelResponse {
+  String? message;
   List<AllUsersPerformanceReportModel>? usersPerformanceModelList;
 
-  AllUsersPerformanceReportModelResponse({this.usersPerformanceModelList});
+  AllUsersPerformanceReportModelResponse(
+      {this.message, this.usersPerformanceModelList});
 
-  AllUsersPerformanceReportModelResponse.fromJson(List<dynamic>? json) {
-    if (json != null) {
+  AllUsersPerformanceReportModelResponse.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    if (json['usersPerformance'] != null) {
       usersPerformanceModelList = <AllUsersPerformanceReportModel>[];
-      for (var item in json) {
+      json['usersPerformance'].forEach((v) {
         usersPerformanceModelList!
-            .add(AllUsersPerformanceReportModel.fromJson(item));
-      }
+            .add(AllUsersPerformanceReportModel.fromJson(v));
+      });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['message'] = message;
     if (usersPerformanceModelList != null) {
-      data['tasks'] =
-          usersPerformanceModelList!.map((item) => item.toJson()).toList();
+      data['usersPerformance'] =
+          usersPerformanceModelList!.map((v) => v.toJson()).toList();
     }
     return data;
   }

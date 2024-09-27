@@ -85,7 +85,10 @@ Widget tasksFilterSection({
                   controller: taskSearchController,
                   hintText: 'Search Task',
                   onChanged: (value) {
-                    filterController.filterTasks();
+                    if (avoidFilterButton != true) {
+                      filterController.filterTasks();
+                    }
+
                     if (tasksController.isDelegatedObs.value == true) {
                       if (tasksController.delegatedTasksListObs.value != null) {
                         tasksController.delegatedTasksListObs.value =
@@ -115,17 +118,16 @@ Widget tasksFilterSection({
                         tasksController.getMyTasks(filter: true);
                       }
                     } else {
-                      tasksController.allTasksListObs.value = tasksController
-                          .allTasksListObs.value!
-                          .where((taskModel) =>
-                              taskModel.title!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              taskModel.description!
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()))
-                          .toList();
-                      tasksController.getAllTasks(getFromLocalStorage: true);
+                      tasksController.dashboardTasksListObs.value =
+                          tasksController.dashboardTasksListObs
+                              .where((taskModel) =>
+                                  taskModel.title!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()) ||
+                                  taskModel.description!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()))
+                              .toList();
                     }
                   }),
             ),

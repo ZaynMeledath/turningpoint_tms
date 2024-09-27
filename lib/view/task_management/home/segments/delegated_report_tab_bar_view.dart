@@ -28,10 +28,12 @@ Widget delegatedReportTabBarView({
             highlightColor: Colors.lightBlue.withOpacity(.15),
             splashColor: Colors.lightBlue.withOpacity(.25),
             onTap: () {
-              final tasksList = tasksController.delegatedTasksListObs.value!
-                  .where((item) =>
-                      item.assignedTo?.first == performanceReportModel.userName)
-                  .toList();
+              tasksController.addToDashboardTasksList(
+                  tasksList: tasksController.delegatedTasksListObs.value!
+                      .where((item) =>
+                          item.assignedTo?.first ==
+                          performanceReportModel.userName)
+                      .toList());
 
               final name = performanceReportModel.userName
                   ?.split('@')
@@ -40,7 +42,6 @@ Widget delegatedReportTabBarView({
               Get.to(
                 () => TasksScreen(
                   title: '$name\'s Tasks',
-                  tasksList: tasksList,
                 ),
                 transition: Transition.zoom,
               );

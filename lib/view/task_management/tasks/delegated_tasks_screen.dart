@@ -33,7 +33,9 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
 
   @override
   void initState() {
-    tasksController.isDelegatedObs.value = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      tasksController.isDelegatedObs.value = true;
+    });
     lottieController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),

@@ -6,20 +6,18 @@ import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
 import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
+import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_filter_section.dart';
 import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
 class TasksScreen extends StatefulWidget {
   final String title;
-  final List<TaskModel> tasksList;
   final bool? avoidTabBar;
 
   const TasksScreen({
     required this.title,
-    required this.tasksList,
     this.avoidTabBar,
     super.key,
   });
@@ -98,32 +96,32 @@ class _TasksScreenState extends State<TasksScreen>
         ),
         body: Obx(
           () {
-            final allTasksList = widget.tasksList;
-            final openTasksList = widget.tasksList
+            final allTasksList = tasksController.dashboardTasksListObs;
+            final openTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.open)
                 .toList();
-            final inProgressTasksList = widget.tasksList
+            final inProgressTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.inProgress)
                 .toList();
-            final completedTasksList = widget.tasksList
+            final completedTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.completed)
                 .toList();
-            final overdueTasksList = widget.tasksList
+            final overdueTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.overdue)
                 .toList();
 
             return Column(
               children: [
-                // filterSection(
-                //   taskSearchController: taskSearchController,
-                //   categorySearchController: categorySearchController,
-                //   assignedSearchController: assignedSearchController,
-                //   userController: userController,
-                //   filterController: filterController,
-                //   tasksController: tasksController,
-                //   avoidFilterButton: true,
-                // ),
-                // SizedBox(height: 10.h),
+                tasksFilterSection(
+                  taskSearchController: taskSearchController,
+                  categorySearchController: categorySearchController,
+                  assignedSearchController: assignedSearchController,
+                  userController: userController,
+                  filterController: filterController,
+                  tasksController: tasksController,
+                  avoidFilterButton: true,
+                ),
+                SizedBox(height: 10.h),
                 widget.avoidTabBar == true
                     ? const SizedBox()
                     : tasksTabBar(tabController: tabController),
