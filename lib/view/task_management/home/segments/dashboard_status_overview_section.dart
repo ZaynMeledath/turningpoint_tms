@@ -163,7 +163,7 @@ Widget dashboardStatusOverviewSection({
                 duration: const Duration(milliseconds: 1000),
                 curve: Curves.elasticOut,
               ),
-          SizedBox(height: 10.h),
+          SizedBox(height: 10.w),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

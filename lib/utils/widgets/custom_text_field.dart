@@ -12,6 +12,7 @@ Widget customTextField({
   bool? isNum,
   bool? isEmail,
   bool? ignoreValidations,
+  EdgeInsetsGeometry? contentPadding,
   void Function(String)? onChanged,
 }) {
   if (userController != null) {
@@ -26,6 +27,7 @@ Widget customTextField({
         isNum: isNum,
         isEmail: isEmail,
         ignoreValidations: ignoreValidations,
+        contentPadding: contentPadding,
         onChanged: onChanged,
       ),
     );
@@ -40,6 +42,7 @@ Widget customTextField({
       isNum: isNum,
       isEmail: isEmail,
       ignoreValidations: ignoreValidations,
+      contentPadding: contentPadding,
       onChanged: onChanged,
     );
   }
@@ -55,6 +58,7 @@ Widget textField({
   bool? isNum,
   bool? isEmail,
   bool? ignoreValidations,
+  EdgeInsetsGeometry? contentPadding,
   void Function(String)? onChanged,
 }) {
   return TextFormField(
@@ -97,10 +101,11 @@ Widget textField({
           fontSize: 16.sp,
         ),
       ),
-      contentPadding: EdgeInsets.symmetric(
-        horizontal: 14.w,
-        vertical: 13.5.h,
-      ),
+      contentPadding: contentPadding ??
+          EdgeInsets.symmetric(
+            horizontal: 14.w,
+            vertical: 13.5.h,
+          ),
       fillColor: backgroundColor ?? AppColors.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(

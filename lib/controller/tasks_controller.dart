@@ -53,6 +53,8 @@ class TasksController extends GetxController {
 
   final dashboardTabIndexObs = 0.obs;
 
+  Rxn<List<AllUsersPerformanceReportModel>> allUsersReportModelSearchList =
+      Rxn<List<AllUsersPerformanceReportModel>>();
   Rxn<List<AllUsersPerformanceReportModel>> allUsersPerformanceReportModelList =
       Rxn<List<AllUsersPerformanceReportModel>>();
 

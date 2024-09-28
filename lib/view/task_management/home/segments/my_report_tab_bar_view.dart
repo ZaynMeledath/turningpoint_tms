@@ -2,6 +2,7 @@ part of '../tasks_dashboard.dart';
 
 Widget myReportTabBarView({
   required TasksController tasksController,
+  required TextEditingController myReportSearchController,
 }) {
   final performanceReportModelList =
       tasksController.myPerformanceReportModelList.value;

@@ -207,10 +207,10 @@ Widget assignToDialog({
                                   key: GlobalKey(),
                                 )
                                 .slideX(
-                                  begin: -.06,
+                                  begin: -.03,
                                   delay:
-                                      Duration(milliseconds: 30 * (index + 1)),
-                                  duration: const Duration(milliseconds: 700),
+                                      Duration(milliseconds: 6 * (index + 1)),
+                                  duration: const Duration(milliseconds: 600),
                                   curve: Curves.elasticOut,
                                 ),
                           ),

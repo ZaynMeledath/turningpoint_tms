@@ -2,6 +2,7 @@ part of '../tasks_dashboard.dart';
 
 Widget categoryWiseTabBarView({
   required TasksController tasksController,
+  required TextEditingController categorySearchController,
 }) {
   final performanceReportModelList =
       tasksController.allCategoriesPerformanceReportModelList.value;
