@@ -92,7 +92,7 @@ class TasksController extends GetxController {
   }
 
   void getDashboardTasksFromStorage() {
-    dashboardTasksListObs = tempDashboardTasksListObs;
+    dashboardTasksListObs.value = tempDashboardTasksListObs;
   }
 
 //====================Get My Tasks====================//

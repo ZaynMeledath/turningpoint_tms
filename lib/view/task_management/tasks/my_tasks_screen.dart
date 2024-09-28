@@ -110,13 +110,27 @@ class _MyTasksScreenState extends State<MyTasksScreen>
             return Column(
               children: [
                 tasksFilterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
-                  tasksController: tasksController,
-                ),
+                    taskSearchController: taskSearchController,
+                    categorySearchController: categorySearchController,
+                    assignedSearchController: assignedSearchController,
+                    userController: userController,
+                    filterController: filterController,
+                    tasksController: tasksController,
+                    textFieldOnChanged: (value) {
+                      if (tasksController.myTasksListObs.value != null) {
+                        tasksController.myTasksListObs.value = tasksController
+                            .myTasksListObs.value!
+                            .where((taskModel) =>
+                                taskModel.title!
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()) ||
+                                taskModel.description!
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()))
+                            .toList();
+                        tasksController.getMyTasks(filter: true);
+                      }
+                    }),
                 SizedBox(height: 10.h),
                 tasksTabBar(tabController: tabController),
                 SizedBox(height: 10.h),

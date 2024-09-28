@@ -113,14 +113,25 @@ class _TasksScreenState extends State<TasksScreen>
             return Column(
               children: [
                 tasksFilterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
-                  tasksController: tasksController,
-                  avoidFilterButton: true,
-                ),
+                    taskSearchController: taskSearchController,
+                    categorySearchController: categorySearchController,
+                    assignedSearchController: assignedSearchController,
+                    userController: userController,
+                    filterController: filterController,
+                    tasksController: tasksController,
+                    avoidFilterButton: true,
+                    textFieldOnChanged: (value) {
+                      tasksController.dashboardTasksListObs.value =
+                          tasksController.dashboardTasksListObs
+                              .where((taskModel) =>
+                                  taskModel.title!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()) ||
+                                  taskModel.description!
+                                      .toLowerCase()
+                                      .contains(value.toLowerCase()))
+                              .toList();
+                    }),
                 SizedBox(height: 10.h),
                 widget.avoidTabBar == true
                     ? const SizedBox()

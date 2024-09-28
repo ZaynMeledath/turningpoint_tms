@@ -115,13 +115,27 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
               // physics: const BouncingScrollPhysics(),
               children: [
                 tasksFilterSection(
-                  taskSearchController: taskSearchController,
-                  categorySearchController: categorySearchController,
-                  assignedSearchController: assignedSearchController,
-                  userController: userController,
-                  filterController: filterController,
-                  tasksController: tasksController,
-                ),
+                    taskSearchController: taskSearchController,
+                    categorySearchController: categorySearchController,
+                    assignedSearchController: assignedSearchController,
+                    userController: userController,
+                    filterController: filterController,
+                    tasksController: tasksController,
+                    textFieldOnChanged: (value) {
+                      if (tasksController.delegatedTasksListObs.value != null) {
+                        tasksController.delegatedTasksListObs.value =
+                            tasksController.delegatedTasksListObs.value!
+                                .where((taskModel) =>
+                                    taskModel.title!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()) ||
+                                    taskModel.description!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()))
+                                .toList();
+                        tasksController.getDelegatedTasks(filter: true);
+                      }
+                    }),
                 SizedBox(height: 10.h),
                 tasksTabBar(tabController: tabController),
                 SizedBox(height: 10.h),

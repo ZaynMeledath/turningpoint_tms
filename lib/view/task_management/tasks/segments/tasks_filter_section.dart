@@ -15,6 +15,7 @@ Widget tasksFilterSection({
   required UserController userController,
   required FilterController filterController,
   required TasksController tasksController,
+  required void Function(String) textFieldOnChanged,
   bool? avoidFilterButton,
 }) {
   return Padding(
@@ -87,47 +88,7 @@ Widget tasksFilterSection({
                   onChanged: (value) {
                     //FilterTasks() also helps to reset the tasksList to ensure seamless search result
                     filterController.filterTasks();
-
-                    if (tasksController.isDelegatedObs.value == true) {
-                      if (tasksController.delegatedTasksListObs.value != null) {
-                        tasksController.delegatedTasksListObs.value =
-                            tasksController.delegatedTasksListObs.value!
-                                .where((taskModel) =>
-                                    taskModel.title!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()) ||
-                                    taskModel.description!
-                                        .toLowerCase()
-                                        .contains(value.toLowerCase()))
-                                .toList();
-                        tasksController.getDelegatedTasks(filter: true);
-                      }
-                    } else if (tasksController.isDelegatedObs.value == false) {
-                      if (tasksController.myTasksListObs.value != null) {
-                        tasksController.myTasksListObs.value = tasksController
-                            .myTasksListObs.value!
-                            .where((taskModel) =>
-                                taskModel.title!
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()) ||
-                                taskModel.description!
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()))
-                            .toList();
-                        tasksController.getMyTasks(filter: true);
-                      }
-                    } else {
-                      tasksController.dashboardTasksListObs.value =
-                          tasksController.dashboardTasksListObs
-                              .where((taskModel) =>
-                                  taskModel.title!
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()) ||
-                                  taskModel.description!
-                                      .toLowerCase()
-                                      .contains(value.toLowerCase()))
-                              .toList();
-                    }
+                    textFieldOnChanged(value);
                   }),
             ),
           ],
