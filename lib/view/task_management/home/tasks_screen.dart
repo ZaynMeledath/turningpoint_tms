@@ -119,7 +119,7 @@ class _TasksScreenState extends State<TasksScreen>
                     userController: userController,
                     filterController: filterController,
                     tasksController: tasksController,
-                    avoidFilterButton: true,
+                    // avoidFilterButton: true,
                     textFieldOnChanged: (value) {
                       tasksController.dashboardTasksListObs.value =
                           tasksController.dashboardTasksListObs

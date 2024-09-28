@@ -89,7 +89,7 @@ Widget delegatedReportTabBarView({
                         width: 52.w,
                         height: 52.w,
                         child: CircularPercentIndicator(
-                          radius: 20.w,
+                          radius: 22.5.w,
                           progressColor: (performanceReportModel
                                           .stats?.completionRate ??
                                       0) <=
