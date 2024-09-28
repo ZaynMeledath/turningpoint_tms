@@ -8,6 +8,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
+import 'package:turning_point_tasks_app/service/api/api_exceptions.dart';
 import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -26,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController passwordController;
   final userController = UserController();
   final appController = Get.put(AppController());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -55,146 +58,163 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: Column(
-                  children: [
-                    SizedBox(height: 140.h),
-                    Hero(
-                      tag: 'turning_point_logo',
-                      child: Image.asset(
-                        'assets/images/turning_point_logo.png',
-                        width: 110,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 140.h),
+                      Hero(
+                        tag: 'turning_point_logo',
+                        child: Image.asset(
+                          'assets/images/turning_point_logo.png',
+                          width: 110,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 25.h),
-                    Row(
-                      children: [
-                        SizedBox(width: 7.w),
-                        Text(
-                          'Welcome Back Amigo!',
-                          style: TextStyle(
-                            fontSize: 26.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ).animate().slideX(
-                              delay: const Duration(milliseconds: 150),
-                              curve: Curves.fastLinearToSlowEaseIn,
+                      SizedBox(height: 25.h),
+                      Row(
+                        children: [
+                          SizedBox(width: 7.w),
+                          Text(
+                            'Welcome Back Amigo!',
+                            style: TextStyle(
+                              fontSize: 26.sp,
+                              fontWeight: FontWeight.w600,
                             ),
-                      ],
-                    ),
-                    const SizedBox(height: 2),
-                    Row(
-                      children: [
-                        SizedBox(width: 7.w),
-                        Text(
-                          'Login to your account',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                          ),
-                        ).animate().slideX(
-                              delay: const Duration(milliseconds: 150),
-                              curve: Curves.fastLinearToSlowEaseIn,
-                            ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    customTextField(
-                      controller: emailController,
-                      hintText: 'Email',
-                      // userController: userController,
-                      isEmail: true,
-                    ).animate().slideX(
-                          begin: 1,
-                          delay: const Duration(milliseconds: 150),
-                          curve: Curves.fastLinearToSlowEaseIn,
-                        ),
-                    SizedBox(height: 35.h),
-                    customTextField(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      isPassword: true,
-                      userController: userController,
-                    ).animate().slideX(
-                          begin: 1,
-                          delay: const Duration(milliseconds: 150),
-                          curve: Curves.fastLinearToSlowEaseIn,
-                        ),
-                    // SizedBox(height: 10.h),
-                    // Align(
-                    //   alignment: Alignment.centerRight,
-                    //   child: GestureDetector(
-                    //     child: const Text('Forgot Password'),
-                    //   ),
-                    // ),
-                    SizedBox(height: 20.h),
-                    Obx(
-                      () => GestureDetector(
-                        onTap: () async {
-                          appController.isLoadingObs.value = true;
-                          try {
-                            await userController.login(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            );
-                            appController.isLoadingObs.value = false;
-                            if (userController.userException.value == null) {
-                              Get.offAll(
-                                () => const TasksHome(),
-                              );
-                            }
-                          } catch (e) {
-                            appController.isLoadingObs.value = false;
-                            showDialog(
-                              context: context,
-                              builder: (context) => const AlertDialog(
-                                title: Text('Error'),
-                                content: Text('Something Went Wrong'),
+                          ).animate().slideX(
+                                delay: const Duration(milliseconds: 150),
+                                curve: Curves.fastLinearToSlowEaseIn,
                               ),
-                            );
-                          }
-                        },
-                        child: customButton(
-                          buttonTitle: 'Login',
-                          isLoading: appController.isLoadingObs.value,
-                        ).animate().scale(
-                              delay: const Duration(milliseconds: 150),
-                              curve: Curves.fastLinearToSlowEaseIn,
-                            ),
+                        ],
                       ),
-                    ),
-                    // SizedBox(height: 16.h),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       'Dont have an Account?',
-                    //       style: TextStyle(
-                    //         fontSize: 14.sp,
-                    //       ),
-                    //     ),
-                    //     InkWell(
-                    //       onTap: () {
-                    //         Get.to(
-                    //           () => const RegisterScreen(),
-                    //           transition: Transition.downToUp,
-                    //         );
-                    //       },
-                    //       borderRadius: BorderRadius.circular(16),
-                    //       child: Padding(
-                    //         padding: EdgeInsets.all(5.w),
-                    //         child: Text(
-                    //           'Sign Up here',
-                    //           style: TextStyle(
-                    //             fontSize: 14.sp,
-                    //             fontWeight: FontWeight.w600,
-                    //             color: AppColor.themeGreen,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(height: 15.h),
-                  ],
+                      const SizedBox(height: 2),
+                      Row(
+                        children: [
+                          SizedBox(width: 7.w),
+                          Text(
+                            'Login to your account',
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                            ),
+                          ).animate().slideX(
+                                delay: const Duration(milliseconds: 150),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                              ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+                      customTextField(
+                        controller: emailController,
+                        hintText: 'Email',
+                        // userController: userController,
+                        isEmail: true,
+                      ).animate().slideX(
+                            begin: 1,
+                            delay: const Duration(milliseconds: 150),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                          ),
+                      SizedBox(height: 35.h),
+                      customTextField(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        isPassword: true,
+                        userController: userController,
+                      ).animate().slideX(
+                            begin: 1,
+                            delay: const Duration(milliseconds: 150),
+                            curve: Curves.fastLinearToSlowEaseIn,
+                          ),
+                      // SizedBox(height: 10.h),
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: GestureDetector(
+                      //     child: const Text('Forgot Password'),
+                      //   ),
+                      // ),
+                      SizedBox(height: 20.h),
+                      Obx(
+                        () => GestureDetector(
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              appController.isLoadingObs.value = true;
+                              try {
+                                await userController.login(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+                                appController.isLoadingObs.value = false;
+                                if (userController.userException.value ==
+                                    null) {
+                                  Get.offAll(
+                                    () => const TasksHome(),
+                                  );
+                                }
+                              } on BadRequestException {
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/password_animation.json',
+                                  title: 'Invalid Credentials',
+                                  content:
+                                      'Check your email and password and try again',
+                                  buttons: {'OK': null},
+                                );
+                                appController.isLoadingObs.value = false;
+                              } catch (e) {
+                                appController.isLoadingObs.value = false;
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/server_error_animation.json',
+                                  title: 'Something went wrong',
+                                  content:
+                                      'Something went wrong while connecting to the server',
+                                  buttons: {'Dismiss': null},
+                                );
+                              }
+                            }
+                          },
+                          child: customButton(
+                            buttonTitle: 'Login',
+                            isLoading: appController.isLoadingObs.value,
+                          ).animate().scale(
+                                delay: const Duration(milliseconds: 150),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                              ),
+                        ),
+                      ),
+                      // SizedBox(height: 16.h),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(
+                      //       'Dont have an Account?',
+                      //       style: TextStyle(
+                      //         fontSize: 14.sp,
+                      //       ),
+                      //     ),
+                      //     InkWell(
+                      //       onTap: () {
+                      //         Get.to(
+                      //           () => const RegisterScreen(),
+                      //           transition: Transition.downToUp,
+                      //         );
+                      //       },
+                      //       borderRadius: BorderRadius.circular(16),
+                      //       child: Padding(
+                      //         padding: EdgeInsets.all(5.w),
+                      //         child: Text(
+                      //           'Sign Up here',
+                      //           style: TextStyle(
+                      //             fontSize: 14.sp,
+                      //             fontWeight: FontWeight.w600,
+                      //             color: AppColor.themeGreen,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      SizedBox(height: 15.h),
+                    ],
+                  ),
                 ),
               ),
             ),

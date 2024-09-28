@@ -67,8 +67,7 @@ class UserController extends GetxController {
         throw FcmTokenNullException();
       }
     } catch (e) {
-      userException.value = e as Exception;
-      // rethrow;
+      rethrow;
     }
   }
 
