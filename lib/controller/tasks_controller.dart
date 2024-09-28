@@ -53,20 +53,29 @@ class TasksController extends GetxController {
 
   final dashboardTabIndexObs = 0.obs;
 
-  Rxn<List<AllUsersPerformanceReportModel>> allUsersReportModelSearchList =
-      Rxn<List<AllUsersPerformanceReportModel>>();
   Rxn<List<AllUsersPerformanceReportModel>> allUsersPerformanceReportModelList =
+      Rxn<List<AllUsersPerformanceReportModel>>();
+  Rxn<List<AllUsersPerformanceReportModel>>
+      allUsersPerformanceReportModelSearchList =
       Rxn<List<AllUsersPerformanceReportModel>>();
 
   Rxn<List<AllCategoriesPerformanceReportModel>>
       allCategoriesPerformanceReportModelList =
       Rxn<List<AllCategoriesPerformanceReportModel>>();
+  Rxn<List<AllCategoriesPerformanceReportModel>>
+      allCategoriesPerformanceReportModelSearchList =
+      Rxn<List<AllCategoriesPerformanceReportModel>>();
 
   Rxn<List<MyPerformanceReportModel>> myPerformanceReportModelList =
+      Rxn<List<MyPerformanceReportModel>>();
+  Rxn<List<MyPerformanceReportModel>> myPerformanceReportModelSearchList =
       Rxn<List<MyPerformanceReportModel>>();
 
   Rxn<List<DelegatedPerformanceReportModel>>
       delegatedPerformanceReportModelList =
+      Rxn<List<DelegatedPerformanceReportModel>>();
+  Rxn<List<DelegatedPerformanceReportModel>>
+      delegatedPerformanceReportModelSearchList =
       Rxn<List<DelegatedPerformanceReportModel>>();
 
   final taskUpdateAttachments = <File>[].obs;
