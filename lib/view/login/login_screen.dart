@@ -138,7 +138,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               appController.isLoadingObs.value = true;
                               try {
                                 await userController.login(
-                                  email: emailController.text.trim(),
+                                  email:
+                                      emailController.text.trim().toLowerCase(),
                                   password: passwordController.text.trim(),
                                 );
                                 appController.isLoadingObs.value = false;

@@ -248,11 +248,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       taskDetailsAssignedContainer(
-                        name: taskModel.createdBy
-                            .toString()
-                            .split('@')[0]
-                            .toUpperCase(),
-                        email: taskModel.createdBy.toString(),
+                        name: taskModel.createdBy!.name!.nameFormat(),
+                        email: taskModel.createdBy!.name!.nameFormat(),
                         isAssignedBy: true,
                       ),
                       Icon(
@@ -260,10 +257,9 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                         size: 28.w,
                       ),
                       taskDetailsAssignedContainer(
-                        name: '${taskModel.assignedTo?.first}'
-                            .split('@')[0]
-                            .toUpperCase(),
-                        email: '${taskModel.assignedTo?.first}',
+                        name:
+                            '${taskModel.assignedTo?.first.name}'.nameFormat(),
+                        email: '${taskModel.assignedTo?.first.emailId}',
                         isAssignedBy: false,
                       ),
                     ],

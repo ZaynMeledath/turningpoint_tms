@@ -47,6 +47,7 @@ Widget swipeToAdd({
                 title: taskTitle,
                 description: taskDescription,
               );
+              Get.back();
               showGenericDialog(
                 iconPath: 'assets/lotties/success_animation.json',
                 title: 'Task Updated!',

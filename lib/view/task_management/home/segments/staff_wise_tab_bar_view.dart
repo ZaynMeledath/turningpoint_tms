@@ -63,22 +63,19 @@ Widget staffWiseTabBarView({
                             highlightColor: Colors.lightBlue.withOpacity(.15),
                             splashColor: Colors.lightBlue.withOpacity(.25),
                             onTap: () {
-                              final name = performanceReportModel.userName
-                                  ?.split(' ')
-                                  .first;
                               tasksController.addToDashboardTasksList(
                                   tasksList: tasksController
                                       .allTasksListObs.value!
                                       .where((taskModel) {
-                                return (taskModel.assignedTo?.first
-                                            .split('@')
-                                            .first as String)
+                                return taskModel.assignedTo?.first.emailId
+                                        .toString()
                                         .nameFormat() ==
-                                    name;
+                                    performanceReportModel.emailId;
                               }).toList());
                               Get.to(
                                 () => TasksScreen(
-                                  title: '$name\'s Tasks',
+                                  title:
+                                      '${performanceReportModel.userName}\'s Tasks',
                                 ),
                                 transition: Transition.zoom,
                               );

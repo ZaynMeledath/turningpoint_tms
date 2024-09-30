@@ -102,9 +102,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   void assignPreviousValues() {
     titleController.text = widget.taskModel!.title ?? '';
     descriptionController.text = widget.taskModel!.description ?? '';
-    for (String item in widget.taskModel!.assignedTo!) {
+    for (AssignedTo assignedTo in widget.taskModel!.assignedTo!) {
       assignTaskController.assignToMap.addAll({
-        item: item.split('@').first,
+        assignedTo.emailId!: assignedTo.name!,
       });
     }
     assignTaskController.selectedCategory.value =

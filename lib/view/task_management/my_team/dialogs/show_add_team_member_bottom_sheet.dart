@@ -324,7 +324,7 @@ Future<void> onSubmit({
         final userModel = AllUsersModel(
           userName: nameController.text.trim(),
           phone: phoneController.text.trim(),
-          emailId: emailController.text.trim(),
+          emailId: emailController.text.trim().toLowerCase(),
           department: userController.departmentObs.value ?? user.department,
           role: userController.roleObs.value ?? Role.user,
           reportingTo: userController.reportingManagerObs.value ?? user.name,

@@ -266,7 +266,7 @@ class AssignTaskController extends GetxController {
       title: title,
       description: description,
       category: selectedCategory.value,
-      assignedTo: assignToMap.keys.toList(),
+      assignedTo: null,
       priority: taskPriority.value,
       dueDate: shouldRepeatTask.value ? null : dueDateString,
       repeat: shouldRepeatTask.value
@@ -278,6 +278,12 @@ class AssignTaskController extends GetxController {
               days: days)
           : null,
       attachments: attachmentsListObs,
+    );
+    assignToMap.forEach(
+      (key, value) => taskModel.assignedTo?.add(AssignedTo(
+        name: value,
+        emailId: key,
+      )),
     );
 
     try {
@@ -332,7 +338,20 @@ class AssignTaskController extends GetxController {
       taskModel.title = title;
       taskModel.description = description;
       taskModel.category = selectedCategory.value;
-      taskModel.assignedTo = assignToMap.keys.toList();
+      assignToMap.forEach(
+        (key, value) => taskModel.assignedTo == null
+            ? taskModel.assignedTo = [
+                AssignedTo(
+                  name: value,
+                  emailId: key,
+                )
+              ]
+            : taskModel.assignedTo?.add(AssignedTo(
+                name: value,
+                emailId: key,
+              )),
+      );
+
       taskModel.priority = taskPriority.value;
       taskModel.dueDate = shouldRepeatTask.value ? null : dueDateString;
       taskModel.repeat = shouldRepeatTask.value
@@ -348,6 +367,13 @@ class AssignTaskController extends GetxController {
           attachmentsListObs.isEmpty ? null : attachmentsListObs;
 
       await tasksRepository.updateTask(taskModel: taskModel);
+      if (tasksController.isDelegatedObs.value == true) {
+        await tasksController.getDelegatedTasks();
+      } else if (tasksController.isDelegatedObs.value == false) {
+        await tasksController.getMyTasks();
+      } else {
+        await tasksController.getAllTasks();
+      }
     } catch (e) {
       rethrow;
     }

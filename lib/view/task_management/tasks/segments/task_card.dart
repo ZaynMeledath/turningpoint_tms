@@ -105,13 +105,9 @@ Widget taskCard({
                                 TextSpan(
                                   text: tasksController.isDelegatedObs.value ==
                                           true
-                                      ? '${taskModel.assignedTo?.first}'
-                                          .split('@')[0]
+                                      ? '${taskModel.assignedTo?.first.name}'
                                           .nameFormat()
-                                      : taskModel.createdBy
-                                          .toString()
-                                          .split('@')[0]
-                                          .nameFormat(),
+                                      : taskModel.createdBy!.name!.nameFormat(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
@@ -134,7 +130,7 @@ Widget taskCard({
                                       ),
                                       SizedBox(width: 2.w),
                                       Text(
-                                        taskModel.assignedTo.toString(),
+                                        taskModel.assignedTo!.first.name!,
                                         style: TextStyle(
                                           fontSize: 13.5.sp,
                                           fontWeight: FontWeight.w600,

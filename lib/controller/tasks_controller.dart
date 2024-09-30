@@ -271,17 +271,6 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Edit Task====================//
-  Future<void> editTask({required String taskId}) async {
-    try {
-      await tasksRepository.editTask(taskId: taskId);
-      tasksException.value = null;
-      await getDelegatedTasks();
-    } catch (_) {
-      rethrow;
-    }
-  }
-
 //====================Delete Task====================//
   Future<void> deleteTask({required String taskId}) async {
     try {

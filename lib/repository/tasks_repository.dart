@@ -126,28 +126,12 @@ class TasksRepository {
     try {
       await ApiService().sendRequest(
         url: '${ApiEndpoints.assignTask}/${taskModel.id}',
-        requestMethod: RequestMethod.POST,
-        data: taskModel.toJson(),
-        fieldNameForFiles: 'attachments',
-        isTokenRequired: true,
-      );
-    } catch (_) {
-      rethrow;
-    }
-  }
-
-//====================Edit Task====================//
-  Future<void> editTask({required String taskId}) async {
-    try {
-      await ApiService().sendRequest(
-        url: '${ApiEndpoints.assignTask}/$taskId',
         requestMethod: RequestMethod.PATCH,
-        data: {},
+        data: taskModel.toJson(),
         fieldNameForFiles: null,
         isTokenRequired: true,
       );
-      await getDelegatedTasks();
-    } catch (e) {
+    } catch (_) {
       rethrow;
     }
   }

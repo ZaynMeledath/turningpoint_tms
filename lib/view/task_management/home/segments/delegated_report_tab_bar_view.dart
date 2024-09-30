@@ -67,14 +67,12 @@ Widget delegatedReportTabBarView({
                                   tasksList: tasksController
                                       .delegatedTasksListObs.value!
                                       .where((item) =>
-                                          item.assignedTo?.first ==
-                                          performanceReportModel.userName)
+                                          item.assignedTo?.first.emailId ==
+                                          performanceReportModel.emailId)
                                       .toList());
 
-                              final name = performanceReportModel.userName
-                                  ?.split('@')
-                                  .first
-                                  .nameFormat();
+                              final name =
+                                  performanceReportModel.userName!.nameFormat();
                               Get.to(
                                 () => TasksScreen(
                                   title: '$name\'s Tasks',
@@ -113,7 +111,8 @@ Widget delegatedReportTabBarView({
                                       SizedBox(
                                         width: 220.w,
                                         child: Text(
-                                          '${performanceReportModel.userName?.split('@').first.nameFormat()}',
+                                          performanceReportModel.userName!
+                                              .nameFormat(),
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                             fontSize: 16.sp,

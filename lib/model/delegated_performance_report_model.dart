@@ -29,18 +29,24 @@ class DelegatedPerformanceReportModelResponse {
 
 class DelegatedPerformanceReportModel {
   String? userName;
+  String? emailId;
   Stats? stats;
 
-  DelegatedPerformanceReportModel({this.userName, this.stats});
+  DelegatedPerformanceReportModel({
+    this.userName,
+    this.stats,
+  });
 
   DelegatedPerformanceReportModel.fromJson(Map<String, dynamic> json) {
     userName = json['userName'];
+    emailId = json['emailID'];
     stats = json['stats'] != null ? Stats.fromJson(json['stats']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['userName'] = userName;
+    data['emailID'] = emailId;
     if (stats != null) {
       data['stats'] = stats!.toJson();
     }
