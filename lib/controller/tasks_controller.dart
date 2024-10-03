@@ -46,6 +46,8 @@ class TasksController extends GetxController {
   Rxn<List<TaskModel>?> completedDelegatedTaskList = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> overdueDelegatedTaskList = Rxn<List<TaskModel>>();
 
+  Rx<TaskModel> openedTaskModelObs = TaskModel().obs;
+
   final completedOnTimeMyTasksList = <TaskModel>[].obs;
   final completedDelayedMyTasksList = <TaskModel>[].obs;
   final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;

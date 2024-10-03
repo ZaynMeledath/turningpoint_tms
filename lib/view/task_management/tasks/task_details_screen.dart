@@ -102,6 +102,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           }
 
           return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 14.w,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -10,7 +11,6 @@ import 'package:turning_point_tasks_app/controller/app_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
 import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
-import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/model/all_users_model.dart';
 import 'package:turning_point_tasks_app/model/user_model.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';

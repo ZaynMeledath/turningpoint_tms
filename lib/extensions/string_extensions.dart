@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 extension StringExtensions on String {
   String nameFormat() {
     String result = '';
-    if (trim().length < 2) {
+    if (trim().length < 3) {
       return toUpperCase();
     }
     final nameSplittedList = split(' ');

@@ -224,6 +224,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                           InkWell(
                             borderRadius: BorderRadius.circular(12),
                             onTap: () async {
+                              appController.isLoadingObs.value = true;
                               await onSubmit(
                                 userController: userController,
                                 formKey: _formKey,
@@ -234,6 +235,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                 user: user!,
                                 userModel: widget.userModel,
                               );
+                              appController.isLoadingObs.value = false;
                             },
                             child: Container(
                               width: 140.w,
@@ -247,15 +249,19 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                 ),
                               ),
                               child: Center(
-                                child: Text(
-                                  widget.userModel != null
-                                      ? 'Submit'
-                                      : 'Add to Team',
-                                  style: TextStyle(
-                                    fontSize: 15.sp,
-                                  ),
-                                ),
-                              ),
+                                  child: appController.isLoadingObs.value
+                                      ? SpinKitWave(
+                                          color: Colors.white,
+                                          size: 16.w,
+                                        )
+                                      : Text(
+                                          widget.userModel != null
+                                              ? 'Submit'
+                                              : 'Add to Team',
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                          ),
+                                        )),
                             ).animate().scale(
                                   delay: const Duration(milliseconds: 360),
                                   curve: Curves.elasticOut,
@@ -302,7 +308,7 @@ Future<void> onSubmit({
 
     try {
       if (userModel != null) {
-        userModel.userName = nameController.text.trim().nameFormat();
+        userModel.userName = nameController.text.trim();
         userModel.phone = phoneController.text.trim();
         userModel.emailId = emailController.text.trim().toLowerCase();
         userModel.department =
@@ -322,7 +328,7 @@ Future<void> onSubmit({
         );
       } else {
         final userModel = AllUsersModel(
-          userName: nameController.text.trim().nameFormat(),
+          userName: nameController.text.trim(),
           phone: phoneController.text.trim(),
           emailId: emailController.text.trim().toLowerCase(),
           department: userController.departmentObs.value ?? user.department,

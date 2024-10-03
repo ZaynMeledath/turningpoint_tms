@@ -28,11 +28,11 @@ Widget assignToAndCategorySegment({
           ),
           child: Obx(
             () {
-              final assignToList = assignTaskController.assignToMap;
-              if (assignToList.isNotEmpty) {
+              final assignToMap = assignTaskController.assignToMap;
+              if (assignToMap.isNotEmpty) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: assignToList.length,
+                  itemCount: assignToMap.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(
@@ -40,7 +40,7 @@ Widget assignToAndCategorySegment({
                         right: 8.w,
                       ),
                       child: nameLetterAvatar(
-                        name: assignToList.values.elementAt(index),
+                        name: assignToMap.values.elementAt(index),
                         circleDiameter: 30.w,
                       ),
                     );
@@ -97,11 +97,14 @@ Widget assignToAndCategorySegment({
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      category.isNotEmpty ? category.value : 'Category',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: Colors.white70,
+                    Expanded(
+                      child: Text(
+                        category.isNotEmpty ? category.value : 'Category',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white70,
+                        ),
                       ),
                     ),
                     Icon(

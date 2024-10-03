@@ -279,11 +279,20 @@ class AssignTaskController extends GetxController {
           : null,
       attachments: attachmentsListObs,
     );
+
+    //assignTo is added before fetching the assign Task API
     assignToMap.forEach(
-      (key, value) => taskModel.assignedTo?.add(AssignedTo(
-        name: value,
-        emailId: key,
-      )),
+      (key, value) => taskModel.assignedTo == null
+          ? taskModel.assignedTo = [
+              AssignedTo(
+                name: value,
+                emailId: key,
+              )
+            ]
+          : taskModel.assignedTo!.add(AssignedTo(
+              name: value,
+              emailId: key,
+            )),
     );
 
     try {

@@ -159,46 +159,42 @@ Widget assignToDialog({
                                     ],
                                   ),
                                 ),
-                                Obx(
-                                  () => Material(
-                                    color: Colors.transparent,
-                                    child: Checkbox.adaptive(
-                                      value: filterController
-                                              .assignedToFilterModel[email] ??
-                                          false,
-                                      visualDensity: VisualDensity.compact,
-                                      fillColor: WidgetStatePropertyAll(
-                                        filterController.assignedToFilterModel[
-                                                    email] ==
-                                                true
-                                            ? AppColors.themeGreen
-                                            : Colors.transparent,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      onChanged: (value) {
-                                        filterController
-                                            .selectOrUnselectAssignedToFilter(
-                                                filterKey: email.toString());
-
-                                        if (filterController
-                                                .assignedToFilterModel[email] ==
-                                            true) {
-                                          assignTaskController
-                                              .addToAssignToList(
-                                            name: name,
-                                            email: email,
-                                          );
-                                        } else {
-                                          assignTaskController
-                                              .removeFromAssignToList(
-                                            email: email,
-                                          );
-                                        }
-                                      },
+                                Material(
+                                  color: Colors.transparent,
+                                  child: Checkbox.adaptive(
+                                    value: filterController
+                                            .assignedToFilterModel[email] ??
+                                        false,
+                                    visualDensity: VisualDensity.compact,
+                                    fillColor: WidgetStatePropertyAll(
+                                      filterController.assignedToFilterModel[
+                                                  email] ==
+                                              true
+                                          ? AppColors.themeGreen
+                                          : Colors.transparent,
                                     ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    onChanged: (value) {
+                                      filterController
+                                          .selectOrUnselectAssignedToFilter(
+                                              filterKey: email.toString());
+
+                                      if (filterController
+                                              .assignedToFilterModel[email] ==
+                                          true) {
+                                        assignTaskController.addToAssignToList(
+                                          name: name,
+                                          email: email,
+                                        );
+                                      } else {
+                                        assignTaskController
+                                            .removeFromAssignToList(
+                                          email: email,
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               ],
