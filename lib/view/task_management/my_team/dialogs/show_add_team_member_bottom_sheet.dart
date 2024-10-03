@@ -302,9 +302,9 @@ Future<void> onSubmit({
 
     try {
       if (userModel != null) {
-        userModel.userName = nameController.text.trim();
+        userModel.userName = nameController.text.trim().nameFormat();
         userModel.phone = phoneController.text.trim();
-        userModel.emailId = emailController.text.trim();
+        userModel.emailId = emailController.text.trim().toLowerCase();
         userModel.department =
             userController.departmentObs.value ?? user.department;
         userModel.role = userController.roleObs.value ?? Role.user;
@@ -322,7 +322,7 @@ Future<void> onSubmit({
         );
       } else {
         final userModel = AllUsersModel(
-          userName: nameController.text.trim(),
+          userName: nameController.text.trim().nameFormat(),
           phone: phoneController.text.trim(),
           emailId: emailController.text.trim().toLowerCase(),
           department: userController.departmentObs.value ?? user.department,
