@@ -68,8 +68,7 @@ Widget staffWiseTabBarView({
                                       .allTasksListObs.value!
                                       .where((taskModel) {
                                 return taskModel.assignedTo?.first.emailId
-                                        .toString()
-                                        .nameFormat() ==
+                                        .toString() ==
                                     performanceReportModel.emailId;
                               }).toList());
                               Get.to(

@@ -79,9 +79,14 @@ class TaskModel {
     title = json['title'];
     description = json['description'];
     category = json['category'];
-    createdBy = CreatedBy.fromJson(json);
+    createdBy = CreatedBy.fromJson(json['createdBy']);
     currentUser = json['currentUser'];
-    assignedTo = [AssignedTo.fromJson(json)];
+    if (json['assignTo'] != null) {
+      assignedTo = <AssignedTo>[];
+      json['assignTo'].forEach((item) {
+        assignedTo!.add(AssignedTo.fromJson(item));
+      });
+    }
     priority = json['priority'];
     dueDate = json['dueDate'];
     status = json['status'];
@@ -198,13 +203,13 @@ class AssignedTo {
   });
 
   AssignedTo.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['userName'];
     emailId = json['emailID'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['name'] = name;
+    data['userName'] = name;
     data['emailID'] = emailId;
     return data;
   }
@@ -220,13 +225,13 @@ class CreatedBy {
   });
 
   CreatedBy.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+    name = json['userName'];
     emailId = json['emailID'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['name'] = name;
+    data['userName'] = name;
     data['emailID'] = emailId;
     return data;
   }

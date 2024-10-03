@@ -107,7 +107,7 @@ Widget taskCard({
                                           true
                                       ? '${taskModel.assignedTo?.first.name}'
                                           .nameFormat()
-                                      : taskModel.createdBy!.name!.nameFormat(),
+                                      : '${taskModel.createdBy?.name!.nameFormat()}',
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
