@@ -12,7 +12,9 @@ Widget assignedFilterSegment({
   required TextEditingController assignedSearchController,
   required FilterController filterController,
   required bool isAssignedBy,
+  required int animationFlag,
 }) {
+  bool shouldAnimate = animationFlag < 1;
   final userController = Get.put(UserController());
   final allUsers = userController.myTeamList.value ?? [];
   return Expanded(
@@ -143,10 +145,11 @@ Widget assignedFilterSegment({
                         key: GlobalKey(),
                       )
                       .slideX(
-                        begin: -.06,
+                        begin: shouldAnimate ? -.06 : 0,
                         delay: Duration(milliseconds: 30 * (index + 1)),
                         duration: const Duration(milliseconds: 700),
-                        curve: Curves.elasticOut,
+                        curve:
+                            shouldAnimate ? Curves.elasticOut : Curves.linear,
                       ),
                 ),
               );

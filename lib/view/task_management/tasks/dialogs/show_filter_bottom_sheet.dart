@@ -21,202 +21,262 @@ Future<Object?> showFilterBottomSheet({
   required TasksController tasksController,
   bool? isAllTasks,
 }) async {
+  int categoryAnimationFlag = -1;
+  int assignedByAnimationFlag = -1;
+  int assignedToAnimationFlag = -1;
+  int frequencyAnimationFlag = -1;
+  int priorityAnimationFlag = -1;
   filterController.selectFilterOption(filterOption: FilterOptions.category);
   return Get.bottomSheet(
     Obx(
-      () => Container(
-        // height: 480.h,
-        decoration: const BoxDecoration(
-          color: AppColors.bottomSheetColor,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(16),
-          ),
-        ),
-        child: Column(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 14.h,
-                ),
-                child: Text(
-                  'Filter Task',
-                  style: GoogleFonts.inter(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+      () {
+        //Used to disable the entry animation after the first time
+        switch (filterController.selectedFilterOption.value) {
+          case FilterOptions.category:
+            categoryAnimationFlag++;
+            assignedByAnimationFlag = -1;
+            assignedToAnimationFlag = -1;
+            frequencyAnimationFlag = -1;
+            priorityAnimationFlag = -1;
+            break;
 
-            //--------------------Selected Filters are displayed here--------------------//
-            filterController.selectedCategoryList.isNotEmpty
-                ? selectedFilter(
-                    title: 'Category',
-                    filterList: filterController.selectedCategoryList,
-                  )
-                : const SizedBox(),
-            filterController.selectedAssignedByList.isNotEmpty
-                ? selectedFilter(
-                    title: 'Assigned By',
-                    filterList: filterController.selectedAssignedByList,
-                  )
-                : const SizedBox(),
-            filterController.selectedAssignedToList.isNotEmpty
-                ? selectedFilter(
-                    title: 'Assigned To',
-                    filterList: filterController.selectedAssignedToList,
-                  )
-                : const SizedBox(),
-            filterController.selectedFrequencyList.isNotEmpty
-                ? selectedFilter(
-                    title: 'Frequency',
-                    filterList: filterController.selectedFrequencyList,
-                  )
-                : const SizedBox(),
-            filterController.selectedPriorityList.isNotEmpty
-                ? selectedFilter(
-                    title: 'Priority',
-                    filterList: filterController.selectedPriorityList,
-                  )
-                : const SizedBox(),
-            Container(
-              width: double.maxFinite,
-              height: 1,
-              color: Colors.grey.withOpacity(.1),
+          case FilterOptions.assignedBy:
+            assignedByAnimationFlag++;
+            categoryAnimationFlag = -1;
+            assignedToAnimationFlag = -1;
+            frequencyAnimationFlag = -1;
+            priorityAnimationFlag = -1;
+            break;
+
+          case FilterOptions.assignedTo:
+            assignedToAnimationFlag++;
+            categoryAnimationFlag = -1;
+            assignedByAnimationFlag = -1;
+            frequencyAnimationFlag = -1;
+            priorityAnimationFlag = -1;
+            break;
+
+          case FilterOptions.frequency:
+            frequencyAnimationFlag++;
+            categoryAnimationFlag = -1;
+            assignedByAnimationFlag = -1;
+            assignedToAnimationFlag = -1;
+            priorityAnimationFlag = -1;
+            break;
+
+          case FilterOptions.priority:
+            priorityAnimationFlag++;
+            categoryAnimationFlag = -1;
+            assignedByAnimationFlag = -1;
+            assignedToAnimationFlag = -1;
+            frequencyAnimationFlag = -1;
+            break;
+        }
+        return Container(
+          // height: 480.h,
+          decoration: const BoxDecoration(
+            color: AppColors.bottomSheetColor,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(16),
             ),
-            Expanded(
-              child: Row(
-                children: [
-                  //--------------------Filter Key Part--------------------//
-                  Container(
-                    width: 140.w,
-                    padding: EdgeInsets.all(2.w),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(.15),
-                    ),
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () => filterController.selectFilterOption(
-                            filterOption: FilterOptions.category,
-                          ),
-                          child: filterItem(
-                            title: 'Category',
-                            isActive:
-                                filterController.selectedFilterOption.value ==
-                                    FilterOptions.category,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        isAllTasks != true &&
-                                tasksController.isDelegatedObs.value != true
-                            ? InkWell(
-                                onTap: () =>
-                                    filterController.selectFilterOption(
-                                  filterOption: FilterOptions.assignedBy,
-                                ),
-                                child: filterItem(
-                                  title: 'Assigned By',
-                                  isActive: filterController
-                                          .selectedFilterOption.value ==
-                                      FilterOptions.assignedBy,
-                                ),
-                              )
-                            : const SizedBox(),
-                        isAllTasks == true ||
-                                tasksController.isDelegatedObs.value == true
-                            ? InkWell(
-                                onTap: () =>
-                                    filterController.selectFilterOption(
-                                  filterOption: FilterOptions.assignedTo,
-                                ),
-                                child: filterItem(
-                                  title: 'Assigned To',
-                                  isActive: filterController
-                                          .selectedFilterOption.value ==
-                                      FilterOptions.assignedTo,
-                                ),
-                              )
-                            : const SizedBox(),
-                        SizedBox(height: 6.h),
-                        InkWell(
-                          onTap: () => filterController.selectFilterOption(
-                            filterOption: FilterOptions.frequency,
-                          ),
-                          child: filterItem(
-                            title: 'Frequency',
-                            isActive:
-                                filterController.selectedFilterOption.value ==
-                                    FilterOptions.frequency,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        InkWell(
-                          onTap: () => filterController.selectFilterOption(
-                            filterOption: FilterOptions.priority,
-                          ),
-                          child: filterItem(
-                            title: 'Priority',
-                            isActive:
-                                filterController.selectedFilterOption.value ==
-                                    FilterOptions.priority,
-                          ),
-                        ),
-                      ],
+          ),
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.w,
+                    vertical: 14.h,
+                  ),
+                  child: Text(
+                    'Filter Task',
+                    style: GoogleFonts.inter(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                  //--------------------Filter Value Part--------------------//
-                  Expanded(
-                    child: Column(
-                      children: [
-                        filterController.selectedFilterOption.value ==
-                                FilterOptions.category
-                            ? categoryFilterSegment(
-                                categorySearchController:
-                                    categorySearchController,
-                                filterController: filterController,
-                                tasksController: tasksController,
-                              )
-                            : filterController.selectedFilterOption.value ==
-                                    FilterOptions.assignedBy
-                                ? assignedFilterSegment(
-                                    assignedSearchController:
-                                        assignedSearchController,
-                                    filterController: filterController,
-                                    isAssignedBy: true,
-                                  )
-                                : filterController.selectedFilterOption.value ==
-                                        FilterOptions.assignedTo
-                                    ? assignedFilterSegment(
-                                        assignedSearchController:
-                                            assignedSearchController,
-                                        filterController: filterController,
-                                        isAssignedBy: false,
-                                      )
-                                    : filterController
-                                                .selectedFilterOption.value ==
-                                            FilterOptions.frequency
-                                        ? frequencyFilterSegment(
-                                            filterController: filterController,
-                                          )
-                                        : priorityFilterSegment(
-                                            filterController: filterController,
-                                          ),
-                        filterResetSegment(
-                          filterController: filterController,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+
+              //--------------------Selected Filters are displayed here--------------------//
+              filterController.selectedCategoryList.isNotEmpty
+                  ? selectedFilter(
+                      title: 'Category',
+                      filterList: filterController.selectedCategoryList,
+                    )
+                  : const SizedBox(),
+              filterController.selectedAssignedByList.isNotEmpty
+                  ? selectedFilter(
+                      title: 'Assigned By',
+                      filterList: filterController.selectedAssignedByList,
+                    )
+                  : const SizedBox(),
+              filterController.selectedAssignedToList.isNotEmpty
+                  ? selectedFilter(
+                      title: 'Assigned To',
+                      filterList: filterController.selectedAssignedToList,
+                    )
+                  : const SizedBox(),
+              filterController.selectedFrequencyList.isNotEmpty
+                  ? selectedFilter(
+                      title: 'Frequency',
+                      filterList: filterController.selectedFrequencyList,
+                    )
+                  : const SizedBox(),
+              filterController.selectedPriorityList.isNotEmpty
+                  ? selectedFilter(
+                      title: 'Priority',
+                      filterList: filterController.selectedPriorityList,
+                    )
+                  : const SizedBox(),
+              Container(
+                width: double.maxFinite,
+                height: 1,
+                color: Colors.grey.withOpacity(.1),
+              ),
+              Expanded(
+                child: Row(
+                  children: [
+                    //--------------------Filter Key Part--------------------//
+                    Container(
+                      width: 140.w,
+                      padding: EdgeInsets.all(2.w),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.15),
+                      ),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () => filterController.selectFilterOption(
+                              filterOption: FilterOptions.category,
+                            ),
+                            child: filterItem(
+                              title: 'Category',
+                              isActive:
+                                  filterController.selectedFilterOption.value ==
+                                      FilterOptions.category,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          isAllTasks != true &&
+                                  tasksController.isDelegatedObs.value != true
+                              ? InkWell(
+                                  onTap: () =>
+                                      filterController.selectFilterOption(
+                                    filterOption: FilterOptions.assignedBy,
+                                  ),
+                                  child: filterItem(
+                                    title: 'Assigned By',
+                                    isActive: filterController
+                                            .selectedFilterOption.value ==
+                                        FilterOptions.assignedBy,
+                                  ),
+                                )
+                              : const SizedBox(),
+                          isAllTasks == true ||
+                                  tasksController.isDelegatedObs.value == true
+                              ? InkWell(
+                                  onTap: () =>
+                                      filterController.selectFilterOption(
+                                    filterOption: FilterOptions.assignedTo,
+                                  ),
+                                  child: filterItem(
+                                    title: 'Assigned To',
+                                    isActive: filterController
+                                            .selectedFilterOption.value ==
+                                        FilterOptions.assignedTo,
+                                  ),
+                                )
+                              : const SizedBox(),
+                          SizedBox(height: 6.h),
+                          InkWell(
+                            onTap: () => filterController.selectFilterOption(
+                              filterOption: FilterOptions.frequency,
+                            ),
+                            child: filterItem(
+                              title: 'Frequency',
+                              isActive:
+                                  filterController.selectedFilterOption.value ==
+                                      FilterOptions.frequency,
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          InkWell(
+                            onTap: () => filterController.selectFilterOption(
+                              filterOption: FilterOptions.priority,
+                            ),
+                            child: filterItem(
+                              title: 'Priority',
+                              isActive:
+                                  filterController.selectedFilterOption.value ==
+                                      FilterOptions.priority,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //--------------------Filter Value Part--------------------//
+                    Expanded(
+                      child: Column(
+                        children: [
+                          filterController.selectedFilterOption.value ==
+                                  FilterOptions.category
+                              ? categoryFilterSegment(
+                                  categorySearchController:
+                                      categorySearchController,
+                                  filterController: filterController,
+                                  tasksController: tasksController,
+                                  animationFlag: categoryAnimationFlag,
+                                )
+                              : filterController.selectedFilterOption.value ==
+                                      FilterOptions.assignedBy
+                                  ? assignedFilterSegment(
+                                      assignedSearchController:
+                                          assignedSearchController,
+                                      filterController: filterController,
+                                      isAssignedBy: true,
+                                      animationFlag: assignedByAnimationFlag,
+                                    )
+                                  : filterController
+                                              .selectedFilterOption.value ==
+                                          FilterOptions.assignedTo
+                                      ? assignedFilterSegment(
+                                          assignedSearchController:
+                                              assignedSearchController,
+                                          filterController: filterController,
+                                          isAssignedBy: false,
+                                          animationFlag:
+                                              assignedToAnimationFlag,
+                                        )
+                                      : filterController
+                                                  .selectedFilterOption.value ==
+                                              FilterOptions.frequency
+                                          ? frequencyFilterSegment(
+                                              filterController:
+                                                  filterController,
+                                              animationFlag:
+                                                  frequencyAnimationFlag,
+                                            )
+                                          : priorityFilterSegment(
+                                              filterController:
+                                                  filterController,
+                                              animationFlag:
+                                                  priorityAnimationFlag,
+                                            ),
+                          filterResetSegment(
+                            filterController: filterController,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     ),
   );
 }

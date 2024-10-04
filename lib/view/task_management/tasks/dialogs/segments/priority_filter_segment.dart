@@ -7,7 +7,9 @@ import 'package:turning_point_tasks_app/controller/filter_controller.dart';
 
 Widget priorityFilterSegment({
   required FilterController filterController,
+  required int animationFlag,
 }) {
+  bool shouldAnimate = animationFlag < 1;
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,10 +87,10 @@ Widget priorityFilterSegment({
                       key: GlobalKey(),
                     )
                     .slideX(
-                      begin: -.06,
+                      begin: shouldAnimate ? -.06 : 0,
                       delay: Duration(milliseconds: 30 * (index + 1)),
                       duration: const Duration(milliseconds: 700),
-                      curve: Curves.elasticOut,
+                      curve: shouldAnimate ? Curves.elasticOut : Curves.linear,
                     ),
               );
             },

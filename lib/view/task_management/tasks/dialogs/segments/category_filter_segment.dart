@@ -11,7 +11,9 @@ Widget categoryFilterSegment({
   required TextEditingController categorySearchController,
   required FilterController filterController,
   required TasksController tasksController,
+  required int animationFlag,
 }) {
+  bool shouldAnimate = animationFlag < 1;
   return Expanded(
     child: Column(
       children: [
@@ -54,8 +56,11 @@ Widget categoryFilterSegment({
                   ? tasksController.categoriesList[index]
                   : filterController.categoriesSearchList[index];
               return InkWell(
-                onTap: () => filterController.selectOrUnselectCategoryFilter(
-                    filterKey: category),
+                enableFeedback: true,
+                onTap: () {
+                  filterController.selectOrUnselectCategoryFilter(
+                      filterKey: category);
+                },
                 child: Row(
                   children: [
                     Obx(
@@ -88,10 +93,10 @@ Widget categoryFilterSegment({
                       key: GlobalKey(),
                     )
                     .slideX(
-                      begin: -.06,
+                      begin: shouldAnimate ? -.06 : 0,
                       delay: Duration(milliseconds: 30 * (index + 1)),
                       duration: const Duration(milliseconds: 700),
-                      curve: Curves.elasticOut,
+                      curve: shouldAnimate ? Curves.elasticOut : Curves.linear,
                     ),
               );
             },
