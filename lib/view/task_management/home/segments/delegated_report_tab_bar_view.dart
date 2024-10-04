@@ -4,15 +4,15 @@ Widget delegatedReportTabBarView({
   required TasksController tasksController,
   required TextEditingController delegatedSearchController,
 }) {
-  tasksController.delegatedPerformanceReportModelSearchList.value =
-      tasksController.delegatedPerformanceReportModelList.value;
-
   return Obx(
     () {
-      if (tasksController.delegatedPerformanceReportModelSearchList.value !=
-          null) {
-        final performanceReportModelList =
-            tasksController.delegatedPerformanceReportModelSearchList.value!;
+      List<DelegatedPerformanceReportModel>? performanceReportModelList =
+          tasksController.delegatedPerformanceReportModelSearchList.value !=
+                      null ||
+                  delegatedSearchController.text.trim().isNotEmpty
+              ? tasksController.delegatedPerformanceReportModelSearchList.value
+              : tasksController.delegatedPerformanceReportModelList.value;
+      if (performanceReportModelList != null) {
         return Column(
           children: [
             SizedBox(height: 6.h),

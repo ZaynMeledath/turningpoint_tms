@@ -4,14 +4,15 @@ Widget categoryWiseTabBarView({
   required TasksController tasksController,
   required TextEditingController categorySearchController,
 }) {
-  tasksController.allCategoriesPerformanceReportModelSearchList.value =
-      tasksController.allCategoriesPerformanceReportModelList.value;
-
   return Obx(() {
-    if (tasksController.allCategoriesPerformanceReportModelSearchList.value !=
-        null) {
-      List<AllCategoriesPerformanceReportModel> performanceReportModelList =
-          tasksController.allCategoriesPerformanceReportModelSearchList.value!;
+    List<AllCategoriesPerformanceReportModel>? performanceReportModelList =
+        tasksController.allCategoriesPerformanceReportModelSearchList.value !=
+                    null ||
+                categorySearchController.text.trim().isNotEmpty
+            ? tasksController
+                .allCategoriesPerformanceReportModelSearchList.value
+            : tasksController.allCategoriesPerformanceReportModelList.value;
+    if (performanceReportModelList != null) {
       return Column(
         children: [
           SizedBox(height: 6.h),

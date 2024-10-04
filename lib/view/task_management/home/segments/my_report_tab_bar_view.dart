@@ -4,14 +4,13 @@ Widget myReportTabBarView({
   required TasksController tasksController,
   required TextEditingController myReportSearchController,
 }) {
-  tasksController.myPerformanceReportModelSearchList.value =
-      tasksController.myPerformanceReportModelList.value;
-
   return Obx(() {
-    if (tasksController.myPerformanceReportModelSearchList.value != null) {
-      List<MyPerformanceReportModel> performanceReportModelList =
-          tasksController.myPerformanceReportModelSearchList.value!;
-
+    List<MyPerformanceReportModel>? performanceReportModelList =
+        tasksController.myPerformanceReportModelSearchList.value != null ||
+                myReportSearchController.text.trim().isNotEmpty
+            ? tasksController.myPerformanceReportModelSearchList.value
+            : tasksController.myPerformanceReportModelList.value;
+    if (performanceReportModelList != null) {
       return Column(
         children: [
           SizedBox(height: 6.h),

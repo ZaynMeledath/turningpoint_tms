@@ -4,15 +4,16 @@ Widget staffWiseTabBarView({
   required TasksController tasksController,
   required TextEditingController staffSearchController,
 }) {
-  tasksController.allUsersPerformanceReportModelSearchList.value =
-      tasksController.allUsersPerformanceReportModelList.value;
-
   return Obx(
     () {
-      if (tasksController.allUsersPerformanceReportModelSearchList.value !=
-          null) {
-        List<AllUsersPerformanceReportModel> performanceReportModelList =
-            tasksController.allUsersPerformanceReportModelSearchList.value!;
+      List<AllUsersPerformanceReportModel>? performanceReportModelList =
+          tasksController.allUsersPerformanceReportModelSearchList.value !=
+                      null ||
+                  staffSearchController.text.trim().isNotEmpty
+              ? tasksController.allUsersPerformanceReportModelSearchList.value
+              : tasksController.allUsersPerformanceReportModelList.value;
+
+      if (performanceReportModelList != null) {
         return Column(
           children: [
             SizedBox(height: 6.h),
