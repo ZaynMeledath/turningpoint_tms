@@ -41,6 +41,8 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   final userController = Get.put(UserController());
   final appController = AppController();
 
+  final teamSearchController = TextEditingController();
+
   List<AllUsersModel>? adminList;
   List<AllUsersModel>? teamLeaderList;
   List<AllUsersModel>? teamMemberList;
@@ -58,6 +60,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   @override
   void dispose() {
     appController.dispose();
+    userController.myTeamSearchList.clear();
     super.dispose();
   }
 
@@ -76,7 +79,11 @@ class _MyTeamScreenState extends State<MyTeamScreen>
       ),
       body: Obx(
         () {
-          final myTeamList = userController.myTeamList.value;
+          final myTeamList = userController.myTeamSearchList.isNotEmpty ||
+                  teamSearchController.text.trim().isNotEmpty
+              ? userController.myTeamSearchList
+              : userController.myTeamList.value;
+
           if (myTeamList != null) {
             adminList = myTeamList
                 .where((element) => element.role == Role.admin)
@@ -135,6 +142,27 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                       )
                     : const SizedBox(),
                 SizedBox(height: 12.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  child: customTextField(
+                      controller: teamSearchController,
+                      hintText: 'Search by Name',
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 14.w,
+                        vertical: 12.h,
+                      ),
+                      onChanged: (value) {
+                        userController.myTeamSearchList.value =
+                            userController.myTeamList.value != null
+                                ? userController.myTeamList.value!
+                                    .where((item) => item.userName!
+                                        .toLowerCase()
+                                        .contains(value.toLowerCase()))
+                                    .toList()
+                                : [];
+                      }),
+                ),
+                SizedBox(height: 10.h),
                 userController.userException.value == null
                     ? Expanded(
                         child: TabBarView(

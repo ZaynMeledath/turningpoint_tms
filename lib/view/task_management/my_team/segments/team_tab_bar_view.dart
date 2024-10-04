@@ -26,20 +26,22 @@ Widget teamTabBarView({
   } else if (myTeamList == null) {
     return shimmerTeamListLoading();
   } else {
-    return Column(
+    return ListView(
       children: [
-        SizedBox(height: 150.h),
-        Lottie.asset(
-          'assets/lotties/team_empty_animation.json',
-          width: 180.w,
-        ),
-        Text(
-          'Add team members to\nview them here',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18.sp,
+        SizedBox(height: 85.h),
+        SizedBox(
+          height: 180.h,
+          child: Lottie.asset(
+            'assets/lotties/team_empty_animation.json',
           ),
         ),
+        // Text(
+        //   '',
+        //   textAlign: TextAlign.center,
+        //   style: TextStyle(
+        //     fontSize: 18.sp,
+        //   ),
+        // ),
       ],
     );
   }

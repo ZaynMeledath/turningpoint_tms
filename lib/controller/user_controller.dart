@@ -15,6 +15,7 @@ class UserController extends GetxController {
 
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
+  RxList<AllUsersModel> myTeamSearchList = <AllUsersModel>[].obs;
 
 //====================My Team====================//
   final roleObs = RxnString();
