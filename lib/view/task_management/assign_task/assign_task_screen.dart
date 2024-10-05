@@ -106,7 +106,11 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     descriptionController.text = widget.taskModel!.description ?? '';
     for (AssignedTo assignedTo in widget.taskModel!.assignedTo!) {
       assignTaskController.assignToMap.addAll({
-        assignedTo.emailId!: assignedTo.name!,
+        assignedTo.emailId!: AssignedTo(
+          name: assignedTo.name,
+          emailId: assignedTo.emailId,
+          phone: assignedTo.phone,
+        ),
       });
     }
     assignTaskController.selectedCategory.value =

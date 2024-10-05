@@ -40,7 +40,7 @@ Widget assignToAndCategorySegment({
                         right: 8.w,
                       ),
                       child: nameLetterAvatar(
-                        name: assignToMap.values.elementAt(index),
+                        name: assignToMap.values.elementAt(index).name!,
                         circleDiameter: 30.w,
                       ),
                     );

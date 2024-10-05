@@ -22,7 +22,7 @@ class AssignTaskController extends GetxController {
   final tasksController = Get.put(TasksController());
 
   //Email is the key and Name is the value
-  RxMap<String, String> assignToMap = RxMap<String, String>();
+  RxMap<String, AssignedTo> assignToMap = RxMap<String, AssignedTo>();
   RxString selectedCategory = RxString('');
 
   RxList<AllUsersModel> assignToSearchList = RxList<AllUsersModel>();
@@ -140,8 +140,15 @@ class AssignTaskController extends GetxController {
   void addToAssignToList({
     required String name,
     required String email,
+    required String phone,
   }) {
-    assignToMap.addAll({email: name});
+    assignToMap.addAll({
+      email: AssignedTo(
+        name: name,
+        emailId: email,
+        phone: phone,
+      ),
+    });
   }
 
 //====================Delete user from AssignToList====================//
@@ -282,17 +289,9 @@ class AssignTaskController extends GetxController {
 
     //assignTo is added before fetching the assign Task API
     assignToMap.forEach(
-      (key, value) => taskModel.assignedTo == null
-          ? taskModel.assignedTo = [
-              AssignedTo(
-                name: value,
-                emailId: key,
-              )
-            ]
-          : taskModel.assignedTo!.add(AssignedTo(
-              name: value,
-              emailId: key,
-            )),
+      (email, assignedToModel) => taskModel.assignedTo == null
+          ? taskModel.assignedTo = [assignedToModel]
+          : taskModel.assignedTo!.add(assignedToModel),
     );
 
     try {
@@ -348,17 +347,9 @@ class AssignTaskController extends GetxController {
       taskModel.description = description;
       taskModel.category = selectedCategory.value;
       assignToMap.forEach(
-        (key, value) => taskModel.assignedTo == null
-            ? taskModel.assignedTo = [
-                AssignedTo(
-                  name: value,
-                  emailId: key,
-                )
-              ]
-            : taskModel.assignedTo?.add(AssignedTo(
-                name: value,
-                emailId: key,
-              )),
+        (email, assignedToModel) => taskModel.assignedTo == null
+            ? taskModel.assignedTo = [assignedToModel]
+            : taskModel.assignedTo?.add(assignedToModel),
       );
 
       taskModel.priority = taskPriority.value;

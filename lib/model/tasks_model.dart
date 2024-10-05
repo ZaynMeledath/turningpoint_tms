@@ -196,21 +196,25 @@ class TaskModel {
 class AssignedTo {
   String? name;
   String? emailId;
+  String? phone;
 
   AssignedTo({
     this.name,
     this.emailId,
+    this.phone,
   });
 
   AssignedTo.fromJson(Map<String, dynamic> json) {
     name = json['userName'];
     emailId = json['emailID'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['userName'] = name;
     data['emailID'] = emailId;
+    data['phone'] = phone;
     return data;
   }
 }
@@ -218,21 +222,25 @@ class AssignedTo {
 class CreatedBy {
   String? name;
   String? emailId;
+  String? phone;
 
   CreatedBy({
     this.name,
     this.emailId,
+    this.phone,
   });
 
   CreatedBy.fromJson(Map<String, dynamic> json) {
     name = json['userName'];
     emailId = json['emailID'];
+    phone = json['phone'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['userName'] = name;
     data['emailID'] = emailId;
+    data['phone'] = phone;
     return data;
   }
 }

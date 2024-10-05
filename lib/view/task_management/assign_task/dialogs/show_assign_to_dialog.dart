@@ -102,6 +102,12 @@ Widget assignToDialog({
                             ? allUsers[index].emailId ?? ''
                             : assignToSearchList[index].emailId ?? '';
 
+                        final phone = allUsers != null &&
+                                searchController.text.isEmpty &&
+                                assignToSearchList.isEmpty
+                            ? allUsers[index].phone ?? ''
+                            : assignToSearchList[index].phone ?? '';
+
                         return GestureDetector(
                           onTap: () {
                             filterController.selectOrUnselectAssignedToFilter(
@@ -112,6 +118,7 @@ Widget assignToDialog({
                               assignTaskController.addToAssignToList(
                                 name: name,
                                 email: email,
+                                phone: phone,
                               );
                             } else {
                               assignTaskController.removeFromAssignToList(
@@ -187,6 +194,7 @@ Widget assignToDialog({
                                         assignTaskController.addToAssignToList(
                                           name: name,
                                           email: email,
+                                          phone: phone,
                                         );
                                       } else {
                                         assignTaskController
