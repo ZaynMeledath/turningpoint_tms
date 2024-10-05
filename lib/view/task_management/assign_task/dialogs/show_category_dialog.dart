@@ -5,6 +5,7 @@ Future<Object?> showCategoryDialog({
   required AssignTaskController assignTaskController,
   required TasksController tasksController,
   required TextEditingController categoryNameController,
+  required TextEditingController categorySearchController,
 }) async {
   return Get.dialog(
     useSafeArea: true,
@@ -14,6 +15,7 @@ Future<Object?> showCategoryDialog({
       assignTaskController: assignTaskController,
       tasksController: tasksController,
       categoryNameController: categoryNameController,
+      categorySearchController: categorySearchController,
     ),
     transitionCurve: Curves.easeInOut,
   );
@@ -24,6 +26,7 @@ Widget categoryDialog({
   required AssignTaskController assignTaskController,
   required TasksController tasksController,
   required TextEditingController categoryNameController,
+  required TextEditingController categorySearchController,
 }) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -57,6 +60,21 @@ Widget categoryDialog({
               child: Column(
                 children: [
                   SizedBox(height: 4.h),
+                  //     Transform.scale(
+                  //   scale: .94,
+                  //   child: customTextField(
+                  //       controller: categorySearchController,
+                  //       hintText: 'Category',
+                  //       borderColor: Colors.grey.withOpacity(.3),
+                  //       onChanged: (value) {
+                  //         assignTaskController.assignToSearchList.clear();
+                  //         assignTaskController.assignToSearchList.value = allUsers!
+                  //             .where((allUsersModel) => allUsersModel.userName!
+                  //                 .toLowerCase()
+                  //                 .contains(value.toLowerCase()))
+                  //             .toList();
+                  //       }),
+                  // ),
                   Obx(
                     () {
                       final categoriesList = tasksController.categoriesList;

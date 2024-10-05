@@ -7,7 +7,7 @@ Future<Object?> showAssignToDialog({
 }) async {
   return Get.dialog(
     assignToDialog(
-      searchController: assignToSearchController,
+      assignToSearchController: assignToSearchController,
       assignTaskController: assignTaskController,
       filterController: filterController,
     ),
@@ -18,7 +18,7 @@ Future<Object?> showAssignToDialog({
 }
 
 Widget assignToDialog({
-  required TextEditingController searchController,
+  required TextEditingController assignToSearchController,
   required AssignTaskController assignTaskController,
   required FilterController filterController,
 }) {
@@ -49,7 +49,7 @@ Widget assignToDialog({
               Transform.scale(
                 scale: .94,
                 child: customTextField(
-                    controller: TextEditingController(),
+                    controller: assignToSearchController,
                     hintText: 'Search by Name/Email',
                     borderColor: Colors.grey.withOpacity(.3),
                     onChanged: (value) {
@@ -68,7 +68,7 @@ Widget assignToDialog({
                         assignTaskController.assignToSearchList;
                     return ListView.builder(
                       itemCount: assignToSearchList.isEmpty &&
-                              searchController.text.trim().isEmpty
+                              assignToSearchController.text.trim().isEmpty
                           ? allUsers?.length ?? 0
                           : assignToSearchList.length,
                       padding: EdgeInsets.symmetric(
@@ -91,19 +91,19 @@ Widget assignToDialog({
                         //     : allUsers?[index].emailId ?? '';
 
                         final name = allUsers != null &&
-                                searchController.text.isEmpty &&
+                                assignToSearchController.text.isEmpty &&
                                 assignToSearchList.isEmpty
                             ? allUsers[index].userName ?? ''
                             : assignToSearchList[index].userName ?? '';
 
                         final email = allUsers != null &&
-                                searchController.text.isEmpty &&
+                                assignToSearchController.text.isEmpty &&
                                 assignToSearchList.isEmpty
                             ? allUsers[index].emailId ?? ''
                             : assignToSearchList[index].emailId ?? '';
 
                         final phone = allUsers != null &&
-                                searchController.text.isEmpty &&
+                                assignToSearchController.text.isEmpty &&
                                 assignToSearchList.isEmpty
                             ? allUsers[index].phone ?? ''
                             : assignToSearchList[index].phone ?? '';

@@ -60,7 +60,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
   late final TextEditingController assignToSearchController;
-  // late final TextEditingController categorySearchController;
+  late final TextEditingController categorySearchController;
   late final TextEditingController reminderTimeTextController;
   late final TextEditingController categoryNameController;
   final filterController = FilterController();
@@ -77,7 +77,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     assignToSearchController = TextEditingController();
-    // categorySearchController = TextEditingController();
+    categorySearchController = TextEditingController();
     categoryNameController = TextEditingController();
     reminderTimeTextController = TextEditingController(
         text: DefaultReminder.defaultReminderTime.toString());
@@ -132,7 +132,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     titleController.dispose();
     descriptionController.dispose();
     assignToSearchController.dispose();
-    // categorySearchController.dispose();
+    categorySearchController.dispose();
     reminderTimeTextController.dispose();
     assignTaskController.dispose();
     recorder.dispose();
@@ -213,7 +213,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     filterController: filterController,
                     assignToSearchController: assignToSearchController,
                     categoryNameController: categoryNameController,
-                    // categorySearchController: categorySearchController,
+                    categorySearchController: categorySearchController,
                   ).animate().slideY(
                         begin: 1,
                         delay: const Duration(milliseconds: 120),
