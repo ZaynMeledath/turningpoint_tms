@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           buttons: {
                             'Cancel': null,
                             'Log Out': () {
-                              Get.off(
+                              Get.offAll(
                                 () => const LoginScreen(),
                               );
                             }
