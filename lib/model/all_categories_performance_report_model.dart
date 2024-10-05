@@ -64,7 +64,7 @@ class AllCategoriesPerformanceReportModel {
     overdueTasks = json['overdueTasks'];
     onTimeTasks = json['onTimeTasks'];
     delayedTasks = json['delayedTasks'];
-    completionRate = (json['completionRate'] as double).toInt();
+    completionRate = (json['completionRate']);
   }
 
   Map<String, dynamic> toJson() {

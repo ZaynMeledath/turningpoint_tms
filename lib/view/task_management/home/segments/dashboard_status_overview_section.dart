@@ -58,7 +58,9 @@ Widget dashboardStatusOverviewSection({
             tasksController.completedDelayedDelegatedTasksList.length;
       } else {
         overdueTasksCount = tasksController.allTasksListObs.value
-                ?.where((taskModel) => taskModel.status == Status.overdue)
+                ?.where((taskModel) =>
+                    taskModel.isDelayed == true &&
+                    taskModel.status != Status.completed)
                 .length ??
             0;
         openTasksCount = tasksController.allTasksListObs.value
