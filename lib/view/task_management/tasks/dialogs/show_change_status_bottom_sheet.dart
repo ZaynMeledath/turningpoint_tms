@@ -165,27 +165,51 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                           ),
                           SizedBox(height: 12.h),
                           //====================Attachment====================//
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(100),
-                              onTap: () async {
-                                await tasksController
-                                    .addImageToTaskUpdateAttachments();
-                              },
-                              child: Container(
-                                width: 42.w,
-                                height: 42.w,
-                                decoration: const BoxDecoration(
-                                  color: Colors.black26,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.photo_rounded,
-                                  size: 24.w,
+                          Row(
+                            children: [
+                              //Add Image
+                              InkWell(
+                                borderRadius: BorderRadius.circular(100),
+                                onTap: () async {
+                                  await tasksController
+                                      .addImageToTaskUpdateAttachments();
+                                },
+                                child: Container(
+                                  width: 42.w,
+                                  height: 42.w,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black26,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.photo_rounded,
+                                    size: 24.w,
+                                  ),
                                 ),
                               ),
-                            ),
+                              SizedBox(width: 10.w),
+
+                              //Add File
+                              // InkWell(
+                              //   borderRadius: BorderRadius.circular(100),
+                              //   onTap: () async {
+                              //     await tasksController
+                              //         .addFileToTaskUpdateAttachments();
+                              //   },
+                              //   child: Container(
+                              //     width: 42.w,
+                              //     height: 42.w,
+                              //     decoration: const BoxDecoration(
+                              //       color: Colors.black26,
+                              //       shape: BoxShape.circle,
+                              //     ),
+                              //     child: Icon(
+                              //       Icons.photo_rounded,
+                              //       size: 24.w,
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
                           SizedBox(height: 10.h),
                           tasksController.taskUpdateAttachments.isNotEmpty

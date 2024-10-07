@@ -165,10 +165,11 @@ class AssignTaskController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
-        attachmentsListObs.add('');
+        attachmentsListObs.add(''); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
         final url = await tasksRepository.uploadAttachment(file: file);
-        attachmentsListObs.removeLast();
+        attachmentsListObs
+            .removeLast(); //The one used for the loader is removed
         attachmentsListObs.add(url);
         appController.isLoadingObs.value = false;
       }

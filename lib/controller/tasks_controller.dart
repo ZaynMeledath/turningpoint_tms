@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
@@ -284,26 +285,6 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Change Task Status====================//
-  Future<void> updateTaskStatus({
-    required String taskId,
-    required String taskStatus,
-    required String note,
-  }) async {
-    try {
-      await tasksRepository.updateTaskStatus(
-        taskId: taskId,
-        taskStatus: taskStatus,
-        note: note,
-      );
-      tasksException.value = null;
-      await getMyTasks();
-      await getDelegatedTasks();
-    } catch (_) {
-      rethrow;
-    }
-  }
-
 //====================Fetch Image from Storage====================//
   Future<File?> fetchImageFromStorage() async {
     final ImagePicker picker = ImagePicker();
@@ -333,6 +314,48 @@ class TasksController extends GetxController {
             .add(await tasksRepository.uploadAttachment(file: file));
       }
       appController.isLoadingObs.value = false;
+    }
+  }
+
+//====================Add File Attachments====================//
+  Future<void> addFileToTaskUpdateAttachments() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        taskUpdateAttachmentsUrl
+            .add(''); //Used of show the loader on the attachment
+        appController.isLoadingObs.value = true;
+        final url = await tasksRepository.uploadAttachment(file: file);
+        taskUpdateAttachmentsUrl
+            .removeLast(); //The one used for the loader is removed
+        taskUpdateAttachmentsUrl.add(url);
+        appController.isLoadingObs.value = false;
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Change Task Status====================//
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String taskStatus,
+    required String note,
+  }) async {
+    try {
+      await tasksRepository.updateTaskStatus(
+        taskId: taskId,
+        taskStatus: taskStatus,
+        note: note,
+        taskUpdateAttachmentsUrlList: taskUpdateAttachmentsUrl,
+      );
+      tasksException.value = null;
+      await getMyTasks();
+      await getDelegatedTasks();
+    } catch (_) {
+      rethrow;
     }
   }
 

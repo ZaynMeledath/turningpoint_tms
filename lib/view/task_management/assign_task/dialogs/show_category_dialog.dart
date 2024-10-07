@@ -154,6 +154,7 @@ Widget categoryDialog({
                       );
                     },
                   ),
+                  SizedBox(height: 2.h),
                   Padding(
                     padding: EdgeInsets.only(bottom: 8.h),
                     child: InkWell(
