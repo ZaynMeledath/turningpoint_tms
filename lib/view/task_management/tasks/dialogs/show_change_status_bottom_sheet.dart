@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:pdf_thumbnail/pdf_thumbnail.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
@@ -189,29 +190,31 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               ),
                               SizedBox(width: 10.w),
 
-                              //Add File
-                              // InkWell(
-                              //   borderRadius: BorderRadius.circular(100),
-                              //   onTap: () async {
-                              //     await tasksController
-                              //         .addFileToTaskUpdateAttachments();
-                              //   },
-                              //   child: Container(
-                              //     width: 42.w,
-                              //     height: 42.w,
-                              //     decoration: const BoxDecoration(
-                              //       color: Colors.black26,
-                              //       shape: BoxShape.circle,
-                              //     ),
-                              //     child: Icon(
-                              //       Icons.photo_rounded,
-                              //       size: 24.w,
-                              //     ),
-                              //   ),
-                              // ),
+                              // Add File
+                              InkWell(
+                                borderRadius: BorderRadius.circular(100),
+                                onTap: () async {
+                                  await tasksController
+                                      .addFileToTaskUpdateAttachments();
+                                },
+                                child: Container(
+                                  width: 42.w,
+                                  height: 42.w,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black26,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.picture_as_pdf,
+                                    size: 24.w,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                           SizedBox(height: 10.h),
+
+                          //====================Attachments Display Section====================//
                           tasksController.taskUpdateAttachments.isNotEmpty
                               ? SizedBox(
                                   height: 170.h,
@@ -224,14 +227,38 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                         children: [
                                           SizedBox(
                                             height: 120.h,
-                                            child: AspectRatio(
-                                              aspectRatio: 4 / 4,
-                                              child: Image.file(
-                                                tasksController
-                                                        .taskUpdateAttachments[
-                                                    index],
-                                              ),
-                                            ),
+                                            child: tasksController
+                                                            .taskUpdateAttachmentsMapList[
+                                                        index]['type'] ==
+                                                    'image'
+                                                ? AspectRatio(
+                                                    aspectRatio: 4 / 4,
+                                                    child: Image.file(
+                                                      tasksController
+                                                              .taskUpdateAttachments[
+                                                          index],
+                                                    ),
+                                                  )
+                                                : tasksController
+                                                                .taskUpdateAttachmentsMapList[
+                                                            index]['type'] ==
+                                                        'pdf'
+                                                    ? PdfThumbnail.fromFile(
+                                                        tasksController
+                                                            .taskUpdateAttachments[
+                                                                index]
+                                                            .path,
+                                                        currentPage: 1)
+                                                    : Column(
+                                                        children: [
+                                                          Image.asset(
+                                                            'assets/icons/file_icon.png',
+                                                            width: 70.w,
+                                                          ),
+                                                          Text(
+                                                              'Attachment-${index + 1}')
+                                                        ],
+                                                      ),
                                           ),
                                           IconButton(
                                             onPressed: () {
@@ -263,6 +290,9 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                             () => InkWell(
                               borderRadius: BorderRadius.circular(12),
                               onTap: () async {
+                                if (appController.isLoadingObs.value) {
+                                  return;
+                                }
                                 if (_formKey.currentState?.validate() != true) {
                                   return;
                                 }

@@ -158,7 +158,7 @@ class TasksRepository {
     required String taskId,
     required String taskStatus,
     required String note,
-    required List<String> taskUpdateAttachmentsUrlList,
+    required List<Map<String, String>> taskUpdateAttachmentsMapList,
   }) async {
     try {
       await ApiService().sendRequest(
@@ -167,8 +167,8 @@ class TasksRepository {
         data: {
           'newStatus': taskStatus,
           'note': note,
-          'changesAttachments': taskUpdateAttachmentsUrlList.isNotEmpty
-              ? taskUpdateAttachmentsUrlList
+          'changesAttachments': taskUpdateAttachmentsMapList.isNotEmpty
+              ? taskUpdateAttachmentsMapList
               : null,
         },
         fieldNameForFiles: null,

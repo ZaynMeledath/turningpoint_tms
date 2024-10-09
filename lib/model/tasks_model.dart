@@ -40,7 +40,7 @@ class TaskModel {
   String? status;
   bool? isDelayed;
   Repeat? repeat;
-  List<dynamic>? attachments;
+  List<Attachment>? attachments;
   List<Reminder>? reminders;
   List<StatusChanges>? statusChanges;
   String? closedAt;
@@ -93,10 +93,10 @@ class TaskModel {
     if (json['attachments'] != null) {
       attachments = [];
       json['attachments'].forEach((item) {
-        attachments!.add(item);
+        attachments!.add(Attachment.fromJson(item));
       });
     }
-    attachments = json['attachments'];
+
     repeat = Repeat.fromJson(json);
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
@@ -270,6 +270,29 @@ class Reminder {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['time'] = time;
     data['unit'] = unit;
+    return data;
+  }
+}
+
+class Attachment {
+  String? path;
+  String? type;
+
+  Attachment({
+    this.path,
+    this.type,
+  });
+
+  Attachment.fromJson(Map<String, dynamic> json) {
+    path = json[path];
+    type = json[type];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = {};
+    data['path'] = path;
+    data['type'] = type;
+
     return data;
   }
 }

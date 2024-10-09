@@ -146,12 +146,15 @@ Widget taskUpdateSection({
                                       itemCount: statusChangesModel
                                           .changesAttachments?.length,
                                       itemBuilder: (context, index) {
-                                        return AspectRatio(
-                                          aspectRatio: 16 / 9,
-                                          child: CachedNetworkImage(
-                                            imageUrl: statusChangesModel
-                                                    .changesAttachments![index]
-                                                ['path'],
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 4.w),
+                                          child: AspectRatio(
+                                            aspectRatio: 16 / 9,
+                                            child: CachedNetworkImage(
+                                              imageUrl: statusChangesModel
+                                                      .changesAttachments![
+                                                  index]['path'],
+                                            ),
                                           ),
                                         );
                                       },

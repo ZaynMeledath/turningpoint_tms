@@ -56,7 +56,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     creationDateString = '${taskModel.createdAt?.dateFormat()}';
     if (taskModel.attachments != null) {
       audioList = taskModel.attachments!
-          .where((item) => item.split('.').last == 'wav')
+          .where((item) => item.path?.split('.').last == 'wav')
           .toList();
     }
     if (audioList.isNotEmpty) {
@@ -131,7 +131,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
-                            SizedBox(height: 14.h),
                             audioList.isNotEmpty
                                 ? Container(
                                     width: 180.w,
@@ -212,34 +211,59 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: taskModel.attachments?.length ?? 0,
                                 itemBuilder: (context, index) {
-                                  return InkWell(
-                                    borderRadius: BorderRadius.circular(12),
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 12.w,
-                                        vertical: 8.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.textFieldColor,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/file_icon.png',
-                                              width: 70.w,
-                                            ),
-                                            Text('Attachment-${index + 1}')
-                                          ],
+                                  return Padding(
+                                    padding: EdgeInsets.only(right: 6.w),
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(12),
+                                      onTap: () {},
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 12.w,
+                                          vertical: 8.h,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.textFieldColor,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: Center(
+                                          child: assignTaskController
+                                                      .attachmentsListObs[index]
+                                                      .type ==
+                                                  'image'
+                                              ? AspectRatio(
+                                                  aspectRatio: 4 / 4,
+                                                  child: Image.network(
+                                                    taskModel
+                                                        .attachments![index]
+                                                        .path!,
+                                                  ),
+                                                )
+                                              : Column(
+                                                  children: [
+                                                    Image.asset(
+                                                      'assets/icons/file_icon.png',
+                                                      width: 70.w,
+                                                    ),
+                                                    Text(
+                                                      taskModel
+                                                          .attachments![index]
+                                                          .path!
+                                                          .split('/')
+                                                          .last,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    )
+                                                  ],
+                                                ),
                                         ),
                                       ),
                                     ),
                                   );
                                 },
                               ),
-                            )
+                            ),
+                            SizedBox(height: 14.h),
                           ],
                         )
                       : const SizedBox(),
@@ -250,7 +274,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     children: [
                       taskDetailsAssignedContainer(
                         name: taskModel.createdBy!.name!.nameFormat(),
-                        email: taskModel.createdBy!.name!.nameFormat(),
+                        email: taskModel.createdBy!.emailId!,
                         isAssignedBy: true,
                       ),
                       Icon(

@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   awesome_notifications
   file_selector_windows
   firebase_core
+  pdfx
   permission_handler_windows
   record_windows
   url_launcher_windows

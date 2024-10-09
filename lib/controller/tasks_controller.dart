@@ -82,7 +82,7 @@ class TasksController extends GetxController {
       Rxn<List<DelegatedPerformanceReportModel>>();
 
   final taskUpdateAttachments = <File>[].obs;
-  final taskUpdateAttachmentsUrl = RxList<String>();
+  final taskUpdateAttachmentsMapList = RxList<Map<String, String>>();
 
 //====================Get All Tasks====================//
   Future<void> getAllTasks({bool? getFromLocalStorage}) async {
@@ -306,13 +306,13 @@ class TasksController extends GetxController {
   Future<void> addImageToTaskUpdateAttachments() async {
     final imageFile = await fetchImageFromStorage();
     if (imageFile != null) {
-      taskUpdateAttachments.add(imageFile);
       appController.isLoadingObs.value = true;
+      taskUpdateAttachmentsMapList.add({
+        'path': await tasksRepository.uploadAttachment(file: imageFile),
+        'type': 'image',
+      });
+      taskUpdateAttachments.add(imageFile);
 
-      for (File file in taskUpdateAttachments) {
-        taskUpdateAttachmentsUrl
-            .add(await tasksRepository.uploadAttachment(file: file));
-      }
       appController.isLoadingObs.value = false;
     }
   }
@@ -324,13 +324,23 @@ class TasksController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
-        taskUpdateAttachmentsUrl
-            .add(''); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
         final url = await tasksRepository.uploadAttachment(file: file);
-        taskUpdateAttachmentsUrl
-            .removeLast(); //The one used for the loader is removed
-        taskUpdateAttachmentsUrl.add(url);
+        final fileExtension = file.path.split('.').last;
+        final fileType = fileExtension == 'pdf'
+            ? 'pdf'
+            : fileExtension == 'jpg' ||
+                    fileExtension == 'jpeg' ||
+                    fileExtension == 'png' ||
+                    fileExtension == 'heif'
+                ? 'image'
+                : 'application';
+
+        taskUpdateAttachmentsMapList.add({
+          'path': url,
+          'type': fileType,
+        });
+        taskUpdateAttachments.add(file);
         appController.isLoadingObs.value = false;
       }
     } catch (_) {
@@ -349,7 +359,7 @@ class TasksController extends GetxController {
         taskId: taskId,
         taskStatus: taskStatus,
         note: note,
-        taskUpdateAttachmentsUrlList: taskUpdateAttachmentsUrl,
+        taskUpdateAttachmentsMapList: taskUpdateAttachmentsMapList,
       );
       tasksException.value = null;
       await getMyTasks();

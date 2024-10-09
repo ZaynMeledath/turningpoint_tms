@@ -49,9 +49,11 @@ class AssignTaskController extends GetxController {
   RxBool isRecordingObs = false.obs;
   RxBool isPlayingObs = false.obs;
   RxString voiceRecordPathObs = ''.obs;
+  RxString voiceRecordUrlObs = ''.obs;
   RxInt voiceRecordPositionObs = 0.obs;
 
-  final attachmentsListObs = RxList<String>();
+  final attachmentsFileListObs = RxList<File>();
+  final attachmentsListObs = RxList<Attachment>();
 
   RxMap<String, bool> daysMap = {
     'Sun': false,
@@ -165,12 +167,28 @@ class AssignTaskController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
-        attachmentsListObs.add(''); //Used of show the loader on the attachment
+        attachmentsListObs
+            .add(Attachment()); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
+        attachmentsFileListObs.add(file);
         final url = await tasksRepository.uploadAttachment(file: file);
         attachmentsListObs
             .removeLast(); //The one used for the loader is removed
-        attachmentsListObs.add(url);
+        final fileExtension = file.path.split('.').last;
+        final fileType = fileExtension == 'pdf'
+            ? 'pdf'
+            : fileExtension == 'jpg' ||
+                    fileExtension == 'jpeg' ||
+                    fileExtension == 'png' ||
+                    fileExtension == 'heif'
+                ? 'image'
+                : 'application';
+        attachmentsListObs.add(
+          Attachment(
+            path: url,
+            type: fileType,
+          ),
+        );
         appController.isLoadingObs.value = false;
       }
     } catch (_) {
@@ -188,11 +206,8 @@ class AssignTaskController extends GetxController {
         voiceRecordPathObs.value = await recorder.stop() ?? '';
         isRecordingObs.value = false;
         appController.isLoadingObs.value = true;
-        attachmentsListObs.add(
-          await tasksRepository.uploadAttachment(
-            file: File(voiceRecordPathObs.value),
-          ),
-        );
+        voiceRecordUrlObs.value = await tasksRepository.uploadAttachment(
+            file: File(voiceRecordPathObs.value));
         appController.isLoadingObs.value = false;
       } else {
         if (await recorder.hasPermission()) {
@@ -270,11 +285,16 @@ class AssignTaskController extends GetxController {
         break;
     }
 
+    attachmentsListObs.add(Attachment(
+      path: voiceRecordUrlObs.value,
+      type: 'audio',
+    ));
+
     final taskModel = TaskModel(
       title: title,
       description: description,
       category: selectedCategory.value,
-      assignedTo: null,
+      assignedTo: null, // will be added after creating taskModel
       priority: taskPriority.value,
       dueDate: shouldRepeatTask.value ? null : dueDateString,
       repeat: shouldRepeatTask.value

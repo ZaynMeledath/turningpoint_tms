@@ -270,12 +270,13 @@ Widget attachmentSegment({
           ),
         ],
       ),
+      SizedBox(height: 8.h),
 
 //====================Attachments display section====================//
       Obx(
         () {
           final attachmentsList = assignTaskController.attachmentsListObs
-              .where((item) => item.split('.').last != 'wav')
+              .where((item) => item.path?.split('.').last != 'wav')
               .toList();
           if (attachmentsList.isNotEmpty) {
             return SizedBox(
@@ -290,6 +291,8 @@ Widget attachmentSegment({
                     alignment: Alignment.center,
                     children: [
                       Container(
+                        width: 120.w,
+                        height: 125.w,
                         padding: EdgeInsets.symmetric(
                           horizontal: 12.w,
                           vertical: 8.h,
@@ -306,15 +309,46 @@ Widget attachmentSegment({
                                   size: 25.w,
                                   color: AppColors.themeGreen,
                                 )
-                              : Column(
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/file_icon.png',
-                                      width: 70.w,
-                                    ),
-                                    Text('Attachment-${index + 1}')
-                                  ],
-                                ),
+                              : assignTaskController
+                                          .attachmentsListObs[index].type ==
+                                      'image'
+                                  ? AspectRatio(
+                                      aspectRatio: 4 / 4,
+                                      child: Image.file(
+                                        assignTaskController
+                                            .attachmentsFileListObs[index],
+                                      ),
+                                    )
+                                  : assignTaskController
+                                              .attachmentsListObs[index].type ==
+                                          'pdf'
+                                      ? PdfThumbnail.fromFile(
+                                          assignTaskController
+                                              .attachmentsFileListObs[index]
+                                              .path,
+                                          currentPage: 1,
+                                          height: 90.w,
+                                          loadingIndicator: SpinKitWave(
+                                            size: 20.w,
+                                            color: AppColors.themeGreen,
+                                          ),
+                                        )
+                                      : Column(
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/file_icon.png',
+                                              width: 70.w,
+                                            ),
+                                            Text(
+                                              assignTaskController
+                                                  .attachmentsFileListObs[index]
+                                                  .path
+                                                  .split('/')
+                                                  .last,
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          ],
+                                        ),
                         ),
                       ),
                       Positioned(
@@ -335,9 +369,11 @@ Widget attachmentSegment({
                                 'Delete': () async {
                                   appController.isLoadingObs.value = true;
 
+                                  //Delete Attachment
                                   assignTaskController.attachmentsListObs
                                       .removeAt(index);
-                                  //Delete Attachment
+                                  assignTaskController.attachmentsFileListObs
+                                      .removeAt(index);
 
                                   appController.isLoadingObs.value = false;
                                   Get.back();
