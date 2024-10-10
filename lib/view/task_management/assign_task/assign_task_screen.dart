@@ -125,6 +125,20 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
 
     //### Add Repeat and attachments also ###//
     assignTaskController.reminderList.value = widget.taskModel!.reminders ?? [];
+    if (widget.taskModel!.attachments != null) {
+      assignTaskController.voiceRecordUrlObs.value =
+          widget.taskModel!.attachments!
+              .firstWhere(
+                (attachment) => attachment.type == 'audio',
+                orElse: () => Attachment(path: '', type: ''),
+              )
+              .path!;
+
+      assignTaskController.attachmentsListObs.value = widget
+          .taskModel!.attachments!
+          .where((attachment) => attachment.type != 'audio')
+          .toList();
+    }
   }
 
   @override

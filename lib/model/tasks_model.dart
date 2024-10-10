@@ -284,8 +284,8 @@ class Attachment {
   });
 
   Attachment.fromJson(Map<String, dynamic> json) {
-    path = json[path];
-    type = json[type];
+    path = json['path'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {

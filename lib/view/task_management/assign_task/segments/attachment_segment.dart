@@ -123,7 +123,8 @@ Widget attachmentSegment({
           SizedBox(width: 12.w),
           Obx(
             () => assignTaskController.isRecordingObs.value ||
-                    assignTaskController.voiceRecordPathObs.isNotEmpty
+                    assignTaskController.voiceRecordPathObs.isNotEmpty ||
+                    assignTaskController.voiceRecordUrlObs.isNotEmpty
                 ? Row(
                     children: [
                       Container(
@@ -170,10 +171,21 @@ Widget attachmentSegment({
                                             assignTaskController
                                                 .isPlayingObs.value = false;
                                           } else {
-                                            await audioPlayer.setFilePath(
-                                              assignTaskController
-                                                  .voiceRecordPathObs.value,
-                                            );
+                                            if (assignTaskController
+                                                    .voiceRecordPathObs
+                                                    .isEmpty &&
+                                                assignTaskController
+                                                    .voiceRecordUrlObs
+                                                    .isNotEmpty) {
+                                              await audioPlayer.setUrl(
+                                                  assignTaskController
+                                                      .voiceRecordUrlObs.value);
+                                            } else {
+                                              await audioPlayer.setFilePath(
+                                                assignTaskController
+                                                    .voiceRecordPathObs.value,
+                                              );
+                                            }
                                             audioPlayer.play();
                                             assignTaskController
                                                 .isPlayingObs.value = true;
@@ -275,9 +287,7 @@ Widget attachmentSegment({
 //====================Attachments display section====================//
       Obx(
         () {
-          final attachmentsList = assignTaskController.attachmentsListObs
-              .where((item) => item.path?.split('.').last != 'wav')
-              .toList();
+          final attachmentsList = assignTaskController.attachmentsListObs;
           if (attachmentsList.isNotEmpty) {
             return SizedBox(
               height: 110.h,
@@ -310,45 +320,71 @@ Widget attachmentSegment({
                                   color: AppColors.themeGreen,
                                 )
                               : assignTaskController
-                                          .attachmentsListObs[index].type ==
-                                      'image'
-                                  ? AspectRatio(
-                                      aspectRatio: 4 / 4,
-                                      child: Image.file(
-                                        assignTaskController
-                                            .attachmentsFileListObs[index],
-                                      ),
-                                    )
-                                  : assignTaskController
-                                              .attachmentsListObs[index].type ==
-                                          'pdf'
-                                      ? PdfThumbnail.fromFile(
-                                          assignTaskController
-                                              .attachmentsFileListObs[index]
-                                              .path,
-                                          currentPage: 1,
-                                          height: 90.w,
-                                          loadingIndicator: SpinKitWave(
-                                            size: 20.w,
-                                            color: AppColors.themeGreen,
+                                      .attachmentsFileListObs.isNotEmpty
+                                  ? attachmentsList[index].type == 'image'
+                                      ? AspectRatio(
+                                          aspectRatio: 4 / 4,
+                                          child: Image.file(
+                                            assignTaskController
+                                                .attachmentsFileListObs[index],
                                           ),
                                         )
-                                      : Column(
+                                      : attachmentsList[index].type == 'pdf'
+                                          ? PdfThumbnail.fromFile(
+                                              assignTaskController
+                                                  .attachmentsFileListObs[index]
+                                                  .path,
+                                              currentPage: 1,
+                                              height: 90.w,
+                                              loadingIndicator: SpinKitWave(
+                                                size: 20.w,
+                                                color: AppColors.themeGreen,
+                                              ),
+                                            )
+                                          : Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/file_icon.png',
+                                                  width: 52.w,
+                                                ),
+                                                Text(
+                                                  assignTaskController
+                                                      .attachmentsFileListObs[
+                                                          index]
+                                                      .path
+                                                      .split('/')
+                                                      .last,
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )
+                                              ],
+                                            )
+                                  : attachmentsList.isNotEmpty
+                                      ? Column(
                                           children: [
                                             Image.asset(
                                               'assets/icons/file_icon.png',
-                                              width: 70.w,
+                                              width: 52.w,
                                             ),
                                             Text(
                                               assignTaskController
-                                                  .attachmentsFileListObs[index]
-                                                  .path
+                                                  .attachmentsListObs[index]
+                                                  .path!
                                                   .split('/')
                                                   .last,
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                              ),
                                               overflow: TextOverflow.ellipsis,
                                             )
                                           ],
-                                        ),
+                                        )
+                                      : const SizedBox(),
                         ),
                       ),
                       Positioned(
@@ -372,20 +408,31 @@ Widget attachmentSegment({
                                   //Delete Attachment
                                   assignTaskController.attachmentsListObs
                                       .removeAt(index);
-                                  assignTaskController.attachmentsFileListObs
-                                      .removeAt(index);
-
-                                  appController.isLoadingObs.value = false;
-                                  Get.back();
-
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/deleted_animation.json',
-                                    title: 'Deleted',
-                                    content:
-                                        'Recording has been successfully deleted',
-                                    buttons: {'OK': null},
-                                  );
+                                  try {
+                                    assignTaskController.attachmentsFileListObs
+                                        .removeAt(index);
+                                    appController.isLoadingObs.value = false;
+                                    Get.back();
+                                    showGenericDialog(
+                                      iconPath:
+                                          'assets/lotties/deleted_animation.json',
+                                      title: 'Deleted',
+                                      content:
+                                          'Recording has been successfully deleted',
+                                      buttons: {'OK': null},
+                                    );
+                                  } catch (_) {
+                                    appController.isLoadingObs.value = false;
+                                    Get.back();
+                                    showGenericDialog(
+                                      iconPath:
+                                          'assets/lotties/deleted_animation.json',
+                                      title: 'Deleted',
+                                      content:
+                                          'Recording has been successfully deleted',
+                                      buttons: {'OK': null},
+                                    );
+                                  }
                                 }
                               },
                             );

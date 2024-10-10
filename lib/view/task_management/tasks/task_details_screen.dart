@@ -1,16 +1,22 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/assign_task_controller.dart';
 import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
 import 'package:turning_point_tasks_app/controller/user_controller.dart';
+import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
 import 'package:turning_point_tasks_app/model/tasks_model.dart';
 import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
 import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
@@ -23,6 +29,7 @@ part 'segments/title_description_container.dart';
 part 'segments/task_details_assigned_container.dart';
 part 'segments/task_updates_section.dart';
 part 'dialogs/show_task_details_assigned_container_dialog.dart';
+part 'segments/task_details_attachment_segment.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final TaskModel taskModel;
@@ -44,6 +51,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   bool isTaskCompleted = false;
   String creationDateString = '';
   List<dynamic> audioList = [];
+  final dio = Dio();
 
   final user = getUserModelFromHive();
   final audioPlayer = AudioPlayer();
@@ -55,9 +63,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     isTaskCompleted = taskModel.status == Status.completed;
     creationDateString = '${taskModel.createdAt?.dateFormat()}';
     if (taskModel.attachments != null) {
-      audioList = taskModel.attachments!
-          .where((item) => item.path?.split('.').last == 'wav')
-          .toList();
+      // audioList = taskModel.attachments!
+      //     .where((item) => item.path?.split('.').last == 'wav')
+      //     .toList();
+      audioList =
+          taskModel.attachments!.where((item) => item.type == 'audio').toList();
     }
     if (audioList.isNotEmpty) {
       audioPlayer.setAudioSource(
@@ -121,150 +131,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   //====================Attachments Section====================//
                   taskModel.attachments != null &&
                           taskModel.attachments!.isNotEmpty
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Attachments',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            audioList.isNotEmpty
-                                ? Container(
-                                    width: 180.w,
-                                    height: 52.h,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color.fromRGBO(48, 78, 85, .4),
-                                          Color.fromRGBO(29, 36, 41, 1),
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(width: 4.w),
-                                        InkWell(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          onTap: () async {
-                                            if (audioPlayer.playing) {
-                                              audioPlayer.stop();
-                                              assignTaskController
-                                                  .isPlayingObs.value = false;
-                                            } else {
-                                              await audioPlayer.setFilePath(
-                                                assignTaskController
-                                                    .voiceRecordPathObs.value,
-                                              );
-                                              audioPlayer.play();
-                                              assignTaskController
-                                                  .isPlayingObs.value = true;
-                                            }
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.all(4.w),
-                                            child: Icon(
-                                              assignTaskController
-                                                      .isPlayingObs.value
-                                                  ? Icons.pause
-                                                  : Icons.play_arrow,
-                                              size: 24.w,
-                                              color: AppColors.themeGreen
-                                                  .withOpacity(.8),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: LinearPercentIndicator(
-                                            padding: EdgeInsets.only(
-                                              left: 2.w,
-                                              right: 12.w,
-                                            ),
-                                            lineHeight: 8.h,
-                                            percent: assignTaskController
-                                                    .voiceRecordPositionObs
-                                                    .value /
-                                                (audioPlayer
-                                                        .duration?.inSeconds ??
-                                                    1),
-                                            backgroundColor: Colors.white24,
-                                            barRadius:
-                                                const Radius.circular(16),
-                                            progressColor: AppColors.themeGreen
-                                                .withOpacity(.9),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(height: 14.h),
-                            SizedBox(
-                              height: 110.h,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: taskModel.attachments?.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(right: 6.w),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(12),
-                                      onTap: () {},
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 12.w,
-                                          vertical: 8.h,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: AppColors.textFieldColor,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Center(
-                                          child: assignTaskController
-                                                      .attachmentsListObs[index]
-                                                      .type ==
-                                                  'image'
-                                              ? AspectRatio(
-                                                  aspectRatio: 4 / 4,
-                                                  child: Image.network(
-                                                    taskModel
-                                                        .attachments![index]
-                                                        .path!,
-                                                  ),
-                                                )
-                                              : Column(
-                                                  children: [
-                                                    Image.asset(
-                                                      'assets/icons/file_icon.png',
-                                                      width: 70.w,
-                                                    ),
-                                                    Text(
-                                                      taskModel
-                                                          .attachments![index]
-                                                          .path!
-                                                          .split('/')
-                                                          .last,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    )
-                                                  ],
-                                                ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 14.h),
-                          ],
+                      ? taskDetailsAttachmentSegment(
+                          taskModel: taskModel,
+                          assignTaskController: assignTaskController,
+                          audioPlayer: audioPlayer,
+                          audioList: audioList,
+                          dio: dio,
                         )
                       : const SizedBox(),
 

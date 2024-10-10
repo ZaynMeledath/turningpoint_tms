@@ -175,8 +175,10 @@ class AssignTaskController extends GetxController {
         attachmentsListObs
             .removeLast(); //The one used for the loader is removed
         final fileExtension = file.path.split('.').last;
-        final fileType = fileExtension == 'pdf'
-            ? 'pdf'
+        final fileType = fileExtension == 'mp4' ||
+                fileExtension == 'mkv' ||
+                fileExtension == 'hevc'
+            ? 'video'
             : fileExtension == 'jpg' ||
                     fileExtension == 'jpeg' ||
                     fileExtension == 'png' ||
@@ -285,10 +287,16 @@ class AssignTaskController extends GetxController {
         break;
     }
 
-    attachmentsListObs.add(Attachment(
-      path: voiceRecordUrlObs.value,
-      type: 'audio',
-    ));
+    final List<Attachment> taskAttachments = attachmentsListObs;
+
+    if (voiceRecordUrlObs.value.isNotEmpty) {
+      taskAttachments.add(
+        Attachment(
+          path: voiceRecordUrlObs.value,
+          type: 'audio',
+        ),
+      );
+    }
 
     final taskModel = TaskModel(
       title: title,
@@ -305,7 +313,7 @@ class AssignTaskController extends GetxController {
                   repeatFrequency: taskRepeatFrequency.value),
               days: days)
           : null,
-      attachments: attachmentsListObs,
+      attachments: taskAttachments,
     );
 
     //assignTo is added before fetching the assign Task API
@@ -364,6 +372,16 @@ class AssignTaskController extends GetxController {
           break;
       }
 
+      final List<Attachment> taskAttachments = attachmentsListObs;
+
+      if (voiceRecordUrlObs.value.isNotEmpty) {
+        taskAttachments.add(
+          Attachment(
+            path: voiceRecordUrlObs.value,
+            type: 'audio',
+          ),
+        );
+      }
       taskModel.title = title;
       taskModel.description = description;
       taskModel.category = selectedCategory.value;
@@ -385,7 +403,9 @@ class AssignTaskController extends GetxController {
             )
           : null;
       taskModel.attachments =
-          attachmentsListObs.isEmpty ? null : attachmentsListObs;
+          attachmentsListObs.isEmpty && voiceRecordUrlObs.value.isEmpty
+              ? null
+              : taskAttachments;
 
       await tasksRepository.updateTask(taskModel: taskModel);
       if (tasksController.isDelegatedObs.value == true) {
