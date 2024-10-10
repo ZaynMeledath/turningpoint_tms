@@ -329,41 +329,39 @@ Widget attachmentSegment({
                                                 .attachmentsFileListObs[index],
                                           ),
                                         )
-                                      : attachmentsList[index].type == 'pdf'
-                                          ? PdfThumbnail.fromFile(
+                                      // : attachmentsList[index].type == 'pdf'
+                                      //     ? PdfThumbnail.fromFile(
+                                      //         assignTaskController
+                                      //             .attachmentsFileListObs[index]
+                                      //             .path,
+                                      //         currentPage: 1,
+                                      //         height: 90.w,
+                                      //         loadingIndicator: SpinKitWave(
+                                      //           size: 20.w,
+                                      //           color: AppColors.themeGreen,
+                                      //         ),
+                                      //       )
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              'assets/icons/file_icon.png',
+                                              width: 52.w,
+                                            ),
+                                            Text(
                                               assignTaskController
                                                   .attachmentsFileListObs[index]
-                                                  .path,
-                                              currentPage: 1,
-                                              height: 90.w,
-                                              loadingIndicator: SpinKitWave(
-                                                size: 20.w,
-                                                color: AppColors.themeGreen,
+                                                  .path
+                                                  .split('/')
+                                                  .last,
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
                                               ),
+                                              overflow: TextOverflow.ellipsis,
                                             )
-                                          : Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Image.asset(
-                                                  'assets/icons/file_icon.png',
-                                                  width: 52.w,
-                                                ),
-                                                Text(
-                                                  assignTaskController
-                                                      .attachmentsFileListObs[
-                                                          index]
-                                                      .path
-                                                      .split('/')
-                                                      .last,
-                                                  style: TextStyle(
-                                                    fontSize: 14.sp,
-                                                  ),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                )
-                                              ],
-                                            )
+                                          ],
+                                        )
                                   : attachmentsList.isNotEmpty
                                       ? Column(
                                           children: [
