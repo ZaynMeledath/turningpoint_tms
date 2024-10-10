@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:pdf_thumbnail/pdf_thumbnail.dart';
 import 'package:turning_point_tasks_app/constants/app_constants.dart';
 import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
 import 'package:turning_point_tasks_app/controller/app_controller.dart';
@@ -239,26 +238,26 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                                           index],
                                                     ),
                                                   )
-                                                : tasksController
-                                                                .taskUpdateAttachmentsMapList[
-                                                            index]['type'] ==
-                                                        'pdf'
-                                                    ? PdfThumbnail.fromFile(
-                                                        tasksController
-                                                            .taskUpdateAttachments[
-                                                                index]
-                                                            .path,
-                                                        currentPage: 1)
-                                                    : Column(
-                                                        children: [
-                                                          Image.asset(
-                                                            'assets/icons/file_icon.png',
-                                                            width: 70.w,
-                                                          ),
-                                                          Text(
-                                                              'Attachment-${index + 1}')
-                                                        ],
+                                                // : tasksController
+                                                //                 .taskUpdateAttachmentsMapList[
+                                                //             index]['type'] ==
+                                                //         'pdf'
+                                                //     ? PdfThumbnail.fromFile(
+                                                //         tasksController
+                                                //             .taskUpdateAttachments[
+                                                //                 index]
+                                                //             .path,
+                                                //         currentPage: 1)
+                                                : Column(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/icons/file_icon.png',
+                                                        width: 70.w,
                                                       ),
+                                                      Text(
+                                                          'Attachment-${index + 1}')
+                                                    ],
+                                                  ),
                                           ),
                                           IconButton(
                                             onPressed: () {
