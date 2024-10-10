@@ -339,7 +339,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   SizedBox(height: 12.h),
 
                   //====================Task Updates Section====================//
-                  taskUpdateSection(taskModel: taskModel),
+                  taskUpdateSection(
+                    taskModel: taskModel,
+                    dio: dio,
+                  ),
                 ],
               ),
             ),

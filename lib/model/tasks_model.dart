@@ -302,7 +302,7 @@ class StatusChanges {
   String? status;
   String? note;
   String? taskUpdatedBy;
-  List<dynamic>? changesAttachments;
+  List<Attachment>? changesAttachments;
   String? changedAt;
 
   StatusChanges({
@@ -319,7 +319,12 @@ class StatusChanges {
     status = json['status'];
     note = json['note'];
     taskUpdatedBy = json['taskUpdatedBy'];
-    changesAttachments = json['changesAttachments'];
+    if (json['changesAttachments'] != null) {
+      changesAttachments = [];
+      json['changesAttachments'].forEach((item) {
+        changesAttachments!.add(Attachment.fromJson(item));
+      });
+    }
     changedAt = json['changedAt'];
   }
 
@@ -330,7 +335,7 @@ class StatusChanges {
     data['note'] = note;
     data['taskUpdatedBy'] = taskUpdatedBy;
     if (changesAttachments != null) {
-      data['attachments'] =
+      data['changesAttachments'] =
           changesAttachments!.map((item) => item.toJson()).toList();
     }
     data['changedAt'] = changedAt;

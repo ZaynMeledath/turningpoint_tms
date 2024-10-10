@@ -93,42 +93,51 @@ Widget taskDetailsAttachmentSegment({
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () async {
-                  showDialog(
-                      context: context,
-                      builder: (context) => const SpinKitWave(
-                            size: 20,
-                            color: Colors.white,
-                          ));
-                  var status = await Permission.storage.status;
-                  if (!status.isGranted) {
-                    await Permission.storage.request();
+                  try {
+                    showDialog(
+                        context: context,
+                        builder: (context) => const SpinKitWave(
+                              size: 20,
+                              color: Colors.white,
+                            ));
+                    var status = await Permission.storage.status;
+                    if (!status.isGranted) {
+                      await Permission.storage.request();
+                    }
+                    final attachmentName = attachmentUrl.split('/').last;
+                    Directory appDocDir;
+                    if (Platform.isAndroid) {
+                      appDocDir = Directory("/storage/emulated/0/Download");
+                    } else {
+                      appDocDir = await getApplicationDocumentsDirectory();
+                    }
+                    final savePath = '${appDocDir.path}/$attachmentName';
+                    await dio.download(
+                      attachmentUrl,
+                      savePath,
+                    );
+                    Get.back();
+                    showGenericDialog(
+                      iconPath: 'assets/lotties/success_animation.json',
+                      title: 'Downloaded',
+                      content: 'File has been downloaded to your device',
+                      buttons: {'OK': null},
+                    );
+                  } catch (_) {
+                    showGenericDialog(
+                      iconPath: 'assets/lotties/server_error_animation.json',
+                      title: 'Something went wrong',
+                      content:
+                          'Something went wrong while downloading the file',
+                      buttons: {'Dismiss': null},
+                    );
                   }
-                  final attachmentName = attachmentUrl.split('/').last;
-                  Directory appDocDir;
-                  if (Platform.isAndroid) {
-                    appDocDir = Directory("/storage/emulated/0/Download");
-                  } else {
-                    appDocDir = await getApplicationDocumentsDirectory();
-                  }
-                  final savePath = '${appDocDir.path}/$attachmentName';
-                  await dio.download(
-                    attachmentUrl,
-                    savePath,
-                  );
-                  Get.back();
-                  showGenericDialog(
-                    iconPath: 'assets/lotties/success_animation.json',
-                    title: 'Downloaded',
-                    content: 'File has been downloaded to your device',
-                    buttons: {'OK': null},
-                  );
                 },
                 child: Container(
                   width: 120.w,
                   height: 125.w,
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.w,
-                    vertical: 8.h,
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.textFieldColor,
@@ -143,6 +152,7 @@ Widget taskDetailsAttachmentSegment({
                             ),
                           )
                         : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Image.asset(
                                 'assets/icons/file_icon.png',
@@ -150,6 +160,9 @@ Widget taskDetailsAttachmentSegment({
                               ),
                               Text(
                                 attachmentUrl.split('/').last,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
                                 overflow: TextOverflow.ellipsis,
                               )
                             ],

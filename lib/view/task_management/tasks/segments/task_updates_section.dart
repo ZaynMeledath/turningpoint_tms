@@ -2,6 +2,7 @@ part of '../task_details_screen.dart';
 
 Widget taskUpdateSection({
   required TaskModel taskModel,
+  required Dio dio,
 }) {
   final statusChangesList = taskModel.statusChanges ?? [];
   return Column(
@@ -146,14 +147,111 @@ Widget taskUpdateSection({
                                       itemCount: statusChangesModel
                                           .changesAttachments?.length,
                                       itemBuilder: (context, index) {
+                                        final changesAttachments =
+                                            statusChangesModel
+                                                .changesAttachments![index];
                                         return Padding(
-                                          padding: EdgeInsets.only(right: 4.w),
-                                          child: AspectRatio(
-                                            aspectRatio: 16 / 9,
-                                            child: CachedNetworkImage(
-                                              imageUrl: statusChangesModel
-                                                      .changesAttachments![
-                                                  index]['path'],
+                                          padding: EdgeInsets.only(right: 6.w),
+                                          child: InkWell(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            onTap: () async {
+                                              try {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        const SpinKitWave(
+                                                          size: 20,
+                                                          color: Colors.white,
+                                                        ));
+                                                var status = await Permission
+                                                    .storage.status;
+                                                if (!status.isGranted) {
+                                                  await Permission.storage
+                                                      .request();
+                                                }
+                                                final attachmentName =
+                                                    changesAttachments.path!
+                                                        .split('/')
+                                                        .last;
+                                                Directory appDocDir;
+                                                if (Platform.isAndroid) {
+                                                  appDocDir = Directory(
+                                                      "/storage/emulated/0/Download");
+                                                } else {
+                                                  appDocDir =
+                                                      await getApplicationDocumentsDirectory();
+                                                }
+                                                final savePath =
+                                                    '${appDocDir.path}/$attachmentName';
+                                                await dio.download(
+                                                  changesAttachments.path!,
+                                                  savePath,
+                                                );
+                                                Get.back();
+                                                showGenericDialog(
+                                                  iconPath:
+                                                      'assets/lotties/success_animation.json',
+                                                  title: 'Downloaded',
+                                                  content:
+                                                      'File has been downloaded to your device',
+                                                  buttons: {'OK': null},
+                                                );
+                                              } catch (_) {
+                                                showGenericDialog(
+                                                  iconPath:
+                                                      'assets/lotties/server_error_animation.json',
+                                                  title: 'Something went wrong',
+                                                  content:
+                                                      'Something went wrong while downloading the file',
+                                                  buttons: {'Dismiss': null},
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width: 120.w,
+                                              height: 125.w,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 12.w,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: Colors.blueGrey
+                                                    .withOpacity(.2),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: changesAttachments.type ==
+                                                      'image'
+                                                  ? AspectRatio(
+                                                      aspectRatio: 16 / 9,
+                                                      child: CachedNetworkImage(
+                                                        imageUrl:
+                                                            changesAttachments
+                                                                .path!,
+                                                      ),
+                                                    )
+                                                  : Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Image.asset(
+                                                          'assets/icons/file_icon.png',
+                                                          height: 65.w,
+                                                        ),
+                                                        Text(
+                                                          changesAttachments
+                                                              .path!
+                                                              .split('/')
+                                                              .last,
+                                                          style: TextStyle(
+                                                            fontSize: 14.sp,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        )
+                                                      ],
+                                                    ),
                                             ),
                                           ),
                                         );
