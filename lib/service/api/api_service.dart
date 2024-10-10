@@ -216,7 +216,7 @@ class ApiService {
         throw NotFoundException(responseJson.toString());
       case 408:
         throw RequestTimedOutException();
-      case 800:
+      case 500:
         throw ServerErrorException(responseJson.toString());
       case 700:
         throw CustomException(responseJson['message']);

@@ -50,7 +50,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final assignTaskController = AssignTaskController();
   bool isTaskCompleted = false;
   String creationDateString = '';
-  List<dynamic> audioList = [];
+  String audioUrl = '';
+  List<Attachment> attachments = [];
   final dio = Dio();
 
   final user = getUserModelFromHive();
@@ -66,16 +67,37 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       // audioList = taskModel.attachments!
       //     .where((item) => item.path?.split('.').last == 'wav')
       //     .toList();
-      audioList =
-          taskModel.attachments!.where((item) => item.type == 'audio').toList();
+      audioUrl = taskModel.attachments!
+          .firstWhere(
+            (item) => item.type == 'audio',
+            orElse: () => Attachment(path: '', type: ''),
+          )
+          .path!;
+      attachments = taskModel.attachments!
+          .where(
+            (item) => item.type != 'audio',
+          )
+          .toList();
     }
-    if (audioList.isNotEmpty) {
+    if (audioUrl.isNotEmpty) {
       audioPlayer.setAudioSource(
         AudioSource.uri(
-          Uri.parse(audioList.first),
+          Uri.parse(audioUrl),
         ),
       );
     }
+
+    audioPlayer.positionStream.listen((position) {
+      assignTaskController.voiceRecordPositionObs.value = position.inSeconds;
+
+      if (position.inMilliseconds > 0 &&
+          position.inMilliseconds == audioPlayer.duration?.inMilliseconds) {
+        audioPlayer.stop();
+        audioPlayer.seek(const Duration(seconds: 0));
+
+        assignTaskController.isPlayingObs.value = false;
+      }
+    });
     super.initState();
   }
 
@@ -132,10 +154,10 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   taskModel.attachments != null &&
                           taskModel.attachments!.isNotEmpty
                       ? taskDetailsAttachmentSegment(
-                          taskModel: taskModel,
+                          attachments: attachments,
                           assignTaskController: assignTaskController,
                           audioPlayer: audioPlayer,
-                          audioList: audioList,
+                          audioUrl: audioUrl,
                           dio: dio,
                         )
                       : const SizedBox(),

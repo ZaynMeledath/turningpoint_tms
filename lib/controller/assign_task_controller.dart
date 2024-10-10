@@ -287,7 +287,7 @@ class AssignTaskController extends GetxController {
         break;
     }
 
-    final List<Attachment> taskAttachments = attachmentsListObs;
+    final List<Attachment> taskAttachments = [...attachmentsListObs];
 
     if (voiceRecordUrlObs.value.isNotEmpty) {
       taskAttachments.add(
@@ -372,7 +372,7 @@ class AssignTaskController extends GetxController {
           break;
       }
 
-      final List<Attachment> taskAttachments = attachmentsListObs;
+      final List<Attachment> taskAttachments = [...attachmentsListObs];
 
       if (voiceRecordUrlObs.value.isNotEmpty) {
         taskAttachments.add(

@@ -327,8 +327,10 @@ class TasksController extends GetxController {
         appController.isLoadingObs.value = true;
         final url = await tasksRepository.uploadAttachment(file: file);
         final fileExtension = file.path.split('.').last;
-        final fileType = fileExtension == 'pdf'
-            ? 'pdf'
+        final fileType = fileExtension == 'mp4' ||
+                fileExtension == 'mkv' ||
+                fileExtension == 'hevc'
+            ? 'video'
             : fileExtension == 'jpg' ||
                     fileExtension == 'jpeg' ||
                     fileExtension == 'png' ||

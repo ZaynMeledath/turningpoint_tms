@@ -1,10 +1,10 @@
 part of '../task_details_screen.dart';
 
 Widget taskDetailsAttachmentSegment({
-  required TaskModel taskModel,
+  required List<Attachment> attachments,
   required AssignTaskController assignTaskController,
   required AudioPlayer audioPlayer,
-  required List<dynamic> audioList,
+  required String audioUrl,
   required Dio dio,
 }) {
   return Column(
@@ -17,10 +17,11 @@ Widget taskDetailsAttachmentSegment({
           fontWeight: FontWeight.w600,
         ),
       ),
-      audioList.isNotEmpty
+      audioUrl.isNotEmpty
           ? Container(
               width: 180.w,
               height: 52.h,
+              margin: EdgeInsets.only(top: 6.h),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 gradient: const LinearGradient(
@@ -42,9 +43,7 @@ Widget taskDetailsAttachmentSegment({
                         audioPlayer.stop();
                         assignTaskController.isPlayingObs.value = false;
                       } else {
-                        await audioPlayer.setFilePath(
-                          assignTaskController.voiceRecordPathObs.value,
-                        );
+                        await audioPlayer.setUrl(audioUrl);
                         audioPlayer.play();
                         assignTaskController.isPlayingObs.value = true;
                       }
@@ -79,15 +78,16 @@ Widget taskDetailsAttachmentSegment({
               ),
             )
           : const SizedBox(),
-      SizedBox(height: 14.h),
+      SizedBox(height: 12.h),
       SizedBox(
         height: 110.h,
         child: ListView.builder(
+          padding: EdgeInsets.zero,
           scrollDirection: Axis.horizontal,
-          itemCount: taskModel.attachments!.length,
+          itemCount: attachments.length,
           itemBuilder: (context, index) {
-            final attachmentUrl = taskModel.attachments![index].path!;
-            final attachmentType = taskModel.attachments![index].type!;
+            final attachmentUrl = attachments[index].path!;
+            final attachmentType = attachments[index].type!;
             return Padding(
               padding: EdgeInsets.only(right: 8.w),
               child: InkWell(
