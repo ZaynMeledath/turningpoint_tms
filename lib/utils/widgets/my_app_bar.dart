@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/user_model.dart';
-import 'package:turning_point_tasks_app/utils/flight_shuttle_builder.dart';
-import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
-import 'package:turning_point_tasks_app/view/task_management/profile/profile_screen.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/model/user_model.dart';
+import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
+import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
+import 'package:turningpoint_tms/view/task_management/profile/profile_screen.dart';
 
 AppBar myAppBar({
   required String title,

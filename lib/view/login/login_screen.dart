@@ -5,12 +5,12 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/controller/app_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
-import 'package:turning_point_tasks_app/service/api/api_exceptions.dart';
-import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/service/api/api_exceptions.dart';
+import 'package:turningpoint_tms/view/task_management/home/tasks_home.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 part '../../utils/widgets/custom_text_field.dart';

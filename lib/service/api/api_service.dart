@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
-import 'package:turning_point_tasks_app/service/api/api_exceptions.dart';
+import 'package:turningpoint_tms/preferences/app_preferences.dart';
+import 'package:turningpoint_tms/service/api/api_exceptions.dart';
 
 enum RequestMethod {
   GET,

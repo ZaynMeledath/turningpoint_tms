@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 
 Widget tasksTabBar({
   required TabController tabController,

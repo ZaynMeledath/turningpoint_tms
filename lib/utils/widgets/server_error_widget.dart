@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
 
 Widget serverErrorWidget({
   required void Function() onRefresh,

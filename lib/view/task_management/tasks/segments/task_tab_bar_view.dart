@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/shimmer_tasks_list_loading.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_card.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/shimmer_tasks_list_loading.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/task_card.dart';
 
 Widget taskTabBarView({
   required List<TaskModel>? tasksList,

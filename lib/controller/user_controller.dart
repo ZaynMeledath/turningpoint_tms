@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/exception/user_exceptions.dart';
-import 'package:turning_point_tasks_app/model/all_users_model.dart';
-import 'package:turning_point_tasks_app/model/user_model.dart';
-import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
-import 'package:turning_point_tasks_app/repository/user_repository.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/exception/user_exceptions.dart';
+import 'package:turningpoint_tms/model/all_users_model.dart';
+import 'package:turningpoint_tms/model/user_model.dart';
+import 'package:turningpoint_tms/preferences/app_preferences.dart';
+import 'package:turningpoint_tms/repository/user_repository.dart';
 
 class UserController extends GetxController {
   final userException = Rxn<Exception>();

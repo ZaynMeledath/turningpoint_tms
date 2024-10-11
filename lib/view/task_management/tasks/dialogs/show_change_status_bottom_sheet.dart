@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/controller/app_controller.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 
 Future<Object?> showChangeStatusBottomSheet({
   required String taskId,

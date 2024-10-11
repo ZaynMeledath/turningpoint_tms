@@ -6,14 +6,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/firebase_options.dart';
-import 'package:turning_point_tasks_app/notification/awesome_notification_controller.dart';
-import 'package:turning_point_tasks_app/preferences/app_preferences.dart';
-import 'package:turning_point_tasks_app/view/login/login_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/home/tasks_home.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/firebase_options.dart';
+import 'package:turningpoint_tms/notification/awesome_notification_controller.dart';
+import 'package:turningpoint_tms/preferences/app_preferences.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/task_management/home/tasks_home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

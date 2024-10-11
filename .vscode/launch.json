@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "turning_point_tasks_app",
+            "name": "TMS",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "turning_point_tasks_app (profile mode)",
+            "name": "TMS (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "turning_point_tasks_app (release mode)",
+            "name": "TMS (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

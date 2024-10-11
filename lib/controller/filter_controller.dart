@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/all_users_model.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/model/all_users_model.dart';
 
 final priorityList = ['High', 'Medium', 'Low'];
 

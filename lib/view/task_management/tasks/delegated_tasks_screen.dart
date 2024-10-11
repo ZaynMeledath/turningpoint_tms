@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/controller/app_controller.dart';
-import 'package:turning_point_tasks_app/controller/filter_controller.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
-import 'package:turning_point_tasks_app/utils/widgets/server_error_widget.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_filter_section.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_tab_bar_view.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/tasks_tab_bar.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/filter_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
+import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/tasks_filter_section.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/task_tab_bar_view.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/tasks_tab_bar.dart';
 
 class DelegatedTasksScreen extends StatefulWidget {
   const DelegatedTasksScreen({super.key});

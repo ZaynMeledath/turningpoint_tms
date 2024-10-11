@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> showEnableNotificationPermissionDialog() {

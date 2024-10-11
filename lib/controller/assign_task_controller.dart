@@ -4,14 +4,14 @@ import 'package:flutter/material.dart' show TimeOfDay;
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/controller/app_controller.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
-import 'package:turning_point_tasks_app/exceptions/tms_exceptions.dart';
-import 'package:turning_point_tasks_app/model/all_users_model.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
-import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/exceptions/tms_exceptions.dart';
+import 'package:turningpoint_tms/model/all_users_model.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/repository/tasks_repository.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
 class AssignTaskController extends GetxController {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/dialogs/show_generic_dialog.dart';
-import 'package:turning_point_tasks_app/model/user_model.dart';
-import 'package:turning_point_tasks_app/utils/widgets/my_app_bar.dart';
-import 'package:turning_point_tasks_app/utils/widgets/name_letter_avatar.dart';
-import 'package:turning_point_tasks_app/view/edit_profile/edit_profile_screen.dart';
-import 'package:turning_point_tasks_app/view/login/login_screen.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/model/user_model.dart';
+import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
+import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
+import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
 
 part 'segments/section_title_container.dart';
 part 'segments/profile_option.dart';

@@ -1,10 +1,10 @@
 import 'dart:developer' show log;
 import 'dart:convert';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/all_users_model.dart';
-import 'package:turning_point_tasks_app/model/user_model.dart';
-import 'package:turning_point_tasks_app/service/api/api_endpoints.dart';
-import 'package:turning_point_tasks_app/service/api/api_service.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/model/all_users_model.dart';
+import 'package:turningpoint_tms/model/user_model.dart';
+import 'package:turningpoint_tms/service/api/api_endpoints.dart';
+import 'package:turningpoint_tms/service/api/api_service.dart';
 
 class UserRepository {
 //====================User Register====================//

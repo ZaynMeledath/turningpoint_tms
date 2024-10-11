@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/controller/app_controller.dart';
-import 'package:turning_point_tasks_app/model/all_categories_performance_report_model.dart';
-import 'package:turning_point_tasks_app/model/all_users_performance_report_model.dart';
-import 'package:turning_point_tasks_app/model/delegated_performance_report_model.dart';
-import 'package:turning_point_tasks_app/model/my_performance_report_model.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
-import 'package:turning_point_tasks_app/repository/tasks_repository.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/model/all_categories_performance_report_model.dart';
+import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
+import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
+import 'package:turningpoint_tms/model/my_performance_report_model.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
   TasksController() {

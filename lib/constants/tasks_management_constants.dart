@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
 
 const totalDays = 31;
 

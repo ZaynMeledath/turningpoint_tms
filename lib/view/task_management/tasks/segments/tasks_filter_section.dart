@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/controller/filter_controller.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/view/login/login_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/show_filter_bottom_sheet.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/filter_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_filter_bottom_sheet.dart';
 
 Widget tasksFilterSection({
   required TextEditingController taskSearchController,

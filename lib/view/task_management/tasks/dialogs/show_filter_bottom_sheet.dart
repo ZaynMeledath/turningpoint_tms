@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/controller/filter_controller.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/filter_item.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/frequency_filter_segment.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/priority_filter_segment.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/dialogs/segments/selected_filter.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/filter_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/filter_item.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/frequency_filter_segment.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/priority_filter_segment.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/selected_filter.dart';
 
 part 'segments/filter_reset_segment.dart';
 

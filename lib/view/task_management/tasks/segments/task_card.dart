@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:turning_point_tasks_app/constants/app_constants.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
-import 'package:turning_point_tasks_app/controller/tasks_controller.dart';
-import 'package:turning_point_tasks_app/controller/user_controller.dart';
-import 'package:turning_point_tasks_app/model/tasks_model.dart';
-import 'package:turning_point_tasks_app/extensions/string_extensions.dart';
-import 'package:turning_point_tasks_app/view/task_management/assign_task/assign_task_screen.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/card_action_button.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/segments/task_crud_operations.dart';
-import 'package:turning_point_tasks_app/view/task_management/tasks/task_details_screen.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/extensions/string_extensions.dart';
+import 'package:turningpoint_tms/view/task_management/assign_task/assign_task_screen.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/card_action_button.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/segments/task_crud_operations.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/task_details_screen.dart';
 
 Widget taskCard({
   required AnimationController lottieController,
