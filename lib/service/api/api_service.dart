@@ -229,15 +229,15 @@ class ApiService {
 
   void sendUserToLoginScreen() async {}
 
-  List<dynamic> flattenList(List<dynamic> list) {
-    return list.expand((element) {
-      if (element is List) {
-        // If the element is a list, recursively flatten it
-        return flattenList(element);
-      } else {
-        // Otherwise, return the element itself
-        return [element];
-      }
-    }).toList();
-  }
+  // List<dynamic> flattenList(List<dynamic> list) {
+  //   return list.expand((element) {
+  //     if (element is List) {
+  //       // If the element is a list, recursively flatten it
+  //       return flattenList(element);
+  //     } else {
+  //       // Otherwise, return the element itself
+  //       return [element];
+  //     }
+  //   }).toList();
+  // }
 }

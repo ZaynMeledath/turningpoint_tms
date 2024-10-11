@@ -199,18 +199,32 @@ Widget teamCard({
                       buttons: {
                         'Cancel': null,
                         'Delete': () async {
-                          appController.isLoadingObs.value = true;
-                          userController.deleteTeamMember(
-                              memberId: allUsersModel.id!);
-                          appController.isLoadingObs.value = false;
-                          Get.back();
+                          try {
+                            appController.isLoadingObs.value = true;
+                            await userController.deleteTeamMember(
+                                memberId: allUsersModel.id!);
+                            appController.isLoadingObs.value = false;
+                            Get.back();
 
-                          showGenericDialog(
-                            iconPath: 'assets/lotties/deleted_animation.json',
-                            title: 'Deleted',
-                            content: 'User has been successfully deleted',
-                            buttons: {'OK': null},
-                          );
+                            showGenericDialog(
+                              iconPath: 'assets/lotties/deleted_animation.json',
+                              title: 'Deleted',
+                              content: 'User has been successfully deleted',
+                              buttons: {'OK': null},
+                            );
+                          } catch (_) {
+                            Get.back();
+                            appController.isLoadingObs.value = false;
+                            showGenericDialog(
+                              iconPath:
+                                  'assets/lotties/server_error_animation.json',
+                              title: 'Something went wrong',
+                              content:
+                                  'Something went wrong while deleting the user',
+                              buttons: {'Dismiss': null},
+                            );
+                            return;
+                          }
                         }
                       },
                     ),

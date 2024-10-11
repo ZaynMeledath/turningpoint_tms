@@ -221,52 +221,55 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                   )
                               : const SizedBox(),
                           SizedBox(height: 26.h),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(12),
-                            onTap: () async {
-                              appController.isLoadingObs.value = true;
-                              await onSubmit(
-                                userController: userController,
-                                formKey: _formKey,
-                                nameController: nameController,
-                                phoneController: phoneController,
-                                emailController: emailController,
-                                passwordController: passwordController,
-                                user: user!,
-                                userModel: widget.userModel,
-                              );
-                              appController.isLoadingObs.value = false;
-                            },
-                            child: Container(
-                              width: 140.w,
-                              height: 40.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: AppColors.themeGreen.withOpacity(.7),
-                                border: Border.all(
-                                  color: AppColors.themeGreen,
-                                  width: 1.7,
+                          Obx(
+                            () => InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () async {
+                                appController.isLoadingObs.value = true;
+                                await onSubmit(
+                                  userController: userController,
+                                  formKey: _formKey,
+                                  nameController: nameController,
+                                  phoneController: phoneController,
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  user: user!,
+                                  userModel: widget.userModel,
+                                );
+                                appController.isLoadingObs.value = false;
+                              },
+                              child: Container(
+                                width: 140.w,
+                                height: 40.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: AppColors.themeGreen.withOpacity(.7),
+                                  border: Border.all(
+                                    color: AppColors.themeGreen,
+                                    width: 1.7,
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                  child: appController.isLoadingObs.value
-                                      ? SpinKitWave(
-                                          color: Colors.white,
-                                          size: 16.w,
-                                        )
-                                      : Text(
-                                          widget.userModel != null
-                                              ? 'Submit'
-                                              : 'Add to Team',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                          ),
-                                        )),
-                            ).animate().scale(
-                                  delay: const Duration(milliseconds: 360),
-                                  curve: Curves.elasticOut,
-                                  duration: const Duration(milliseconds: 1000),
-                                ),
+                                child: Center(
+                                    child: appController.isLoadingObs.value
+                                        ? SpinKitWave(
+                                            color: Colors.white,
+                                            size: 16.w,
+                                          )
+                                        : Text(
+                                            widget.userModel != null
+                                                ? 'Submit'
+                                                : 'Add to Team',
+                                            style: TextStyle(
+                                              fontSize: 15.sp,
+                                            ),
+                                          )),
+                              ).animate().scale(
+                                    delay: const Duration(milliseconds: 360),
+                                    curve: Curves.elasticOut,
+                                    duration:
+                                        const Duration(milliseconds: 1000),
+                                  ),
+                            ),
                           ),
                           SizedBox(height: 18.h),
                         ],
@@ -293,20 +296,20 @@ Future<void> onSubmit({
   required UserModel user,
   AllUsersModel? userModel,
 }) async {
-  if (formKey.currentState!.validate()) {
-    if (userController.departmentObs.value == null ||
-        userController.roleObs.value == null ||
-        userController.reportingManagerObs.value == null) {
-      showGenericDialog(
-        iconPath: 'assets/lotties/fill_details_animation.json',
-        title: 'Fill Details',
-        content: 'User details cannot be blank',
-        buttons: {'Dismiss': null},
-      );
-      return;
-    }
+  try {
+    if (formKey.currentState!.validate()) {
+      if (userController.departmentObs.value == null ||
+          userController.roleObs.value == null ||
+          userController.reportingManagerObs.value == null) {
+        showGenericDialog(
+          iconPath: 'assets/lotties/fill_details_animation.json',
+          title: 'Fill Details',
+          content: 'User details cannot be blank',
+          buttons: {'Dismiss': null},
+        );
+        return;
+      }
 
-    try {
       if (userModel != null) {
         userModel.userName = nameController.text.trim();
         userModel.phone = phoneController.text.trim();
@@ -346,13 +349,14 @@ Future<void> onSubmit({
           buttons: {'OK': null},
         );
       }
-    } catch (_) {
-      showGenericDialog(
-        iconPath: 'assets/lotties/server_error_animation.json',
-        title: 'Something went wrong',
-        content: 'Something went wrong while adding the user',
-        buttons: {'Dismiss': null},
-      );
     }
+  } catch (_) {
+    showGenericDialog(
+      iconPath: 'assets/lotties/server_error_animation.json',
+      title: 'Something went wrong',
+      content: 'Something went wrong while adding the user',
+      buttons: {'Dismiss': null},
+    );
+    return;
   }
 }

@@ -81,6 +81,17 @@ class _MyTeamScreenState extends State<MyTeamScreen>
         ),
         body: Obx(
           () {
+            if (teamSearchController.text.isNotEmpty) {
+              userController.myTeamSearchList.value = userController
+                          .myTeamList.value !=
+                      null
+                  ? userController.myTeamList.value!
+                      .where((item) => item.userName!
+                          .toLowerCase()
+                          .contains(teamSearchController.text.toLowerCase()))
+                      .toList()
+                  : [];
+            }
             final myTeamList = userController.myTeamSearchList.isNotEmpty ||
                     teamSearchController.text.trim().isNotEmpty
                 ? userController.myTeamSearchList

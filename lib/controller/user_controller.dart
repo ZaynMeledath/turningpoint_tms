@@ -149,9 +149,10 @@ class UserController extends GetxController {
   }) async {
     try {
       await UserRepository.deleteTeamMember(memberId: memberId);
+      await getAllTeamMembers();
       userException.value = null;
     } catch (e) {
-      userException.value = e as Exception;
+      rethrow;
     }
     await getAllTeamMembers();
   }

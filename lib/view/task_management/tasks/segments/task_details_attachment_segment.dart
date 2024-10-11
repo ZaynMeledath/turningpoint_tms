@@ -108,6 +108,7 @@ Widget taskDetailsAttachmentSegment({
                     Directory appDocDir;
                     if (Platform.isAndroid) {
                       appDocDir = Directory("/storage/emulated/0/Download");
+                      log('${await getApplicationDocumentsDirectory()}');
                     } else {
                       appDocDir = await getApplicationDocumentsDirectory();
                     }
