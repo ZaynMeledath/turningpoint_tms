@@ -111,6 +111,9 @@ class UserController extends GetxController {
   Future<void> getAllTeamMembers() async {
     try {
       myTeamList.value = await UserRepository.getAllTeamMembers();
+      if (myTeamList.value != null) {
+        myTeamSearchList.value = myTeamList.value!;
+      }
       userException.value = null;
     } catch (e) {
       userException.value = e as Exception;

@@ -279,7 +279,16 @@ class TasksController extends GetxController {
     try {
       await tasksRepository.deleteTask(taskId: taskId);
       tasksException.value = null;
-      await getDelegatedTasks();
+      if (isDelegatedObs.value == true) {
+        await getDelegatedTasks();
+      } else if (isDelegatedObs.value == false) {
+        await getMyTasks();
+      }
+      await getAllTasks();
+      if (dashboardTasksListObs.isNotEmpty) {
+        dashboardTasksListObs
+            .removeWhere((taskModel) => taskModel.id == taskId);
+      }
     } catch (_) {
       rethrow;
     }
