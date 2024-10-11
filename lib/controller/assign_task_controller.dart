@@ -412,8 +412,15 @@ class AssignTaskController extends GetxController {
         await tasksController.getDelegatedTasks();
       } else if (tasksController.isDelegatedObs.value == false) {
         await tasksController.getMyTasks();
-      } else {
-        await tasksController.getAllTasks();
+      }
+      await tasksController.getAllTasks();
+      for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
+        if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
+          tasksController.dashboardTasksListObs[i] = tasksController
+              .allTasksListObs.value!
+              .firstWhere((item) => item.id == taskModel.id);
+          return;
+        }
       }
     } catch (e) {
       rethrow;

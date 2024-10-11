@@ -234,7 +234,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                                   emailController: emailController,
                                   passwordController: passwordController,
                                   user: user!,
-                                  userModel: widget.userModel,
+                                  allUsersModel: widget.userModel,
                                 );
                                 appController.isLoadingObs.value = false;
                               },
@@ -294,33 +294,36 @@ Future<void> onSubmit({
   required TextEditingController emailController,
   required TextEditingController passwordController,
   required UserModel user,
-  AllUsersModel? userModel,
+  AllUsersModel? allUsersModel,
 }) async {
   try {
+    final user = getUserModelFromHive();
     if (formKey.currentState!.validate()) {
-      if (userController.departmentObs.value == null ||
-          userController.roleObs.value == null ||
-          userController.reportingManagerObs.value == null) {
-        showGenericDialog(
-          iconPath: 'assets/lotties/fill_details_animation.json',
-          title: 'Fill Details',
-          content: 'User details cannot be blank',
-          buttons: {'Dismiss': null},
-        );
-        return;
+      if (user!.role != Role.teamLeader) {
+        if (userController.departmentObs.value == null ||
+            userController.roleObs.value == null ||
+            userController.reportingManagerObs.value == null) {
+          showGenericDialog(
+            iconPath: 'assets/lotties/fill_details_animation.json',
+            title: 'Fill Details',
+            content: 'User details cannot be blank',
+            buttons: {'Dismiss': null},
+          );
+          return;
+        }
       }
 
-      if (userModel != null) {
-        userModel.userName = nameController.text.trim();
-        userModel.phone = phoneController.text.trim();
-        userModel.emailId = emailController.text.trim().toLowerCase();
-        userModel.department =
+      if (allUsersModel != null) {
+        allUsersModel.userName = nameController.text.trim();
+        allUsersModel.phone = phoneController.text.trim();
+        allUsersModel.emailId = emailController.text.trim().toLowerCase();
+        allUsersModel.department =
             userController.departmentObs.value ?? user.department;
-        userModel.role = userController.roleObs.value ?? Role.user;
-        userModel.reportingTo =
+        allUsersModel.role = userController.roleObs.value ?? Role.user;
+        allUsersModel.reportingTo =
             userController.reportingManagerObs.value ?? user.name;
-        userModel.password = null;
-        await userController.updateTeamMember(userModel: userModel);
+        allUsersModel.password = null;
+        await userController.updateTeamMember(userModel: allUsersModel);
         Get.back();
 
         showGenericDialog(

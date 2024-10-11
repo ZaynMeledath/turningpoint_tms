@@ -189,7 +189,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   //====================Action Buttons Section====================//
                   isTaskCompleted &&
                           (tasksController.isDelegatedObs.value == true ||
-                              user?.role == Role.admin)
+                              user?.role == Role.admin ||
+                              taskModel.createdBy!.emailId == user!.emailId)
                       ? Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.w,
@@ -286,7 +287,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                   SizedBox(height: isTaskCompleted ? 0 : 9.h),
                   !isTaskCompleted &&
                           (tasksController.isDelegatedObs.value == true ||
-                              user?.role == Role.admin)
+                              user?.role == Role.admin ||
+                              taskModel.createdBy!.emailId == user!.emailId)
                       ? Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 14.w,

@@ -373,8 +373,19 @@ class TasksController extends GetxController {
         taskUpdateAttachmentsMapList: taskUpdateAttachmentsMapList,
       );
       tasksException.value = null;
-      await getMyTasks();
-      await getDelegatedTasks();
+      if (isDelegatedObs.value == true) {
+        await getDelegatedTasks();
+      } else if (isDelegatedObs.value == false) {
+        await getMyTasks();
+      }
+      await getAllTasks();
+      for (int i = 0; i < dashboardTasksListObs.length; i++) {
+        if (dashboardTasksListObs[i].id == taskId) {
+          dashboardTasksListObs[i] = allTasksListObs.value!
+              .firstWhere((taskModel) => taskModel.id == taskId);
+          return;
+        }
+      }
     } catch (_) {
       rethrow;
     }

@@ -220,7 +220,8 @@ Widget taskCard({
                 SizedBox(height: 12.h),
                 isTaskCompleted &&
                         (tasksController.isDelegatedObs.value == true ||
-                            user?.role == Role.admin)
+                            user?.role == Role.admin ||
+                            taskModel.createdBy!.emailId == user!.emailId)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -277,7 +278,8 @@ Widget taskCard({
                 SizedBox(height: isTaskCompleted ? 0 : 9.h),
                 !isTaskCompleted &&
                         (tasksController.isDelegatedObs.value == true ||
-                            user?.role == Role.admin)
+                            user?.role == Role.admin ||
+                            taskModel.createdBy!.emailId == user!.emailId)
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

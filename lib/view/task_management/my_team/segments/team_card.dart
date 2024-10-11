@@ -5,7 +5,7 @@ Widget teamCard({
 }) {
   final userController = Get.put(UserController());
   final appController = Get.put(AppController());
-  final userModel = getUserModelFromHive();
+  final user = getUserModelFromHive();
   Color roleBadgeColor = Colors.teal;
 
   switch (allUsersModel.role) {
@@ -173,7 +173,8 @@ Widget teamCard({
         ),
         SizedBox(height: 15.h),
 //====================Buttons====================//
-        userModel!.role == Role.admin && allUsersModel.id != userModel.id
+        (user!.role == Role.admin || allUsersModel.reportingTo == user.name) &&
+                allUsersModel.id != user.id
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
