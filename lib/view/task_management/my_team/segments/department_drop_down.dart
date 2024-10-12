@@ -49,6 +49,22 @@ Widget departmentDropDown({
       ),
     ),
     value: userController.departmentObs.value,
+    selectedItemBuilder: (context) {
+      return tasksController.categoriesList.map((String department) {
+        return SizedBox(
+          width: 300.w,
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 16.sp,
+            ),
+            child: Text(
+              department,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
+      }).toList();
+    },
     items: tasksController.categoriesList.map((String department) {
       return DropdownMenuItem<String>(
         value: department,

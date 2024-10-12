@@ -53,6 +53,22 @@ Widget roleDropDown({
       ),
     ),
     value: userController.roleObs.value,
+    selectedItemBuilder: (context) {
+      return roles.map((String role) {
+        return SizedBox(
+          width: 300.w,
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 16.sp,
+            ),
+            child: Text(
+              role,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
+      }).toList();
+    },
     items: roles.map((String role) {
       return DropdownMenuItem<String>(
         value: role,

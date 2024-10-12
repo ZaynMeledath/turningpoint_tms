@@ -48,6 +48,25 @@ Widget reportingManagerDropDown({
       ),
     ),
     value: userController.reportingManagerObs.value,
+    selectedItemBuilder: (context) {
+      return userController.myTeamList.value!
+          .where(
+              (user) => user.role == Role.admin || user.role == Role.teamLeader)
+          .map((AllUsersModel user) {
+        return SizedBox(
+          width: 300.w,
+          child: DefaultTextStyle(
+            style: TextStyle(
+              fontSize: 16.sp,
+            ),
+            child: Text(
+              user.userName.toString(),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
+      }).toList();
+    },
     items: userController.myTeamList.value!
         .where(
             (user) => user.role == Role.admin || user.role == Role.teamLeader)
