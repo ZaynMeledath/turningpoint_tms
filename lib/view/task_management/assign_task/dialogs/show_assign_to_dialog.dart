@@ -23,7 +23,7 @@ Widget assignToDialog({
   required FilterController filterController,
 }) {
   final userController = Get.put(UserController());
-  final allUsers = userController.myTeamList.value;
+  final allUsers = userController.assignTaskUsersList.value;
 
   // final tasksController = TasksController();
 
@@ -61,173 +61,192 @@ Widget assignToDialog({
                           .toList();
                     }),
               ),
-              Expanded(
-                child: Obx(
-                  () {
-                    final assignToSearchList =
-                        assignTaskController.assignToSearchList;
-                    return ListView.builder(
-                      itemCount: assignToSearchList.isEmpty &&
-                              assignToSearchController.text.trim().isEmpty
-                          ? allUsers?.length ?? 0
-                          : assignToSearchList.length,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 8.h,
-                      ),
-                      itemBuilder: (context, index) {
-                        // final name =
-                        //     tasksController.assignToSearchList.isNotEmpty &&
-                        //             searchController.text.isNotEmpty
-                        //         ? tasksController
-                        //                 .assignToSearchList[index].userName ??
-                        //             ''
-                        //         : allUsers?[index].userName ?? '';
-                        // final email = tasksController
-                        //             .assignToSearchList.isNotEmpty &&
-                        //         searchController.text.isNotEmpty
-                        //     ? tasksController.assignToSearchList[index].emailId ??
-                        //         ''
-                        //     : allUsers?[index].emailId ?? '';
+              allUsers != null
+                  ? Expanded(
+                      child: Obx(
+                        () {
+                          final assignToSearchList =
+                              assignTaskController.assignToSearchList;
+                          return ListView.builder(
+                            itemCount: assignToSearchList.isEmpty &&
+                                    assignToSearchController.text.trim().isEmpty
+                                ? allUsers.length
+                                : assignToSearchList.length,
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 16.w,
+                              vertical: 8.h,
+                            ),
+                            itemBuilder: (context, index) {
+                              // final name =
+                              //     tasksController.assignToSearchList.isNotEmpty &&
+                              //             searchController.text.isNotEmpty
+                              //         ? tasksController
+                              //                 .assignToSearchList[index].userName ??
+                              //             ''
+                              //         : allUsers?[index].userName ?? '';
+                              // final email = tasksController
+                              //             .assignToSearchList.isNotEmpty &&
+                              //         searchController.text.isNotEmpty
+                              //     ? tasksController.assignToSearchList[index].emailId ??
+                              //         ''
+                              //     : allUsers?[index].emailId ?? '';
 
-                        final name = allUsers != null &&
-                                assignToSearchController.text.isEmpty &&
-                                assignToSearchList.isEmpty
-                            ? allUsers[index].userName ?? ''
-                            : assignToSearchList[index].userName ?? '';
+                              final name = assignToSearchController
+                                          .text.isEmpty &&
+                                      assignToSearchList.isEmpty
+                                  ? allUsers[index].userName ?? ''
+                                  : assignToSearchList[index].userName ?? '';
 
-                        final email = allUsers != null &&
-                                assignToSearchController.text.isEmpty &&
-                                assignToSearchList.isEmpty
-                            ? allUsers[index].emailId ?? ''
-                            : assignToSearchList[index].emailId ?? '';
+                              final email =
+                                  assignToSearchController.text.isEmpty &&
+                                          assignToSearchList.isEmpty
+                                      ? allUsers[index].emailId ?? ''
+                                      : assignToSearchList[index].emailId ?? '';
 
-                        final phone = allUsers != null &&
-                                assignToSearchController.text.isEmpty &&
-                                assignToSearchList.isEmpty
-                            ? allUsers[index].phone ?? ''
-                            : assignToSearchList[index].phone ?? '';
+                              final phone =
+                                  assignToSearchController.text.isEmpty &&
+                                          assignToSearchList.isEmpty
+                                      ? allUsers[index].phone ?? ''
+                                      : assignToSearchList[index].phone ?? '';
 
-                        return GestureDetector(
-                          onTap: () {
-                            filterController.selectOrUnselectAssignedToFilter(
-                                filterKey: email.toString());
+                              return GestureDetector(
+                                onTap: () {
+                                  filterController
+                                      .selectOrUnselectAssignedToFilter(
+                                          filterKey: email.toString());
 
-                            if (filterController.assignedToFilterModel[email] ==
-                                true) {
-                              assignTaskController.addToAssignToList(
-                                name: name,
-                                email: email,
-                                phone: phone,
-                              );
-                            } else {
-                              assignTaskController.removeFromAssignToList(
-                                email: email,
-                              );
-                            }
-                          },
-                          child: Container(
-                            color: Colors.transparent,
-                            margin: EdgeInsets.only(bottom: 16.h),
-                            child: Row(
-                              children: [
-                                nameLetterAvatar(
-                                  name: name.toString(),
-                                  circleDiameter: 32.w,
-                                ),
-                                SizedBox(width: 8.w),
-                                SizedBox(
-                                  width: 270.w,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                  if (filterController
+                                          .assignedToFilterModel[email] ==
+                                      true) {
+                                    assignTaskController.addToAssignToList(
+                                      name: name,
+                                      email: email,
+                                      phone: phone,
+                                    );
+                                  } else {
+                                    assignTaskController.removeFromAssignToList(
+                                      email: email,
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  margin: EdgeInsets.only(bottom: 16.h),
+                                  child: Row(
                                     children: [
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        child: Text(
-                                          name.toString(),
-                                          overflow: TextOverflow.ellipsis,
+                                      nameLetterAvatar(
+                                        name: name.toString(),
+                                        circleDiameter: 32.w,
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      SizedBox(
+                                        width: 270.w,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            DefaultTextStyle(
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              child: Text(
+                                                name.toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(height: 2.h),
+                                            DefaultTextStyle(
+                                              style: TextStyle(
+                                                color: Colors.white60,
+                                                fontSize: 13.sp,
+                                              ),
+                                              child: Text(
+                                                email.toString(),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(height: 2.h),
-                                      DefaultTextStyle(
-                                        style: TextStyle(
-                                          color: Colors.white60,
-                                          fontSize: 13.sp,
-                                        ),
-                                        child: Text(
-                                          email.toString(),
-                                          overflow: TextOverflow.ellipsis,
+                                      Obx(
+                                        () => Material(
+                                          color: Colors.transparent,
+                                          child: Checkbox.adaptive(
+                                            value: filterController
+                                                        .assignedToFilterModel[
+                                                    email] ??
+                                                false,
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                            fillColor: WidgetStatePropertyAll(
+                                              filterController.assignedToFilterModel[
+                                                          email] ==
+                                                      true
+                                                  ? AppColors.themeGreen
+                                                  : Colors.transparent,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                            ),
+                                            onChanged: (value) {
+                                              filterController
+                                                  .selectOrUnselectAssignedToFilter(
+                                                      filterKey:
+                                                          email.toString());
+
+                                              if (filterController
+                                                          .assignedToFilterModel[
+                                                      email] ==
+                                                  true) {
+                                                assignTaskController
+                                                    .addToAssignToList(
+                                                  name: name,
+                                                  email: email,
+                                                  phone: phone,
+                                                );
+                                              } else {
+                                                assignTaskController
+                                                    .removeFromAssignToList(
+                                                  email: email,
+                                                );
+                                              }
+                                            },
+                                          ),
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                Obx(
-                                  () => Material(
-                                    color: Colors.transparent,
-                                    child: Checkbox.adaptive(
-                                      value: filterController
-                                              .assignedToFilterModel[email] ??
-                                          false,
-                                      visualDensity: VisualDensity.compact,
-                                      fillColor: WidgetStatePropertyAll(
-                                        filterController.assignedToFilterModel[
-                                                    email] ==
-                                                true
-                                            ? AppColors.themeGreen
-                                            : Colors.transparent,
+                                  )
+                                      .animate(
+                                        key: GlobalKey(),
+                                      )
+                                      .slideX(
+                                        begin: -.03,
+                                        delay: Duration(
+                                            milliseconds: 6 * (index + 1)),
+                                        duration:
+                                            const Duration(milliseconds: 600),
+                                        curve: Curves.elasticOut,
                                       ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      onChanged: (value) {
-                                        filterController
-                                            .selectOrUnselectAssignedToFilter(
-                                                filterKey: email.toString());
-
-                                        if (filterController
-                                                .assignedToFilterModel[email] ==
-                                            true) {
-                                          assignTaskController
-                                              .addToAssignToList(
-                                            name: name,
-                                            email: email,
-                                            phone: phone,
-                                          );
-                                        } else {
-                                          assignTaskController
-                                              .removeFromAssignToList(
-                                            email: email,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
                                 ),
-                              ],
-                            )
-                                .animate(
-                                  key: GlobalKey(),
-                                )
-                                .slideX(
-                                  begin: -.03,
-                                  delay:
-                                      Duration(milliseconds: 6 * (index + 1)),
-                                  duration: const Duration(milliseconds: 600),
-                                  curve: Curves.elasticOut,
-                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : Column(
+                      children: [
+                        SizedBox(height: 80.h),
+                        Center(
+                          child: SpinKitWave(
+                            size: 21.w,
+                            color: AppColors.themeGreen,
                           ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),

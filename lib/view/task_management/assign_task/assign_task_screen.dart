@@ -66,12 +66,14 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   final filterController = FilterController();
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
+  final userController = Get.put(UserController());
   final recorder = AudioRecorder();
   final audioPlayer = AudioPlayer();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
+    getData();
     tabController = TabController(length: 3, vsync: this);
 
     titleController = TextEditingController();
@@ -99,6 +101,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     });
 
     super.initState();
+  }
+
+  void getData() async {
+    await userController.getAssignTaskUsers();
   }
 
   void assignPreviousValues() {

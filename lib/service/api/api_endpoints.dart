@@ -6,6 +6,7 @@ class ApiEndpoints {
   static const register = '$baseUrl/auth/register';
   static const users = '$baseUrl/users';
   static const updateProfile = '$baseUrl/users/profile';
+  static const getAssignTaskUsers = '$baseUrl/users/assign';
   static const getAllTasks = '$baseUrl/tasks';
   static const getMyTasks = '$baseUrl/tasks/mytasks';
   static const getDelegatedTasks = '$baseUrl/tasks/delegatedtasks';

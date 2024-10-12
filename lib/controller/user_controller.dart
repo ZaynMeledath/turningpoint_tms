@@ -17,6 +17,9 @@ class UserController extends GetxController {
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
   RxList<AllUsersModel> myTeamSearchList = <AllUsersModel>[].obs;
 
+  Rxn<List<AllUsersModel>> assignTaskUsersList = Rxn<List<AllUsersModel>>();
+  RxList<AllUsersModel> assignTaskUsersSearchList = <AllUsersModel>[].obs;
+
 //====================My Team====================//
   final roleObs = RxnString();
   final reportingManagerObs = RxnString();
@@ -113,6 +116,19 @@ class UserController extends GetxController {
       myTeamList.value = await UserRepository.getAllTeamMembers();
       if (myTeamList.value != null) {
         myTeamSearchList.value = myTeamList.value!;
+      }
+      userException.value = null;
+    } catch (e) {
+      userException.value = e as Exception;
+    }
+  }
+
+//====================Get Assign Task Users====================//
+  Future<void> getAssignTaskUsers() async {
+    try {
+      assignTaskUsersList.value = await UserRepository.getAssignTaskUsers();
+      if (assignTaskUsersList.value != null) {
+        assignTaskUsersSearchList.value = assignTaskUsersList.value!;
       }
       userException.value = null;
     } catch (e) {

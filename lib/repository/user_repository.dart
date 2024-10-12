@@ -140,6 +140,25 @@ class UserRepository {
     }
   }
 
+//====================Get Assign Task Users====================//
+  static Future<List<AllUsersModel>?> getAssignTaskUsers() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.getAssignTaskUsers,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      final allUsersModelResponse = AllUsersModelResponse.fromJson(response);
+
+      return allUsersModelResponse.users;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 //====================Add a Team Member====================//
   static Future<void> addTeamMember({
     required AllUsersModel userModel,
