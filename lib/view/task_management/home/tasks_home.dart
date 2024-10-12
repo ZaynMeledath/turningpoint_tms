@@ -73,7 +73,7 @@ class _TasksHomeState extends State<TasksHome> {
 
   Future<void> getData() async {
     await userController.getUserById(userId: userModel!.id!);
-    await userController.getAllTeamMembers();
+    await userController.getAssignTaskUsers();
   }
 
   void handleNotificationDialog() async {

@@ -66,12 +66,12 @@ class FilterController extends GetxController {
 
     if (userController.myTeamList.value != null) {
       assignedByFilterModel.value = {
-        for (AllUsersModel element in userController.myTeamList.value!)
+        for (AllUsersModel element in userController.assignTaskUsersList.value!)
           element.emailId.toString(): false
       };
 
       assignedToFilterModel.value = {
-        for (AllUsersModel element in userController.myTeamList.value!)
+        for (AllUsersModel element in userController.assignTaskUsersList.value!)
           element.emailId.toString(): false
       };
     }

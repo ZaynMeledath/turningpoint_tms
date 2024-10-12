@@ -16,7 +16,7 @@ Widget assignedFilterSegment({
 }) {
   bool shouldAnimate = animationFlag < 1;
   final userController = Get.put(UserController());
-  final allUsers = userController.myTeamList.value ?? [];
+  final allUsers = userController.assignTaskUsersList.value ?? [];
   return Expanded(
     child: Column(
       children: [
@@ -58,11 +58,14 @@ Widget assignedFilterSegment({
             itemBuilder: (context, index) {
               final name = filterController.assignedSearchList.isEmpty &&
                       assignedSearchController.text.trim().isEmpty
-                  ? (userController.myTeamList.value?[index].userName ?? '')
+                  ? (userController
+                          .assignTaskUsersList.value?[index].userName ??
+                      '')
                   : filterController.assignedSearchList[index].userName ?? '';
               final email = filterController.assignedSearchList.isEmpty &&
                       assignedSearchController.text.trim().isEmpty
-                  ? (userController.myTeamList.value?[index].emailId ?? '')
+                  ? (userController.assignTaskUsersList.value?[index].emailId ??
+                      '')
                   : filterController.assignedSearchList[index].emailId ?? '';
               return InkWell(
                 onTap: () {
