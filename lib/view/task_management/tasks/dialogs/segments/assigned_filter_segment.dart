@@ -27,12 +27,21 @@ Widget assignedFilterSegment({
               controller: assignedSearchController,
               hintText: 'Search by Name/Email',
               onChanged: (value) {
-                filterController.assignedSearchList.clear();
-                filterController.assignedSearchList.value = allUsers
-                    .where((userModel) => userModel.userName!
-                        .toLowerCase()
-                        .contains(value.toLowerCase()))
-                    .toList();
+                if (isAssignedBy) {
+                  filterController.assignedBySearchList.clear();
+                  filterController.assignedBySearchList.value = allUsers
+                      .where((userModel) => userModel.userName!
+                          .toLowerCase()
+                          .contains(value.toLowerCase()))
+                      .toList();
+                } else {
+                  filterController.assignedToSearchList.clear();
+                  filterController.assignedToSearchList.value = allUsers
+                      .where((userModel) => userModel.userName!
+                          .toLowerCase()
+                          .contains(value.toLowerCase()))
+                      .toList();
+                }
               }),
         ),
         // .animate(
@@ -47,26 +56,57 @@ Widget assignedFilterSegment({
         Expanded(
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
-            itemCount: filterController.assignedSearchList.isEmpty &&
-                    assignedSearchController.text.trim().isEmpty
-                ? allUsers.length
-                : filterController.assignedSearchList.length,
+            itemCount: isAssignedBy
+                ? filterController.assignedBySearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? allUsers.length
+                    : filterController.assignedBySearchList.length
+                : filterController.assignedToSearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? allUsers.length
+                    : filterController.assignedToSearchList.length,
             padding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 8.h,
             ),
             itemBuilder: (context, index) {
-              final name = filterController.assignedSearchList.isEmpty &&
-                      assignedSearchController.text.trim().isEmpty
-                  ? (userController
-                          .assignTaskUsersList.value?[index].userName ??
-                      '')
-                  : filterController.assignedSearchList[index].userName ?? '';
-              final email = filterController.assignedSearchList.isEmpty &&
-                      assignedSearchController.text.trim().isEmpty
-                  ? (userController.assignTaskUsersList.value?[index].emailId ??
-                      '')
-                  : filterController.assignedSearchList[index].emailId ?? '';
+              String name = '';
+              String email = '';
+
+              if (isAssignedBy) {
+                name = filterController.assignedBySearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].userName ??
+                        '')
+                    : filterController.assignedBySearchList[index].userName ??
+                        '';
+
+                email = filterController.assignedBySearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].emailId ??
+                        '')
+                    : filterController.assignedBySearchList[index].emailId ??
+                        '';
+              } else {
+                name = filterController.assignedToSearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].userName ??
+                        '')
+                    : filterController.assignedToSearchList[index].userName ??
+                        '';
+
+                email = filterController.assignedToSearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].emailId ??
+                        '')
+                    : filterController.assignedToSearchList[index].emailId ??
+                        '';
+              }
+
               return InkWell(
                 onTap: () {
                   if (isAssignedBy) {
@@ -120,11 +160,13 @@ Widget assignedFilterSegment({
                                   false,
                           visualDensity: VisualDensity.compact,
                           fillColor: WidgetStatePropertyAll(
-                            filterController.assignedToFilterModel[email] ==
-                                        true ||
-                                    filterController
-                                            .assignedByFilterModel[email] ==
-                                        true
+                            (filterController.assignedToFilterModel[email] ==
+                                            true &&
+                                        !isAssignedBy) ||
+                                    (filterController
+                                                .assignedByFilterModel[email] ==
+                                            true &&
+                                        isAssignedBy)
                                 ? AppColors.themeGreen
                                 : Colors.transparent,
                           ),

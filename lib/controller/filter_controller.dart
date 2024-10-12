@@ -49,7 +49,8 @@ class FilterController extends GetxController {
 
 //To filter with search in filter bottom sheet
   RxList<String> categoriesSearchList = RxList<String>();
-  RxList<AllUsersModel> assignedSearchList = RxList<AllUsersModel>();
+  RxList<AllUsersModel> assignedBySearchList = RxList<AllUsersModel>();
+  RxList<AllUsersModel> assignedToSearchList = RxList<AllUsersModel>();
 
   final RxList selectedCategoryList = [].obs;
   final RxList selectedAssignedByList = [].obs;
@@ -64,7 +65,7 @@ class FilterController extends GetxController {
         element.toString(): false
     };
 
-    if (userController.myTeamList.value != null) {
+    if (userController.assignTaskUsersList.value != null) {
       assignedByFilterModel.value = {
         for (AllUsersModel element in userController.assignTaskUsersList.value!)
           element.emailId.toString(): false
@@ -239,12 +240,12 @@ class FilterController extends GetxController {
     };
 
     assignedByFilterModel.value = {
-      for (AllUsersModel element in userController.myTeamList.value!)
+      for (AllUsersModel element in userController.assignTaskUsersList.value!)
         element.emailId.toString(): false
     }.obs;
 
     assignedToFilterModel.value = {
-      for (AllUsersModel element in userController.myTeamList.value!)
+      for (AllUsersModel element in userController.assignTaskUsersList.value!)
         element.emailId.toString(): false
     }.obs;
 

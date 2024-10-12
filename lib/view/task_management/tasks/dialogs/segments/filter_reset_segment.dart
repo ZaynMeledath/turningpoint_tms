@@ -2,6 +2,9 @@ part of '../show_filter_bottom_sheet.dart';
 
 Widget filterResetSegment({
   required FilterController filterController,
+  required TextEditingController categorySearchController,
+  required TextEditingController? assignedBySearchController,
+  required TextEditingController? assignedToSearchController,
 }) {
   return SizedBox(
     height: 50.h,
@@ -15,6 +18,16 @@ Widget filterResetSegment({
           InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
+              categorySearchController.clear();
+              filterController.categoriesSearchList.clear();
+              if (assignedBySearchController != null) {
+                assignedBySearchController.clear();
+                filterController.assignedBySearchList.clear();
+              }
+              if (assignedToSearchController != null) {
+                assignedToSearchController.clear();
+                filterController.assignedToSearchList.clear();
+              }
               filterController.resetFilters();
             },
             child: Container(

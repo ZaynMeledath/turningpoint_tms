@@ -16,7 +16,8 @@ part 'segments/filter_reset_segment.dart';
 
 Future<Object?> showFilterBottomSheet({
   required TextEditingController categorySearchController,
-  required TextEditingController assignedSearchController,
+  required TextEditingController? assignedBySearchController,
+  required TextEditingController? assignedToSearchController,
   required FilterController filterController,
   required TasksController tasksController,
   bool? isAllTasks,
@@ -175,7 +176,9 @@ Future<Object?> showFilterBottomSheet({
                                 )
                               : const SizedBox(),
                           isAllTasks == true ||
-                                  tasksController.isDelegatedObs.value == true
+                                  tasksController.isDelegatedObs.value ==
+                                      true ||
+                                  tasksController.isDelegatedObs.value == null
                               ? InkWell(
                                   onTap: () =>
                                       filterController.selectFilterOption(
@@ -233,7 +236,7 @@ Future<Object?> showFilterBottomSheet({
                                       FilterOptions.assignedBy
                                   ? assignedFilterSegment(
                                       assignedSearchController:
-                                          assignedSearchController,
+                                          assignedBySearchController!,
                                       filterController: filterController,
                                       isAssignedBy: true,
                                       animationFlag: assignedByAnimationFlag,
@@ -243,7 +246,7 @@ Future<Object?> showFilterBottomSheet({
                                           FilterOptions.assignedTo
                                       ? assignedFilterSegment(
                                           assignedSearchController:
-                                              assignedSearchController,
+                                              assignedToSearchController!,
                                           filterController: filterController,
                                           isAssignedBy: false,
                                           animationFlag:
@@ -266,6 +269,11 @@ Future<Object?> showFilterBottomSheet({
                                             ),
                           filterResetSegment(
                             filterController: filterController,
+                            categorySearchController: categorySearchController,
+                            assignedBySearchController:
+                                assignedBySearchController,
+                            assignedToSearchController:
+                                assignedToSearchController,
                           ),
                         ],
                       ),

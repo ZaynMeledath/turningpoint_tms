@@ -11,7 +11,8 @@ import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_filter_
 Widget tasksFilterSection({
   required TextEditingController taskSearchController,
   required TextEditingController categorySearchController,
-  required TextEditingController assignedSearchController,
+  required TextEditingController? assignedToSearchController,
+  required TextEditingController? assignedBySearchController,
   required UserController userController,
   required FilterController filterController,
   required TasksController tasksController,
@@ -34,7 +35,10 @@ Widget tasksFilterSection({
                         onTap: () async {
                           await showFilterBottomSheet(
                             categorySearchController: categorySearchController,
-                            assignedSearchController: assignedSearchController,
+                            assignedToSearchController:
+                                assignedToSearchController,
+                            assignedBySearchController:
+                                assignedBySearchController,
                             filterController: filterController,
                             tasksController: tasksController,
                           );

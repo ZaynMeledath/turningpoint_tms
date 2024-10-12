@@ -23,7 +23,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   late final AnimationController lottieController;
   late final TextEditingController taskSearchController;
   late final TextEditingController categorySearchController;
-  late final TextEditingController assignedSearchController;
+  late final TextEditingController assignedBySearchController;
   late final TabController tabController;
   final UserController userController = Get.put(UserController());
   final TasksController tasksController = Get.put(TasksController());
@@ -47,7 +47,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     );
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
-    assignedSearchController = TextEditingController();
+    assignedBySearchController = TextEditingController();
 
     getData();
     animateLottie();
@@ -82,7 +82,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
     lottieController.dispose();
     taskSearchController.dispose();
     categorySearchController.dispose();
-    assignedSearchController.dispose();
+    assignedBySearchController.dispose();
     tabController.dispose();
     super.dispose();
   }
@@ -112,7 +112,8 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                 tasksFilterSection(
                     taskSearchController: taskSearchController,
                     categorySearchController: categorySearchController,
-                    assignedSearchController: assignedSearchController,
+                    assignedBySearchController: assignedBySearchController,
+                    assignedToSearchController: null,
                     userController: userController,
                     filterController: filterController,
                     tasksController: tasksController,
