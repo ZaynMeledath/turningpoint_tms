@@ -55,6 +55,7 @@ class _TasksDashboardState extends State<TasksDashboard>
 
   @override
   void initState() {
+    tasksController.isDelegatedObs.value = null;
     userModel = getUserModelFromHive();
     isAdminOrLeader =
         userModel?.role == Role.admin || userModel?.role == Role.teamLeader;
@@ -81,6 +82,17 @@ class _TasksDashboardState extends State<TasksDashboard>
     } else {
       await tasksController.getMyPerformanceReport();
     }
+  }
+
+  @override
+  void dispose() {
+    appController.isLoadingObs.value = false;
+    staffWiseSearchController.dispose();
+    categoryWiseSearchController.dispose();
+    myReportSearchController.dispose();
+    delegatedSearchController.dispose();
+    tabController.dispose();
+    super.dispose();
   }
 
   @override

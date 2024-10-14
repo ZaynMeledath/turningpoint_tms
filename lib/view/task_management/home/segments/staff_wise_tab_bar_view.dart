@@ -75,7 +75,7 @@ Widget staffWiseTabBarView({
                               Get.to(
                                 () => TasksScreen(
                                   title:
-                                      '${performanceReportModel.userName}\'s Tasks',
+                                      '${performanceReportModel.userName!.split(' ').first}\'s Tasks',
                                 ),
                                 transition: Transition.zoom,
                               );

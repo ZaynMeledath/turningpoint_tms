@@ -6,6 +6,11 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 
 Widget tasksTabBar({
   required TabController tabController,
+  required int? allTasksCount,
+  required int? overdueTasksCount,
+  required int? openTasksCount,
+  required int? inProgressTasksCount,
+  required int? completedTasksCount,
 }) {
   return TabBar(
     controller: tabController,
@@ -34,7 +39,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            'All',
+            'All - ${allTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),
@@ -50,7 +55,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            Status.overdue,
+            '${Status.overdue} - ${overdueTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),
@@ -66,7 +71,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            Status.open,
+            '${Status.open} - ${openTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),
@@ -82,7 +87,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            Status.inProgress,
+            '${Status.inProgress} - ${inProgressTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),
@@ -98,7 +103,7 @@ Widget tasksTabBar({
           ),
           SizedBox(width: 2.w),
           Text(
-            Status.completed,
+            '${Status.completed} - ${completedTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),

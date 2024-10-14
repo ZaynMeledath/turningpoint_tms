@@ -78,6 +78,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
   @override
   void dispose() {
     tasksController.isDelegatedObs.value = null;
+    appController.isLoadingObs.value = false;
     filterController.resetFilters();
     lottieController.dispose();
     taskSearchController.dispose();
@@ -133,7 +134,14 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                       }
                     }),
                 SizedBox(height: 10.h),
-                tasksTabBar(tabController: tabController),
+                tasksTabBar(
+                  tabController: tabController,
+                  allTasksCount: allTasksList?.length,
+                  overdueTasksCount: overdueTasksList?.length,
+                  openTasksCount: openTasksList?.length,
+                  inProgressTasksCount: inProgressTasksList?.length,
+                  completedTasksCount: completedTasksList?.length,
+                ),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
                     ? Expanded(

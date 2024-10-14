@@ -89,7 +89,7 @@ Widget taskCard({
                             ),
                           ),
                         ),
-                        SizedBox(height: 2.w),
+                        SizedBox(height: 4.w),
                         SizedBox(
                           width: 192.w,
                           child: Text.rich(
@@ -117,6 +117,32 @@ Widget taskCard({
                             ),
                           ),
                         ),
+                        tasksController.isDelegatedObs.value == null
+                            ? Container(
+                                width: 192.w,
+                                margin: EdgeInsets.only(top: 2.h),
+                                child: Text.rich(
+                                  overflow: TextOverflow.ellipsis,
+                                  TextSpan(
+                                    text: 'Assigned To ',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(.6),
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            '${taskModel.assignedTo?.first.name}'
+                                                .nameFormat(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
                         SizedBox(height: 8.h),
                         Row(
                           children: [

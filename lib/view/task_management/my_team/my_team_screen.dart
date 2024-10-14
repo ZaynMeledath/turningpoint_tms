@@ -17,6 +17,7 @@ import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/task_management/home/tasks_screen.dart';
 
 part 'segments/team_card.dart';
 part 'segments/team_tab_bar.dart';
@@ -39,16 +40,18 @@ class _MyTeamScreenState extends State<MyTeamScreen>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
   final userController = Get.put(UserController());
-  final appController = AppController();
+  final tasksController = Get.put(TasksController());
+  final appController = Get.put(AppController());
 
   final teamSearchController = TextEditingController();
 
-  List<AllUsersModel>? adminList;
-  List<AllUsersModel>? teamLeaderList;
-  List<AllUsersModel>? teamMemberList;
+  List<AllUsersModel> adminList = [];
+  List<AllUsersModel> teamLeaderList = [];
+  List<AllUsersModel> teamMemberList = [];
 
   @override
   void initState() {
+    tasksController.isDelegatedObs.value = null;
     tabController = TabController(
       length: 4,
       vsync: this,
@@ -59,8 +62,8 @@ class _MyTeamScreenState extends State<MyTeamScreen>
 
   @override
   void dispose() {
-    appController.dispose();
     userController.myTeamSearchList.clear();
+    appController.isLoadingObs.value = false;
     super.dispose();
   }
 
@@ -184,18 +187,22 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                               teamTabBarView(
                                 myTeamList: myTeamList,
                                 appController: appController,
+                                tasksController: tasksController,
                               ),
                               teamTabBarView(
                                 myTeamList: adminList,
                                 appController: appController,
+                                tasksController: tasksController,
                               ),
                               teamTabBarView(
                                 myTeamList: teamLeaderList,
                                 appController: appController,
+                                tasksController: tasksController,
                               ),
                               teamTabBarView(
                                 myTeamList: teamMemberList,
                                 appController: appController,
+                                tasksController: tasksController,
                               ),
                             ],
                           ),

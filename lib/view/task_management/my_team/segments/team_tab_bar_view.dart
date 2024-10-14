@@ -3,6 +3,7 @@ part of '../my_team_screen.dart';
 Widget teamTabBarView({
   required List<AllUsersModel>? myTeamList,
   required AppController appController,
+  required TasksController tasksController,
 }) {
   if (myTeamList != null && myTeamList.isNotEmpty) {
     return ListView.builder(
@@ -15,11 +16,30 @@ Widget teamTabBarView({
             right: 10.w,
             bottom: index == (myTeamList.length - 1) ? 18.h : 10.h,
           ),
-          child: teamCard(allUsersModel: myTeamList[index]).animate().slideX(
-                begin: index % 2 == 0 ? -.4 : .4,
-                duration: const Duration(milliseconds: 1000),
-                curve: Curves.elasticOut,
-              ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(16),
+            highlightColor: Colors.lightBlue.withOpacity(.15),
+            splashColor: Colors.lightBlue.withOpacity(.25),
+            onTap: () {
+              tasksController.addToDashboardTasksList(
+                  tasksList:
+                      tasksController.allTasksListObs.value!.where((taskModel) {
+                return taskModel.assignedTo?.first.emailId.toString() ==
+                    myTeamList[index].emailId;
+              }).toList());
+              Get.to(
+                () => TasksScreen(
+                    title:
+                        '${myTeamList[index].userName!.split(' ').first}\'s Tasks'),
+                transition: Transition.zoom,
+              );
+            },
+            child: teamCard(allUsersModel: myTeamList[index]).animate().slideX(
+                  begin: index % 2 == 0 ? -.4 : .4,
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.elasticOut,
+                ),
+          ),
         );
       },
     );

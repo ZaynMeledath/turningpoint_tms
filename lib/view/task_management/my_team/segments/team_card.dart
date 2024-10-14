@@ -43,7 +43,7 @@ Widget teamCard({
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-//====================DP, Name and Role====================//
+        //====================DP, Name and Role====================//
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -94,7 +94,7 @@ Widget teamCard({
           ],
         ),
         SizedBox(height: 8.h),
-//====================Email, Phone, Reporting Manager====================//
+        //====================Email, Phone, Reporting Manager====================//
         Row(
           children: [
             Icon(
@@ -172,7 +172,7 @@ Widget teamCard({
           ],
         ),
         SizedBox(height: 15.h),
-//====================Buttons====================//
+        //====================Buttons====================//
         (user!.role == Role.admin || allUsersModel.reportingTo == user.name) &&
                 allUsersModel.id != user.id
             ? Row(

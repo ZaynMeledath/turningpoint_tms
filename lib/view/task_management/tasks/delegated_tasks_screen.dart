@@ -81,6 +81,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
   void dispose() {
     super.dispose();
     tasksController.isDelegatedObs.value = null;
+    appController.isLoadingObs.value = false;
     filterController.resetFilters();
     lottieController.dispose();
     taskSearchController.dispose();
@@ -138,7 +139,14 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                       }
                     }),
                 SizedBox(height: 10.h),
-                tasksTabBar(tabController: tabController),
+                tasksTabBar(
+                  tabController: tabController,
+                  allTasksCount: allDelegatedTasksList?.length,
+                  overdueTasksCount: overdueDelegatedTasksList?.length,
+                  openTasksCount: openDelegatedTasksList?.length,
+                  inProgressTasksCount: inProgressDelegatedTasksList?.length,
+                  completedTasksCount: completedDelegatedTasksList?.length,
+                ),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
                     ? Expanded(
