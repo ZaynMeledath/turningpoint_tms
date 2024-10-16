@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDIHYEXztT4nbeE0fAqoCESfnat84686NE',
-    appId: '1:810991594594:android:f424cd3f3b49f01830753b',
+    appId: '1:810991594594:android:9cfa22f8b09ea7bc30753b',
     messagingSenderId: '810991594594',
     projectId: 'turning-point-tms',
     storageBucket: 'turning-point-tms.appspot.com',
