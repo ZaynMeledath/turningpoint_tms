@@ -29,8 +29,11 @@ Widget teamTabBarView({
               }).toList());
               Get.to(
                 () => TasksScreen(
-                    title:
-                        '${myTeamList[index].userName!.split(' ').first}\'s Tasks'),
+                  title:
+                      '${myTeamList[index].userName!.split(' ').first}\'s Tasks',
+                  tasksListCategory: TasksListCategory.staffWise,
+                  email: myTeamList[index].emailId,
+                ),
                 transition: Transition.zoom,
               );
             },

@@ -60,17 +60,12 @@ Widget myReportTabBarView({
                           highlightColor: Colors.lightBlue.withOpacity(.15),
                           splashColor: Colors.lightBlue.withOpacity(.25),
                           onTap: () {
-                            tasksController.addToDashboardTasksList(
-                                tasksList: tasksController.myTasksListObs.value!
-                                    .where((taskModel) =>
-                                        taskModel.category ==
-                                        performanceReportModel.category)
-                                    .toList());
-
                             Get.to(
                               () => TasksScreen(
                                 title:
                                     '${performanceReportModel.category} Tasks',
+                                tasksListCategory: TasksListCategory.myReport,
+                                category: performanceReportModel.category,
                               ),
                               transition: Transition.zoom,
                             );

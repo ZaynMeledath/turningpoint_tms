@@ -98,14 +98,10 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where(
-                              (taskModel) => taskModel.status == Status.overdue)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'Overdue Tasks',
                         avoidTabBar: true,
+                        tasksListCategory: TasksListCategory.overdue,
                       ));
                 },
                 child: dashboardStatusOverviewContainer(
@@ -120,12 +116,9 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where((taskModel) => taskModel.status == Status.open)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'Open Tasks',
+                        tasksListCategory: TasksListCategory.open,
                         avoidTabBar: true,
                       ));
                 },
@@ -141,13 +134,9 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where((taskModel) =>
-                              taskModel.status == Status.inProgress)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'In Progress Tasks',
+                        tasksListCategory: TasksListCategory.inProgress,
                         avoidTabBar: true,
                       ));
                 },
@@ -173,13 +162,9 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where((taskModel) =>
-                              taskModel.status == Status.completed)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'Completed Tasks',
+                        tasksListCategory: TasksListCategory.completed,
                         avoidTabBar: true,
                       ));
                 },
@@ -195,14 +180,9 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where((taskModel) =>
-                              taskModel.status == Status.completed &&
-                              taskModel.isDelayed != true)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'On Time Tasks',
+                        tasksListCategory: TasksListCategory.onTime,
                         avoidTabBar: true,
                       ));
                 },
@@ -218,14 +198,9 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  tasksController.addToDashboardTasksList(
-                      tasksList: tasksController.allTasksListObs.value!
-                          .where((taskModel) =>
-                              taskModel.status == Status.completed &&
-                              taskModel.isDelayed == true)
-                          .toList());
                   Get.to(() => const TasksScreen(
                         title: 'Delayed Tasks',
+                        tasksListCategory: TasksListCategory.delayed,
                         avoidTabBar: true,
                       ));
                 },

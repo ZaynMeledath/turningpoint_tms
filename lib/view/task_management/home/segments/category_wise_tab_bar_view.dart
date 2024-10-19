@@ -64,18 +64,13 @@ Widget categoryWiseTabBarView({
                           highlightColor: Colors.lightBlue.withOpacity(.15),
                           splashColor: Colors.lightBlue.withOpacity(.25),
                           onTap: () {
-                            tasksController.addToDashboardTasksList(
-                                tasksList: tasksController
-                                    .allTasksListObs.value!
-                                    .where((taskModel) =>
-                                        taskModel.category ==
-                                        performanceReportModel.category)
-                                    .toList());
-
                             Get.to(
                               () => TasksScreen(
                                 title:
                                     '${performanceReportModel.category} Tasks',
+                                tasksListCategory:
+                                    TasksListCategory.categoryWise,
+                                category: performanceReportModel.category,
                               ),
                               transition: Transition.zoom,
                             );

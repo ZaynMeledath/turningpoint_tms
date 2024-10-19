@@ -18,6 +18,12 @@ Widget titleDescriptionContainer({
       break;
   }
 
+  String completionDateString = '';
+
+  if (taskModel.status == Status.completed) {
+    completionDateString = taskModel.updatedAt!.dateFormat();
+  }
+
   return Hero(
     tag: 'task_card${taskModel.id}',
     child: Material(
@@ -44,7 +50,7 @@ Widget titleDescriptionContainer({
             Row(
               children: [
                 SizedBox(
-                  width: 72.w,
+                  width: 90.w,
                   child: Text(
                     'Creation',
                     overflow: TextOverflow.ellipsis,
@@ -55,7 +61,7 @@ Widget titleDescriptionContainer({
                   ),
                 ),
                 const Text(':'),
-                SizedBox(width: 12.w),
+                SizedBox(width: 14.w),
                 Icon(
                   Icons.schedule,
                   size: 17.sp,
@@ -75,13 +81,13 @@ Widget titleDescriptionContainer({
             Row(
               children: [
                 SizedBox(
-                  width: 72.w,
+                  width: 90.w,
                   child: const Text(
                     'Due Date',
                   ),
                 ),
                 const Text(':'),
-                SizedBox(width: 12.w),
+                SizedBox(width: 14.w),
                 Icon(
                   Icons.alarm,
                   size: 17.sp,
@@ -100,16 +106,47 @@ Widget titleDescriptionContainer({
               ],
             ),
             SizedBox(height: 8.h),
+            taskModel.status == Status.completed
+                ? Row(
+                    children: [
+                      SizedBox(
+                        width: 90.w,
+                        child: const Text(
+                          'Completion',
+                        ),
+                      ),
+                      const Text(':'),
+                      SizedBox(width: 14.w),
+                      Icon(
+                        Icons.alarm,
+                        size: 17.sp,
+                        color: Colors.white70,
+                      ),
+                      SizedBox(width: 3.w),
+                      Text(
+                        completionDateString,
+                        style: TextStyle(
+                          color: taskModel.isDelayed == true
+                              ? Colors.red
+                              : Colors.green,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+            SizedBox(height: 8.h),
             Row(
               children: [
                 SizedBox(
-                  width: 72.w,
+                  width: 90.w,
                   child: const Text(
                     'Category',
                   ),
                 ),
                 const Text(':'),
-                SizedBox(width: 12.w),
+                SizedBox(width: 14.w),
                 Text(
                   taskModel.category.toString(),
                   style: const TextStyle(
@@ -122,13 +159,13 @@ Widget titleDescriptionContainer({
             Row(
               children: [
                 SizedBox(
-                  width: 72.w,
+                  width: 90.w,
                   child: const Text(
                     'Priority',
                   ),
                 ),
                 const Text(':'),
-                SizedBox(width: 12.w),
+                SizedBox(width: 14.w),
                 Icon(
                   Icons.flag,
                   size: 18.sp,

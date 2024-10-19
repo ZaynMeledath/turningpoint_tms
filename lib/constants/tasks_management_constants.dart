@@ -35,3 +35,17 @@ class DefaultReminder {
   static const defaultReminderTime = 10;
   static const defaultReminderUnit = 'Minutes';
 }
+
+//To filter the tasks list in dashboard screen to tasks screen
+enum TasksListCategory {
+  overdue,
+  open,
+  inProgress,
+  completed,
+  onTime,
+  delayed,
+  staffWise,
+  categoryWise,
+  myReport,
+  delegatedReport,
+}

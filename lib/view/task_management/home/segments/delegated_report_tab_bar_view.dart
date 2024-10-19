@@ -63,19 +63,14 @@ Widget delegatedReportTabBarView({
                             highlightColor: Colors.lightBlue.withOpacity(.15),
                             splashColor: Colors.lightBlue.withOpacity(.25),
                             onTap: () {
-                              tasksController.addToDashboardTasksList(
-                                  tasksList: tasksController
-                                      .delegatedTasksListObs.value!
-                                      .where((item) =>
-                                          item.assignedTo?.first.emailId ==
-                                          performanceReportModel.emailId)
-                                      .toList());
-
                               final name =
                                   performanceReportModel.userName!.nameFormat();
                               Get.to(
                                 () => TasksScreen(
                                   title: '$name\'s Tasks',
+                                  tasksListCategory:
+                                      TasksListCategory.delegatedReport,
+                                  email: performanceReportModel.emailId,
                                 ),
                                 transition: Transition.zoom,
                               );

@@ -124,7 +124,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignTaskController.taskPriority.value =
         widget.taskModel!.priority ?? TaskPriority.low;
     assignTaskController.taskDate.value =
-        DateTime.parse(widget.taskModel!.dueDate!);
+        DateTime.parse(widget.taskModel!.dueDate!).toLocal();
     assignTaskController.taskTime.value =
         TimeOfDay.fromDateTime(assignTaskController.taskDate.value);
 
