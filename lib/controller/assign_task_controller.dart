@@ -349,8 +349,6 @@ class AssignTaskController extends GetxController {
 //====================Update Task====================//
   Future<void> updateTask({
     required TaskModel taskModel,
-    required String title,
-    required String description,
   }) async {
     final dueDate = DateTime(
       taskDate.value.year,
@@ -403,8 +401,6 @@ class AssignTaskController extends GetxController {
           ),
         );
       }
-      taskModel.title = title;
-      taskModel.description = description;
       taskModel.category = selectedCategory.value;
       assignToMap.forEach(
         (email, assignedToModel) => taskModel.assignedTo == null

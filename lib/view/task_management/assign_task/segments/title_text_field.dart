@@ -43,6 +43,9 @@ Widget titleTextField({
         ),
       ),
     ),
+    onChanged: (value) {
+      log(value);
+    },
     validator: (value) {
       if (value == null) {
         return 'Invalid value';

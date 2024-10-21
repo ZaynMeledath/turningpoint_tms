@@ -2,8 +2,8 @@ part of '../assign_task_screen.dart';
 
 Widget swipeToAdd({
   required AssignTaskController assignTaskController,
-  required String taskTitle,
-  required String taskDescription,
+  required TextEditingController titleController,
+  required TextEditingController descriptionController,
   required GlobalKey<FormState> formKey,
   required bool isUpdating,
   required TaskModel? taskModel,
@@ -43,10 +43,10 @@ Widget swipeToAdd({
 
           try {
             if (isUpdating) {
+              taskModel!.title = titleController.text.trim();
+              taskModel.description = descriptionController.text.trim();
               await assignTaskController.updateTask(
-                taskModel: taskModel!,
-                title: taskTitle,
-                description: taskDescription,
+                taskModel: taskModel,
               );
               Get.back();
               showGenericDialog(
@@ -57,8 +57,8 @@ Widget swipeToAdd({
               );
             } else {
               await assignTaskController.assignTask(
-                title: taskTitle,
-                description: taskDescription,
+                title: titleController.text.trim(),
+                description: descriptionController.text.trim(),
               );
               Get.back();
               showGenericDialog(

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -295,8 +296,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         ),
         bottomNavigationBar: swipeToAdd(
           assignTaskController: assignTaskController,
-          taskTitle: titleController.text.trim(),
-          taskDescription: descriptionController.text.trim(),
+          titleController: titleController,
+          descriptionController: descriptionController,
           formKey: _formKey,
           isUpdating: widget.taskModel != null,
           taskModel: widget.taskModel,
