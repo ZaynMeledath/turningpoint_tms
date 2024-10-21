@@ -64,21 +64,24 @@ Widget dateAndTimeSegment({
                 padding: EdgeInsets.all(5.w),
                 child: Row(
                   children: [
-                    Container(
-                      width: 61.w,
-                      height: 61.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.textFieldColor,
-                        shape: BoxShape.circle,
-                        border: assignTaskController.showTimeErrorTextObs.value
-                            ? Border.all(
-                                color: Colors.redAccent,
-                              )
-                            : null,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.calendar_month_rounded,
+                    Obx(
+                      () => Container(
+                        width: 61.w,
+                        height: 61.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.textFieldColor,
+                          shape: BoxShape.circle,
+                          border:
+                              assignTaskController.showTimeErrorTextObs.value
+                                  ? Border.all(
+                                      color: Colors.redAccent,
+                                    )
+                                  : null,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.calendar_month_rounded,
+                          ),
                         ),
                       ),
                     ),
@@ -125,21 +128,24 @@ Widget dateAndTimeSegment({
                 padding: EdgeInsets.all(5.w),
                 child: Row(
                   children: [
-                    Container(
-                      width: 61.w,
-                      height: 61.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.textFieldColor,
-                        shape: BoxShape.circle,
-                        border: assignTaskController.showTimeErrorTextObs.value
-                            ? Border.all(
-                                color: Colors.redAccent,
-                              )
-                            : null,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.access_time,
+                    Obx(
+                      () => Container(
+                        width: 61.w,
+                        height: 61.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.textFieldColor,
+                          shape: BoxShape.circle,
+                          border:
+                              assignTaskController.showTimeErrorTextObs.value
+                                  ? Border.all(
+                                      color: Colors.redAccent,
+                                    )
+                                  : null,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.access_time,
+                          ),
                         ),
                       ),
                     ),
@@ -159,23 +165,29 @@ Widget dateAndTimeSegment({
             ),
           ],
         ),
-        assignTaskController.showTimeErrorTextObs.value
-            ? Column(
-                children: [
-                  SizedBox(height: 4.h),
-                  Align(
-                    // alignment: Alignment.centerRight,
-                    child: Text(
-                      'Set a valid due date and time',
-                      style: TextStyle(
-                        fontSize: 12.5.sp,
-                        color: Colors.redAccent.shade100,
-                      ),
+        Obx(() {
+          if (assignTaskController.showTimeErrorTextObs.value) {
+            return Column(
+              children: [
+                SizedBox(height: 4.h),
+                Align(
+                  // alignment: Alignment.centerRight,
+                  child: Text(
+                    !assignTaskController.shouldRepeatTask.value
+                        ? 'Due date and time should be in the future'
+                        : 'Start Date and time should be in the future',
+                    style: TextStyle(
+                      fontSize: 12.5.sp,
+                      color: Colors.redAccent.shade100,
                     ),
                   ),
-                ],
-              )
-            : const SizedBox(),
+                ),
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
       ],
     ),
   );

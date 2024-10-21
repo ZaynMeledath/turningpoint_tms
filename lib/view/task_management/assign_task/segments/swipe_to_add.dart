@@ -69,13 +69,10 @@ Widget swipeToAdd({
               );
             }
           } on DateTimeErrorException {
-            return showGenericDialog(
-              iconPath: 'assets/lotties/task_Open_animation.json',
-              iconWidth: 50.w,
-              title: 'Date and time Error',
-              content: 'Date and time should be in the future',
-              buttons: {'OK': null},
-            );
+            assignTaskController.showTimeErrorTextObs.value = true;
+            return 0;
+          } on RepeatFrequencyNullException {
+            assignTaskController.showRepeatFrequencyErrorTextObs.value = true;
           } catch (_) {
             return showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',

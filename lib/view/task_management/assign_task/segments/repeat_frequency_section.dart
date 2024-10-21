@@ -107,6 +107,11 @@ Widget repeatFrequencySection({
                                   ),
                                 ),
                               ],
+                              onTap: () {
+                                assignTaskController
+                                    .showRepeatFrequencyErrorTextObs
+                                    .value = false;
+                              },
                               onChanged:
                                   assignTaskController.repeatFrequencyOnChanged,
                             ),
@@ -135,6 +140,28 @@ Widget repeatFrequencySection({
             return const SizedBox();
         }
       }),
+
+      Obx(
+        () {
+          if (assignTaskController.showRepeatFrequencyErrorTextObs.value) {
+            return Padding(
+              padding: EdgeInsets.only(right: 6.w),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Select Repeat Frequency',
+                  style: TextStyle(
+                    fontSize: 12.5.sp,
+                    color: Colors.redAccent.shade100,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      )
     ],
   );
 }
