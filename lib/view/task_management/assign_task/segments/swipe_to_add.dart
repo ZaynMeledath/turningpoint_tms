@@ -32,12 +32,13 @@ Widget swipeToAdd({
         if (formKey.currentState!.validate()) {
           if (assignTaskController.assignToMap.isEmpty ||
               assignTaskController.selectedCategory.value.isEmpty) {
-            return showGenericDialog(
-              iconPath: 'assets/lotties/fill_details_animation.json',
-              title: 'Fill Details',
-              content: 'Please fill all the details before creating the task',
-              buttons: {'OK': null},
-            );
+            if (assignTaskController.assignToMap.isEmpty) {
+              assignTaskController.showAssignToEmptyErrorTextObs.value = true;
+            }
+            if (assignTaskController.selectedCategory.value.isEmpty) {
+              assignTaskController.showCategoryEmptyErrorTextObs.value = true;
+            }
+            return 0;
           }
 
           try {

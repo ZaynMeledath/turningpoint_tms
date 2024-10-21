@@ -8,116 +8,183 @@ Widget assignToAndCategorySegment({
   required TextEditingController categoryNameController,
   required TextEditingController categorySearchController,
 }) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  return Column(
     children: [
-//====================Assign To DropDown====================//
-      InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => showAssignToDialog(
-          assignTaskController: assignTaskController,
-          filterController: filterController,
-          assignToSearchController: assignToSearchController,
-        ),
-        child: Container(
-          width: 156.w,
-          height: 56.h,
-          decoration: BoxDecoration(
-            color: AppColors.textFieldColor,
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //====================Assign To DropDown====================//
+          InkWell(
             borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              showAssignToDialog(
+                assignTaskController: assignTaskController,
+                filterController: filterController,
+                assignToSearchController: assignToSearchController,
+              );
+              assignTaskController.showAssignToEmptyErrorTextObs.value = false;
+            },
+            child: Obx(
+              () => Container(
+                width: 156.w,
+                height: 56.h,
+                decoration: BoxDecoration(
+                  color: AppColors.textFieldColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border:
+                      assignTaskController.showCategoryEmptyErrorTextObs.value
+                          ? Border.all(
+                              color: Colors.redAccent,
+                            )
+                          : null,
+                ),
+                child: Obx(
+                  () {
+                    final assignToMap = assignTaskController.assignToMap;
+                    if (assignToMap.isNotEmpty) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: assignToMap.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              left: index == 0 ? 8.w : 0,
+                              right: 8.w,
+                            ),
+                            child: nameLetterAvatar(
+                              name: assignToMap.values.elementAt(index).name!,
+                              circleDiameter: 30.w,
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Assign To',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.white70,
+                              size: 24.w,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ),
           ),
-          child: Obx(
-            () {
-              final assignToMap = assignTaskController.assignToMap;
-              if (assignToMap.isNotEmpty) {
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: assignToMap.length,
-                  itemBuilder: (context, index) {
+
+          //====================Category DropDown====================//
+          InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              showCategoryDialog(
+                filterController: filterController,
+                assignTaskController: assignTaskController,
+                tasksController: tasksController,
+                categoryNameController: categoryNameController,
+                categorySearchController: categorySearchController,
+              );
+              assignTaskController.showCategoryEmptyErrorTextObs.value = false;
+            },
+            child: Obx(
+              () => Container(
+                width: 156.w,
+                height: 56.h,
+                decoration: BoxDecoration(
+                  color: AppColors.textFieldColor,
+                  borderRadius: BorderRadius.circular(20),
+                  border:
+                      assignTaskController.showCategoryEmptyErrorTextObs.value
+                          ? Border.all(
+                              color: Colors.redAccent,
+                            )
+                          : null,
+                ),
+                child: Obx(
+                  () {
+                    final category = assignTaskController.selectedCategory;
                     return Padding(
-                      padding: EdgeInsets.only(
-                        left: index == 0 ? 8.w : 0,
-                        right: 8.w,
-                      ),
-                      child: nameLetterAvatar(
-                        name: assignToMap.values.elementAt(index).name!,
-                        circleDiameter: 30.w,
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              category.isNotEmpty ? category.value : 'Category',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.white70,
+                            size: 24.w,
+                          ),
+                        ],
                       ),
                     );
                   },
-                );
-              } else {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      Obx(
+        () => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            assignTaskController.showAssignToEmptyErrorTextObs.value
+                ? Column(
                     children: [
-                      Text(
-                        'Assign To',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white70,
+                      SizedBox(height: 8.h),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Assign To cannot be empty',
+                          style: TextStyle(
+                            fontSize: 12.5.sp,
+                            color: Colors.redAccent.shade100,
+                          ),
                         ),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.white70,
-                        size: 24.w,
                       ),
                     ],
-                  ),
-                );
-              }
-            },
-          ),
-        ),
-      ),
-
-//====================Category DropDown====================//
-      InkWell(
-        borderRadius: BorderRadius.circular(20),
-        onTap: () => showCategoryDialog(
-          filterController: filterController,
-          assignTaskController: assignTaskController,
-          tasksController: tasksController,
-          categoryNameController: categoryNameController,
-          categorySearchController: categorySearchController,
-        ),
-        child: Container(
-          width: 156.w,
-          height: 56.h,
-          decoration: BoxDecoration(
-            color: AppColors.textFieldColor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Obx(
-            () {
-              final category = assignTaskController.selectedCategory;
-              return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        category.isNotEmpty ? category.value : 'Category',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white70,
+                  )
+                : const SizedBox(),
+            assignTaskController.showCategoryEmptyErrorTextObs.value
+                ? Column(
+                    children: [
+                      SizedBox(height: 8.h),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Category cannot be empty',
+                          style: TextStyle(
+                            fontSize: 12.5.sp,
+                            color: Colors.redAccent.shade100,
+                          ),
                         ),
                       ),
-                    ),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.white70,
-                      size: 24.w,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                    ],
+                  )
+                : const SizedBox(),
+          ],
         ),
       ),
     ],

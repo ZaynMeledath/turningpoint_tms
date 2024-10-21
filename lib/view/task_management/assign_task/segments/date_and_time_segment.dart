@@ -67,9 +67,14 @@ Widget dateAndTimeSegment({
                     Container(
                       width: 61.w,
                       height: 61.w,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.textFieldColor,
                         shape: BoxShape.circle,
+                        border: assignTaskController.showTimeErrorTextObs.value
+                            ? Border.all(
+                                color: Colors.redAccent,
+                              )
+                            : null,
                       ),
                       child: const Center(
                         child: Icon(
@@ -123,9 +128,14 @@ Widget dateAndTimeSegment({
                     Container(
                       width: 61.w,
                       height: 61.w,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.textFieldColor,
                         shape: BoxShape.circle,
+                        border: assignTaskController.showTimeErrorTextObs.value
+                            ? Border.all(
+                                color: Colors.redAccent,
+                              )
+                            : null,
                       ),
                       child: const Center(
                         child: Icon(
@@ -149,6 +159,23 @@ Widget dateAndTimeSegment({
             ),
           ],
         ),
+        assignTaskController.showTimeErrorTextObs.value
+            ? Column(
+                children: [
+                  SizedBox(height: 4.h),
+                  Align(
+                    // alignment: Alignment.centerRight,
+                    child: Text(
+                      'Set a valid due date and time',
+                      style: TextStyle(
+                        fontSize: 12.5.sp,
+                        color: Colors.redAccent.shade100,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : const SizedBox(),
       ],
     ),
   );

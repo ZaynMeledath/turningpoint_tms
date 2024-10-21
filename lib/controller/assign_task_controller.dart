@@ -8,7 +8,6 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
-import 'package:turningpoint_tms/exceptions/tms_exceptions.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/repository/tasks_repository.dart';
@@ -54,6 +53,10 @@ class AssignTaskController extends GetxController {
 
   final attachmentsFileListObs = RxList<File>();
   final attachmentsListObs = RxList<Attachment>();
+
+  final RxBool showAssignToEmptyErrorTextObs = false.obs;
+  final RxBool showCategoryEmptyErrorTextObs = false.obs;
+  final RxBool showTimeErrorTextObs = false.obs;
 
   RxMap<String, bool> daysMap = {
     'Sun': false,
@@ -262,7 +265,9 @@ class AssignTaskController extends GetxController {
 
     if (!dueDate.isAfter(DateTime.now()) ||
         dueDate.isAtSameMomentAs(DateTime.now())) {
-      throw DateTimeErrorException();
+      // throw DateTimeErrorException();
+      showTimeErrorTextObs.value = true;
+      return;
     }
 
     final dueDateString = dueDate.toIso8601String();
@@ -349,7 +354,9 @@ class AssignTaskController extends GetxController {
     );
     if (!dueDate.isAfter(DateTime.now()) ||
         dueDate.isAtSameMomentAs(DateTime.now())) {
-      throw DateTimeErrorException();
+      // throw DateTimeErrorException();
+      showTimeErrorTextObs.value = true;
+      return;
     }
 
     final dueDateString = dueDate.toIso8601String();
