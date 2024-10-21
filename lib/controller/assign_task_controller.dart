@@ -260,7 +260,8 @@ class AssignTaskController extends GetxController {
       taskTime.value.minute,
     );
 
-    if (!dueDate.isAfter(DateTime.now())) {
+    if (!dueDate.isAfter(DateTime.now()) ||
+        dueDate.isAtSameMomentAs(DateTime.now())) {
       throw DateTimeErrorException();
     }
 
@@ -346,9 +347,11 @@ class AssignTaskController extends GetxController {
       taskTime.value.hour,
       taskTime.value.minute,
     );
-    if (!dueDate.isAfter(DateTime.now())) {
+    if (!dueDate.isAfter(DateTime.now()) ||
+        dueDate.isAtSameMomentAs(DateTime.now())) {
       throw DateTimeErrorException();
     }
+
     final dueDateString = dueDate.toIso8601String();
     try {
       List<int>? days;

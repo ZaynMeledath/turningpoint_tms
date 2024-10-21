@@ -117,7 +117,13 @@ class _MyTeamScreenState extends State<MyTeamScreen>
             return Column(
                 // physics: const BouncingScrollPhysics(),
                 children: [
-                  teamTabBar(tabController: tabController).animate().slideX(
+                  teamTabBar(
+                    tabController: tabController,
+                    allUsersCount: myTeamList?.length,
+                    adminCount: adminList.length,
+                    teamLeaderCount: teamLeaderList.length,
+                    teamMemberCount: teamMemberList.length,
+                  ).animate().slideX(
                         begin: .4,
                         curve: Curves.elasticOut,
                         duration: const Duration(milliseconds: 900),

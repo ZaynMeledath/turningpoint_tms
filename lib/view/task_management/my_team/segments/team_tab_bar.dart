@@ -2,6 +2,10 @@ part of '../my_team_screen.dart';
 
 Widget teamTabBar({
   required TabController tabController,
+  required int? allUsersCount,
+  required int? adminCount,
+  required int? teamLeaderCount,
+  required int? teamMemberCount,
 }) {
   return TabBar(
     controller: tabController,
@@ -28,25 +32,25 @@ Widget teamTabBar({
     // dividerColor: Colors.transparent,
     tabs: [
       Text(
-        'All',
+        'All - ${allUsersCount ?? 0}',
         style: TextStyle(
           fontSize: 16.sp,
         ),
       ),
       Text(
-        'Admin',
+        'Admin - ${adminCount ?? 0}',
         style: TextStyle(
           fontSize: 16.sp,
         ),
       ),
       Text(
-        'Team Leader',
+        'Team Leader - ${teamLeaderCount ?? 0}',
         style: TextStyle(
           fontSize: 16.sp,
         ),
       ),
       Text(
-        'User',
+        'User - ${teamMemberCount ?? 0}',
         style: TextStyle(
           fontSize: 16.sp,
         ),
