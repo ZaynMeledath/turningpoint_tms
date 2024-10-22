@@ -114,6 +114,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     return Scaffold(
       appBar: myAppBar(
         title: 'Task Details',
+        trailingIcons: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.alarm_add),
+          ),
+        ],
       ),
       body: Obx(
         () {

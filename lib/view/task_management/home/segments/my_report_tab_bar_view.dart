@@ -94,7 +94,7 @@ Widget myReportTabBarView({
                                   children: [
                                     Container(
                                       margin: EdgeInsets.only(left: 4.w),
-                                      width: 250.w,
+                                      width: 195.w,
                                       child: Text(
                                         performanceReportModel.category ?? '-',
                                         overflow: TextOverflow.ellipsis,
@@ -105,40 +105,74 @@ Widget myReportTabBarView({
                                       ),
                                     ),
                                     const Expanded(child: SizedBox()),
-                                    SizedBox(
-                                      width: 52.w,
-                                      height: 52.w,
-                                      child: CircularPercentIndicator(
-                                        radius: 22.5.w,
-                                        progressColor: (performanceReportModel
-                                                        .stats
-                                                        ?.completionRate ??
-                                                    0) <=
-                                                30
-                                            ? StatusColor.overdue
-                                            : (performanceReportModel.stats
-                                                                ?.completionRate ??
-                                                            0) >
-                                                        30 &&
-                                                    (performanceReportModel
-                                                                .stats
-                                                                ?.completionRate ??
-                                                            0) <=
-                                                        60
-                                                ? StatusColor.open
-                                                : StatusColor.completed,
-                                        percent: (performanceReportModel
-                                                    .stats?.completionRate ??
-                                                0) /
-                                            100,
-                                        center: Text(
-                                          '${(performanceReportModel.stats?.completionRate ?? '-')}%',
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                          ),
+                                    //--------------------On Time Progress Indicator--------------------//
+                                    CircularPercentIndicator(
+                                      radius: 23.w,
+                                      progressColor: StatusColor.completed,
+                                      // progressColor: (performanceReportModel
+                                      //                 .stats
+                                      //                 ?.completionRate ??
+                                      //             0) <=
+                                      //         30
+                                      //     ? StatusColor.overdue
+                                      //     : (performanceReportModel.stats
+                                      //                         ?.completionRate ??
+                                      //                     0) >
+                                      //                 30 &&
+                                      //             (performanceReportModel
+                                      //                         .stats
+                                      //                         ?.completionRate ??
+                                      //                     0) <=
+                                      //                 60
+                                      //         ? StatusColor.open
+                                      //         : StatusColor.completed,
+                                      percent: (performanceReportModel
+                                                  .stats?.completionRate ??
+                                              0) /
+                                          100,
+                                      center: Text(
+                                        '${performanceReportModel.stats?.completionRate ?? 0}%',
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: StatusColor.completed,
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(width: 8.w),
+
+                                    //--------------------Delayed Progress Indicator--------------------//
+                                    CircularPercentIndicator(
+                                      radius: 23.w,
+                                      progressColor: StatusColor.overdue,
+                                      // progressColor: (performanceReportModel
+                                      //                 .stats
+                                      //                 ?.completionRate ??
+                                      //             0) <=
+                                      //         30
+                                      //     ? StatusColor.overdue
+                                      //     : (performanceReportModel.stats
+                                      //                         ?.completionRate ??
+                                      //                     0) >
+                                      //                 30 &&
+                                      //             (performanceReportModel
+                                      //                         .stats
+                                      //                         ?.completionRate ??
+                                      //                     0) <=
+                                      //                 60
+                                      //         ? StatusColor.open
+                                      //         : StatusColor.completed,
+                                      percent: (performanceReportModel
+                                                  .stats?.delayedRate ??
+                                              0) /
+                                          100,
+                                      center: Text(
+                                        '${performanceReportModel.stats?.delayedRate ?? 0}%',
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: StatusColor.overdue,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 8.h),

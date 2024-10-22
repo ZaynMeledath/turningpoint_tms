@@ -42,6 +42,7 @@ class AllCategoriesPerformanceReportModel {
   int? onTimeTasks;
   int? delayedTasks;
   int? completionRate;
+  int? delayedRate;
 
   AllCategoriesPerformanceReportModel({
     this.category,
@@ -53,6 +54,7 @@ class AllCategoriesPerformanceReportModel {
     this.onTimeTasks,
     this.delayedTasks,
     this.completionRate,
+    this.delayedRate,
   });
 
   AllCategoriesPerformanceReportModel.fromJson(Map<String, dynamic> json) {
@@ -64,7 +66,8 @@ class AllCategoriesPerformanceReportModel {
     overdueTasks = json['overdueTasks'];
     onTimeTasks = json['onTimeTasks'];
     delayedTasks = json['delayedTasks'];
-    completionRate = (json['completionRate']);
+    completionRate = json['completionRate'];
+    delayedRate = json['delayedRate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -78,6 +81,7 @@ class AllCategoriesPerformanceReportModel {
     data['onTimeTasks'] = onTimeTasks;
     data['delayedTasks'] = delayedTasks;
     data['completionRate'] = completionRate;
+    data['delayedRate'] = delayedRate;
     return data;
   }
 }

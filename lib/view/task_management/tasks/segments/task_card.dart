@@ -73,6 +73,7 @@ Widget taskCard({
             child: Column(
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //--------------------Name and details column--------------------//
                     Column(
@@ -201,45 +202,50 @@ Widget taskCard({
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Icon(
-                              Icons.alarm,
-                              size: 17.sp,
-                              color: Colors.white70,
-                            ),
-                            SizedBox(width: 3.w),
-                            Text(
-                              dueDateString,
-                              style: TextStyle(
-                                color: taskModel.isDelayed == true
-                                    ? Colors.red
-                                    : Colors.green,
-                                fontSize: 13.5.sp,
-                                fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: 4.5.h,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                size: 17.sp,
+                                color: Colors.white70,
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Lottie.asset(
-                          'assets/lotties/task_${taskModel.status}_animation.json',
-                          controller: lottieController,
-                          width: 30.sp,
-                        ),
-                        SizedBox(width: 3.w),
-                        Text(
-                          taskModel.status.toString(),
-                          style: TextStyle(
-                            fontSize: 13.5.sp,
-                            fontWeight: FontWeight.w600,
+                              SizedBox(width: 3.w),
+                              Text(
+                                dueDateString,
+                                style: TextStyle(
+                                  color: taskModel.isDelayed == true
+                                      ? Colors.red
+                                      : Colors.green,
+                                  fontSize: 13.5.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 12.h),
+                          Lottie.asset(
+                            'assets/lotties/task_${taskModel.status}_animation.json',
+                            controller: lottieController,
+                            width: 30.sp,
+                          ),
+                          SizedBox(width: 3.w),
+                          Text(
+                            taskModel.status.toString(),
+                            style: TextStyle(
+                              fontSize: 13.5.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

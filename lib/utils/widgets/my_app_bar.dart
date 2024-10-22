@@ -12,6 +12,7 @@ AppBar myAppBar({
   required String title,
   Color? backgroundColor,
   Color? foregroundColor,
+  List<Widget>? trailingIcons,
   bool profileAvatar = false,
   bool implyLeading = true,
 }) {
@@ -63,6 +64,20 @@ AppBar myAppBar({
             //       curve: Curves.elasticOut,
             //     ),
             ),
+        trailingIcons != null
+            ? Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    for (Widget widget in trailingIcons)
+                      Padding(
+                        padding: EdgeInsets.only(right: 4.w),
+                        child: widget,
+                      ),
+                  ],
+                ),
+              )
+            : const SizedBox(),
         profileAvatar
             ? Expanded(
                 child: Align(

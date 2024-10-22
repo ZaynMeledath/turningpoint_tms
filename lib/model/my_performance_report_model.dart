@@ -54,6 +54,7 @@ class Stats {
   int? onTimeTasks;
   int? delayedTasks;
   int? completionRate;
+  int? delayedRate;
 
   Stats({
     this.totalTasks,
@@ -64,6 +65,7 @@ class Stats {
     this.onTimeTasks,
     this.delayedTasks,
     this.completionRate,
+    this.delayedRate,
   });
 
   Stats.fromJson(Map<String, dynamic> json) {
@@ -75,6 +77,7 @@ class Stats {
     onTimeTasks = json['onTimeTasks'];
     delayedTasks = json['delayedTasks'];
     completionRate = json['completionRate'];
+    delayedRate = json['delayedRate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +90,7 @@ class Stats {
     data['onTimeTasks'] = onTimeTasks;
     data['delayedTasks'] = delayedTasks;
     data['completionRate'] = completionRate;
+    data['delayedRate'] = delayedRate;
     return data;
   }
 }
