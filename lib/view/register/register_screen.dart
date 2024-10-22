@@ -181,7 +181,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                   SizedBox(height: 34.h),
                   Obx(
-                    () => GestureDetector(
+                    () => customButton(
+                      buttonTitle: 'Register',
+                      isLoading: appController.isLoadingObs.value,
                       onTap: () async {
                         appController.isLoadingObs.value = true;
                         try {
@@ -208,14 +210,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                         }
                       },
-                      child: customButton(
-                        buttonTitle: 'Register',
-                        isLoading: appController.isLoadingObs.value,
-                      ).animate().scale(
-                            delay: const Duration(milliseconds: 100),
-                            curve: Curves.fastLinearToSlowEaseIn,
-                          ),
-                    ),
+                    ).animate().scale(
+                          delay: const Duration(milliseconds: 100),
+                          curve: Curves.fastLinearToSlowEaseIn,
+                        ),
                   ),
                   SizedBox(height: 16.h),
                   Row(

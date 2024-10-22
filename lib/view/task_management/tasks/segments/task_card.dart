@@ -77,6 +77,7 @@ Widget taskCard({
                   children: [
                     //--------------------Name and details column--------------------//
                     Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
@@ -204,7 +205,7 @@ Widget taskCard({
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        top: 4.5.h,
+                        top: 4.h,
                       ),
                       child: Column(
                         children: [
