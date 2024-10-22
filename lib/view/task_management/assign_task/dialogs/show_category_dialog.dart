@@ -98,6 +98,7 @@ Widget categoryDialog({
                                   Get.back();
                                 },
                                 child: Container(
+                                  width: 200.w,
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 8.w,
                                     vertical: 8.h,
