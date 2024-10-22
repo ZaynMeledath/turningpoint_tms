@@ -139,6 +139,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               orElse: () => TaskModel(),
             );
           }
+          isTaskCompleted = taskModel.status == Status.completed;
 
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
