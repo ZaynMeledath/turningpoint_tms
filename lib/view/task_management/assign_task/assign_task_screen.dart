@@ -183,7 +183,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     alignment: Alignment.centerLeft,
                     child: Text.rich(
                       TextSpan(
-                        text: 'Create\nNew ',
+                        text: widget.taskModel != null
+                            ? 'Update\n'
+                            : 'Create\nNew ',
                         style: TextStyle(
                           fontFamily: 'Lufga',
                           fontSize: 32.sp,
