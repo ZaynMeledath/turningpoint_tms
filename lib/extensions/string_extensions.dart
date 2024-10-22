@@ -8,10 +8,12 @@ extension StringExtensions on String {
     }
     final nameSplittedList = split(' ');
     for (int index = 0; index < nameSplittedList.length; index++) {
-      final firstLetter =
-          nameSplittedList[index].characters.first.toUpperCase();
-      final splittedString = nameSplittedList[index].substring(1);
-      result += '$firstLetter$splittedString ';
+      if (nameSplittedList[index].isNotEmpty) {
+        final firstLetter =
+            nameSplittedList[index].characters.first.toUpperCase();
+        final splittedString = nameSplittedList[index].substring(1);
+        result += '$firstLetter$splittedString ';
+      }
     }
 
     return result.trim();

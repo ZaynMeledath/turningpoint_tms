@@ -8,7 +8,7 @@ Widget delegatedReportTabBarView({
     () {
       List<DelegatedPerformanceReportModel>? performanceReportModelList =
           tasksController.delegatedPerformanceReportModelSearchList.value !=
-                      null ||
+                      null &&
                   delegatedSearchController.text.trim().isNotEmpty
               ? tasksController.delegatedPerformanceReportModelSearchList.value
               : tasksController.delegatedPerformanceReportModelList.value;

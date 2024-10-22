@@ -6,7 +6,7 @@ Widget myReportTabBarView({
 }) {
   return Obx(() {
     List<MyPerformanceReportModel>? performanceReportModelList =
-        tasksController.myPerformanceReportModelSearchList.value != null ||
+        tasksController.myPerformanceReportModelSearchList.value != null &&
                 myReportSearchController.text.trim().isNotEmpty
             ? tasksController.myPerformanceReportModelSearchList.value
             : tasksController.myPerformanceReportModelList.value;

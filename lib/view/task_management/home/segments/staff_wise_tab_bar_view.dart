@@ -8,7 +8,7 @@ Widget staffWiseTabBarView({
     () {
       List<AllUsersPerformanceReportModel>? performanceReportModelList =
           tasksController.allUsersPerformanceReportModelSearchList.value !=
-                      null ||
+                      null &&
                   staffSearchController.text.trim().isNotEmpty
               ? tasksController.allUsersPerformanceReportModelSearchList.value
               : tasksController.allUsersPerformanceReportModelList.value;

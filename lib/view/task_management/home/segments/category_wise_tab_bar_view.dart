@@ -7,7 +7,7 @@ Widget categoryWiseTabBarView({
   return Obx(() {
     List<AllCategoriesPerformanceReportModel>? performanceReportModelList =
         tasksController.allCategoriesPerformanceReportModelSearchList.value !=
-                    null ||
+                    null &&
                 categorySearchController.text.trim().isNotEmpty
             ? tasksController
                 .allCategoriesPerformanceReportModelSearchList.value
