@@ -1,45 +1,46 @@
 part of '../assign_task_screen.dart';
 
-Widget weeklyFrequencySegment({required TasksController tasksController}) {
+Widget weeklyFrequencySegment(
+    {required AssignTaskController assignTaskController}) {
   return AnimatedOpacity(
-    opacity: tasksController.scaleWeekly.value ? 1 : 0,
-    duration: const Duration(milliseconds: 300),
+    opacity: assignTaskController.scaleWeekly.value ? 1 : 0,
+    duration: const Duration(milliseconds: 400),
     child: AnimatedSlide(
-      offset: tasksController.scaleWeekly.value
+      offset: assignTaskController.scaleWeekly.value
           ? const Offset(0, 0)
           : const Offset(0, -.1),
-      duration: const Duration(milliseconds: 800),
-      curve: Curves.bounceOut,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.elasticOut,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.grey.withOpacity(.1),
+          color: AppColors.textFieldColor,
         ),
         child: Center(
           child: Column(
             children: [
-              Gap(screenHeight * .007),
+              SizedBox(height: 6.5.h),
               Text(
                 'Select Days',
                 style: TextStyle(
-                  fontSize: screenWidth * .038,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Gap(2),
+              SizedBox(height: 2.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  for (String i in tasksController.daysMap.keys)
+                  for (String i in assignTaskController.daysMap.keys)
                     Column(
                       children: [
                         Checkbox(
-                          value: tasksController.daysMap[i],
+                          value: assignTaskController.daysMap[i],
                           fillColor: WidgetStateProperty.resolveWith<Color?>(
                             (Set<WidgetState> states) {
                               if (states.contains(WidgetState.selected)) {
-                                return const Color(0xff5d87ff);
+                                return AppColors.themeGreen;
                               }
                               return Colors.transparent;
                             },
@@ -49,8 +50,8 @@ Widget weeklyFrequencySegment({required TasksController tasksController}) {
                           ),
                           visualDensity: VisualDensity.compact,
                           onChanged: (value) {
-                            tasksController.daysMap[i] =
-                                value ?? tasksController.daysMap[i]!;
+                            assignTaskController.daysMap[i] =
+                                value ?? assignTaskController.daysMap[i]!;
                           },
                         ),
                         Text(i),

@@ -1,80 +1,404 @@
-import 'package:flutter/material.dart' show TimeOfDay;
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
-import 'package:turning_point_tasks_app/constants/tasks_management_constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/model/all_categories_performance_report_model.dart';
+import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
+import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
+import 'package:turningpoint_tms/model/my_performance_report_model.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
-//====================Date and Time====================//
-  Rx<DateTime> taskDate = DateTime.now().obs;
-  Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
+  TasksController() {
+    getCategories();
+  }
+  final tasksRepository = TasksRepository();
 
-//====================Priority====================//
-  Rx<TaskPriority> taskPriority = TaskPriority.low.obs;
+  final tasksException = Rxn<Exception>();
 
-//====================Repeat Frequency Segment====================//
-  RxBool shouldRepeatTask = false.obs;
-  Rxn<RepeatFrequency?> taskRepeatFrequency = Rxn<RepeatFrequency>();
+  final appController = Get.put(AppController());
 
-  RxMap<String, bool> daysMap = {
-    'Sun': false,
-    'Mon': false,
-    'Tue': false,
-    'Wed': false,
-    'Thu': false,
-    'Fri': false,
-    'Sat': false,
-  }.obs;
-  RxMap<int, bool> datesMap = createDateMap().obs;
+  final RxnBool isDelegatedObs = RxnBool();
 
-  //To block the keyboard from popping up on dismissing the selectDate or selectTime dialog
-  Rx<bool> isTitleAndDescriptionEnabled = true.obs;
+  RxList<TaskModel> dashboardTasksListObs = RxList<TaskModel>();
+  RxList<TaskModel> tempDashboardTasksListObs = RxList<TaskModel>();
 
-  //To animate the entry of the Weekly and Monthly frequencies segments
-  Rx<bool> scaleWeekly = false.obs;
-  Rx<bool> scaleMonthly = false.obs;
+  Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> tempAllTasksListObs = Rxn<List<TaskModel>>();
 
-//====================Reset Days Map====================//
-  void resetDaysMap() {
-    for (String i in daysMap.keys) {
-      daysMap[i] = false;
+  Rxn<List<TaskModel>> myTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>> tempMyTasksListObs = Rxn<List<TaskModel>>();
+
+  Rxn<List<TaskModel>?> delegatedTasksListObs = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> tempDelegatedTasksListObs = Rxn<List<TaskModel>>();
+
+  RxList<String> categoriesList = RxList<String>();
+
+  Rxn<List<TaskModel>?> openTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> inProgressTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> completedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> overdueTaskList = Rxn<List<TaskModel>>();
+
+  Rxn<List<TaskModel>?> openDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> inProgressDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> completedDelegatedTaskList = Rxn<List<TaskModel>>();
+  Rxn<List<TaskModel>?> overdueDelegatedTaskList = Rxn<List<TaskModel>>();
+
+  Rx<TaskModel> openedTaskModelObs = TaskModel().obs;
+
+  final completedOnTimeMyTasksList = <TaskModel>[].obs;
+  final completedDelayedMyTasksList = <TaskModel>[].obs;
+  final completedOnTimeDelegatedTasksList = <TaskModel>[].obs;
+  final completedDelayedDelegatedTasksList = <TaskModel>[].obs;
+
+  final dashboardTabIndexObs = 0.obs;
+
+  Rxn<List<AllUsersPerformanceReportModel>> allUsersPerformanceReportModelList =
+      Rxn<List<AllUsersPerformanceReportModel>>();
+  Rxn<List<AllUsersPerformanceReportModel>>
+      allUsersPerformanceReportModelSearchList =
+      Rxn<List<AllUsersPerformanceReportModel>>();
+
+  Rxn<List<AllCategoriesPerformanceReportModel>>
+      allCategoriesPerformanceReportModelList =
+      Rxn<List<AllCategoriesPerformanceReportModel>>();
+  Rxn<List<AllCategoriesPerformanceReportModel>>
+      allCategoriesPerformanceReportModelSearchList =
+      Rxn<List<AllCategoriesPerformanceReportModel>>();
+
+  Rxn<List<MyPerformanceReportModel>> myPerformanceReportModelList =
+      Rxn<List<MyPerformanceReportModel>>();
+  Rxn<List<MyPerformanceReportModel>> myPerformanceReportModelSearchList =
+      Rxn<List<MyPerformanceReportModel>>();
+
+  Rxn<List<DelegatedPerformanceReportModel>>
+      delegatedPerformanceReportModelList =
+      Rxn<List<DelegatedPerformanceReportModel>>();
+  Rxn<List<DelegatedPerformanceReportModel>>
+      delegatedPerformanceReportModelSearchList =
+      Rxn<List<DelegatedPerformanceReportModel>>();
+
+  final taskUpdateAttachments = <File>[].obs;
+  final taskUpdateAttachmentsMapList = RxList<Map<String, String>>();
+
+//====================Get All Tasks====================//
+  Future<void> getAllTasks({bool? getFromLocalStorage}) async {
+    try {
+      if (getFromLocalStorage != true) {
+        allTasksListObs.value = await tasksRepository.getAllTasks();
+        tempAllTasksListObs.value = allTasksListObs.value;
+
+        tasksException.value = null;
+      } else {
+        myTasksListObs.value = tempAllTasksListObs.value;
+      }
+    } catch (e) {
+      tasksException.value = e as Exception;
     }
   }
 
-//====================Reset Dates Map====================//
-  void resetDatesMap() {
-    for (int i = 1; i <= totalDays; i++) {
-      datesMap[i] = false;
+  void addToDashboardTasksList({required List<TaskModel> tasksList}) {
+    dashboardTasksListObs.value = tasksList;
+    tempDashboardTasksListObs.value = tasksList;
+  }
+
+  void getDashboardTasksFromStorage() {
+    dashboardTasksListObs.value = tempDashboardTasksListObs;
+  }
+
+//====================Get My Tasks====================//
+  Future<void> getMyTasks({
+    bool? getFromLocalStorage,
+    bool? filter,
+  }) async {
+    try {
+      //Executes if it's not run for the filter function
+      if (filter != true) {
+        if (getFromLocalStorage != true) {
+          myTasksListObs.value = await tasksRepository.getMyTasks();
+          tempMyTasksListObs.value = myTasksListObs.value;
+
+          tasksException.value = null;
+        } else {
+          myTasksListObs.value = tempMyTasksListObs.value;
+        }
+      }
+
+      openTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.open)
+          .toList();
+      inProgressTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.inProgress)
+          .toList();
+      completedTaskList.value = myTasksListObs.value!
+          .where((item) => item.status == Status.completed)
+          .toList();
+      overdueTaskList.value = myTasksListObs.value!
+          .where((item) =>
+              item.isDelayed == true && item.status != Status.completed)
+          .toList();
+
+      completedOnTimeMyTasksList.value = myTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed != true)
+          .toList();
+      completedDelayedMyTasksList.value = myTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed == true)
+          .toList();
+    } catch (e) {
+      tasksException.value = e as Exception;
     }
   }
 
-//====================Repeat Check Box OnChanged Method====================//
-  void repeatCheckBoxOnChanged(bool? value) {
-    shouldRepeatTask.value = value ?? shouldRepeatTask.value;
-    taskRepeatFrequency.value = null;
-    scaleWeekly.value = false;
-    resetDaysMap();
-    resetDatesMap();
+//====================Get Delegated Tasks====================//
+  Future<void> getDelegatedTasks({
+    bool? getFromLocalStorage,
+    bool? filter,
+  }) async {
+    try {
+      //Executes if it's not executed for the filter function.If executed for the filter function, it just filter tasks into respective variables
+      if (filter != true) {
+        if (getFromLocalStorage != true) {
+          delegatedTasksListObs.value =
+              await tasksRepository.getDelegatedTasks();
+          tempDelegatedTasksListObs.value = delegatedTasksListObs.value;
+
+          tasksException.value = null;
+        } else {
+          delegatedTasksListObs.value = tempDelegatedTasksListObs.value;
+        }
+      }
+
+      openDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.open)
+          .toList();
+      inProgressDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.inProgress)
+          .toList();
+      completedDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) => item.status == Status.completed)
+          .toList();
+      overdueDelegatedTaskList.value = delegatedTasksListObs.value!
+          .where((item) =>
+              item.isDelayed == true && item.status != Status.completed)
+          .toList();
+
+      completedOnTimeDelegatedTasksList.value = delegatedTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed != true)
+          .toList();
+      completedDelayedDelegatedTasksList.value = delegatedTasksListObs.value!
+          .where((taskModel) =>
+              taskModel.status == Status.completed &&
+              taskModel.isDelayed == true)
+          .toList();
+    } catch (e) {
+      tasksException.value = e as Exception;
+      return;
+    }
   }
 
-//====================Repeat Frequency DropDown onChanged Method====================//
-  void repeatFrequencyOnChanged(RepeatFrequency? repeatFrequency) {
-    taskRepeatFrequency.value = repeatFrequency;
-    if (repeatFrequency == RepeatFrequency.weekly) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        scaleWeekly.value = true;
-        scaleMonthly.value = false;
+//====================Get Categories====================//
+  Future<void> getCategories() async {
+    try {
+      final temp = await tasksRepository.getCategories();
+      if (temp != null) {
+        categoriesList.clear();
+        for (var item in temp) {
+          categoriesList.add(item.toString());
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Add Categories====================//
+  Future<void> addCategory({required String categoryName}) async {
+    try {
+      await tasksRepository.addCategory(categoryName: categoryName);
+      await getCategories();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Get All Users Performance Report====================//
+  Future<void> getAllUsersPerformanceReport() async {
+    try {
+      allUsersPerformanceReportModelList.value =
+          await tasksRepository.getAllUsersPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get All Categories Performance Report====================//
+  Future<void> getAllCategoriesPerformanceReport() async {
+    try {
+      allCategoriesPerformanceReportModelList.value =
+          await tasksRepository.getAllCategoriesPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get My Performance Report====================//
+  Future<void> getMyPerformanceReport() async {
+    try {
+      myPerformanceReportModelList.value =
+          await tasksRepository.getMyPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Get Delegated Performance Report====================//
+  Future<void> getDelegatedPerformanceReport() async {
+    try {
+      delegatedPerformanceReportModelList.value =
+          await tasksRepository.getDelegatedPerformanceReport();
+      tasksException.value = null;
+    } catch (e) {
+      tasksException.value = e as Exception;
+    }
+  }
+
+//====================Delete Task====================//
+  Future<void> deleteTask({required String taskId}) async {
+    try {
+      await tasksRepository.deleteTask(taskId: taskId);
+      tasksException.value = null;
+      if (isDelegatedObs.value == true) {
+        await getDelegatedTasks();
+      } else if (isDelegatedObs.value == false) {
+        await getMyTasks();
+      }
+      await getAllTasks();
+      if (dashboardTasksListObs.isNotEmpty) {
+        dashboardTasksListObs
+            .removeWhere((taskModel) => taskModel.id == taskId);
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Fetch Image from Storage====================//
+  Future<File?> fetchImageFromStorage() async {
+    final ImagePicker picker = ImagePicker();
+    try {
+      final XFile? imageXFile = await picker.pickImage(
+        source: ImageSource.gallery,
+      );
+      if (imageXFile != null) {
+        return File(imageXFile.path);
+      } else {
+        return null;
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Add Image to task update attachments====================//
+  Future<void> addImageToTaskUpdateAttachments() async {
+    final imageFile = await fetchImageFromStorage();
+    if (imageFile != null) {
+      appController.isLoadingObs.value = true;
+      taskUpdateAttachmentsMapList.add({
+        'path': await tasksRepository.uploadAttachment(file: imageFile),
+        'type': 'image',
       });
-    } else if (repeatFrequency == RepeatFrequency.monthly) {
-      Future.delayed(const Duration(milliseconds: 100), () {
-        scaleMonthly.value = true;
-        scaleWeekly.value = false;
-      });
-    } else {
-      scaleMonthly.value = false;
-      scaleWeekly.value = false;
+      taskUpdateAttachments.add(imageFile);
+
+      appController.isLoadingObs.value = false;
     }
-    resetDaysMap();
-    resetDatesMap();
   }
+
+//====================Add File Attachments====================//
+  Future<void> addFileToTaskUpdateAttachments() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        appController.isLoadingObs.value = true;
+        final url = await tasksRepository.uploadAttachment(file: file);
+        final fileExtension = file.path.split('.').last;
+        final fileType = fileExtension == 'mp4' ||
+                fileExtension == 'mkv' ||
+                fileExtension == 'hevc'
+            ? 'video'
+            : fileExtension == 'jpg' ||
+                    fileExtension == 'jpeg' ||
+                    fileExtension == 'png' ||
+                    fileExtension == 'heif'
+                ? 'image'
+                : 'application';
+
+        taskUpdateAttachmentsMapList.add({
+          'path': url,
+          'type': fileType,
+        });
+        taskUpdateAttachments.add(file);
+        appController.isLoadingObs.value = false;
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Change Task Status====================//
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String taskStatus,
+    required String note,
+  }) async {
+    try {
+      await tasksRepository.updateTaskStatus(
+        taskId: taskId,
+        taskStatus: taskStatus,
+        note: note,
+        taskUpdateAttachmentsMapList: taskUpdateAttachmentsMapList,
+      );
+      tasksException.value = null;
+      if (isDelegatedObs.value == true) {
+        await getDelegatedTasks();
+      } else if (isDelegatedObs.value == false) {
+        await getMyTasks();
+      }
+      await getAllTasks();
+      for (int i = 0; i < dashboardTasksListObs.length; i++) {
+        if (dashboardTasksListObs[i].id == taskId) {
+          dashboardTasksListObs[i] = allTasksListObs.value!
+              .firstWhere((taskModel) => taskModel.id == taskId);
+          return;
+        }
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Reset Task Controller====================//
+  void resetTasksController() {}
+}
+
+class TaskPriority {
+  static const low = 'Low';
+  static const medium = 'Medium';
+  static const high = 'High';
 }
 
 //====================ENUMS====================//
@@ -85,19 +409,19 @@ enum RepeatFrequency {
   monthly,
 }
 
-enum TaskPriority {
-  low,
-  medium,
-  high,
-}
-
-//====================create Date Map====================//
-Map<int, bool> createDateMap() {
-  Map<int, bool> datesMap = {};
-
-  for (int i = 1; i <= totalDays; i++) {
-    datesMap[i] = false;
+extension RepeatFrequencyExtension on RepeatFrequency {
+  String? enumToString() {
+    switch (this) {
+      case RepeatFrequency.once:
+        return null;
+      case RepeatFrequency.daily:
+        return 'Daily';
+      case RepeatFrequency.weekly:
+        return 'Weekly';
+      case RepeatFrequency.monthly:
+        return 'Monthly';
+      default:
+        return null;
+    }
   }
-
-  return datesMap;
 }

@@ -2,34 +2,42 @@ part of '../assign_task_screen.dart';
 
 Widget priorityTabBar({
   required TabController tabController,
-  required TasksController tasksController,
+  required AssignTaskController assignTaskController,
 }) {
   return Column(
     children: [
       Row(
         children: [
-          Gap(screenWidth * .025),
-          Icon(
-            Icons.flag,
-            color: Colors.black.withOpacity(.75),
+          SizedBox(height: 10.h),
+          Obx(
+            () => Icon(
+              Icons.flag,
+              color: assignTaskController.taskPriority.value == TaskPriority.low
+                  ? Colors.white.withOpacity(.9)
+                  : assignTaskController.taskPriority.value ==
+                          TaskPriority.medium
+                      ? Colors.orange
+                      : Colors.red,
+            ),
           ),
-          Gap(screenWidth * .005),
+          SizedBox(height: 2.h),
           Text(
             'Priority',
             style: TextStyle(
-              fontSize: screenWidth * .04,
+              fontSize: 16.sp,
             ),
           ),
         ],
       ),
-      Gap(screenHeight * .015),
+      SizedBox(height: 14.h),
       Container(
-        height: screenHeight * .068,
+        height: 62.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.grey.withOpacity(.25),
+          color: AppColors.textFieldColor,
         ),
         child: TabBar(
+          onTap: (index) => assignTaskController.changeTaskPriority(index),
           controller: tabController,
           dividerColor: Colors.transparent,
           enableFeedback: true,
@@ -38,22 +46,18 @@ Widget priorityTabBar({
           indicatorSize: TabBarIndicatorSize.tab,
           labelColor: Colors.white,
           labelStyle: TextStyle(
-            fontSize: screenWidth * .035,
+            fontSize: 16.sp,
             fontFamily: 'Lufga',
-            fontWeight: FontWeight.w500,
           ),
           unselectedLabelColor: Colors.black54,
           indicator: BoxDecoration(
             color: const Color(0xff5d87ff),
             borderRadius: BorderRadius.circular(30),
-            // gradient: const LinearGradient(
-            //   colors: [
-            //     Color.fromRGBO(36, 196, 123, 1),
-            //     Color.fromRGBO(52, 228, 140, 1)
-            //   ],
-            //   begin: Alignment.centerLeft,
-            //   end: Alignment.centerRight,
-            // ),
+            gradient: const LinearGradient(
+              colors: [AppColors.themeGreen, Color.fromRGBO(52, 228, 140, 1)],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
           ),
           tabs: const [
             Column(

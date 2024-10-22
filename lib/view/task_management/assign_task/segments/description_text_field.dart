@@ -2,21 +2,21 @@ part of '../assign_task_screen.dart';
 
 Widget descriptionTextField({
   required TextEditingController descriptionController,
-  required TasksController tasksController,
+  required AssignTaskController assingTaskController,
 }) {
-  return TextField(
+  return TextFormField(
     controller: descriptionController,
-    enabled: tasksController.isTitleAndDescriptionEnabled.value,
+    enabled: assingTaskController.isTitleAndDescriptionEnabled.value,
     style: GoogleFonts.roboto(),
     maxLines: null,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
       hintText: 'Description',
       contentPadding: EdgeInsets.symmetric(
-        horizontal: screenWidth * .034,
-        vertical: screenHeight * .015,
+        horizontal: 14.w,
+        vertical: 13.5.h,
       ),
-      fillColor: Colors.grey.withOpacity(.25),
+      fillColor: AppColors.textFieldColor,
       filled: true,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -36,6 +36,24 @@ Widget descriptionTextField({
           color: Colors.red,
         ),
       ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        ),
+      ),
     ),
+    validator: (value) {
+      if (value == null) {
+        return 'Invalid value';
+      }
+      if (value.trim().isEmpty) {
+        return 'Description cannot be empty';
+      }
+      if (value.length < 3) {
+        return 'Decription length should be atleast 3 characters';
+      }
+      return null;
+    },
   );
 }

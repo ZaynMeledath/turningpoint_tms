@@ -1,35 +1,38 @@
 part of '../assign_task_screen.dart';
 
-Widget monthlyFrequencySegment({required TasksController tasksController}) {
+Widget monthlyFrequencySegment({
+  required AssignTaskController assignTaskController,
+}) {
   const rowElementsCount = 8;
+  final totalRows = (totalDays / rowElementsCount).ceil();
   return AnimatedOpacity(
-    opacity: tasksController.scaleMonthly.value ? 1 : 0,
-    duration: const Duration(milliseconds: 300),
+    opacity: assignTaskController.scaleMonthly.value ? 1 : 0,
+    duration: const Duration(milliseconds: 400),
     child: AnimatedSlide(
-      offset: tasksController.scaleMonthly.value
+      offset: assignTaskController.scaleMonthly.value
           ? const Offset(0, 0)
           : const Offset(0, -.1),
-      duration: const Duration(milliseconds: 800),
-      curve: Curves.bounceOut,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.elasticOut,
       child: Container(
-        padding: const EdgeInsets.only(bottom: 8),
+        padding: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.grey.withOpacity(.1),
+          color: AppColors.textFieldColor,
         ),
         child: Center(
           child: Column(
             children: [
-              Gap(screenHeight * .007),
+              SizedBox(height: 6.5.h),
               Text(
                 'Select Dates',
                 style: TextStyle(
-                  fontSize: screenWidth * .038,
+                  fontSize: 15.5.w,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const Gap(2),
-              for (int i = 0; i < 4; i++)
+              SizedBox(height: 2.h),
+              for (int i = 0; i < totalRows; i++)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -37,12 +40,11 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                         j <= (i + 1) * rowElementsCount && j <= totalDays;
                         j++)
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * .0082),
+                        padding: EdgeInsets.symmetric(horizontal: 3.5.w),
                         child: Column(
                           children: [
                             Checkbox(
-                              value: tasksController.datesMap[j],
+                              value: assignTaskController.datesMap[j],
                               fillColor:
                                   WidgetStateProperty.resolveWith<Color?>(
                                 (Set<WidgetState> states) {
@@ -57,13 +59,15 @@ Widget monthlyFrequencySegment({required TasksController tasksController}) {
                               ),
                               visualDensity: VisualDensity.compact,
                               onChanged: (value) {
-                                tasksController.datesMap[j] =
-                                    value ?? tasksController.datesMap[j]!;
+                                assignTaskController.datesMap[j] =
+                                    value ?? assignTaskController.datesMap[j]!;
                               },
                             ),
-                            Text(tasksController.datesMap.keys
-                                .elementAt(j - 1)
-                                .toString()),
+                            Text(
+                              assignTaskController.datesMap.keys
+                                  .elementAt(j - 1)
+                                  .toString(),
+                            ),
                           ],
                         ),
                       ),

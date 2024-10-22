@@ -1,0 +1,1 @@
+class FcmTokenNullException implements Exception {}

@@ -1,6 +1,6 @@
 {
-    "name": "turning_point_tasks_app",
-    "short_name": "turning_point_tasks_app",
+    "name": "turningpoint_tms",
+    "short_name": "turningpoint_tms",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

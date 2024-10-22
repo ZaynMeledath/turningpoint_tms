@@ -1,4 +1,4 @@
-package com.example.turning_point_tasks_app
+package com.turningpointvapi.tms
 
 import io.flutter.embedding.android.FlutterActivity
 

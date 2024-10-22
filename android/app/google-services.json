@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "810991594594",
+    "project_id": "turning-point-tms",
+    "storage_bucket": "turning-point-tms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810991594594:android:9cfa22f8b09ea7bc30753b",
+        "android_client_info": {
+          "package_name": "com.turningpointvapi.tms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIHYEXztT4nbeE0fAqoCESfnat84686NE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

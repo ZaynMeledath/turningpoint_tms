@@ -1,32 +1,34 @@
 part of '../assign_task_screen.dart';
 
-Widget repeatFrequencySection({required TasksController tasksController}) {
+Widget repeatFrequencySection({
+  required AssignTaskController assignTaskController,
+}) {
   return Column(
     children: [
       Obx(
         () => Container(
-          height: screenHeight * .075,
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * .03),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Center(
             child: Row(
               children: [
                 Icon(
                   Icons.repeat,
-                  size: screenWidth * .05,
+                  size: 20.sp,
                 ),
-                const Gap(4),
+                SizedBox(width: 4.w),
                 Text(
                   'Repeat',
                   style: TextStyle(
-                    fontSize: screenWidth * .041,
+                    fontSize: 20.sp,
+                    height: 1,
                   ),
                 ),
                 Checkbox(
-                  value: tasksController.shouldRepeatTask.value,
+                  value: assignTaskController.shouldRepeatTask.value,
                   fillColor: WidgetStateProperty.resolveWith<Color?>(
                     (Set<WidgetState> states) {
                       if (states.contains(WidgetState.selected)) {
-                        return const Color(0xff5d87ff);
+                        return AppColors.themeGreen;
                       }
                       return Colors.transparent;
                     },
@@ -35,27 +37,31 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   visualDensity: VisualDensity.compact,
-                  onChanged: tasksController.repeatCheckBoxOnChanged,
+                  splashRadius: 5,
+                  onChanged: assignTaskController.repeatCheckBoxOnChanged,
                 ),
-                tasksController.shouldRepeatTask.value
+                assignTaskController.shouldRepeatTask.value
                     ? Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: SizedBox(
-                            width: screenWidth * .36,
+                            width: 148.w,
                             child: DropdownButtonFormField(
+                              dropdownColor: AppColors.textFieldColor,
                               elevation: 2,
-                              hint: const Text(
+                              hint: Text(
                                 'Frequency',
                                 style: TextStyle(
-                                  color: Colors.black87,
+                                  fontSize: 16.sp,
+                                  color: Colors.white70,
                                 ),
                               ),
-                              value: tasksController.taskRepeatFrequency.value,
+                              value: assignTaskController
+                                  .taskRepeatFrequency.value,
                               borderRadius: BorderRadius.circular(20),
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.grey.withOpacity(.25),
+                                fillColor: AppColors.textFieldColor,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -72,22 +78,42 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
                                   ),
                                 ),
                               ),
-                              items: const [
+                              items: [
                                 DropdownMenuItem(
                                   value: RepeatFrequency.daily,
-                                  child: Text('Daily'),
+                                  child: Text(
+                                    'Daily',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                                 DropdownMenuItem(
                                   value: RepeatFrequency.weekly,
-                                  child: Text('Weekly'),
+                                  child: Text(
+                                    'Weekly',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                                 DropdownMenuItem(
                                   value: RepeatFrequency.monthly,
-                                  child: Text('Monthly'),
+                                  child: Text(
+                                    'Monthly',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
                                 ),
                               ],
+                              onTap: () {
+                                assignTaskController
+                                    .showRepeatFrequencyErrorTextObs
+                                    .value = false;
+                              },
                               onChanged:
-                                  tasksController.repeatFrequencyOnChanged,
+                                  assignTaskController.repeatFrequencyOnChanged,
                             ),
                           ),
                         ),
@@ -98,20 +124,44 @@ Widget repeatFrequencySection({required TasksController tasksController}) {
           ),
         ),
       ),
-      Gap(screenHeight * .015),
+      SizedBox(height: 13.5.h),
 //====================Day Frequency Segment====================//
       Obx(() {
-        switch (tasksController.taskRepeatFrequency.value) {
+        switch (assignTaskController.taskRepeatFrequency.value) {
           case RepeatFrequency.daily:
             return const SizedBox();
           case RepeatFrequency.weekly:
-            return weeklyFrequencySegment(tasksController: tasksController);
+            return weeklyFrequencySegment(
+                assignTaskController: assignTaskController);
           case RepeatFrequency.monthly:
-            return monthlyFrequencySegment(tasksController: tasksController);
+            return monthlyFrequencySegment(
+                assignTaskController: assignTaskController);
           default:
             return const SizedBox();
         }
       }),
+
+      Obx(
+        () {
+          if (assignTaskController.showRepeatFrequencyErrorTextObs.value) {
+            return Padding(
+              padding: EdgeInsets.only(right: 6.w),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Select Repeat Frequency',
+                  style: TextStyle(
+                    fontSize: 12.5.sp,
+                    color: Colors.redAccent.shade100,
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      )
     ],
   );
 }
