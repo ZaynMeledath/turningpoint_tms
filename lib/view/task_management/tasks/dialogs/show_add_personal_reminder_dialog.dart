@@ -23,6 +23,7 @@ class AddPersonalReminderDialog extends StatefulWidget {
 class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
   final noteController = TextEditingController();
   final assignTaskController = AssignTaskController();
+  final appController = AppController();
 
   @override
   void dispose() {
@@ -49,11 +50,11 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
           child: Container(
             // width: 300.w,
             margin: EdgeInsets.symmetric(
-              horizontal: 36.w,
+              horizontal: 26.w,
             ),
             padding: EdgeInsets.symmetric(
               horizontal: 16.w,
-              vertical: 14.h,
+              vertical: 16.h,
             ),
             decoration: BoxDecoration(
               color: AppColors.textFieldColor,
@@ -73,13 +74,13 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                       child: Text(
                         'Add a Personal Reminder',
                         style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 17.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 12.h),
+                  SizedBox(height: 14.h),
                   customTextField(
                     controller: noteController,
                     hintText: 'Reminder Note',
@@ -250,11 +251,21 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                       return const SizedBox();
                     }
                   }),
-                  SizedBox(height: 8.h),
-                  customButton(
-                    buttonTitle: 'Add Reminder',
-                    fontSize: 16.w,
-                    onTap: () {},
+                  SizedBox(height: 10.h),
+                  Obx(
+                    () => customButton(
+                      buttonTitle: 'Add Reminder',
+                      width: 148.w,
+                      height: 40.w,
+                      fontSize: 16.w,
+                      isLoading: appController.isLoadingObs.value,
+                      onTap: () async {
+                        appController.isLoadingObs.value = true;
+                        await Future.delayed(const Duration(seconds: 2));
+                        appController.isLoadingObs.value = false;
+                        assignTaskController.showTimeErrorTextObs.value = true;
+                      },
+                    ),
                   )
                 ],
               ),

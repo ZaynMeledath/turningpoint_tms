@@ -15,6 +15,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
