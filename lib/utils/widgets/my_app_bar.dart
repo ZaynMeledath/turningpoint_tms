@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
@@ -21,7 +22,7 @@ AppBar myAppBar({
     automaticallyImplyLeading: false,
     elevation: 10,
     titleSpacing: 0,
-    toolbarHeight: 60.h,
+    toolbarHeight: 60.w,
     surfaceTintColor: Colors.transparent,
     backgroundColor: backgroundColor ?? Colors.transparent,
     title: Row(
@@ -87,7 +88,9 @@ AppBar myAppBar({
                   child: Padding(
                     padding: EdgeInsets.only(right: 6.w),
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showRemindersListDialog();
+                      },
                       icon: Icon(
                         Icons.alarm,
                         size: 24.w,

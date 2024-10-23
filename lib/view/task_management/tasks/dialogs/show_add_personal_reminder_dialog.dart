@@ -3,11 +3,10 @@
 part of '../task_details_screen.dart';
 
 Future<Object?> showAddPersonalReminderDialog({
-  required BuildContext context,
   required String? taskId,
 }) async {
   return showGeneralDialog(
-    context: context,
+    context: Get.context!,
     // barrierDismissible: true,
     barrierColor: Colors.transparent,
     pageBuilder: (context, a1, a2) {

@@ -122,7 +122,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
           IconButton(
             onPressed: () {
               showAddPersonalReminderDialog(
-                context: context,
                 taskId: taskModel.id,
               );
             },

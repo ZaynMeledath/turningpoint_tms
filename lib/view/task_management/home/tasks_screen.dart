@@ -168,7 +168,9 @@ class _TasksScreenState extends State<TasksScreen>
       case TasksListCategory.categoryWise:
         tasksController.addToDashboardTasksList(
             tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) => taskModel.category == widget.category)
+                .where((taskModel) =>
+                    taskModel.category!.toLowerCase() ==
+                    widget.category!.toLowerCase())
                 .toList());
         break;
       case TasksListCategory.myReport:
