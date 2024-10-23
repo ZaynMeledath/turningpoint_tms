@@ -47,7 +47,7 @@ Widget customButton({
                     : Text(
                         buttonTitle,
                         style: TextStyle(
-                          fontSize: fontSize ?? 18,
+                          fontSize: fontSize ?? 18.w,
                           // fontWeight: FontWeight.w500,
                         ),
                       ),

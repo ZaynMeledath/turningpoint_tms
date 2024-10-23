@@ -119,7 +119,9 @@ class _TasksScreenState extends State<TasksScreen>
       case TasksListCategory.overdue:
         tasksController.addToDashboardTasksList(
             tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) => taskModel.status == Status.overdue)
+                .where((taskModel) =>
+                    taskModel.isDelayed == true &&
+                    taskModel.status != Status.completed)
                 .toList());
         break;
       case TasksListCategory.open:
@@ -193,18 +195,22 @@ class _TasksScreenState extends State<TasksScreen>
       child: Obx(
         () {
           allTasksList = tasksController.dashboardTasksListObs;
-          openTasksList = tasksController.dashboardTasksListObs
-              .where((taskModel) => taskModel.status == Status.open)
-              .toList();
-          inProgressTasksList = tasksController.dashboardTasksListObs
-              .where((taskModel) => taskModel.status == Status.inProgress)
-              .toList();
-          completedTasksList = tasksController.dashboardTasksListObs
-              .where((taskModel) => taskModel.status == Status.completed)
-              .toList();
-          overdueTasksList = tasksController.dashboardTasksListObs
-              .where((taskModel) => taskModel.status == Status.overdue)
-              .toList();
+          if (widget.avoidTabBar != true) {
+            openTasksList = tasksController.dashboardTasksListObs
+                .where((taskModel) => taskModel.status == Status.open)
+                .toList();
+            inProgressTasksList = tasksController.dashboardTasksListObs
+                .where((taskModel) => taskModel.status == Status.inProgress)
+                .toList();
+            completedTasksList = tasksController.dashboardTasksListObs
+                .where((taskModel) => taskModel.status == Status.completed)
+                .toList();
+            overdueTasksList = tasksController.dashboardTasksListObs
+                .where((taskModel) =>
+                    taskModel.isDelayed == true &&
+                    taskModel.status != Status.completed)
+                .toList();
+          }
           return Scaffold(
             appBar: myAppBar(
               title:

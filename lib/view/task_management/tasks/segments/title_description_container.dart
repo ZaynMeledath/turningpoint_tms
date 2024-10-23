@@ -105,35 +105,38 @@ Widget titleDescriptionContainer({
                 ),
               ],
             ),
-            SizedBox(height: 8.h),
+
             taskModel.status == Status.completed
-                ? Row(
-                    children: [
-                      SizedBox(
-                        width: 90.w,
-                        child: const Text(
-                          'Completion',
+                ? Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 90.w,
+                          child: const Text(
+                            'Completion',
+                          ),
                         ),
-                      ),
-                      const Text(':'),
-                      SizedBox(width: 14.w),
-                      Icon(
-                        Icons.alarm,
-                        size: 17.sp,
-                        color: Colors.white70,
-                      ),
-                      SizedBox(width: 3.w),
-                      Text(
-                        completionDateString,
-                        style: TextStyle(
-                          color: taskModel.isDelayed == true
-                              ? Colors.red
-                              : Colors.green,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
+                        const Text(':'),
+                        SizedBox(width: 14.w),
+                        Icon(
+                          Icons.alarm,
+                          size: 17.sp,
+                          color: Colors.white70,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 3.w),
+                        Text(
+                          completionDateString,
+                          style: TextStyle(
+                            color: taskModel.isDelayed == true
+                                ? Colors.red
+                                : Colors.green,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 : const SizedBox(),
             SizedBox(height: 8.h),

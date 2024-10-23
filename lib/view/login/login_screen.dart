@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             delay: const Duration(milliseconds: 150),
                             curve: Curves.fastLinearToSlowEaseIn,
                           ),
-                      SizedBox(height: 35.h),
+                      SizedBox(height: 28.h),
                       customTextField(
                         controller: passwordController,
                         hintText: 'Password',
@@ -130,10 +130,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       //     child: const Text('Forgot Password'),
                       //   ),
                       // ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 30.h),
                       Obx(
                         () => customButton(
                           buttonTitle: 'Login',
+                          width: 125.w,
+                          height: 46.w,
                           isLoading: appController.isLoadingObs.value,
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {

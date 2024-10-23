@@ -121,7 +121,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         trailingIcons: [
           IconButton(
             onPressed: () {
-              showAddPersonalReminderDialog();
+              showAddPersonalReminderDialog(context: context);
             },
             icon: const Icon(Icons.alarm_add),
           ),

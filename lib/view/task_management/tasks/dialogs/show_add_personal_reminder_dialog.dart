@@ -2,13 +2,25 @@
 
 part of '../task_details_screen.dart';
 
-Future<Object?> showAddPersonalReminderDialog() async {
-  return Get.dialog(
-    const AddPersonalReminderDialog(),
-    useSafeArea: true,
+Future<Object?> showAddPersonalReminderDialog({
+  required BuildContext context,
+}) async {
+  return showGeneralDialog(
+    context: context,
+    // barrierDismissible: true,
     barrierColor: Colors.transparent,
-    transitionCurve: Curves.easeInOut,
-    scaleAnimation: true,
+    pageBuilder: (context, a1, a2) {
+      return Container();
+    },
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionBuilder: (context, a1, a2, child) {
+      final curve = Curves.easeInOut.transform(a1.value);
+      return Transform.scale(
+        alignment: Alignment.topRight,
+        scale: curve,
+        child: const AddPersonalReminderDialog(),
+      );
+    },
   );
 }
 
@@ -34,243 +46,256 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MediaQuery.of(context).viewInsets.bottom != 0
-          ? MainAxisAlignment.start
-          : MainAxisAlignment.center,
+    return Stack(
       children: [
-        SizedBox(
-          height: MediaQuery.of(context).viewInsets.bottom != 0 ? 250.h : 0,
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 3.0,
-            sigmaY: 3.0,
-          ),
+        GestureDetector(
+          onTap: () => Get.back(),
           child: Container(
-            // width: 300.w,
-            margin: EdgeInsets.symmetric(
-              horizontal: 26.w,
+            color: Colors.transparent,
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MediaQuery.of(context).viewInsets.bottom != 0
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).viewInsets.bottom != 0 ? 250.h : 0,
             ),
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 16.h,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.textFieldColor,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: Colors.blueGrey.withOpacity(.3),
+            BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 3.0,
+                sigmaY: 3.0,
               ),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.w),
-                      child: Text(
-                        'Add a Personal Reminder',
-                        style: TextStyle(
-                          fontSize: 17.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+              child: Container(
+                // width: 300.w,
+                margin: EdgeInsets.symmetric(
+                  horizontal: 26.w,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16.w,
+                  vertical: 16.h,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.textFieldColor,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: Colors.blueGrey.withOpacity(.3),
                   ),
-                  SizedBox(height: 14.h),
-                  customTextField(
-                    controller: noteController,
-                    hintText: 'Reminder Note',
-                    borderColor: Colors.grey.withOpacity(.3),
-                    backgroundColor: AppColors.scaffoldBackgroundColor,
-                  ),
-                  SizedBox(height: 8.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: Column(
                     children: [
-                      //====================Date Picker Section====================//
-                      InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () async {
-                          //To prevent the keyboard popping glitch
-                          final currentFocus = FocusScope.of(context);
-                          if (currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-
-                          assignTaskController
-                              .isTitleAndDescriptionEnabled.value = false;
-                          final date = await showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime(2030),
-                          );
-                          if (date != null) {
-                            assignTaskController.taskDate.value = date;
-                            assignTaskController.taskTime.value =
-                                await showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.now(),
-                                    ) ??
-                                    TimeOfDay.now();
-                          }
-                          Future.delayed(Duration.zero, () {
-                            assignTaskController
-                                .isTitleAndDescriptionEnabled.value = true;
-                          });
-                        },
+                      Align(
+                        alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: EdgeInsets.all(5.w),
-                          child: Row(
-                            children: [
-                              Obx(
-                                () => Container(
-                                  width: 61.w,
-                                  height: 61.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.scaffoldBackgroundColor,
-                                    shape: BoxShape.circle,
-                                    border: assignTaskController
-                                            .showTimeErrorTextObs.value
-                                        ? Border.all(
-                                            color: Colors.redAccent,
-                                          )
-                                        : null,
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.calendar_month_rounded,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Obx(
-                                () => Text(
-                                  '${assignTaskController.taskDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDate.value)}',
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ),
-                            ],
+                          padding: EdgeInsets.only(left: 8.w),
+                          child: Text(
+                            'Add a Personal Reminder',
+                            style: TextStyle(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                      const Expanded(
-                        child: SizedBox(),
+                      SizedBox(height: 14.h),
+                      customTextField(
+                        controller: noteController,
+                        hintText: 'Reminder Note',
+                        borderColor: Colors.grey.withOpacity(.3),
+                        backgroundColor: AppColors.scaffoldBackgroundColor,
                       ),
-
-                      //====================Time Picker Section====================//
-                      InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () async {
-                          //To prevent the keyboard popping glitch
-                          final currentFocus = FocusScope.of(context);
-                          if (currentFocus.hasPrimaryFocus) {
-                            currentFocus.unfocus();
-                          }
-
-                          assignTaskController
-                              .isTitleAndDescriptionEnabled.value = false;
-                          assignTaskController.taskTime.value =
-                              await showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now(),
-                                  ) ??
-                                  TimeOfDay.now();
-                          Future.delayed(Duration.zero, () {
-                            assignTaskController
-                                .isTitleAndDescriptionEnabled.value = true;
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(5.w),
-                          child: Row(
-                            children: [
-                              Obx(
-                                () => Container(
-                                  width: 61.w,
-                                  height: 61.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.scaffoldBackgroundColor,
-                                    shape: BoxShape.circle,
-                                    border: assignTaskController
-                                            .showTimeErrorTextObs.value
-                                        ? Border.all(
-                                            color: Colors.redAccent,
-                                          )
-                                        : null,
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.access_time,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Obx(
-                                () => Text(
-                                  assignTaskController.taskTime.value
-                                      .format(context),
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Obx(() {
-                    if (assignTaskController.showTimeErrorTextObs.value) {
-                      return Column(
+                      SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 4.h),
-                          Align(
-                            // alignment: Alignment.centerRight,
-                            child: Text(
-                              'Reminder Date and Time should be in the future',
-                              style: TextStyle(
-                                fontSize: 12.5.sp,
-                                color: Colors.redAccent.shade100,
+                          //====================Date Picker Section====================//
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () async {
+                              //To prevent the keyboard popping glitch
+                              final currentFocus = FocusScope.of(context);
+                              if (currentFocus.hasPrimaryFocus) {
+                                currentFocus.unfocus();
+                              }
+
+                              assignTaskController
+                                  .isTitleAndDescriptionEnabled.value = false;
+                              final date = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2030),
+                              );
+                              if (date != null) {
+                                assignTaskController.taskDate.value = date;
+                                assignTaskController.taskTime.value =
+                                    await showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay.now(),
+                                        ) ??
+                                        TimeOfDay.now();
+                              }
+                              Future.delayed(Duration.zero, () {
+                                assignTaskController
+                                    .isTitleAndDescriptionEnabled.value = true;
+                              });
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(5.w),
+                              child: Row(
+                                children: [
+                                  Obx(
+                                    () => Container(
+                                      width: 61.w,
+                                      height: 61.w,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            AppColors.scaffoldBackgroundColor,
+                                        shape: BoxShape.circle,
+                                        border: assignTaskController
+                                                .showTimeErrorTextObs.value
+                                            ? Border.all(
+                                                color: Colors.redAccent,
+                                              )
+                                            : null,
+                                      ),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.calendar_month_rounded,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Obx(
+                                    () => Text(
+                                      '${assignTaskController.taskDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDate.value)}',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const Expanded(
+                            child: SizedBox(),
+                          ),
+
+                          //====================Time Picker Section====================//
+                          InkWell(
+                            borderRadius: BorderRadius.circular(20),
+                            onTap: () async {
+                              //To prevent the keyboard popping glitch
+                              final currentFocus = FocusScope.of(context);
+                              if (currentFocus.hasPrimaryFocus) {
+                                currentFocus.unfocus();
+                              }
+
+                              assignTaskController
+                                  .isTitleAndDescriptionEnabled.value = false;
+                              assignTaskController.taskTime.value =
+                                  await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now(),
+                                      ) ??
+                                      TimeOfDay.now();
+                              Future.delayed(Duration.zero, () {
+                                assignTaskController
+                                    .isTitleAndDescriptionEnabled.value = true;
+                              });
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(5.w),
+                              child: Row(
+                                children: [
+                                  Obx(
+                                    () => Container(
+                                      width: 61.w,
+                                      height: 61.w,
+                                      decoration: BoxDecoration(
+                                        color:
+                                            AppColors.scaffoldBackgroundColor,
+                                        shape: BoxShape.circle,
+                                        border: assignTaskController
+                                                .showTimeErrorTextObs.value
+                                            ? Border.all(
+                                                color: Colors.redAccent,
+                                              )
+                                            : null,
+                                      ),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.access_time,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8.w),
+                                  Obx(
+                                    () => Text(
+                                      assignTaskController.taskTime.value
+                                          .format(context),
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ],
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  }),
-                  SizedBox(height: 10.h),
-                  Obx(
-                    () => customButton(
-                      buttonTitle: 'Add Reminder',
-                      width: 148.w,
-                      height: 40.w,
-                      fontSize: 16.w,
-                      isLoading: appController.isLoadingObs.value,
-                      onTap: () async {
-                        appController.isLoadingObs.value = true;
-                        await Future.delayed(const Duration(seconds: 2));
-                        appController.isLoadingObs.value = false;
-                        assignTaskController.showTimeErrorTextObs.value = true;
-                      },
-                    ),
-                  )
-                ],
+                      ),
+                      Obx(() {
+                        if (assignTaskController.showTimeErrorTextObs.value) {
+                          return Column(
+                            children: [
+                              SizedBox(height: 4.h),
+                              Align(
+                                // alignment: Alignment.centerRight,
+                                child: Text(
+                                  'Reminder Date and Time should be in the future',
+                                  style: TextStyle(
+                                    fontSize: 12.5.sp,
+                                    color: Colors.redAccent.shade100,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      }),
+                      SizedBox(height: 10.h),
+                      Obx(
+                        () => customButton(
+                          buttonTitle: 'Add Reminder',
+                          width: 148.w,
+                          height: 40.w,
+                          fontSize: 16.w,
+                          isLoading: appController.isLoadingObs.value,
+                          onTap: () async {
+                            appController.isLoadingObs.value = true;
+                            await Future.delayed(const Duration(seconds: 2));
+                            appController.isLoadingObs.value = false;
+                            assignTaskController.showTimeErrorTextObs.value =
+                                true;
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ],
     );
