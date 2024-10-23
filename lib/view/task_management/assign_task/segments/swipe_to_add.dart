@@ -25,7 +25,7 @@ Widget swipeToAdd({
       outerColor: AppColors.textFieldColor,
       sliderButtonIcon: const Icon(
         Icons.arrow_forward,
-        color: Color.fromRGBO(50, 50, 50, 1),
+        color: Colors.white,
       ),
       elevation: 2,
       onSubmit: () async {

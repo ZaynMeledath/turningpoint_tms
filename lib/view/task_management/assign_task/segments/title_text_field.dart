@@ -8,7 +8,6 @@ Widget titleTextField({
     controller: titleController,
     enabled: assignTaskController.isTitleAndDescriptionEnabled.value,
     maxLines: null,
-    keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
       hintText: 'Title',

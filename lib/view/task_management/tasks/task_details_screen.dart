@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,6 +15,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
@@ -22,6 +24,7 @@ import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/segments/card_action_button.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/segments/task_crud_operations.dart';
@@ -31,6 +34,7 @@ part 'segments/task_details_assigned_container.dart';
 part 'segments/task_updates_section.dart';
 part 'dialogs/show_task_details_assigned_container_dialog.dart';
 part 'segments/task_details_attachment_segment.dart';
+part 'dialogs/show_add_personal_reminder_dialog.dart';
 
 class TaskDetailsScreen extends StatefulWidget {
   final TaskModel taskModel;
@@ -114,12 +118,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     return Scaffold(
       appBar: myAppBar(
         title: 'Task Details',
-        // trailingIcons: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: const Icon(Icons.alarm_add),
-        //   ),
-        // ],
+        trailingIcons: [
+          IconButton(
+            onPressed: () {
+              showAddPersonalReminderDialog();
+            },
+            icon: const Icon(Icons.alarm_add),
+          ),
+        ],
       ),
       body: Obx(
         () {

@@ -132,7 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       // ),
                       SizedBox(height: 20.h),
                       Obx(
-                        () => GestureDetector(
+                        () => customButton(
+                          buttonTitle: 'Login',
+                          isLoading: appController.isLoadingObs.value,
                           onTap: () async {
                             if (_formKey.currentState!.validate()) {
                               appController.isLoadingObs.value = true;
@@ -172,14 +174,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               }
                             }
                           },
-                          child: customButton(
-                            buttonTitle: 'Login',
-                            isLoading: appController.isLoadingObs.value,
-                          ).animate().scale(
-                                delay: const Duration(milliseconds: 150),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                              ),
-                        ),
+                        ).animate().scale(
+                              delay: const Duration(milliseconds: 150),
+                              curve: Curves.fastLinearToSlowEaseIn,
+                            ),
                       ),
                       // SizedBox(height: 16.h),
                       // Row(

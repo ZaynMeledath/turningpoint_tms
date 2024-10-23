@@ -9,7 +9,6 @@ Widget descriptionTextField({
     enabled: assingTaskController.isTitleAndDescriptionEnabled.value,
     style: GoogleFonts.roboto(),
     maxLines: null,
-    keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
     decoration: InputDecoration(
       hintText: 'Description',
