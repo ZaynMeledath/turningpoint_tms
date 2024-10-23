@@ -1,6 +1,6 @@
 class ApiEndpoints {
-  static const baseUrl = 'http://13.126.184.197/tms/api';
-  // static const baseUrl = 'http://192.168.1.129:5001/api';
+  // static const baseUrl = 'http://13.126.184.197/tms/api';
+  static const baseUrl = 'http://192.168.1.134:5001/api';
 
   static const login = '$baseUrl/auth/login';
   static const register = '$baseUrl/auth/register';
@@ -21,4 +21,5 @@ class ApiEndpoints {
       '$baseUrl/dashboard/delegated-tasks-performance';
   static const uploadFile = '$baseUrl/upload';
   static const addCategory = '$baseUrl/category';
+  static const personalReminder = '$baseUrl/notification/reminder';
 }

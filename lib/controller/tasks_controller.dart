@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/model/all_categories_performance_report_model.dart';
 import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
 import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
@@ -228,6 +229,21 @@ class TasksController extends GetxController {
     } catch (_) {
       rethrow;
     }
+  }
+
+//====================Add Personal Reminder====================//
+  Future<void> addPersonalReminder({
+    required String? taskId,
+    required String message,
+    required AssignTaskController assignTaskController,
+  }) async {
+    final reminderDateString =
+        assignTaskController.taskDate.value.toIso8601String();
+    await tasksRepository.addPersonalReminder(
+      taskId: taskId,
+      message: message,
+      reminderDateString: reminderDateString,
+    );
   }
 
 //====================Get All Users Performance Report====================//

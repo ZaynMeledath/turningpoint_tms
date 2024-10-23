@@ -50,12 +50,16 @@ AppBar myAppBar({
         Hero(
             tag: 'title',
             flightShuttleBuilder: flightShuttleBuilder,
-            child: Text(
-              title,
-              style: GoogleFonts.inter(
-                color: foregroundColor,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
+            child: SizedBox(
+              width: 230.w,
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.inter(
+                  color: foregroundColor,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             )
             // .animate().slideX(
@@ -77,23 +81,35 @@ AppBar myAppBar({
                   ],
                 ),
               )
-            : const SizedBox(),
-        profileAvatar
-            ? Expanded(
+            : Expanded(
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: EdgeInsets.only(right: 12.w),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () => Get.to(
-                        () => const ProfileScreen(),
-                        transition: Transition.rightToLeft,
+                    padding: EdgeInsets.only(right: 6.w),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.alarm,
+                        size: 24.w,
                       ),
-                      child: nameLetterAvatar(
-                        name: '${userModel?.name}',
-                        circleDiameter: 40.h,
-                      ),
+                    ),
+                  ),
+                ),
+              ),
+        profileAvatar
+            ? Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 12.w),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () => Get.to(
+                      () => const ProfileScreen(),
+                      transition: Transition.rightToLeft,
+                    ),
+                    child: nameLetterAvatar(
+                      name: '${userModel?.name}',
+                      circleDiameter: 40.h,
                     ),
                   ),
                 ),

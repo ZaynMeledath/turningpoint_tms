@@ -179,6 +179,25 @@ class TasksRepository {
     }
   }
 
+//====================Add Personal Reminder====================//
+  Future<void> addPersonalReminder({
+    required String? taskId,
+    required String message,
+    required String reminderDateString,
+  }) async {
+    await ApiService().sendRequest(
+      url: ApiEndpoints.personalReminder,
+      requestMethod: RequestMethod.POST,
+      data: {
+        'taskId': taskId,
+        'message': message,
+        'reminderDate': reminderDateString,
+      },
+      fieldNameForFiles: null,
+      isTokenRequired: true,
+    );
+  }
+
 //====================Get All Users Performance Report====================//
   Future<List<AllUsersPerformanceReportModel>?>
       getAllUsersPerformanceReport() async {

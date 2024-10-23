@@ -4,6 +4,7 @@ part of '../task_details_screen.dart';
 
 Future<Object?> showAddPersonalReminderDialog({
   required BuildContext context,
+  required String? taskId,
 }) async {
   return showGeneralDialog(
     context: context,
@@ -18,14 +19,18 @@ Future<Object?> showAddPersonalReminderDialog({
       return Transform.scale(
         alignment: Alignment.topRight,
         scale: curve,
-        child: const AddPersonalReminderDialog(),
+        child: AddPersonalReminderDialog(taskId: taskId),
       );
     },
   );
 }
 
 class AddPersonalReminderDialog extends StatefulWidget {
-  const AddPersonalReminderDialog({super.key});
+  final String? taskId;
+  const AddPersonalReminderDialog({
+    required this.taskId,
+    super.key,
+  });
 
   @override
   State<AddPersonalReminderDialog> createState() =>
@@ -33,13 +38,14 @@ class AddPersonalReminderDialog extends StatefulWidget {
 }
 
 class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
-  final noteController = TextEditingController();
+  final messageController = TextEditingController();
   final assignTaskController = AssignTaskController();
   final appController = AppController();
+  final tasksController = Get.put(TasksController());
 
   @override
   void dispose() {
-    noteController.dispose();
+    messageController.dispose();
     assignTaskController.dispose();
     super.dispose();
   }
@@ -102,8 +108,8 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                       ),
                       SizedBox(height: 14.h),
                       customTextField(
-                        controller: noteController,
-                        hintText: 'Reminder Note',
+                        controller: messageController,
+                        hintText: 'Reminder Message',
                         borderColor: Colors.grey.withOpacity(.3),
                         backgroundColor: AppColors.scaffoldBackgroundColor,
                       ),
@@ -283,10 +289,12 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                           isLoading: appController.isLoadingObs.value,
                           onTap: () async {
                             appController.isLoadingObs.value = true;
-                            await Future.delayed(const Duration(seconds: 2));
+                            await tasksController.addPersonalReminder(
+                              taskId: widget.taskId,
+                              message: messageController.text.trim(),
+                              assignTaskController: assignTaskController,
+                            );
                             appController.isLoadingObs.value = false;
-                            assignTaskController.showTimeErrorTextObs.value =
-                                true;
                           },
                         ),
                       )
