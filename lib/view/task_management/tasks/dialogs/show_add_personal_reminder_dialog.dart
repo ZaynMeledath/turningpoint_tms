@@ -287,13 +287,37 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                           fontSize: 16.w,
                           isLoading: appController.isLoadingObs.value,
                           onTap: () async {
-                            appController.isLoadingObs.value = true;
-                            await tasksController.addPersonalReminder(
-                              taskId: widget.taskId,
-                              message: messageController.text.trim(),
-                              assignTaskController: assignTaskController,
-                            );
-                            appController.isLoadingObs.value = false;
+                            try {
+                              appController.isLoadingObs.value = true;
+                              await tasksController.addPersonalReminder(
+                                taskId: widget.taskId,
+                                message: messageController.text.trim(),
+                                assignTaskController: assignTaskController,
+                              );
+                              appController.isLoadingObs.value = false;
+                              Get.back();
+                              showGenericDialog(
+                                title: 'Reminder Added',
+                                content: 'Personal Reminder added successfully',
+                                iconPath:
+                                    'assets/lotties/success_animation.json',
+                                buttons: {'OK': null},
+                              );
+                            } on DateTimeErrorException {
+                              appController.isLoadingObs.value = false;
+                              assignTaskController.showTimeErrorTextObs.value =
+                                  true;
+                            } catch (e) {
+                              appController.isLoadingObs.value = false;
+                              showGenericDialog(
+                                title: 'Something Went Wrong',
+                                content:
+                                    'Something went wrong while adding a personal reminder',
+                                iconPath:
+                                    'assets/lotties/server_error_animation.json',
+                                buttons: {'Dismiss': null},
+                              );
+                            }
                           },
                         ),
                       )
