@@ -68,10 +68,28 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     taskModel = widget.taskModel;
     isTaskCompleted = taskModel.status == Status.completed;
     creationDateString = '${taskModel.createdAt?.dateFormat()}';
+    setAudioAndOtherAttachments();
+
+    if (tasksController.isDelegatedObs.value == true) {
+      ever(tasksController.delegatedTasksListObs, (tasksList) {
+        setAudioAndOtherAttachments();
+      });
+    } else if (tasksController.isDelegatedObs.value == false) {
+      ever(tasksController.myTasksListObs, (tasksList) {
+        setAudioAndOtherAttachments();
+      });
+    } else {
+      ever(tasksController.allTasksListObs, (tasksList) {
+        setAudioAndOtherAttachments();
+      });
+    }
+
+    super.initState();
+  }
+
+//====================Set Audio and Other Attachments====================//
+  void setAudioAndOtherAttachments() {
     if (taskModel.attachments != null) {
-      // audioList = taskModel.attachments!
-      //     .where((item) => item.path?.split('.').last == 'wav')
-      //     .toList();
       audioUrl = taskModel.attachments!
           .firstWhere(
             (item) => item.type == 'audio',
@@ -103,7 +121,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         assignTaskController.isPlayingObs.value = false;
       }
     });
-    super.initState();
   }
 
   @override
@@ -315,7 +332,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 title: 'Edit',
                                 icon: Icons.edit,
                                 iconColor: Colors.blueGrey,
-                                onTap: () => Get.off(
+                                onTap: () => Get.to(
                                   () => AssignTaskScreen(
                                     taskModel: taskModel,
                                   ),

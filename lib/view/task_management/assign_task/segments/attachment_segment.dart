@@ -247,6 +247,8 @@ Widget attachmentSegment({
                                       appController.isLoadingObs.value = true;
                                       assignTaskController
                                           .voiceRecordPathObs.value = '';
+                                      assignTaskController
+                                          .voiceRecordUrlObs.value = '';
                                       await audioPlayer.seek(
                                         const Duration(seconds: 0),
                                       );

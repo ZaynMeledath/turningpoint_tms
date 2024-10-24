@@ -422,7 +422,7 @@ class AssignTaskController extends GetxController {
             )
           : null;
       taskModel.attachments =
-          attachmentsListObs.isEmpty && voiceRecordUrlObs.value.isEmpty
+          (attachmentsListObs.isEmpty && voiceRecordUrlObs.value.isEmpty)
               ? null
               : taskAttachments;
 

@@ -301,10 +301,10 @@ class TasksController extends GetxController {
         await getMyTasks();
       }
       await getAllTasks();
-      if (dashboardTasksListObs.isNotEmpty) {
-        dashboardTasksListObs
-            .removeWhere((taskModel) => taskModel.id == taskId);
-      }
+      // if (dashboardTasksListObs.isNotEmpty) {
+      //   dashboardTasksListObs
+      //       .removeWhere((taskModel) => taskModel.id == taskId);
+      // }
     } catch (_) {
       rethrow;
     }

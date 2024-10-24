@@ -17,6 +17,8 @@ Widget taskDetailsAttachmentSegment({
           fontWeight: FontWeight.w600,
         ),
       ),
+
+      //====================Audios====================//
       audioUrl.isNotEmpty
           ? Container(
               width: 180.w,
@@ -79,102 +81,109 @@ Widget taskDetailsAttachmentSegment({
             )
           : const SizedBox(),
       SizedBox(height: 12.h),
-      SizedBox(
-        height: 110.h,
-        child: ListView.builder(
-          padding: EdgeInsets.zero,
-          scrollDirection: Axis.horizontal,
-          itemCount: attachments.length,
-          itemBuilder: (context, index) {
-            final attachmentUrl = attachments[index].path!;
-            final attachmentType = attachments[index].type!;
-            return Padding(
-              padding: EdgeInsets.only(right: 8.w),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(12),
-                onTap: () async {
-                  try {
-                    showDialog(
-                        context: context,
-                        builder: (context) => const SpinKitWave(
-                              size: 20,
-                              color: Colors.white,
-                            ));
-                    var status = await Permission.storage.status;
-                    if (!status.isGranted) {
-                      await Permission.storage.request();
-                    }
-                    final attachmentName = attachmentUrl.split('/').last;
-                    Directory appDocDir;
-                    if (Platform.isAndroid) {
-                      appDocDir = Directory("/storage/emulated/0/Download");
-                      log('${await getApplicationDocumentsDirectory()}');
-                    } else {
-                      appDocDir = await getApplicationDocumentsDirectory();
-                    }
-                    final savePath = '${appDocDir.path}/$attachmentName';
-                    await dio.download(
-                      attachmentUrl,
-                      savePath,
-                    );
-                    Get.back();
-                    showGenericDialog(
-                      iconPath: 'assets/lotties/success_animation.json',
-                      title: 'Downloaded',
-                      content: 'File has been downloaded to your device',
-                      buttons: {'OK': null},
-                    );
-                  } catch (_) {
-                    showGenericDialog(
-                      iconPath: 'assets/lotties/server_error_animation.json',
-                      title: 'Something went wrong',
-                      content:
-                          'Something went wrong while downloading the file',
-                      buttons: {'Dismiss': null},
-                    );
-                  }
-                },
-                child: Container(
-                  width: 120.w,
-                  height: 125.w,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.textFieldColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: attachmentType == 'image'
-                        ? AspectRatio(
-                            aspectRatio: 4 / 4,
-                            child: Image.network(
-                              attachmentUrl,
-                            ),
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/icons/file_icon.png',
-                                height: 70.w,
-                              ),
-                              Text(
-                                attachmentUrl.split('/').last,
-                                style: TextStyle(
-                                  fontSize: 14.sp,
+
+//====================Files====================//
+      attachments.isNotEmpty
+          ? SizedBox(
+              height: 110.h,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                scrollDirection: Axis.horizontal,
+                itemCount: attachments.length,
+                itemBuilder: (context, index) {
+                  final attachmentUrl = attachments[index].path!;
+                  final attachmentType = attachments[index].type!;
+                  return Padding(
+                    padding: EdgeInsets.only(right: 8.w),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () async {
+                        try {
+                          showDialog(
+                              context: context,
+                              builder: (context) => const SpinKitWave(
+                                    size: 20,
+                                    color: Colors.white,
+                                  ));
+                          var status = await Permission.storage.status;
+                          if (!status.isGranted) {
+                            await Permission.storage.request();
+                          }
+                          final attachmentName = attachmentUrl.split('/').last;
+                          Directory appDocDir;
+                          if (Platform.isAndroid) {
+                            appDocDir =
+                                Directory("/storage/emulated/0/Download");
+                            log('${await getApplicationDocumentsDirectory()}');
+                          } else {
+                            appDocDir =
+                                await getApplicationDocumentsDirectory();
+                          }
+                          final savePath = '${appDocDir.path}/$attachmentName';
+                          await dio.download(
+                            attachmentUrl,
+                            savePath,
+                          );
+                          Get.back();
+                          showGenericDialog(
+                            iconPath: 'assets/lotties/success_animation.json',
+                            title: 'Downloaded',
+                            content: 'File has been downloaded to your device',
+                            buttons: {'OK': null},
+                          );
+                        } catch (_) {
+                          showGenericDialog(
+                            iconPath:
+                                'assets/lotties/server_error_animation.json',
+                            title: 'Something went wrong',
+                            content:
+                                'Something went wrong while downloading the file',
+                            buttons: {'Dismiss': null},
+                          );
+                        }
+                      },
+                      child: Container(
+                        width: 120.w,
+                        height: 125.w,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.textFieldColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: attachmentType == 'image'
+                              ? AspectRatio(
+                                  aspectRatio: 4 / 4,
+                                  child: Image.network(
+                                    attachmentUrl,
+                                  ),
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/icons/file_icon.png',
+                                      height: 70.w,
+                                    ),
+                                    Text(
+                                      attachmentUrl.split('/').last,
+                                      style: TextStyle(
+                                        fontSize: 14.sp,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    )
+                                  ],
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
-                          ),
-                  ),
-                ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            )
+          : const SizedBox(),
       SizedBox(height: 14.h),
     ],
   );
