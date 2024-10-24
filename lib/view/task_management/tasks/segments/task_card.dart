@@ -250,7 +250,12 @@ Widget taskCard({
                     ),
                   ],
                 ),
-                SizedBox(height: 12.h),
+                SizedBox(
+                    height: isTaskCompleted &&
+                            tasksController.isDelegatedObs.value == false &&
+                            user?.role != Role.admin
+                        ? 8.h
+                        : 12.h),
                 isTaskCompleted &&
                         (tasksController.isDelegatedObs.value == true ||
                             user?.role == Role.admin ||
@@ -308,35 +313,38 @@ Widget taskCard({
                             ],
                           )
                         : const SizedBox(),
-                SizedBox(height: isTaskCompleted ? 0 : 9.h),
+                // SizedBox(height: isTaskCompleted ? 0 : 9.h),
                 !isTaskCompleted &&
                         (tasksController.isDelegatedObs.value == true ||
                             user?.role == Role.admin ||
                             taskModel.createdBy!.emailId == user!.emailId)
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          cardActionButton(
-                            title: 'Edit',
-                            icon: Icons.edit,
-                            iconColor: Colors.blueGrey,
-                            onTap: () => Get.to(
-                              () => AssignTaskScreen(
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 9.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            cardActionButton(
+                              title: 'Edit',
+                              icon: Icons.edit,
+                              iconColor: Colors.blueGrey,
+                              onTap: () => Get.to(
+                                () => AssignTaskScreen(
+                                  taskModel: taskModel,
+                                ),
+                                transition: Transition.downToUp,
+                              ),
+                            ),
+                            cardActionButton(
+                              title: 'Delete',
+                              icon: Icons.delete,
+                              iconColor: Colors.red,
+                              onTap: () => TaskCrudOperations.deleteTask(
+                                tasksController: tasksController,
                                 taskModel: taskModel,
                               ),
-                              transition: Transition.downToUp,
                             ),
-                          ),
-                          cardActionButton(
-                            title: 'Delete',
-                            icon: Icons.delete,
-                            iconColor: Colors.red,
-                            onTap: () => TaskCrudOperations.deleteTask(
-                              tasksController: tasksController,
-                              taskModel: taskModel,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       )
                     : const SizedBox(),
               ],

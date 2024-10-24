@@ -232,6 +232,11 @@ class TasksController extends GetxController {
     }
   }
 
+//====================Get Personal Reminders====================//
+  Future<void> getPersonalRemindersList() async {
+    final test = await tasksRepository.getPersonalRemindersList();
+  }
+
 //====================Add Personal Reminder====================//
   Future<void> addPersonalReminder({
     required String? taskId,

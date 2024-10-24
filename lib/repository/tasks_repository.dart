@@ -179,6 +179,17 @@ class TasksRepository {
     }
   }
 
+//====================Get Personal Reminders====================//
+  Future<void> getPersonalRemindersList() async {
+    final response = await ApiService().sendRequest(
+      url: ApiEndpoints.personalReminder,
+      requestMethod: RequestMethod.GET,
+      data: {},
+      fieldNameForFiles: null,
+      isTokenRequired: true,
+    );
+  }
+
 //====================Add Personal Reminder====================//
   Future<void> addPersonalReminder({
     required String? taskId,

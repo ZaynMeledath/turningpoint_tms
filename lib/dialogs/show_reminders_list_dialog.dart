@@ -4,9 +4,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 
 Future<Object?> showRemindersListDialog() async {
   return showGeneralDialog(
@@ -38,7 +40,7 @@ class RemindersListDialog extends StatefulWidget {
 class _RemindersListDialogState extends State<RemindersListDialog> {
   final GlobalKey _containerKey = GlobalKey();
   double _mainContainerHeight = 200.w;
-  int? notificationListLength = 3;
+  int? notificationListLength = 5;
 
   @override
   void initState() {
@@ -50,7 +52,7 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
           final subContainerHeight = renderBox.size.height;
           final screenHeight = MediaQuery.of(Get.context!).size.height;
           _mainContainerHeight =
-              (notificationListLength! * (subContainerHeight + 10)) + 66.w;
+              (notificationListLength! * (subContainerHeight + 10)) + 68.w;
           if (_mainContainerHeight > (screenHeight - 350.h)) {
             _mainContainerHeight = screenHeight - 350;
           }
@@ -139,60 +141,102 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
                                           right: 12.w,
                                           bottom: 10.w,
                                         ),
-                                        child: Container(
-                                          key:
-                                              index == 0 ? _containerKey : null,
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 12.w,
-                                            vertical: 8.w,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            gradient: const LinearGradient(
-                                              colors: [
-                                                Color.fromRGBO(48, 78, 85, .4),
-                                                Color.fromRGBO(29, 36, 41, 1),
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                            border: Border.all(
-                                              color: Colors.blueGrey
-                                                  .withOpacity(.3),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                        child: Slidable(
+                                          endActionPane: ActionPane(
+                                            extentRatio:
+                                                index % 2 != 0 ? .25 : .5,
+                                            motion: const DrawerMotion(),
                                             children: [
-                                              Text(
-                                                'Reminder Message',
-                                                style: TextStyle(
-                                                  fontSize: 16.sp,
+                                              if (index % 2 == 0)
+                                                SlidableAction(
+                                                  onPressed: (context) {},
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  // padding: EdgeInsets.symmetric(
+                                                  //     horizontal: 8.w),
+                                                  backgroundColor:
+                                                      AppColors.themeGreen,
+                                                  foregroundColor: Colors.white,
+                                                  icon: Icons.task_alt,
+                                                  label: 'Task',
                                                 ),
-                                              ),
-                                              SizedBox(height: 2.w),
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                    '24 Oct 2024',
-                                                    style: TextStyle(
-                                                      fontSize: 16.sp,
-                                                    ),
-                                                  ),
-                                                  SizedBox(width: 8.w),
-                                                  Text(
-                                                    '10:00 PM',
-                                                    style: TextStyle(
-                                                      fontSize: 16.sp,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ],
+                                              SlidableAction(
+                                                onPressed: (context) {},
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                // padding: EdgeInsets.symmetric(
+                                                //     horizontal: 8.w),
+                                                backgroundColor:
+                                                    StatusColor.overdue,
+                                                icon: Icons.delete,
+                                                label: 'Delete',
                                               ),
                                             ],
+                                          ),
+                                          child: Container(
+                                            key: index == 0
+                                                ? _containerKey
+                                                : null,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w,
+                                              vertical: 8.w,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              gradient: const LinearGradient(
+                                                colors: [
+                                                  Color.fromRGBO(
+                                                      48, 78, 85, .4),
+                                                  Color.fromRGBO(29, 36, 41, 1),
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              border: Border.all(
+                                                color: Colors.blueGrey
+                                                    .withOpacity(.3),
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Reminder Message for the task',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 4.w),
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '24 Oct',
+                                                      style: TextStyle(
+                                                        fontSize: 16.sp,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 8.w),
+                                                    Icon(
+                                                      Icons.alarm,
+                                                      size: 18.w,
+                                                      color:
+                                                          AppColors.themeGreen,
+                                                    ),
+                                                    SizedBox(width: 2.w),
+                                                    Text(
+                                                      '10:00 PM',
+                                                      style: TextStyle(
+                                                        fontSize: 16.sp,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );
@@ -218,6 +262,8 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
   }
 }
 
+
+
 // Widget remindersListDialog() {
 //   const notificationListLength = 5;
 //   int containerHeight = ((notificationListLength * 64.h) + 60.h).toInt();
@@ -225,5 +271,5 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
 //   if (containerHeight > (MediaQuery.of(Get.context!).size.height - 350.h)) {
 //     containerHeight = (MediaQuery.of(Get.context!).size.height - 350).toInt();
 //   }
-  
+
 // }
