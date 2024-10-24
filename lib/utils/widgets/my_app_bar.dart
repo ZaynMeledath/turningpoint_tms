@@ -52,7 +52,7 @@ AppBar myAppBar({
             tag: 'title',
             flightShuttleBuilder: flightShuttleBuilder,
             child: SizedBox(
-              width: 230.w,
+              width: 198.w,
               child: Text(
                 title,
                 overflow: TextOverflow.ellipsis,
@@ -83,19 +83,32 @@ AppBar myAppBar({
                 ),
               )
             : Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 6.w),
-                    child: IconButton(
-                      onPressed: () {
-                        showRemindersListDialog();
-                      },
-                      icon: Icon(
-                        Icons.alarm,
-                        size: 24.w,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 10.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // IconButton(
+                      //   visualDensity: VisualDensity.compact,
+                      //   onPressed: () {
+                      //     // showRemindersListDialog();
+                      //   },
+                      //   icon: Icon(
+                      //     Icons.notifications,
+                      //     size: 24.w,
+                      //   ),
+                      // ),
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () {
+                          showRemindersListDialog();
+                        },
+                        icon: Icon(
+                          Icons.alarm,
+                          size: 24.w,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),

@@ -240,12 +240,14 @@ class FilterController extends GetxController {
     };
 
     assignedByFilterModel.value = {
-      for (AllUsersModel element in userController.assignTaskUsersList.value!)
+      for (AllUsersModel element
+          in userController.assignTaskUsersList.value ?? [])
         element.emailId.toString(): false
     }.obs;
 
     assignedToFilterModel.value = {
-      for (AllUsersModel element in userController.assignTaskUsersList.value!)
+      for (AllUsersModel element
+          in userController.assignTaskUsersList.value ?? [])
         element.emailId.toString(): false
     }.obs;
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart' show TimeOfDay;
@@ -258,85 +259,85 @@ class AssignTaskController extends GetxController {
     required String title,
     required String description,
   }) async {
-    final dueDate = DateTime(
-      taskDate.value.year,
-      taskDate.value.month,
-      taskDate.value.day,
-      taskTime.value.hour,
-      taskTime.value.minute,
-    );
-
-    if (!dueDate.isAfter(DateTime.now()) ||
-        dueDate.isAtSameMomentAs(DateTime.now())) {
-      throw DateTimeErrorException();
-    }
-
-    if (shouldRepeatTask.value) {
-      if (taskRepeatFrequency.value == null) {
-        throw RepeatFrequencyNullException();
-      }
-    }
-
-    final dueDateString = dueDate.toIso8601String();
-
-    List<int>? days;
-
-    switch (taskRepeatFrequency.value) {
-      case RepeatFrequency.daily:
-        break;
-
-      case RepeatFrequency.weekly:
-        days = weekDaysToIndex(
-            weekDays: daysMap.keys.where((key) {
-          return daysMap[key] == true;
-        }).toList());
-        break;
-
-      case RepeatFrequency.monthly:
-        days = datesMap.keys.where((key) => datesMap[key] == true).toList();
-        break;
-
-      default:
-        break;
-    }
-
-    final List<Attachment> taskAttachments = [...attachmentsListObs];
-
-    if (voiceRecordUrlObs.value.isNotEmpty) {
-      taskAttachments.add(
-        Attachment(
-          path: voiceRecordUrlObs.value,
-          type: 'audio',
-        ),
-      );
-    }
-
-    final taskModel = TaskModel(
-      title: title,
-      description: description,
-      category: selectedCategory.value,
-      assignedTo: null, // will be added after creating taskModel
-      priority: taskPriority.value,
-      dueDate: shouldRepeatTask.value ? null : dueDateString,
-      repeat: shouldRepeatTask.value
-          ? Repeat(
-              startDate:
-                  dueDateString, //due date acts as start date when repeat is turned ON
-              frequency: repeatFrequencyEnumToString(
-                  repeatFrequency: taskRepeatFrequency.value),
-              days: days)
-          : null,
-      attachments: taskAttachments,
-    );
-
-    //assignTo is added before fetching the assign Task API
-    assignToMap.forEach(
-      (email, assignedToModel) => taskModel.assignedTo == null
-          ? taskModel.assignedTo = [assignedToModel]
-          : taskModel.assignedTo!.add(assignedToModel),
-    );
-
     try {
+      final dueDate = DateTime(
+        taskDate.value.year,
+        taskDate.value.month,
+        taskDate.value.day,
+        taskTime.value.hour,
+        taskTime.value.minute,
+      );
+
+      if (!dueDate.isAfter(DateTime.now()) ||
+          dueDate.isAtSameMomentAs(DateTime.now())) {
+        throw DateTimeErrorException();
+      }
+
+      if (shouldRepeatTask.value) {
+        if (taskRepeatFrequency.value == null) {
+          throw RepeatFrequencyNullException();
+        }
+      }
+
+      final dueDateString = dueDate.toIso8601String();
+
+      List<int>? days;
+
+      switch (taskRepeatFrequency.value) {
+        case RepeatFrequency.daily:
+          break;
+
+        case RepeatFrequency.weekly:
+          days = weekDaysToIndex(
+              weekDays: daysMap.keys.where((key) {
+            return daysMap[key] == true;
+          }).toList());
+          break;
+
+        case RepeatFrequency.monthly:
+          days = datesMap.keys.where((key) => datesMap[key] == true).toList();
+          break;
+
+        default:
+          break;
+      }
+
+      final List<Attachment> taskAttachments = [...attachmentsListObs];
+
+      if (voiceRecordUrlObs.value.isNotEmpty) {
+        taskAttachments.add(
+          Attachment(
+            path: voiceRecordUrlObs.value,
+            type: 'audio',
+          ),
+        );
+      }
+
+      final taskModel = TaskModel(
+        title: title,
+        description: description,
+        category: selectedCategory.value,
+        assignedTo: null, // will be added after creating taskModel
+        priority: taskPriority.value,
+        dueDate: shouldRepeatTask.value ? null : dueDateString,
+        repeat: shouldRepeatTask.value
+            ? Repeat(
+                startDate:
+                    dueDateString, //due date acts as start date when repeat is turned ON
+                frequency: repeatFrequencyEnumToString(
+                    repeatFrequency: taskRepeatFrequency.value),
+                days: days)
+            : null,
+        attachments: taskAttachments,
+      );
+
+      //assignTo is added before fetching the assign Task API
+      assignToMap.forEach(
+        (email, assignedToModel) => taskModel.assignedTo == null
+            ? taskModel.assignedTo = [assignedToModel]
+            : taskModel.assignedTo!.add(assignedToModel),
+      );
+
       await tasksRepository.assignTask(
         taskModel: taskModel,
       );
@@ -350,26 +351,27 @@ class AssignTaskController extends GetxController {
   Future<void> updateTask({
     required TaskModel taskModel,
   }) async {
-    final dueDate = DateTime(
-      taskDate.value.year,
-      taskDate.value.month,
-      taskDate.value.day,
-      taskTime.value.hour,
-      taskTime.value.minute,
-    );
-    if (!dueDate.isAfter(DateTime.now()) ||
-        dueDate.isAtSameMomentAs(DateTime.now())) {
-      throw DateTimeErrorException();
-    }
-
-    if (shouldRepeatTask.value) {
-      if (taskRepeatFrequency.value == null) {
-        throw RepeatFrequencyNullException();
-      }
-    }
-
-    final dueDateString = dueDate.toIso8601String();
     try {
+      final dueDate = DateTime(
+        taskDate.value.year,
+        taskDate.value.month,
+        taskDate.value.day,
+        taskTime.value.hour,
+        taskTime.value.minute,
+      );
+      if (!dueDate.isAfter(DateTime.now()) ||
+          dueDate.isAtSameMomentAs(DateTime.now())) {
+        throw DateTimeErrorException();
+      }
+
+      if (shouldRepeatTask.value) {
+        if (taskRepeatFrequency.value == null) {
+          throw RepeatFrequencyNullException();
+        }
+      }
+
+      final dueDateString = dueDate.toIso8601String();
+
       List<int>? days;
 
       switch (taskRepeatFrequency.value) {
@@ -430,7 +432,7 @@ class AssignTaskController extends GetxController {
       } else if (tasksController.isDelegatedObs.value == false) {
         await tasksController.getMyTasks();
       }
-      await tasksController.getAllTasks();
+      unawaited(tasksController.getAllTasks());
       for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
         if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
           tasksController.dashboardTasksListObs[i] = tasksController
