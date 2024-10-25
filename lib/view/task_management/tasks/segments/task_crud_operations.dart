@@ -29,10 +29,9 @@ class TaskCrudOperations {
             await tasksController.deleteTask(
               taskId: taskModel.id.toString(),
             );
-            Get.back();
-            if (shouldDoubleBack == true) {
-              Get.back();
-            }
+            // if (shouldDoubleBack == true) {
+            //   Get.back();
+            // }
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
               title: 'Task Deleted!',

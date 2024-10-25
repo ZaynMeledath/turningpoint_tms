@@ -169,7 +169,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
       },
       child: Scaffold(
         extendBody: true,
-        appBar: myAppBar(title: ''),
+        appBar: myAppBar(
+          title: '',
+          reminderListIcon: false,
+        ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(

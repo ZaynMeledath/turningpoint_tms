@@ -147,8 +147,6 @@ class TasksRepository {
         fieldNameForFiles: null,
         isTokenRequired: true,
       );
-      await getDelegatedTasks();
-      // await getMyTasks();
     } catch (e) {
       rethrow;
     }

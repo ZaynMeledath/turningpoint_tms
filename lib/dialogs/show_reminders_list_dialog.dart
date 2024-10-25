@@ -159,6 +159,21 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
             'Reminders',
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
           ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.only(right: 8.w),
+                child: Text(
+                  '<< Swipe the card for options',
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.white60,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -242,7 +257,9 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
           label: 'Task',
         ),
       SlidableAction(
-        onPressed: (_) {},
+        onPressed: (_) {
+          const test = 'Delete api integration left';
+        },
         borderRadius: BorderRadius.circular(12),
         backgroundColor: StatusColor.overdue,
         icon: Icons.delete,
@@ -294,6 +311,6 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
 
   Widget _buildEmptyState() {
     return Lottie.asset('assets/lotties/empty_list_animation.json',
-        width: 110.w);
+        width: 105.w);
   }
 }

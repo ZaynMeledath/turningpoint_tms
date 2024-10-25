@@ -323,7 +323,10 @@ class TasksController extends GetxController {
   Future<void> deleteTask({required String taskId}) async {
     try {
       await tasksRepository.deleteTask(taskId: taskId);
-      tasksException.value = null;
+      Get.back();
+      if (Get.currentRoute == '/TaskDetailsScreen') {
+        Get.back();
+      }
       if (isDelegatedObs.value == true) {
         await getDelegatedTasks();
       } else if (isDelegatedObs.value == false) {

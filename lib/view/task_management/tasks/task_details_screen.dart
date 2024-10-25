@@ -202,8 +202,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       taskDetailsAssignedContainer(
-                        name: taskModel.createdBy!.name!.nameFormat(),
-                        email: taskModel.createdBy!.emailId!,
+                        name: taskModel.createdBy != null
+                            ? taskModel.createdBy!.name!.nameFormat()
+                            : '-',
+                        email: taskModel.createdBy != null
+                            ? taskModel.createdBy!.emailId!
+                            : '-',
                         isAssignedBy: true,
                       ),
                       Icon(

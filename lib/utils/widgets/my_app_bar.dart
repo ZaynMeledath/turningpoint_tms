@@ -16,6 +16,7 @@ AppBar myAppBar({
   List<Widget>? trailingIcons,
   bool profileAvatar = false,
   bool implyLeading = true,
+  bool reminderListIcon = true,
 }) {
   final UserModel? userModel = getUserModelFromHive();
   return AppBar(
@@ -69,36 +70,39 @@ AppBar myAppBar({
             //       curve: Curves.elasticOut,
             //     ),
             ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(right: profileAvatar == true ? 10.w : 6.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // IconButton(
-                //   visualDensity: VisualDensity.compact,
-                //   onPressed: () {
-                //     // showRemindersListDialog();
-                //   },
-                //   icon: Icon(
-                //     Icons.notifications,
-                //     size: 24.w,
-                //   ),
-                // ),
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  onPressed: () {
-                    showRemindersListDialog();
-                  },
-                  icon: Icon(
-                    Icons.alarm,
-                    size: 24.w,
+        reminderListIcon
+            ? Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      right: profileAvatar == true ? 10.w : 6.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // IconButton(
+                      //   visualDensity: VisualDensity.compact,
+                      //   onPressed: () {
+                      //     // showRemindersListDialog();
+                      //   },
+                      //   icon: Icon(
+                      //     Icons.notifications,
+                      //     size: 24.w,
+                      //   ),
+                      // ),
+                      IconButton(
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () {
+                          showRemindersListDialog();
+                        },
+                        icon: Icon(
+                          Icons.alarm,
+                          size: 24.w,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              )
+            : const SizedBox(),
         trailingIcons != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.end,
