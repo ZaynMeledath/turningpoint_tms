@@ -69,49 +69,48 @@ AppBar myAppBar({
             //       curve: Curves.elasticOut,
             //     ),
             ),
-        trailingIcons != null
-            ? Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    for (Widget widget in trailingIcons)
-                      Padding(
-                        padding: EdgeInsets.only(right: 4.w),
-                        child: widget,
-                      ),
-                  ],
-                ),
-              )
-            : Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // IconButton(
-                      //   visualDensity: VisualDensity.compact,
-                      //   onPressed: () {
-                      //     // showRemindersListDialog();
-                      //   },
-                      //   icon: Icon(
-                      //     Icons.notifications,
-                      //     size: 24.w,
-                      //   ),
-                      // ),
-                      IconButton(
-                        visualDensity: VisualDensity.compact,
-                        onPressed: () {
-                          showRemindersListDialog();
-                        },
-                        icon: Icon(
-                          Icons.alarm,
-                          size: 24.w,
-                        ),
-                      ),
-                    ],
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(right: profileAvatar == true ? 10.w : 6.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // IconButton(
+                //   visualDensity: VisualDensity.compact,
+                //   onPressed: () {
+                //     // showRemindersListDialog();
+                //   },
+                //   icon: Icon(
+                //     Icons.notifications,
+                //     size: 24.w,
+                //   ),
+                // ),
+                IconButton(
+                  visualDensity: VisualDensity.compact,
+                  onPressed: () {
+                    showRemindersListDialog();
+                  },
+                  icon: Icon(
+                    Icons.alarm,
+                    size: 24.w,
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+        ),
+        trailingIcons != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  for (Widget widget in trailingIcons)
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.w),
+                      child: widget,
+                    ),
+                ],
+              )
+            : const SizedBox(),
         profileAvatar
             ? Align(
                 alignment: Alignment.centerRight,

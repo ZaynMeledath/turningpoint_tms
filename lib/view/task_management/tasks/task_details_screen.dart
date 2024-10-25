@@ -138,6 +138,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         title: 'Task Details',
         trailingIcons: [
           IconButton(
+            visualDensity: VisualDensity.compact,
             onPressed: () {
               showAddPersonalReminderDialog(
                 taskId: taskModel.id,

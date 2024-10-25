@@ -10,6 +10,7 @@ import 'package:turningpoint_tms/model/all_categories_performance_report_model.d
 import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
 import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
 import 'package:turningpoint_tms/model/my_performance_report_model.dart';
+import 'package:turningpoint_tms/model/personal_reminder_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/repository/tasks_repository.dart';
 
@@ -85,6 +86,8 @@ class TasksController extends GetxController {
 
   final taskUpdateAttachments = <File>[].obs;
   final taskUpdateAttachmentsMapList = RxList<Map<String, String>>();
+
+  final personalRemindersListObs = Rxn<List<PersonalReminderModel>>();
 
 //====================Get All Tasks====================//
   Future<void> getAllTasks({bool? getFromLocalStorage}) async {
@@ -234,7 +237,12 @@ class TasksController extends GetxController {
 
 //====================Get Personal Reminders====================//
   Future<void> getPersonalRemindersList() async {
-    final test = await tasksRepository.getPersonalRemindersList();
+    try {
+      personalRemindersListObs.value =
+          await tasksRepository.getPersonalRemindersList();
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Add Personal Reminder====================//

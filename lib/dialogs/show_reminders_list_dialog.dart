@@ -9,22 +9,24 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/extensions/string_extensions.dart';
+import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/task_details_screen.dart';
 
 Future<Object?> showRemindersListDialog() async {
   return showGeneralDialog(
     context: Get.context!,
-    // barrierDismissible: true,
     barrierColor: Colors.transparent,
-    pageBuilder: (context, a1, a2) {
-      return Container();
-    },
     transitionDuration: const Duration(milliseconds: 300),
-    transitionBuilder: (context, a1, a2, child) {
-      final curve = Curves.easeInOut.transform(a1.value);
+    pageBuilder: (context, _, __) => const RemindersListDialog(),
+    transitionBuilder: (context, animation, _, child) {
+      final curve = Curves.easeInOut.transform(animation.value);
       return Transform.scale(
         alignment: Alignment.topCenter,
         scale: curve,
-        child: const RemindersListDialog(),
+        child: child,
       );
     },
   );
@@ -38,28 +40,55 @@ class RemindersListDialog extends StatefulWidget {
 }
 
 class _RemindersListDialogState extends State<RemindersListDialog> {
+  final tasksController = Get.put(TasksController());
   final GlobalKey _containerKey = GlobalKey();
   double _mainContainerHeight = 200.w;
-  int? notificationListLength = 5;
+  final user = getUserModelFromHive();
+
+  final List<String> monthList = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        if (notificationListLength != null && notificationListLength! > 0) {
-          final RenderBox renderBox =
-              _containerKey.currentContext!.findRenderObject() as RenderBox;
-          final subContainerHeight = renderBox.size.height;
-          final screenHeight = MediaQuery.of(Get.context!).size.height;
-          _mainContainerHeight =
-              (notificationListLength! * (subContainerHeight + 10)) + 68.w;
-          if (_mainContainerHeight > (screenHeight - 350.h)) {
-            _mainContainerHeight = screenHeight - 350;
-          }
-        }
-      });
-    });
     super.initState();
+    tasksController.getPersonalRemindersList();
+    _updateContainerHeight();
+    ever(tasksController.personalRemindersListObs,
+        (_) => _updateContainerHeight());
+  }
+
+  void _updateContainerHeight() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final remindersListLength =
+          tasksController.personalRemindersListObs.value?.length ?? 5;
+
+      if (remindersListLength > 0 && _containerKey.currentContext != null) {
+        final renderBox =
+            _containerKey.currentContext!.findRenderObject() as RenderBox;
+        final subContainerHeight = renderBox.size.height;
+        final screenHeight = MediaQuery.of(Get.context!).size.height;
+
+        setState(() {
+          _mainContainerHeight =
+              (remindersListLength * (subContainerHeight + 10)) + 68.w;
+          _mainContainerHeight = _mainContainerHeight > (screenHeight - 350.h)
+              ? screenHeight - 350.h
+              : _mainContainerHeight;
+        });
+      }
+    });
   }
 
   @override
@@ -68,191 +97,47 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
       child: Stack(
         children: [
           GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Container(
-              color: Colors.transparent,
-            ),
+            onTap: () => Get.back(),
+            child: Container(color: Colors.transparent),
           ),
-          //====================Reminder Container====================//
           Column(
             children: [
-              SizedBox(height: 60.w),
+              SizedBox(height: 64.w),
               BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 3.0,
-                  sigmaY: 3.0,
-                ),
-                child: Container(
-                  height: _mainContainerHeight,
-                  margin: EdgeInsets.symmetric(horizontal: 12.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: AppColors.scaffoldBackgroundColor,
-                    border: Border.all(
-                      color: Colors.blueGrey.withOpacity(.2),
+                filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
+                child: Obx(() {
+                  return Container(
+                    height: _mainContainerHeight,
+                    margin: EdgeInsets.symmetric(horizontal: 12.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColors.scaffoldBackgroundColor,
+                      border:
+                          Border.all(color: Colors.blueGrey.withOpacity(.2)),
                     ),
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 4.w,
-                            right: 10.w,
-                            top: 12.w,
-                            bottom: 4.w,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          _buildDialogHeader(),
+                          Expanded(
+                            child: tasksController
+                                            .personalRemindersListObs.value !=
+                                        null &&
+                                    tasksController.personalRemindersListObs
+                                        .value!.isNotEmpty
+                                ? _buildRemindersList()
+                                : tasksController
+                                            .personalRemindersListObs.value ==
+                                        null
+                                    ? const SizedBox()
+                                    : _buildEmptyState(),
                           ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: 24.w,
-                                ),
-                              ),
-                              Text(
-                                'Reminders',
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        //====================Reminders====================//
-                        Expanded(
-                          child: notificationListLength != null &&
-                                  notificationListLength! > 0
-                              ? ListView.builder(
-                                  itemCount: notificationListLength,
-                                  itemBuilder: (context, index) {
-                                    return StatefulBuilder(
-                                        builder: (context, setState) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                          left: 12.w,
-                                          right: 12.w,
-                                          bottom: 10.w,
-                                        ),
-                                        child: Slidable(
-                                          endActionPane: ActionPane(
-                                            extentRatio:
-                                                index % 2 != 0 ? .25 : .5,
-                                            motion: const DrawerMotion(),
-                                            children: [
-                                              if (index % 2 == 0)
-                                                SlidableAction(
-                                                  onPressed: (context) {},
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  // padding: EdgeInsets.symmetric(
-                                                  //     horizontal: 8.w),
-                                                  backgroundColor:
-                                                      AppColors.themeGreen,
-                                                  foregroundColor: Colors.white,
-                                                  icon: Icons.task_alt,
-                                                  label: 'Task',
-                                                ),
-                                              SlidableAction(
-                                                onPressed: (context) {},
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                // padding: EdgeInsets.symmetric(
-                                                //     horizontal: 8.w),
-                                                backgroundColor:
-                                                    StatusColor.overdue,
-                                                icon: Icons.delete,
-                                                label: 'Delete',
-                                              ),
-                                            ],
-                                          ),
-                                          child: Container(
-                                            key: index == 0
-                                                ? _containerKey
-                                                : null,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 12.w,
-                                              vertical: 8.w,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              gradient: const LinearGradient(
-                                                colors: [
-                                                  Color.fromRGBO(
-                                                      48, 78, 85, .4),
-                                                  Color.fromRGBO(29, 36, 41, 1),
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              border: Border.all(
-                                                color: Colors.blueGrey
-                                                    .withOpacity(.3),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Reminder Message for the task',
-                                                  style: TextStyle(
-                                                    fontSize: 16.sp,
-                                                  ),
-                                                ),
-                                                SizedBox(height: 4.w),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      '24 Oct',
-                                                      style: TextStyle(
-                                                        fontSize: 16.sp,
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 8.w),
-                                                    Icon(
-                                                      Icons.alarm,
-                                                      size: 18.w,
-                                                      color:
-                                                          AppColors.themeGreen,
-                                                    ),
-                                                    SizedBox(width: 2.w),
-                                                    Text(
-                                                      '10:00 PM',
-                                                      style: TextStyle(
-                                                        fontSize: 16.sp,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    });
-                                  })
-                              : notificationListLength == null
-                                  ? const SizedBox()
-                                  : Lottie.asset(
-                                      'assets/lotties/empty_list_animation.json',
-                                      width: 110.w,
-                                    ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
           ),
@@ -260,16 +145,155 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
       ),
     );
   }
+
+  Widget _buildDialogHeader() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 10.w),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () => Get.back(),
+            icon: Icon(Icons.arrow_back_ios_new, size: 24.w),
+          ),
+          Text(
+            'Reminders',
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRemindersList() {
+    return Obx(
+      () => ListView.builder(
+        itemCount: tasksController.personalRemindersListObs.value!.length,
+        itemBuilder: (context, index) {
+          final reminder =
+              tasksController.personalRemindersListObs.value![index];
+          final reminderDate = DateTime.parse(reminder.reminderDate!).toLocal();
+          final timeSuffix = reminderDate.hour >= 12 ? 'PM' : 'AM';
+          final hour =
+              reminderDate.hour % 12 == 0 ? 12 : reminderDate.hour % 12;
+
+          return Padding(
+            padding: EdgeInsets.only(
+              right: 12.w,
+              left: 12.w,
+              bottom: 10.w,
+            ),
+            child: Slidable(
+              key: index == 0 ? _containerKey : null,
+              closeOnScroll: true,
+              endActionPane: ActionPane(
+                extentRatio: tasksController
+                            .personalRemindersListObs.value![index].task !=
+                        null
+                    ? .5
+                    : .25,
+                motion: const DrawerMotion(),
+                children: _buildSlidableActions(index),
+              ),
+              child:
+                  _buildReminderCard(reminder, reminderDate, hour, timeSuffix),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> _buildSlidableActions(int index) {
+    return [
+      if (tasksController.personalRemindersListObs.value![index].task != null)
+        SlidableAction(
+          onPressed: (_) {
+            TaskModel taskModel = TaskModel();
+            if (user!.role == Role.user) {
+              taskModel = tasksController.myTasksListObs.value!.firstWhere(
+                (taskModel) =>
+                    taskModel.id ==
+                    tasksController
+                        .personalRemindersListObs.value![index].task!.id,
+                orElse: () => TaskModel(),
+              );
+            } else {
+              taskModel = tasksController.allTasksListObs.value!.firstWhere(
+                (taskModel) =>
+                    taskModel.id ==
+                    tasksController
+                        .personalRemindersListObs.value![index].task!.id,
+                orElse: () => TaskModel(),
+              );
+            }
+            final dueDateString = taskModel.dueDate!.dateFormat();
+            Get.to(
+              () => TaskDetailsScreen(
+                taskModel: taskModel,
+                dueDateString: dueDateString,
+              ),
+              transition: Transition.rightToLeftWithFade,
+            );
+          },
+          borderRadius: BorderRadius.circular(12),
+          backgroundColor: AppColors.themeGreen,
+          foregroundColor: Colors.white,
+          icon: Icons.task_alt,
+          label: 'Task',
+        ),
+      SlidableAction(
+        onPressed: (_) {},
+        borderRadius: BorderRadius.circular(12),
+        backgroundColor: StatusColor.overdue,
+        icon: Icons.delete,
+        label: 'Delete',
+      ),
+    ];
+  }
+
+  Widget _buildReminderCard(
+      reminder, DateTime reminderDate, int hour, String timeSuffix) {
+    final hourString = hour.toString().padLeft(2, '0');
+    final minuteString = reminderDate.minute.toString().padLeft(2, '0');
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: const LinearGradient(
+          colors: [
+            Color.fromRGBO(48, 78, 85, .4),
+            Color.fromRGBO(29, 36, 41, 1)
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(color: Colors.blueGrey.withOpacity(.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(reminder.message.toString(), style: TextStyle(fontSize: 16.sp)),
+          SizedBox(height: 4.w),
+          Row(
+            children: [
+              Text('${reminderDate.day} ${monthList[reminderDate.month - 1]}',
+                  style: TextStyle(fontSize: 16.sp)),
+              SizedBox(width: 12.w),
+              Icon(Icons.alarm, size: 18.w, color: AppColors.themeGreen),
+              SizedBox(width: 3.w),
+              Text('$hourString:$minuteString $timeSuffix',
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Lottie.asset('assets/lotties/empty_list_animation.json',
+        width: 110.w);
+  }
 }
-
-
-
-// Widget remindersListDialog() {
-//   const notificationListLength = 5;
-//   int containerHeight = ((notificationListLength * 64.h) + 60.h).toInt();
-
-//   if (containerHeight > (MediaQuery.of(Get.context!).size.height - 350.h)) {
-//     containerHeight = (MediaQuery.of(Get.context!).size.height - 350).toInt();
-//   }
-
-// }

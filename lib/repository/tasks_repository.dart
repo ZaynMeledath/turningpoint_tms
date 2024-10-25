@@ -4,6 +4,7 @@ import 'package:turningpoint_tms/model/all_categories_performance_report_model.d
 import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
 import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
 import 'package:turningpoint_tms/model/my_performance_report_model.dart';
+import 'package:turningpoint_tms/model/personal_reminder_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/service/api/api_endpoints.dart';
 import 'package:turningpoint_tms/service/api/api_service.dart';
@@ -180,14 +181,20 @@ class TasksRepository {
   }
 
 //====================Get Personal Reminders====================//
-  Future<void> getPersonalRemindersList() async {
-    final response = await ApiService().sendRequest(
-      url: ApiEndpoints.personalReminder,
-      requestMethod: RequestMethod.GET,
-      data: {},
-      fieldNameForFiles: null,
-      isTokenRequired: true,
-    );
+  Future<List<PersonalReminderModel>?> getPersonalRemindersList() async {
+    try {
+      final response = await ApiService().sendRequest(
+        url: ApiEndpoints.personalReminder,
+        requestMethod: RequestMethod.GET,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+
+      return PersonalReminderModelResponse.fromJson(response).reminders;
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Add Personal Reminder====================//
@@ -196,17 +203,21 @@ class TasksRepository {
     required String message,
     required String reminderDateString,
   }) async {
-    await ApiService().sendRequest(
-      url: ApiEndpoints.personalReminder,
-      requestMethod: RequestMethod.POST,
-      data: {
-        'taskId': taskId,
-        'message': message,
-        'reminderDate': reminderDateString,
-      },
-      fieldNameForFiles: null,
-      isTokenRequired: true,
-    );
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.personalReminder,
+        requestMethod: RequestMethod.POST,
+        data: {
+          'taskId': taskId,
+          'message': message,
+          'reminderDate': reminderDateString,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
   }
 
 //====================Get All Users Performance Report====================//
