@@ -275,6 +275,18 @@ class TasksController extends GetxController {
     }
   }
 
+//====================Delete Personal Reminders====================//
+  Future<void> deletePersonalReminder({
+    required String reminderId,
+  }) async {
+    try {
+      await tasksRepository.deletePersonalReminder(reminderId: reminderId);
+      await getPersonalRemindersList();
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Get All Users Performance Report====================//
   Future<void> getAllUsersPerformanceReport() async {
     try {
@@ -333,10 +345,6 @@ class TasksController extends GetxController {
         await getMyTasks();
       }
       await getAllTasks();
-      // if (dashboardTasksListObs.isNotEmpty) {
-      //   dashboardTasksListObs
-      //       .removeWhere((taskModel) => taskModel.id == taskId);
-      // }
     } catch (_) {
       rethrow;
     }

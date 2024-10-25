@@ -9,10 +9,14 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_add_personal_reminder_dialog.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/task_details_screen.dart';
 
 Future<Object?> showRemindersListDialog() async {
@@ -41,6 +45,7 @@ class RemindersListDialog extends StatefulWidget {
 
 class _RemindersListDialogState extends State<RemindersListDialog> {
   final tasksController = Get.put(TasksController());
+  final appController = Get.put(AppController());
   final GlobalKey _containerKey = GlobalKey();
   double _mainContainerHeight = 200.w;
   final user = getUserModelFromHive();
@@ -82,7 +87,7 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
 
         setState(() {
           _mainContainerHeight =
-              (remindersListLength * (subContainerHeight + 10)) + 68.w;
+              (remindersListLength * (subContainerHeight + 10)) + 115.w;
           _mainContainerHeight = _mainContainerHeight > (screenHeight - 350.h)
               ? screenHeight - 350.h
               : _mainContainerHeight;
@@ -133,6 +138,19 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
                                     ? const SizedBox()
                                     : _buildEmptyState(),
                           ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 8.w,
+                            ),
+                            child: customButton(
+                              buttonTitle: 'New Reminder',
+                              onTap: () {
+                                Get.back();
+                                showAddPersonalReminderDialog(taskId: null);
+                              },
+                              fontSize: 14.sp,
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -258,7 +276,41 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
         ),
       SlidableAction(
         onPressed: (_) {
-          const test = 'Delete api integration left';
+          showGenericDialog(
+            iconPath: 'assets/lotties/delete_animation.json',
+            title: 'Delete Reminder',
+            content: 'Are you sure you want to delete the reminder?',
+            buttons: {
+              'Cancel': null,
+              'Delete': () async {
+                try {
+                  appController.isLoadingObs.value = true;
+                  await tasksController.deletePersonalReminder(
+                      reminderId: tasksController
+                          .personalRemindersListObs.value![index].id!);
+                  appController.isLoadingObs.value = false;
+                  Get.back();
+                  showGenericDialog(
+                    iconPath: 'assets/lotties/deleted_animation.json',
+                    title: 'Reminder Deleted',
+                    content: 'Reminder has been deleted successfully',
+                    buttons: {
+                      'OK': null,
+                    },
+                  );
+                } catch (_) {
+                  showGenericDialog(
+                    iconPath: 'assets/lotties/server_error_animation.json',
+                    title: 'Something Went Wrong',
+                    content: 'Something went wrong while deleting the reminder',
+                    buttons: {
+                      'Dismiss': null,
+                    },
+                  );
+                }
+              },
+            },
+          );
         },
         borderRadius: BorderRadius.circular(12),
         backgroundColor: StatusColor.overdue,
@@ -310,7 +362,9 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
   }
 
   Widget _buildEmptyState() {
-    return Lottie.asset('assets/lotties/empty_list_animation.json',
-        width: 105.w);
+    return Lottie.asset(
+      'assets/lotties/empty_list_animation.json',
+      width: 105.w,
+    );
   }
 }

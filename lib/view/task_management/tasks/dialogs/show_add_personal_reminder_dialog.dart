@@ -1,6 +1,18 @@
 // ignore_for_file: use_build_context_synchronously
 
-part of '../task_details_screen.dart';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
+import 'package:turningpoint_tms/controller/assign_task_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/exceptions/tms_exceptions.dart';
+import 'package:turningpoint_tms/view/login/login_screen.dart';
 
 Future<Object?> showAddPersonalReminderDialog({
   required String? taskId,

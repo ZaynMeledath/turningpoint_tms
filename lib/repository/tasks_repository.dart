@@ -218,6 +218,23 @@ class TasksRepository {
     }
   }
 
+//====================Delete Personal Reminder====================//
+  Future<void> deletePersonalReminder({
+    required String reminderId,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.personalReminder}/$reminderId',
+        requestMethod: RequestMethod.DELETE,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Get All Users Performance Report====================//
   Future<List<AllUsersPerformanceReportModel>?>
       getAllUsersPerformanceReport() async {
