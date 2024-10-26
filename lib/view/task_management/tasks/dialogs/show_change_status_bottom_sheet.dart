@@ -52,7 +52,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   @override
   void dispose() {
     textController.dispose();
-    tasksController.taskUpdateAttachments.clear();
+    tasksController.taskUpdateAttachmentsFileList.clear();
     super.dispose();
   }
 
@@ -214,55 +214,92 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                           SizedBox(height: 10.h),
 
                           //====================Attachments Display Section====================//
-                          tasksController.taskUpdateAttachments.isNotEmpty
+                          tasksController
+                                  .taskUpdateAttachmentsFileList.isNotEmpty
                               ? SizedBox(
                                   height: 170.h,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
                                     itemCount: tasksController
-                                        .taskUpdateAttachments.length,
+                                        .taskUpdateAttachmentsFileList.length,
                                     itemBuilder: (context, index) {
                                       return Column(
                                         children: [
-                                          SizedBox(
-                                            height: 120.h,
-                                            child: tasksController
-                                                            .taskUpdateAttachmentsMapList[
-                                                        index]['type'] ==
-                                                    'image'
-                                                ? AspectRatio(
-                                                    aspectRatio: 4 / 4,
-                                                    child: Image.file(
-                                                      tasksController
-                                                              .taskUpdateAttachments[
-                                                          index],
-                                                    ),
-                                                  )
-                                                // : tasksController
-                                                //                 .taskUpdateAttachmentsMapList[
-                                                //             index]['type'] ==
-                                                //         'pdf'
-                                                //     ? PdfThumbnail.fromFile(
-                                                //         tasksController
-                                                //             .taskUpdateAttachments[
-                                                //                 index]
-                                                //             .path,
-                                                //         currentPage: 1)
-                                                : Column(
-                                                    children: [
-                                                      Image.asset(
-                                                        'assets/icons/file_icon.png',
-                                                        width: 70.w,
+                                          Container(
+                                              width: 110.w,
+                                              height: 115.w,
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: 12.w,
+                                                vertical: 8.h,
+                                              ),
+                                              margin:
+                                                  EdgeInsets.only(right: 12.w),
+                                              decoration: BoxDecoration(
+                                                color: AppColors.textFieldColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Center(
+                                                child: tasksController
+                                                                .taskUpdateAttachmentsMapList[
+                                                            index]['type'] ==
+                                                        'image'
+                                                    ? AspectRatio(
+                                                        aspectRatio: 4 / 4,
+                                                        child: Image.file(
+                                                          tasksController
+                                                                  .taskUpdateAttachmentsFileList[
+                                                              index],
+                                                        ),
+                                                      )
+                                                    // : tasksController
+                                                    //                 .taskUpdateAttachmentsMapList[
+                                                    //             index]['type'] ==
+                                                    //         'pdf'
+                                                    //     ? PdfThumbnail.fromFile(
+                                                    //         tasksController
+                                                    //             .taskUpdateAttachments[
+                                                    //                 index]
+                                                    //             .path,
+                                                    //         currentPage: 1)
+                                                    : Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 6.w),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Image.asset(
+                                                              'assets/icons/file_icon.png',
+                                                              width: 52.w,
+                                                            ),
+                                                            Text(
+                                                              tasksController
+                                                                  .taskUpdateAttachmentsFileList[
+                                                                      index]
+                                                                  .path
+                                                                  .split('/')
+                                                                  .last,
+                                                              style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Text(
-                                                          'Attachment-${index + 1}')
-                                                    ],
-                                                  ),
-                                          ),
+                                              )),
                                           IconButton(
                                             onPressed: () {
                                               tasksController
-                                                  .taskUpdateAttachments
+                                                  .taskUpdateAttachmentsFileList
+                                                  .removeAt(index);
+                                              tasksController
+                                                  .taskUpdateAttachmentsMapList
                                                   .removeAt(index);
                                             },
                                             icon: Icon(
@@ -279,10 +316,10 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               : const SizedBox(),
 
                           SizedBox(
-                            height:
-                                tasksController.taskUpdateAttachments.isNotEmpty
-                                    ? 12.h
-                                    : 24.h,
+                            height: tasksController
+                                    .taskUpdateAttachmentsFileList.isNotEmpty
+                                ? 12.h
+                                : 24.h,
                           ),
                           //====================Update Button====================//
                           Obx(

@@ -84,7 +84,7 @@ class TasksController extends GetxController {
       delegatedPerformanceReportModelSearchList =
       Rxn<List<DelegatedPerformanceReportModel>>();
 
-  final taskUpdateAttachments = <File>[].obs;
+  final taskUpdateAttachmentsFileList = <File>[].obs;
   final taskUpdateAttachmentsMapList = RxList<Map<String, String>>();
 
   final personalRemindersListObs = Rxn<List<PersonalReminderModel>>();
@@ -376,7 +376,7 @@ class TasksController extends GetxController {
         'path': await tasksRepository.uploadAttachment(file: imageFile),
         'type': 'image',
       });
-      taskUpdateAttachments.add(imageFile);
+      taskUpdateAttachmentsFileList.add(imageFile);
 
       appController.isLoadingObs.value = false;
     }
@@ -407,7 +407,7 @@ class TasksController extends GetxController {
           'path': url,
           'type': fileType,
         });
-        taskUpdateAttachments.add(file);
+        taskUpdateAttachmentsFileList.add(file);
         appController.isLoadingObs.value = false;
       }
     } catch (_) {
