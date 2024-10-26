@@ -45,7 +45,7 @@ class UserRepository {
     log('FCM TOKEN: $fcmToken');
     try {
       final response = await ApiService().sendRequest(
-        url: ApiEndpoints.login,
+        url: ApiEndpoints.logIn,
         requestMethod: RequestMethod.POST,
         data: {
           'emailID': email,
@@ -210,6 +210,23 @@ class UserRepository {
 
       return allUsersModelResponse.users;
     } catch (e) {
+      rethrow;
+    }
+  }
+
+//====================Log out====================//
+  static Future<void> logOut({required String fcmToken}) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.logOut,
+        requestMethod: RequestMethod.POST,
+        data: {
+          'fcmToken': fcmToken,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
       rethrow;
     }
   }

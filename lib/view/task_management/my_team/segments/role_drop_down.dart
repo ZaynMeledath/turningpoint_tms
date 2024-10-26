@@ -3,10 +3,11 @@ part of '../my_team_screen.dart';
 Widget roleDropDown({
   required UserController userController,
 }) {
+  final user = getUserModelFromHive();
   final roles = [
     Role.user,
     Role.teamLeader,
-    Role.admin,
+    if (user?.role == Role.admin) Role.admin,
   ];
   return DropdownButtonFormField<String>(
     dropdownColor: AppColors.textFieldColor,

@@ -35,6 +35,8 @@ Widget dateAndTimeSegment({
             InkWell(
               borderRadius: BorderRadius.circular(20),
               onTap: () async {
+                assignTaskController.showTimeErrorTextObs.value = false;
+
                 //To prevent the keyboard popping glitch
                 final currentFocus = FocusScope.of(context);
                 if (currentFocus.hasPrimaryFocus) {
@@ -107,6 +109,7 @@ Widget dateAndTimeSegment({
             InkWell(
               borderRadius: BorderRadius.circular(20),
               onTap: () async {
+                assignTaskController.showTimeErrorTextObs.value = false;
                 //To prevent the keyboard popping glitch
                 final currentFocus = FocusScope.of(context);
                 if (currentFocus.hasPrimaryFocus) {

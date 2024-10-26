@@ -175,6 +175,20 @@ class UserController extends GetxController {
     }
     await getAllTeamMembers();
   }
+
+//====================Log Out====================//
+  Future<void> logOut() async {
+    try {
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await UserRepository.logOut(fcmToken: fcmToken);
+      } else {
+        throw FcmTokenNullException();
+      }
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
 
 Future<void> addUserModelToHive({

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/exception/user_exceptions.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
@@ -24,6 +26,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final passwordController = TextEditingController();
   final userController = Get.put(UserController());
+  final appController = Get.put(AppController());
 
   @override
   void dispose() {
@@ -132,10 +135,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           iconWidth: 85.w,
                           buttons: {
                             'Cancel': null,
-                            'Log Out': () {
-                              Get.offAll(
-                                () => const LoginScreen(),
-                              );
+                            'Log Out': () async {
+                              try {
+                                if (appController.isLoadingObs.value) {
+                                  return;
+                                }
+                                appController.isLoadingObs.value = true;
+                                await userController.logOut();
+                                appController.isLoadingObs.value = false;
+                                Get.offAll(
+                                  () => const LoginScreen(),
+                                );
+                              } on FcmTokenNullException {
+                                appController.isLoadingObs.value = false;
+                                Get.back();
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/server_error_animation.json',
+                                  title: 'Firebase Error',
+                                  content:
+                                      'Something went wrong while connecting to firebase',
+                                  buttons: {
+                                    'OK': null,
+                                  },
+                                );
+                                return;
+                              } catch (_) {
+                                appController.isLoadingObs.value = false;
+                                Get.back();
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/server_error_animation.json',
+                                  title: 'Something went wrong',
+                                  content:
+                                      'Something went wrong while connecting to server',
+                                  buttons: {
+                                    'OK': null,
+                                  },
+                                );
+                                return;
+                              }
                             }
                           });
                     },
