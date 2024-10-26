@@ -5,7 +5,7 @@ Future<Object?> showAddTeamMemberBottomSheet({
 }) {
   return Get.bottomSheet(
     isScrollControlled: true,
-    isDismissible: false,
+    // isDismissible: false,
     AddTeamMemberBottomSheet(
       userModel: userModel,
     ),
@@ -65,219 +65,215 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final user = getUserModelFromHive();
-    return SafeArea(
-      child: SingleChildScrollView(
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Material(
-            borderRadius: const BorderRadius.vertical(
-              top: Radius.circular(16),
-            ),
-            color: AppColors.scaffoldBackgroundColor,
-            child: SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //====================Title====================//
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.w,
-                      vertical: 14.h,
-                    ),
-                    child: Text(
-                      'Add to Team',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
+    return SingleChildScrollView(
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Material(
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(16),
+          ),
+          color: AppColors.scaffoldBackgroundColor,
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //====================Title====================//
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 14.w,
+                    vertical: 14.h,
+                  ),
+                  child: Text(
+                    'Add to Team',
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  Container(
-                    width: double.maxFinite,
-                    height: 1,
-                    color: Colors.white12,
+                ),
+                Container(
+                  width: double.maxFinite,
+                  height: 1,
+                  color: Colors.white12,
+                ),
+                SizedBox(height: 12.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 14.w,
                   ),
-                  SizedBox(height: 12.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.w,
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          customTextField(
-                            controller: nameController,
-                            hintText: 'Name',
-                          ).animate().slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 100),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 60,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: AppColors.textFieldColor,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '+91',
-                                    style: GoogleFonts.roboto(),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Expanded(
-                                child: customTextField(
-                                  controller: phoneController,
-                                  hintText: 'WhatsApp Number',
-                                  // userController: userController,
-                                  isNum: true,
-                                ),
-                              ),
-                            ],
-                          ).animate().slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 140),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          customTextField(
-                            controller: emailController,
-                            hintText: 'Email',
-                            isEmail: true,
-                          ).animate().slideY(
-                                begin: .7,
-                                delay: const Duration(milliseconds: 180),
-                                curve: Curves.elasticOut,
-                                duration: const Duration(milliseconds: 1000),
-                              ),
-                          SizedBox(height: 22.h),
-                          user != null && user.role == Role.admin
-                              ? Column(
-                                  children: [
-                                    departmentDropDown(
-                                      tasksController: tasksController,
-                                      userController: userController,
-                                    ).animate().slideY(
-                                          begin: .7,
-                                          delay:
-                                              const Duration(milliseconds: 220),
-                                          curve: Curves.elasticOut,
-                                          duration: const Duration(
-                                              milliseconds: 1000),
-                                        ),
-                                    SizedBox(height: 22.h),
-                                    roleDropDown(userController: userController)
-                                        .animate()
-                                        .slideY(
-                                          begin: .7,
-                                          delay:
-                                              const Duration(milliseconds: 260),
-                                          curve: Curves.elasticOut,
-                                          duration: const Duration(
-                                              milliseconds: 1000),
-                                        ),
-                                    SizedBox(height: 22.h),
-                                    reportingManagerDropDown(
-                                            userController: userController)
-                                        .animate()
-                                        .slideY(
-                                          begin: .7,
-                                          delay:
-                                              const Duration(milliseconds: 300),
-                                          curve: Curves.elasticOut,
-                                          duration: const Duration(
-                                              milliseconds: 1000),
-                                        ),
-                                    SizedBox(height: 22.h),
-                                  ],
-                                )
-                              : const SizedBox(),
-                          widget.userModel == null || user?.role == Role.admin
-                              ? customTextField(
-                                  controller: passwordController,
-                                  hintText: 'Password',
-                                  userController: userController,
-                                  isPassword: true,
-                                  ignoreValidations: widget.userModel != null,
-                                ).animate().slideY(
-                                    begin: .7,
-                                    delay: const Duration(milliseconds: 340),
-                                    curve: Curves.elasticOut,
-                                    duration:
-                                        const Duration(milliseconds: 1000),
-                                  )
-                              : const SizedBox(),
-                          SizedBox(height: 26.h),
-                          Obx(
-                            () => InkWell(
-                              borderRadius: BorderRadius.circular(12),
-                              onTap: () async {
-                                appController.isLoadingObs.value = true;
-                                await onSubmit(
-                                  userController: userController,
-                                  formKey: _formKey,
-                                  nameController: nameController,
-                                  phoneController: phoneController,
-                                  emailController: emailController,
-                                  passwordController: passwordController,
-                                  user: user!,
-                                  allUsersModel: widget.userModel,
-                                );
-                                appController.isLoadingObs.value = false;
-                              },
-                              child: Container(
-                                width: 140.w,
-                                height: 40.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: AppColors.themeGreen.withOpacity(.7),
-                                  border: Border.all(
-                                    color: AppColors.themeGreen,
-                                    width: 1.7,
-                                  ),
-                                ),
-                                child: Center(
-                                    child: appController.isLoadingObs.value
-                                        ? SpinKitWave(
-                                            color: Colors.white,
-                                            size: 16.w,
-                                          )
-                                        : Text(
-                                            widget.userModel != null
-                                                ? 'Submit'
-                                                : 'Add to Team',
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
-                                            ),
-                                          )),
-                              ).animate().scale(
-                                    delay: const Duration(milliseconds: 360),
-                                    curve: Curves.elasticOut,
-                                    duration:
-                                        const Duration(milliseconds: 1000),
-                                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        customTextField(
+                          controller: nameController,
+                          hintText: 'Name',
+                        ).animate().slideY(
+                              begin: .7,
+                              delay: const Duration(milliseconds: 100),
+                              curve: Curves.elasticOut,
+                              duration: const Duration(milliseconds: 1000),
                             ),
+                        SizedBox(height: 22.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 60,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: AppColors.textFieldColor,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '+91',
+                                  style: GoogleFonts.roboto(),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: customTextField(
+                                controller: phoneController,
+                                hintText: 'WhatsApp Number',
+                                // userController: userController,
+                                isNum: true,
+                              ),
+                            ),
+                          ],
+                        ).animate().slideY(
+                              begin: .7,
+                              delay: const Duration(milliseconds: 140),
+                              curve: Curves.elasticOut,
+                              duration: const Duration(milliseconds: 1000),
+                            ),
+                        SizedBox(height: 22.h),
+                        customTextField(
+                          controller: emailController,
+                          hintText: 'Email',
+                          isEmail: true,
+                        ).animate().slideY(
+                              begin: .7,
+                              delay: const Duration(milliseconds: 180),
+                              curve: Curves.elasticOut,
+                              duration: const Duration(milliseconds: 1000),
+                            ),
+                        SizedBox(height: 22.h),
+                        user != null && user.role == Role.admin
+                            ? Column(
+                                children: [
+                                  departmentDropDown(
+                                    tasksController: tasksController,
+                                    userController: userController,
+                                  ).animate().slideY(
+                                        begin: .7,
+                                        delay:
+                                            const Duration(milliseconds: 220),
+                                        curve: Curves.elasticOut,
+                                        duration:
+                                            const Duration(milliseconds: 1000),
+                                      ),
+                                  SizedBox(height: 22.h),
+                                  roleDropDown(userController: userController)
+                                      .animate()
+                                      .slideY(
+                                        begin: .7,
+                                        delay:
+                                            const Duration(milliseconds: 260),
+                                        curve: Curves.elasticOut,
+                                        duration:
+                                            const Duration(milliseconds: 1000),
+                                      ),
+                                  SizedBox(height: 22.h),
+                                  reportingManagerDropDown(
+                                          userController: userController)
+                                      .animate()
+                                      .slideY(
+                                        begin: .7,
+                                        delay:
+                                            const Duration(milliseconds: 300),
+                                        curve: Curves.elasticOut,
+                                        duration:
+                                            const Duration(milliseconds: 1000),
+                                      ),
+                                  SizedBox(height: 22.h),
+                                ],
+                              )
+                            : const SizedBox(),
+                        widget.userModel == null || user?.role == Role.admin
+                            ? customTextField(
+                                controller: passwordController,
+                                hintText: 'Password',
+                                userController: userController,
+                                isPassword: true,
+                                ignoreValidations: widget.userModel != null,
+                              ).animate().slideY(
+                                  begin: .7,
+                                  delay: const Duration(milliseconds: 340),
+                                  curve: Curves.elasticOut,
+                                  duration: const Duration(milliseconds: 1000),
+                                )
+                            : const SizedBox(),
+                        SizedBox(height: 26.h),
+                        Obx(
+                          () => InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            onTap: () async {
+                              appController.isLoadingObs.value = true;
+                              await onSubmit(
+                                userController: userController,
+                                formKey: _formKey,
+                                nameController: nameController,
+                                phoneController: phoneController,
+                                emailController: emailController,
+                                passwordController: passwordController,
+                                user: user!,
+                                allUsersModel: widget.userModel,
+                              );
+                              appController.isLoadingObs.value = false;
+                            },
+                            child: Container(
+                              width: 140.w,
+                              height: 40.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: AppColors.themeGreen.withOpacity(.7),
+                                border: Border.all(
+                                  color: AppColors.themeGreen,
+                                  width: 1.7,
+                                ),
+                              ),
+                              child: Center(
+                                  child: appController.isLoadingObs.value
+                                      ? SpinKitWave(
+                                          color: Colors.white,
+                                          size: 16.w,
+                                        )
+                                      : Text(
+                                          widget.userModel != null
+                                              ? 'Submit'
+                                              : 'Add to Team',
+                                          style: TextStyle(
+                                            fontSize: 15.sp,
+                                          ),
+                                        )),
+                            ).animate().scale(
+                                  delay: const Duration(milliseconds: 360),
+                                  curve: Curves.elasticOut,
+                                  duration: const Duration(milliseconds: 1000),
+                                ),
                           ),
-                          SizedBox(height: 18.h),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: 18.h),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

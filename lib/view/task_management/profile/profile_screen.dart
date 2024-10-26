@@ -41,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: myAppBar(
         title: 'Profile',
+        reminderListIcon: false,
       ),
       body: Center(
         child: Padding(
@@ -133,6 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           title: 'Log Out?',
                           content: 'Are you sure you want to log out?',
                           iconWidth: 85.w,
+                          confirmationButtonColor: Colors.red,
                           buttons: {
                             'Cancel': null,
                             'Log Out': () async {
@@ -179,11 +181,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           });
                     },
                     child: Container(
-                      width: 100.w,
-                      height: 46.h,
+                      width: 98.w,
+                      height: 40.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: const Color.fromRGBO(21, 25, 28, 1),
+                        // color: const Color.fromRGBO(21, 25, 28, 1),
+                        color: Colors.red,
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.white38,
@@ -197,6 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           'Log Out',
                           style: TextStyle(
                             fontSize: 16.sp,
+                            height: 1,
                           ),
                         ),
                       ),
