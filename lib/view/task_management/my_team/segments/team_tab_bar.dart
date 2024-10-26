@@ -6,6 +6,7 @@ Widget teamTabBar({
   required int? adminCount,
   required int? teamLeaderCount,
   required int? teamMemberCount,
+  required int? blockedCount,
 }) {
   return TabBar(
     controller: tabController,
@@ -51,6 +52,12 @@ Widget teamTabBar({
       ),
       Text(
         'User - ${teamMemberCount ?? 0}',
+        style: TextStyle(
+          fontSize: 16.sp,
+        ),
+      ),
+      Text(
+        'Blocked - ${blockedCount ?? 0}',
         style: TextStyle(
           fontSize: 16.sp,
         ),

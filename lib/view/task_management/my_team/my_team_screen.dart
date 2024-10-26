@@ -49,12 +49,13 @@ class _MyTeamScreenState extends State<MyTeamScreen>
   List<AllUsersModel> adminList = [];
   List<AllUsersModel> teamLeaderList = [];
   List<AllUsersModel> teamMemberList = [];
+  List<AllUsersModel> blockedList = [];
 
   @override
   void initState() {
     tasksController.isDelegatedObs.value = null;
     tabController = TabController(
-      length: 4,
+      length: 5,
       vsync: this,
     );
     getData();
@@ -113,6 +114,9 @@ class _MyTeamScreenState extends State<MyTeamScreen>
               teamMemberList = myTeamList
                   .where((element) => element.role == Role.user)
                   .toList();
+              blockedList = myTeamList
+                  .where((element) => element.isBlocked == true)
+                  .toList();
             }
             return Column(
                 // physics: const BouncingScrollPhysics(),
@@ -123,6 +127,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                     adminCount: adminList.length,
                     teamLeaderCount: teamLeaderList.length,
                     teamMemberCount: teamMemberList.length,
+                    blockedCount: blockedList.length,
                   ).animate().slideX(
                         begin: .4,
                         curve: Curves.elasticOut,
@@ -208,6 +213,11 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                               ),
                               teamTabBarView(
                                 myTeamList: teamMemberList,
+                                appController: appController,
+                                tasksController: tasksController,
+                              ),
+                              teamTabBarView(
+                                myTeamList: blockedList,
                                 appController: appController,
                                 tasksController: tasksController,
                               ),
