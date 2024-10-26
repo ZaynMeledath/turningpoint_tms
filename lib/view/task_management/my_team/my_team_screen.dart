@@ -14,6 +14,7 @@ import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
+import 'package:turningpoint_tms/service/api/api_exceptions.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';

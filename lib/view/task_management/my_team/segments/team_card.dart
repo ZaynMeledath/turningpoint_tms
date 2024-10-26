@@ -173,70 +173,93 @@ Widget teamCard({
         ),
         SizedBox(height: 15.h),
         //====================Buttons====================//
-        (user!.role == Role.admin || allUsersModel.reportingTo == user.name) &&
-                allUsersModel.id != user.id
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 //--------------------Edit Button--------------------//
-                  teamCardActionButton(
-                    icon: Icons.edit,
-                    title: 'Edit',
-                    iconColor: Colors.blue,
-                    onTap: () {
-                      showAddTeamMemberBottomSheet(userModel: allUsersModel);
-                    },
-                  ),
-                  SizedBox(width: 15.w),
-
-//--------------------Delete Button--------------------//
-                  teamCardActionButton(
-                    icon: Icons.delete,
-                    title: 'Delete',
-                    iconColor: Colors.red,
-                    onTap: () => showGenericDialog(
-                      iconPath: 'assets/lotties/delete_animation.json',
-                      iconWidth: 100.w,
-                      title: 'Delete User?',
-                      content: 'Are you sure you want to delete this user?',
-                      confirmationButtonColor: Colors.red,
-                      buttons: {
-                        'Cancel': null,
-                        'Delete': () async {
-                          try {
-                            appController.isLoadingObs.value = true;
-                            await userController.deleteTeamMember(
-                                memberId: allUsersModel.id!);
-                            appController.isLoadingObs.value = false;
-                            Get.back();
-
-                            showGenericDialog(
-                              iconPath: 'assets/lotties/deleted_animation.json',
-                              title: 'Deleted',
-                              content: 'User has been successfully deleted',
-                              buttons: {'OK': null},
-                            );
-                          } catch (_) {
-                            Get.back();
-                            appController.isLoadingObs.value = false;
-                            showGenericDialog(
-                              iconPath:
-                                  'assets/lotties/server_error_animation.json',
-                              title: 'Something went wrong',
-                              content:
-                                  'Something went wrong while deleting the user',
-                              buttons: {'Dismiss': null},
-                            );
-                            return;
-                          }
-                        }
+            (user!.role == Role.admin ||
+                        allUsersModel.reportingTo == user.name) &&
+                    allUsersModel.id != user.id
+                ? Padding(
+                    padding: EdgeInsets.only(right: 15.w),
+                    child: teamCardActionButton(
+                      icon: Icons.edit,
+                      title: 'Edit',
+                      iconColor: Colors.blue,
+                      onTap: () {
+                        showAddTeamMemberBottomSheet(userModel: allUsersModel);
                       },
                     ),
-                  ),
-                  SizedBox(width: 15.w),
+                  )
+                : const SizedBox(),
+
+//--------------------Delete Button--------------------//
+            (user.role == Role.admin ||
+                        allUsersModel.reportingTo == user.name) &&
+                    allUsersModel.id != user.id
+                ? Padding(
+                    padding: EdgeInsets.only(right: 15.w),
+                    child: teamCardActionButton(
+                      icon: Icons.delete,
+                      title: 'Delete',
+                      iconColor: Colors.red,
+                      onTap: () => showGenericDialog(
+                        iconPath: 'assets/lotties/delete_animation.json',
+                        iconWidth: 100.w,
+                        title: 'Delete User?',
+                        content: 'Are you sure you want to delete this user?',
+                        confirmationButtonColor: Colors.red,
+                        buttons: {
+                          'Cancel': null,
+                          'Delete': () async {
+                            try {
+                              appController.isLoadingObs.value = true;
+                              await userController.deleteTeamMember(
+                                  memberId: allUsersModel.id!);
+                              appController.isLoadingObs.value = false;
+                              Get.back();
+
+                              showGenericDialog(
+                                iconPath:
+                                    'assets/lotties/deleted_animation.json',
+                                title: 'Deleted',
+                                content: 'User has been successfully deleted',
+                                buttons: {'OK': null},
+                              );
+                            } on BadRequestException {
+                              appController.isLoadingObs.value = false;
+                              showGenericDialog(
+                                iconPath:
+                                    'assets/lotties/server_error_animation.json',
+                                title: 'Cannot Delete User',
+                                content:
+                                    'User cannot be deleted as they have pending tasks',
+                                buttons: {'OK': null},
+                              );
+                              return;
+                            } catch (_) {
+                              Get.back();
+                              appController.isLoadingObs.value = false;
+                              showGenericDialog(
+                                iconPath:
+                                    'assets/lotties/server_error_animation.json',
+                                title: 'Something went wrong',
+                                content:
+                                    'Something went wrong while deleting the user',
+                                buttons: {'Dismiss': null},
+                              );
+                              return;
+                            }
+                          }
+                        },
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
 
 //--------------------Block Button--------------------//
-                  teamCardActionButton(
+            user.role == Role.admin
+                ? teamCardActionButton(
                     icon: Icons.block,
                     title:
                         allUsersModel.isBlocked == true ? 'Unblock' : 'Block',
@@ -331,10 +354,10 @@ Widget teamCard({
                         );
                       }
                     },
-                  ),
-                ],
-              )
-            : const SizedBox(),
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ],
     ),
   );

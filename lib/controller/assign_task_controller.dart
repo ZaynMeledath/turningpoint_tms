@@ -435,6 +435,11 @@ class AssignTaskController extends GetxController {
         await tasksController.getMyTasks();
       }
       unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getMyPerformanceReport());
+      unawaited(tasksController.getDelegatedPerformanceReport());
+      unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getAllUsersPerformanceReport());
+      unawaited(tasksController.getAllCategoriesPerformanceReport());
       for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
         if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
           tasksController.dashboardTasksListObs[i] = tasksController

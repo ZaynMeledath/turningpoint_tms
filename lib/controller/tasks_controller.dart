@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
@@ -436,7 +437,12 @@ class TasksController extends GetxController {
       } else if (isDelegatedObs.value == false) {
         await getMyTasks();
       }
-      await getAllTasks();
+      unawaited(getAllTasks());
+      unawaited(getMyPerformanceReport());
+      unawaited(getDelegatedPerformanceReport());
+      unawaited(getAllTasks());
+      unawaited(getAllUsersPerformanceReport());
+      unawaited(getAllCategoriesPerformanceReport());
       for (int i = 0; i < dashboardTasksListObs.length; i++) {
         if (dashboardTasksListObs[i].id == taskId) {
           dashboardTasksListObs[i] = allTasksListObs.value!

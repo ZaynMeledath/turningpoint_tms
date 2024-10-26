@@ -170,10 +170,10 @@ class UserController extends GetxController {
     try {
       await UserRepository.deleteTeamMember(memberId: memberId);
       userException.value = null;
+      await getAllTeamMembers();
     } catch (e) {
       rethrow;
     }
-    await getAllTeamMembers();
   }
 
 //====================Block Team Member====================//
@@ -183,10 +183,10 @@ class UserController extends GetxController {
     try {
       await UserRepository.blockTeamMember(memberId: memberId);
       userException.value = null;
+      await getAllTeamMembers();
     } catch (e) {
       rethrow;
     }
-    await getAllTeamMembers();
   }
 
 //====================Log Out====================//

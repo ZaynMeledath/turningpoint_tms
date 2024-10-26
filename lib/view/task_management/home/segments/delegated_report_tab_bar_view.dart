@@ -103,17 +103,47 @@ Widget delegatedReportTabBarView({
                                         circleDiameter: 34.w,
                                       ),
                                       SizedBox(width: 7.w),
-                                      SizedBox(
-                                        width: 200.w,
-                                        child: Text(
-                                          performanceReportModel.userName!
-                                              .nameFormat(),
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
+                                      Column(
+                                        children: [
+                                          SizedBox(
+                                            width: 200.w,
+                                            child: Text(
+                                              performanceReportModel.userName!
+                                                  .nameFormat(),
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          SizedBox(height: 2.w),
+                                          SizedBox(
+                                            width: 200.w,
+                                            child: Text.rich(
+                                              overflow: TextOverflow.ellipsis,
+                                              TextSpan(
+                                                text: 'Total Tasks : ',
+                                                style: TextStyle(
+                                                  color: Colors.white
+                                                      .withOpacity(.7),
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: performanceReportModel
+                                                        .stats!.totalTasks
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const Expanded(child: SizedBox()),
                                       //--------------------On Time Progress Indicator--------------------//

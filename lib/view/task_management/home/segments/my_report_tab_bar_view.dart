@@ -92,17 +92,48 @@ Widget myReportTabBarView({
                                 //====================Avatar, Name and Progress Indicator====================//
                                 Row(
                                   children: [
-                                    Container(
-                                      margin: EdgeInsets.only(left: 4.w),
-                                      width: 195.w,
-                                      child: Text(
-                                        performanceReportModel.category ?? '-',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 17.sp,
-                                          fontWeight: FontWeight.w600,
+                                    Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(left: 4.w),
+                                          width: 195.w,
+                                          child: Text(
+                                            performanceReportModel.category ??
+                                                '-',
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 17.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                        SizedBox(height: 2.w),
+                                        Container(
+                                          width: 200.w,
+                                          margin: EdgeInsets.only(left: 6.w),
+                                          child: Text.rich(
+                                            overflow: TextOverflow.ellipsis,
+                                            TextSpan(
+                                              text: 'Total Tasks : ',
+                                              style: TextStyle(
+                                                color: Colors.white
+                                                    .withOpacity(.7),
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text: performanceReportModel
+                                                      .stats!.totalTasks
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     const Expanded(child: SizedBox()),
                                     //--------------------On Time Progress Indicator--------------------//
@@ -175,7 +206,7 @@ Widget myReportTabBarView({
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 8.h),
+                                SizedBox(height: 14.h),
 
                                 //====================Tasks Status Counter Section====================//
                                 tasksStatusCounterSection(

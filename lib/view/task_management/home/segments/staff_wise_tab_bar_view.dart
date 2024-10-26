@@ -103,16 +103,47 @@ Widget staffWiseTabBarView({
                                         circleDiameter: 34.w,
                                       ),
                                       SizedBox(width: 7.w),
-                                      SizedBox(
-                                        width: 200.w,
-                                        child: Text(
-                                          '${performanceReportModel.userName}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w600,
+                                      Column(
+                                        children: [
+                                          SizedBox(height: 2.w),
+                                          SizedBox(
+                                            width: 200.w,
+                                            child: Text(
+                                              '${performanceReportModel.userName}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                fontSize: 16.sp,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                          SizedBox(height: 2.w),
+                                          SizedBox(
+                                            width: 200.w,
+                                            child: Text.rich(
+                                              overflow: TextOverflow.ellipsis,
+                                              TextSpan(
+                                                text: 'Total Tasks : ',
+                                                style: TextStyle(
+                                                  color: Colors.white
+                                                      .withOpacity(.7),
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: performanceReportModel
+                                                        .stats!.totalTasks
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const Expanded(child: SizedBox()),
 
@@ -186,7 +217,7 @@ Widget staffWiseTabBarView({
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: 10.h),
+                                  SizedBox(height: 14.h),
 
                                   //====================Tasks Status Counter Section====================//
                                   tasksStatusCounterSection(

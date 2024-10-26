@@ -219,11 +219,7 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
               key: index == 0 ? _containerKey : null,
               closeOnScroll: true,
               endActionPane: ActionPane(
-                extentRatio: tasksController
-                            .personalRemindersListObs.value![index].task !=
-                        null
-                    ? .5
-                    : .25,
+                extentRatio: .5,
                 motion: const DrawerMotion(),
                 children: _buildSlidableActions(index),
               ),
