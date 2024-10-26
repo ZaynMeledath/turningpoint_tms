@@ -120,6 +120,7 @@ Widget taskUpdateSection({
                               ],
                             ),
 //====================Note and Photo Section====================//
+                            SizedBox(height: 6.h),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Padding(
@@ -131,6 +132,7 @@ Widget taskUpdateSection({
                                   statusChangesModel.note ?? '',
                                   style: TextStyle(
                                     fontSize: 14.sp,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),
@@ -141,7 +143,7 @@ Widget taskUpdateSection({
                                         .changesAttachments!.isNotEmpty
                                 ? Container(
                                     height: 100.h,
-                                    margin: EdgeInsets.only(top: 4.h),
+                                    margin: EdgeInsets.only(top: 10.h),
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: statusChangesModel

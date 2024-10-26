@@ -429,6 +429,8 @@ class TasksController extends GetxController {
         taskUpdateAttachmentsMapList: taskUpdateAttachmentsMapList,
       );
       tasksException.value = null;
+      taskUpdateAttachmentsFileList.clear();
+      taskUpdateAttachmentsMapList.clear();
       if (isDelegatedObs.value == true) {
         await getDelegatedTasks();
       } else if (isDelegatedObs.value == false) {
