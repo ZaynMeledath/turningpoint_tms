@@ -16,7 +16,7 @@ Widget shimmerTasksListLoading() {
             bottom: 10.h,
           ),
           child: Container(
-            height: 200,
+            height: 165.h,
             width: double.maxFinite,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),

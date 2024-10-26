@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
-import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/exception/user_exceptions.dart';
@@ -146,6 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 appController.isLoadingObs.value = true;
                                 await userController.logOut();
                                 appController.isLoadingObs.value = false;
+
                                 Get.offAll(
                                   () => const LoginScreen(),
                                 );
@@ -178,9 +178,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                                 return;
                               }
-                              final tasksController =
-                                  Get.put(TasksController());
-                              tasksController.dispose();
                             }
                           });
                     },

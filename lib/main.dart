@@ -133,6 +133,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authToken = AppPreferences.getValueShared('auth_token');
+    final user = getUserModelFromHive();
     return ScreenUtilInit(
       ///Add maxScreen width to the ScreenUtil package file to ensure UI quality (On line 216 of screen_util.dart (pub package))
       ///  double get scaleWidth => !_enableScaleWH() ? 1 : (screenWidth > 550 ? 550 : screenWidth) / _uiSize.width;
@@ -151,7 +152,9 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
         ),
-        home: authToken == null ? const LoginScreen() : const TasksHome(),
+        home: user == null || authToken == null
+            ? const LoginScreen()
+            : const TasksHome(),
       ),
     );
   }

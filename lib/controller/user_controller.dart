@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/exception/user_exceptions.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
@@ -182,6 +183,11 @@ class UserController extends GetxController {
       final fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != null) {
         await UserRepository.logOut(fcmToken: fcmToken);
+        final tasksController = Get.put(TasksController());
+        tasksController.allTasksListObs.value = null;
+        tasksController.myTasksListObs.value = null;
+        tasksController.delegatedTasksListObs.value = null;
+        tasksController.dashboardTasksListObs.clear();
         deleteUserModelFromHive();
         AppPreferences.clearSharedPreferences();
       } else {
