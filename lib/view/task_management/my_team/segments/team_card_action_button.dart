@@ -5,6 +5,7 @@ Widget teamCardActionButton({
   required String title,
   required Color iconColor,
   required void Function() onTap,
+  void Function()? onLongPress,
 }) {
   Color splashColor = AppColors.themeGreen;
 
@@ -24,6 +25,7 @@ Widget teamCardActionButton({
     borderRadius: BorderRadius.circular(8),
     splashColor: splashColor,
     onTap: onTap,
+    onLongPress: onLongPress,
     child: Container(
       width: 100.w,
       height: 35.h,

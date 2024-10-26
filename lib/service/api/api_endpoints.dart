@@ -1,11 +1,12 @@
 class ApiEndpoints {
-  static const baseUrl = 'http://13.126.184.197/tms/api';
-  // static const baseUrl = 'http://192.168.1.139:5001/api';
+  // static const baseUrl = 'http://13.126.184.197/tms/api';
+  static const baseUrl = 'http://192.168.1.139:5001/api';
 
   static const register = '$baseUrl/auth/register';
   static const logIn = '$baseUrl/auth/login';
   static const logOut = '$baseUrl/auth/logout';
   static const users = '$baseUrl/users';
+  static const blockUser = '$baseUrl/users/block';
   static const updateProfile = '$baseUrl/users/profile';
   static const getAssignTaskUsers = '$baseUrl/users/assign';
   static const getAllTasks = '$baseUrl/tasks';

@@ -194,21 +194,34 @@ class UserRepository {
   }
 
 //====================Delete a Team Member====================//
-  static Future<List<AllUsersModel>?> deleteTeamMember({
+  static Future<void> deleteTeamMember({
     required String memberId,
   }) async {
     try {
-      final response = await ApiService().sendRequest(
+      await ApiService().sendRequest(
         url: '${ApiEndpoints.users}/$memberId',
         requestMethod: RequestMethod.DELETE,
         data: {},
         fieldNameForFiles: null,
         isTokenRequired: true,
       );
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-      final allUsersModelResponse = AllUsersModelResponse.fromJson(response);
-
-      return allUsersModelResponse.users;
+//====================Block a Team Member====================//
+  static Future<void> blockTeamMember({
+    required String memberId,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.blockUser}/$memberId',
+        requestMethod: RequestMethod.PUT,
+        data: {},
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
     } catch (e) {
       rethrow;
     }

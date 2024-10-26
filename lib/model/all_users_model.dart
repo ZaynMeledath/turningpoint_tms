@@ -28,6 +28,7 @@ class AllUsersModel {
   String? emailId;
   String? phone;
   String? role;
+  bool? isBlocked;
   String? reportingTo;
   String? createdStamp;
   String? updatedStamp;
@@ -40,6 +41,7 @@ class AllUsersModel {
     this.emailId,
     this.phone,
     this.role,
+    this.isBlocked,
     this.reportingTo,
     this.createdStamp,
     this.updatedStamp,
@@ -53,6 +55,7 @@ class AllUsersModel {
     emailId = json['emailID'];
     phone = json['phone'];
     role = json['role'];
+    isBlocked = json['isBlocked'];
     reportingTo = json['reportingTo'];
     createdStamp = json['createdStamp'];
     updatedStamp = json['updatedStamp'];
@@ -66,6 +69,7 @@ class AllUsersModel {
     data['emailID'] = emailId;
     data['phone'] = phone;
     data['role'] = role;
+    data['isBlocked'] = isBlocked;
     data['reportingTo'] = reportingTo;
     data['createdStamp'] = createdStamp;
     data['updatedStamp'] = updatedStamp;

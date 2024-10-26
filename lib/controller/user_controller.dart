@@ -169,7 +169,19 @@ class UserController extends GetxController {
   }) async {
     try {
       await UserRepository.deleteTeamMember(memberId: memberId);
-      await getAllTeamMembers();
+      userException.value = null;
+    } catch (e) {
+      rethrow;
+    }
+    await getAllTeamMembers();
+  }
+
+//====================Block Team Member====================//
+  Future<void> blockTeamMember({
+    required String memberId,
+  }) async {
+    try {
+      await UserRepository.blockTeamMember(memberId: memberId);
       userException.value = null;
     } catch (e) {
       rethrow;

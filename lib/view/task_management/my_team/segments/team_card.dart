@@ -178,6 +178,7 @@ Widget teamCard({
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+//--------------------Edit Button--------------------//
                   teamCardActionButton(
                     icon: Icons.edit,
                     title: 'Edit',
@@ -186,16 +187,18 @@ Widget teamCard({
                       showAddTeamMemberBottomSheet(userModel: allUsersModel);
                     },
                   ),
-                  SizedBox(width: 30.w),
+                  SizedBox(width: 15.w),
+
+//--------------------Delete Button--------------------//
                   teamCardActionButton(
                     icon: Icons.delete,
                     title: 'Delete',
                     iconColor: Colors.red,
                     onTap: () => showGenericDialog(
                       iconPath: 'assets/lotties/delete_animation.json',
+                      iconWidth: 100.w,
                       title: 'Delete User?',
-                      content:
-                          'Are you sure you want to delete this team member?',
+                      content: 'Are you sure you want to delete this user?',
                       confirmationButtonColor: Colors.red,
                       buttons: {
                         'Cancel': null,
@@ -229,6 +232,105 @@ Widget teamCard({
                         }
                       },
                     ),
+                  ),
+                  SizedBox(width: 15.w),
+
+//--------------------Block Button--------------------//
+                  teamCardActionButton(
+                    icon: Icons.block,
+                    title:
+                        allUsersModel.isBlocked == true ? 'Unblock' : 'Block',
+                    iconColor: Colors.red,
+                    onTap: () {
+                      if (allUsersModel.isBlocked == true) {
+                        //--------------------Unblock Dialog--------------------//
+                        showGenericDialog(
+                          iconPath: 'assets/lotties/block_animation.json',
+                          iconWidth: 50.w,
+                          title: 'Unblock User?',
+                          content:
+                              'Are you sure you want to unblock this user from getting any task?',
+                          confirmationButtonColor: Colors.red,
+                          buttons: {
+                            'Cancel': null,
+                            'Unblock': () async {
+                              try {
+                                appController.isLoadingObs.value = true;
+                                await userController.blockTeamMember(
+                                    memberId: allUsersModel.id!);
+                                appController.isLoadingObs.value = false;
+                                Get.back();
+
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/block_animation.json',
+                                  title: 'Unblocked',
+                                  iconWidth: 50.w,
+                                  content:
+                                      'User has been successfully unblocked',
+                                  buttons: {'OK': null},
+                                );
+                              } catch (_) {
+                                Get.back();
+                                appController.isLoadingObs.value = false;
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/server_error_animation.json',
+                                  title: 'Something went wrong',
+                                  content:
+                                      'Something went wrong while unblocking the user',
+                                  buttons: {'Dismiss': null},
+                                );
+                                return;
+                              }
+                            }
+                          },
+                        );
+                      } else {
+                        //--------------------Block Dialog--------------------//
+                        showGenericDialog(
+                          iconPath: 'assets/lotties/block_animation.json',
+                          iconWidth: 50.w,
+                          title: 'Block User?',
+                          content:
+                              'Are you sure you want to block this user from getting any task?',
+                          confirmationButtonColor: Colors.red,
+                          buttons: {
+                            'Cancel': null,
+                            'Block': () async {
+                              try {
+                                appController.isLoadingObs.value = true;
+                                await userController.blockTeamMember(
+                                    memberId: allUsersModel.id!);
+                                appController.isLoadingObs.value = false;
+                                Get.back();
+
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/block_animation.json',
+                                  title: 'Blocked',
+                                  iconWidth: 50.w,
+                                  content: 'User has been successfully blocked',
+                                  buttons: {'OK': null},
+                                );
+                              } catch (_) {
+                                Get.back();
+                                appController.isLoadingObs.value = false;
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/server_error_animation.json',
+                                  title: 'Something went wrong',
+                                  content:
+                                      'Something went wrong while blocking the user',
+                                  buttons: {'Dismiss': null},
+                                );
+                                return;
+                              }
+                            }
+                          },
+                        );
+                      }
+                    },
                   ),
                 ],
               )

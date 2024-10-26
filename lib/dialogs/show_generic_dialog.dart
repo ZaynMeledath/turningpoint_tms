@@ -69,7 +69,7 @@ Widget dialog({
                     width: iconWidth ?? 61.w,
                   ),
             SizedBox(
-              height: isLottie ? 4.5.h : 12.5.h,
+              height: isLottie ? 6.h : 12.5.h,
             ),
             DefaultTextStyle(
               style: GoogleFonts.roboto(
