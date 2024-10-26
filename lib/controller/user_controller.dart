@@ -182,6 +182,8 @@ class UserController extends GetxController {
       final fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != null) {
         await UserRepository.logOut(fcmToken: fcmToken);
+        deleteUserModelFromHive();
+        AppPreferences.clearSharedPreferences();
       } else {
         throw FcmTokenNullException();
       }
@@ -191,12 +193,23 @@ class UserController extends GetxController {
   }
 }
 
+//====================Add user to Hive Box====================//
 Future<void> addUserModelToHive({
   required dynamic userModelResponseJson,
 }) async {
+  try {
+    final userBox = Hive.box(AppConstants.appDb);
+    userBox.delete(AppConstants.userModelStorageKey);
+    userBox.put(AppConstants.userModelStorageKey, userModelResponseJson);
+  } catch (_) {
+    rethrow;
+  }
+}
+
+//====================Delete user from Hive Box====================//
+Future<void> deleteUserModelFromHive() async {
   final userBox = Hive.box(AppConstants.appDb);
   userBox.delete(AppConstants.userModelStorageKey);
-  userBox.put(AppConstants.userModelStorageKey, userModelResponseJson);
 }
 
 //====================Get user from Hive Box====================//
