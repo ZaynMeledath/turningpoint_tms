@@ -26,6 +26,7 @@ class ApiService {
     required String? fieldNameForFiles,
     required bool isTokenRequired,
   }) async {
+    const timeOutSeconds = 10;
     data ??= {};
     dynamic responseJson;
     if (isTokenRequired) {
@@ -41,7 +42,7 @@ class ApiService {
       switch (requestMethod) {
         case RequestMethod.GET:
           response = await http.get(Uri.parse(url), headers: headers).timeout(
-            const Duration(seconds: 8),
+            const Duration(seconds: timeOutSeconds),
             onTimeout: () {
               return http.Response('Request timed out', 408);
             },
@@ -61,7 +62,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -75,7 +76,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -96,7 +97,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -110,7 +111,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -132,7 +133,7 @@ class ApiService {
             final streamedResponse = await multiPartRequest.send();
 
             response = await Response.fromStream(streamedResponse).timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -147,7 +148,7 @@ class ApiService {
               body: requestBody,
             )
                 .timeout(
-              const Duration(seconds: 8),
+              const Duration(seconds: timeOutSeconds),
               onTimeout: () {
                 return http.Response('Request timed out', 408);
               },
@@ -158,7 +159,7 @@ class ApiService {
         case RequestMethod.DELETE:
           response =
               await http.delete(Uri.parse(url), headers: headers).timeout(
-            const Duration(seconds: 8),
+            const Duration(seconds: timeOutSeconds),
             onTimeout: () {
               return http.Response('Request timed out', 408);
             },

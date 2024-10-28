@@ -145,7 +145,6 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                           TextFormField(
                             controller: textController,
                             maxLines: 5,
-                            maxLength: 100,
                             decoration: InputDecoration(
                               counterText: '',
                               contentPadding: EdgeInsets.symmetric(
