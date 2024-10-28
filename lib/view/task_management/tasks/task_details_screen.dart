@@ -18,6 +18,7 @@ import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
@@ -133,6 +134,16 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       appBar: myAppBar(
         title: 'Task Details',
         trailingIcons: [
+          IconButton(
+            visualDensity: VisualDensity.compact,
+            onPressed: () {
+              showRemindersListDialog(taskId: widget.taskModel.id);
+            },
+            icon: Icon(
+              Icons.alarm,
+              size: 24.w,
+            ),
+          ),
           IconButton(
             visualDensity: VisualDensity.compact,
             onPressed: () {
