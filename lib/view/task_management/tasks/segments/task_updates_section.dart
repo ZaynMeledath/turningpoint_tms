@@ -119,7 +119,7 @@ Widget taskUpdateSection({
                                 ),
                               ],
                             ),
-//====================Note and Photo Section====================//
+//====================Note and Attachments Section====================//
                             SizedBox(height: 6.h),
                             Align(
                               alignment: Alignment.centerLeft,
@@ -142,7 +142,7 @@ Widget taskUpdateSection({
                                     statusChangesModel
                                         .changesAttachments!.isNotEmpty
                                 ? Container(
-                                    height: 100.h,
+                                    height: 102.w,
                                     margin: EdgeInsets.only(top: 10.h),
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
@@ -158,63 +158,36 @@ Widget taskUpdateSection({
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                             onTap: () async {
-                                              try {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        const SpinKitWave(
-                                                          size: 20,
-                                                          color: Colors.white,
-                                                        ));
-                                                var status = await Permission
-                                                    .storage.status;
-                                                if (!status.isGranted) {
-                                                  await Permission.storage
-                                                      .request();
-                                                }
-                                                final attachmentName =
-                                                    changesAttachments.path!
-                                                        .split('/')
-                                                        .last;
-                                                Directory appDocDir;
-                                                if (Platform.isAndroid) {
-                                                  appDocDir = Directory(
-                                                      "/storage/emulated/0/Download");
-                                                } else {
-                                                  appDocDir =
-                                                      await getApplicationDocumentsDirectory();
-                                                }
-                                                final savePath =
-                                                    '${appDocDir.path}/$attachmentName';
-                                                await dio.download(
-                                                  changesAttachments.path!,
-                                                  savePath,
+                                              if (changesAttachments.type ==
+                                                  TaskFileType.image) {
+                                                Get.to(
+                                                  () => ImageViewer(
+                                                      imageUrl:
+                                                          changesAttachments
+                                                              .path!),
+                                                  transition: Transition.zoom,
                                                 );
-                                                Get.back();
-                                                showGenericDialog(
-                                                  iconPath:
-                                                      'assets/lotties/success_animation.json',
-                                                  title: 'Downloaded',
-                                                  content:
-                                                      'File has been downloaded to your device',
-                                                  buttons: {'OK': null},
+                                              } else if (changesAttachments
+                                                      .type ==
+                                                  TaskFileType.video) {
+                                                Get.to(
+                                                  () => TaskVideoPlayer(
+                                                      videoUrl:
+                                                          changesAttachments
+                                                              .path!),
+                                                  transition: Transition.zoom,
                                                 );
-                                              } catch (_) {
-                                                showGenericDialog(
-                                                  iconPath:
-                                                      'assets/lotties/server_error_animation.json',
-                                                  title: 'Something went wrong',
-                                                  content:
-                                                      'Something went wrong while downloading the file',
-                                                  buttons: {'Dismiss': null},
-                                                );
+                                              } else {
+                                                downloadFile(
+                                                    fileUrl: changesAttachments
+                                                        .path!);
                                               }
                                             },
                                             child: Container(
                                               width: 120.w,
-                                              height: 125.w,
                                               padding: EdgeInsets.symmetric(
-                                                horizontal: 12.w,
+                                                horizontal: 8.w,
+                                                vertical: 4.w,
                                               ),
                                               decoration: BoxDecoration(
                                                 color: Colors.blueGrey
@@ -223,7 +196,7 @@ Widget taskUpdateSection({
                                                     BorderRadius.circular(12),
                                               ),
                                               child: changesAttachments.type ==
-                                                      'image'
+                                                      TaskFileType.image
                                                   ? AspectRatio(
                                                       aspectRatio: 16 / 9,
                                                       child: CachedNetworkImage(
@@ -238,9 +211,15 @@ Widget taskUpdateSection({
                                                               .center,
                                                       children: [
                                                         Image.asset(
-                                                          'assets/icons/file_icon.png',
-                                                          height: 65.w,
+                                                          changesAttachments
+                                                                      .type ==
+                                                                  TaskFileType
+                                                                      .video
+                                                              ? 'assets/icons/video_icon.png'
+                                                              : 'assets/icons/file_icon.png',
+                                                          height: 60.w,
                                                         ),
+                                                        SizedBox(height: 6.w),
                                                         Text(
                                                           changesAttachments
                                                               .path!

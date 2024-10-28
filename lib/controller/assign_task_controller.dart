@@ -53,7 +53,6 @@ class AssignTaskController extends GetxController {
   RxString voiceRecordUrlObs = ''.obs;
   RxInt voiceRecordPositionObs = 0.obs;
 
-  final attachmentsFileListObs = RxList<File>();
   final attachmentsListObs = RxList<Attachment>();
 
   final RxBool showAssignToEmptyErrorTextObs = false.obs;
@@ -177,7 +176,6 @@ class AssignTaskController extends GetxController {
         attachmentsListObs
             .add(Attachment()); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
-        attachmentsFileListObs.add(file);
         final url = await tasksRepository.uploadAttachment(file: file);
         attachmentsListObs
             .removeLast(); //The one used for the loader is removed
@@ -185,13 +183,13 @@ class AssignTaskController extends GetxController {
         final fileType = fileExtension == 'mp4' ||
                 fileExtension == 'mkv' ||
                 fileExtension == 'hevc'
-            ? 'video'
+            ? TaskFileType.video
             : fileExtension == 'jpg' ||
                     fileExtension == 'jpeg' ||
                     fileExtension == 'png' ||
                     fileExtension == 'heif'
-                ? 'image'
-                : 'application';
+                ? TaskFileType.image
+                : TaskFileType.others;
         attachmentsListObs.add(
           Attachment(
             path: url,
@@ -309,7 +307,7 @@ class AssignTaskController extends GetxController {
         taskAttachments.add(
           Attachment(
             path: voiceRecordUrlObs.value,
-            type: 'audio',
+            type: TaskFileType.audio,
           ),
         );
       }
@@ -401,7 +399,7 @@ class AssignTaskController extends GetxController {
         taskAttachments.add(
           Attachment(
             path: voiceRecordUrlObs.value,
-            type: 'audio',
+            type: TaskFileType.audio,
           ),
         );
       }

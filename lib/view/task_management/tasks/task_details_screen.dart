@@ -1,28 +1,25 @@
-import 'dart:developer';
-import 'dart:io';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
-import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
+import 'package:turningpoint_tms/utils/download_file.dart';
+import 'package:turningpoint_tms/utils/widgets/image_viewer.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
+import 'package:turningpoint_tms/utils/widgets/task_video_player.dart';
 import 'package:turningpoint_tms/view/task_management/assign_task/assign_task_screen.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_add_personal_reminder_dialog.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/segments/card_action_button.dart';
@@ -51,6 +48,7 @@ class TaskDetailsScreen extends StatefulWidget {
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final tasksController = Get.put(TasksController());
   final assignTaskController = AssignTaskController();
+
   bool isTaskCompleted = false;
   String creationDateString = '';
   String audioUrl = '';
@@ -90,13 +88,13 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     if (taskModel.attachments != null) {
       audioUrl = taskModel.attachments!
           .firstWhere(
-            (item) => item.type == 'audio',
+            (item) => item.type == TaskFileType.audio,
             orElse: () => Attachment(path: '', type: ''),
           )
           .path!;
       attachments = taskModel.attachments!
           .where(
-            (item) => item.type != 'audio',
+            (item) => item.type != TaskFileType.audio,
           )
           .toList();
     }

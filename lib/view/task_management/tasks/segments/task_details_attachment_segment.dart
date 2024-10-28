@@ -98,48 +98,18 @@ Widget taskDetailsAttachmentSegment({
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () async {
-                        try {
-                          showDialog(
-                              context: context,
-                              builder: (context) => const SpinKitWave(
-                                    size: 20,
-                                    color: Colors.white,
-                                  ));
-                          var status = await Permission.storage.status;
-                          if (!status.isGranted) {
-                            await Permission.storage.request();
-                          }
-                          final attachmentName = attachmentUrl.split('/').last;
-                          Directory appDocDir;
-                          if (Platform.isAndroid) {
-                            appDocDir =
-                                Directory("/storage/emulated/0/Download");
-                            log('${await getApplicationDocumentsDirectory()}');
-                          } else {
-                            appDocDir =
-                                await getApplicationDocumentsDirectory();
-                          }
-                          final savePath = '${appDocDir.path}/$attachmentName';
-                          await dio.download(
-                            attachmentUrl,
-                            savePath,
+                        if (attachmentType == TaskFileType.image) {
+                          Get.to(
+                            () => ImageViewer(imageUrl: attachmentUrl),
+                            transition: Transition.zoom,
                           );
-                          Get.back();
-                          showGenericDialog(
-                            iconPath: 'assets/lotties/success_animation.json',
-                            title: 'Downloaded',
-                            content: 'File has been downloaded to your device',
-                            buttons: {'OK': null},
+                        } else if (attachmentType == TaskFileType.video) {
+                          Get.to(
+                            () => TaskVideoPlayer(videoUrl: attachmentUrl),
+                            transition: Transition.zoom,
                           );
-                        } catch (_) {
-                          showGenericDialog(
-                            iconPath:
-                                'assets/lotties/server_error_animation.json',
-                            title: 'Something went wrong',
-                            content:
-                                'Something went wrong while downloading the file',
-                            buttons: {'Dismiss': null},
-                          );
+                        } else {
+                          await downloadFile(fileUrl: attachmentUrl);
                         }
                       },
                       child: Container(
@@ -153,7 +123,7 @@ Widget taskDetailsAttachmentSegment({
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
-                          child: attachmentType == 'image'
+                          child: attachmentType == TaskFileType.image
                               ? AspectRatio(
                                   aspectRatio: 4 / 4,
                                   child: Image.network(

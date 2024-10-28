@@ -204,7 +204,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
-                                    Icons.picture_as_pdf,
+                                    Icons.attachment,
                                     size: 24.w,
                                   ),
                                 ),

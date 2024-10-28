@@ -321,28 +321,16 @@ Widget attachmentSegment({
                                   size: 25.w,
                                   color: AppColors.themeGreen,
                                 )
-                              : assignTaskController
-                                      .attachmentsFileListObs.isNotEmpty
-                                  ? attachmentsList[index].type == 'image'
+                              : attachmentsList.isNotEmpty
+                                  ? assignTaskController
+                                              .attachmentsListObs[index].type ==
+                                          TaskFileType.image
                                       ? AspectRatio(
                                           aspectRatio: 4 / 4,
-                                          child: Image.file(
-                                            assignTaskController
-                                                .attachmentsFileListObs[index],
+                                          child: Image.network(
+                                            attachmentsList[index].path!,
                                           ),
                                         )
-                                      // : attachmentsList[index].type == 'pdf'
-                                      //     ? PdfThumbnail.fromFile(
-                                      //         assignTaskController
-                                      //             .attachmentsFileListObs[index]
-                                      //             .path,
-                                      //         currentPage: 1,
-                                      //         height: 90.w,
-                                      //         loadingIndicator: SpinKitWave(
-                                      //           size: 20.w,
-                                      //           color: AppColors.themeGreen,
-                                      //         ),
-                                      //       )
                                       : Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -352,9 +340,8 @@ Widget attachmentSegment({
                                               width: 52.w,
                                             ),
                                             Text(
-                                              assignTaskController
-                                                  .attachmentsFileListObs[index]
-                                                  .path
+                                              attachmentsList[index]
+                                                  .path!
                                                   .split('/')
                                                   .last,
                                               style: TextStyle(
@@ -409,8 +396,6 @@ Widget attachmentSegment({
                                   assignTaskController.attachmentsListObs
                                       .removeAt(index);
                                   try {
-                                    assignTaskController.attachmentsFileListObs
-                                        .removeAt(index);
                                     appController.isLoadingObs.value = false;
                                     Get.back();
                                     showGenericDialog(

@@ -24,6 +24,13 @@ class StatusColor {
   static const overdue = Colors.red;
 }
 
+class TaskFileType {
+  static const image = 'image';
+  static const video = 'video';
+  static const audio = 'audio';
+  static const others = 'application';
+}
+
 final statusAndColorMap = {
   Status.open: StatusColor.open,
   Status.inProgress: StatusColor.inProgress,

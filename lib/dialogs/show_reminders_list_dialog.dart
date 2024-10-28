@@ -152,19 +152,22 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
                                     ? const SizedBox()
                                     : _buildEmptyState(),
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 8.w,
-                            ),
-                            child: customButton(
-                              buttonTitle: 'New Reminder',
-                              onTap: () {
-                                Get.back();
-                                showAddPersonalReminderDialog(taskId: null);
-                              },
-                              fontSize: 14.sp,
-                            ),
-                          )
+                          Get.currentRoute == '/TaskDetailsScreen'
+                              ? const SizedBox()
+                              : Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 8.w,
+                                  ),
+                                  child: customButton(
+                                    buttonTitle: 'New Reminder',
+                                    onTap: () {
+                                      Get.back();
+                                      showAddPersonalReminderDialog(
+                                          taskId: null);
+                                    },
+                                    fontSize: 14.sp,
+                                  ),
+                                )
                         ],
                       ),
                     ),

@@ -59,6 +59,7 @@ AppBar myAppBar({
                   color: foregroundColor,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
+                  height: 1,
                 ),
               ),
             )),
