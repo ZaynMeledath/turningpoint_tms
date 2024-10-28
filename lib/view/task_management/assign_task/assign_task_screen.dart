@@ -171,7 +171,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         extendBody: true,
         appBar: myAppBar(
           title: '',
-          reminderListIcon: false,
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

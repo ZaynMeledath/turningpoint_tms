@@ -41,7 +41,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: myAppBar(
         title: 'Profile',
-        reminderListIcon: false,
       ),
       body: Center(
         child: Padding(

@@ -12,6 +12,7 @@ import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/service/api/api_exceptions.dart';
@@ -84,6 +85,18 @@ class _MyTeamScreenState extends State<MyTeamScreen>
           title: 'My Team',
           implyLeading: false,
           profileAvatar: true,
+          trailingIcons: [
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                showRemindersListDialog();
+              },
+              icon: Icon(
+                Icons.alarm,
+                size: 24.w,
+              ),
+            ),
+          ],
         ),
         body: Obx(
           () {

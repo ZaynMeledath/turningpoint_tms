@@ -70,7 +70,8 @@ Widget staffWiseTabBarView({
                                       '${performanceReportModel.userName!.split(' ').first}\'s Tasks',
                                   tasksListCategory:
                                       TasksListCategory.staffWise,
-                                  email: performanceReportModel.emailId,
+                                  delegatedUserEmail:
+                                      performanceReportModel.emailId,
                                 ),
                                 transition: Transition.zoom,
                               );

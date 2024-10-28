@@ -32,7 +32,7 @@ Widget teamTabBarView({
                   title:
                       '${myTeamList[index].userName!.split(' ').first}\'s Tasks',
                   tasksListCategory: TasksListCategory.staffWise,
-                  email: myTeamList[index].emailId,
+                  delegatedUserEmail: myTeamList[index].emailId,
                 ),
                 transition: Transition.zoom,
               );

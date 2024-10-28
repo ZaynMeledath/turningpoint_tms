@@ -88,6 +88,7 @@ class TasksController extends GetxController {
   final taskUpdateAttachmentsFileList = <File>[].obs;
   final taskUpdateAttachmentsMapList = RxList<Map<String, String>>();
 
+  final allPersonalRemindersListObs = Rxn<List<PersonalReminderModel>>();
   final personalRemindersListObs = Rxn<List<PersonalReminderModel>>();
 
 //====================Get All Tasks====================//
@@ -239,7 +240,7 @@ class TasksController extends GetxController {
 //====================Get Personal Reminders====================//
   Future<void> getPersonalRemindersList() async {
     try {
-      personalRemindersListObs.value =
+      allPersonalRemindersListObs.value =
           await tasksRepository.getPersonalRemindersList();
     } catch (_) {
       rethrow;

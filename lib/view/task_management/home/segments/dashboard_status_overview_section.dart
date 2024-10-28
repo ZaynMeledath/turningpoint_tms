@@ -10,26 +10,27 @@ Widget dashboardStatusOverviewSection({
   int completedTasksCount;
   int onTimeTasksCount;
   int delayedTasksCount;
+  final user = getUserModelFromHive();
   return Obx(
     () {
       final overdueMyTasksCount =
           tasksController.overdueTaskList.value?.length ?? 0;
-      final overdueDelegatedTasksCount =
-          tasksController.overdueDelegatedTaskList.value?.length ?? 0;
+      // final overdueDelegatedTasksCount =
+      //     tasksController.overdueDelegatedTaskList.value?.length ?? 0;
 
       final openMyTasksCount = tasksController.openTaskList.value?.length ?? 0;
-      final openDelegatedTasksCount =
-          tasksController.openDelegatedTaskList.value?.length ?? 0;
+      // final openDelegatedTasksCount =
+      //     tasksController.openDelegatedTaskList.value?.length ?? 0;
 
       final inProgressMyTasksCount =
           tasksController.inProgressTaskList.value?.length ?? 0;
-      final inProgressDelegatedTasksCount =
-          tasksController.inProgressDelegatedTaskList.value?.length ?? 0;
+      // final inProgressDelegatedTasksCount =
+      //     tasksController.inProgressDelegatedTaskList.value?.length ?? 0;
 
       final completedMyTasksCount =
           tasksController.completedTaskList.value?.length ?? 0;
-      final completedDelegatedTasksCount =
-          tasksController.completedDelegatedTaskList.value?.length ?? 0;
+      // final completedDelegatedTasksCount =
+      //     tasksController.completedDelegatedTaskList.value?.length ?? 0;
 
       if (!isAdminOrLeader) {
         overdueTasksCount = overdueMyTasksCount;
@@ -48,14 +49,57 @@ Widget dashboardStatusOverviewSection({
         delayedTasksCount = tasksController.completedDelayedMyTasksList.length;
       } else if (tasksController.dashboardTabIndexObs.value == 3) {
         //When Delegated Report tab is selected
-        overdueTasksCount = overdueDelegatedTasksCount;
-        openTasksCount = openDelegatedTasksCount;
-        inProgressTasksCount = inProgressDelegatedTasksCount;
-        completedTasksCount = completedDelegatedTasksCount;
-        onTimeTasksCount =
-            tasksController.completedOnTimeDelegatedTasksList.length;
-        delayedTasksCount =
-            tasksController.completedDelayedDelegatedTasksList.length;
+        overdueTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.isDelayed == true &&
+                      taskModel.status != Status.completed,
+                )
+                .length ??
+            0;
+        openTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.status == Status.open,
+                )
+                .length ??
+            0;
+        inProgressTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.status == Status.inProgress,
+                )
+                .length ??
+            0;
+        completedTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.status == Status.completed,
+                )
+                .length ??
+            0;
+        onTimeTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.status == Status.completed &&
+                      taskModel.isDelayed != true,
+                )
+                .length ??
+            0;
+        delayedTasksCount = tasksController.allTasksListObs.value
+                ?.where(
+                  (taskModel) =>
+                      taskModel.createdBy!.emailId == user!.emailId &&
+                      taskModel.status == Status.completed &&
+                      taskModel.isDelayed == true,
+                )
+                .length ??
+            0;
       } else {
         overdueTasksCount = tasksController.allTasksListObs.value
                 ?.where((taskModel) =>
@@ -98,8 +142,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'Overdue Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'Overdue Tasks - $overdueTasksCount',
                         avoidTabBar: true,
                         tasksListCategory: TasksListCategory.overdue,
                       ));
@@ -116,8 +160,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'Open Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'Open Tasks - $openTasksCount',
                         tasksListCategory: TasksListCategory.open,
                         avoidTabBar: true,
                       ));
@@ -134,8 +178,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'In Progress Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'In Progress - $inProgressTasksCount',
                         tasksListCategory: TasksListCategory.inProgress,
                         avoidTabBar: true,
                       ));
@@ -162,8 +206,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'Completed Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'Completed Tasks - $completedTasksCount',
                         tasksListCategory: TasksListCategory.completed,
                         avoidTabBar: true,
                       ));
@@ -180,8 +224,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'On Time Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'On Time Tasks - $onTimeTasksCount',
                         tasksListCategory: TasksListCategory.onTime,
                         avoidTabBar: true,
                       ));
@@ -198,8 +242,8 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => const TasksScreen(
-                        title: 'Delayed Tasks',
+                  Get.to(() => TasksScreen(
+                        title: 'Delayed Tasks - $delayedTasksCount',
                         tasksListCategory: TasksListCategory.delayed,
                         avoidTabBar: true,
                       ));

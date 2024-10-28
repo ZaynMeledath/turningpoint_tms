@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';
@@ -16,14 +18,14 @@ import 'package:turningpoint_tms/view/task_management/tasks/segments/tasks_tab_b
 class TasksScreen extends StatefulWidget {
   final String title;
   final TasksListCategory tasksListCategory;
-  final String? email;
+  final String? delegatedUserEmail;
   final String? category;
   final bool? avoidTabBar;
 
   const TasksScreen({
     required this.title,
     required this.tasksListCategory,
-    this.email,
+    this.delegatedUserEmail,
     this.category,
     this.avoidTabBar,
     super.key,
@@ -115,56 +117,212 @@ class _TasksScreenState extends State<TasksScreen>
   }
 
   void tasksListFilter() {
+    final user = getUserModelFromHive();
     switch (widget.tasksListCategory) {
+//====================Overdue====================//
       case TasksListCategory.overdue:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) =>
-                    taskModel.isDelayed == true &&
-                    taskModel.status != Status.completed)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.isDelayed == true &&
+                taskModel.status != Status.completed;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.isDelayed == true &&
+                  taskModel.status != Status.completed;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.isDelayed == true &&
+                  taskModel.status != Status.completed;
+
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.isDelayed == true &&
+                  taskModel.status != Status.completed;
+            }
+          }).toList());
+        }
         break;
+
+//====================Open====================//
       case TasksListCategory.open:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) => taskModel.status == Status.open)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.status == Status.open;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.status == Status.open;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.status == Status.open;
+
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.status == Status.open;
+            }
+          }).toList());
+        }
         break;
+
+//====================In Progress====================//
       case TasksListCategory.inProgress:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) => taskModel.status == Status.inProgress)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.status == Status.inProgress;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.status == Status.inProgress;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.status == Status.inProgress;
+
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.status == Status.inProgress;
+            }
+          }).toList());
+        }
         break;
+
+//====================Completed====================//
       case TasksListCategory.completed:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) => taskModel.status == Status.completed)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.status == Status.completed;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.status == Status.completed;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.status == Status.completed;
+
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.status == Status.completed;
+            }
+          }).toList());
+        }
         break;
+
+//====================On Time====================//
       case TasksListCategory.onTime:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) =>
-                    taskModel.status == Status.completed &&
-                    taskModel.isDelayed != true)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.status == Status.completed &&
+                taskModel.isDelayed != true;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.status == Status.completed &&
+                  taskModel.isDelayed != true;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.status == Status.completed &&
+                  taskModel.status == Status.completed &&
+                  taskModel.isDelayed != true;
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.status == Status.completed &&
+                  taskModel.isDelayed != true;
+            }
+          }).toList());
+        }
+
         break;
+
+//====================Delayed====================//
       case TasksListCategory.delayed:
-        tasksController.addToDashboardTasksList(
-            tasksList: tasksController.allTasksListObs.value!
-                .where((taskModel) =>
-                    taskModel.status == Status.completed &&
-                    taskModel.isDelayed == true)
-                .toList());
+        if (user!.role == Role.user) {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.myTasksListObs.value!.where((taskModel) {
+            return taskModel.status == Status.completed &&
+                taskModel.isDelayed == true;
+          }).toList());
+        } else {
+          tasksController.addToDashboardTasksList(
+              tasksList:
+                  tasksController.allTasksListObs.value!.where((taskModel) {
+            //--------------------My Report Tab Selected--------------------//
+            if (tasksController.dashboardTabIndexObs.value == 2) {
+              return taskModel.assignedTo!.first.emailId == user.emailId &&
+                  taskModel.status == Status.completed &&
+                  taskModel.isDelayed == true;
+
+              //--------------------Delegated Report Tab Selected--------------------//
+            } else if (tasksController.dashboardTabIndexObs.value == 3) {
+              return taskModel.createdBy!.emailId == user.emailId &&
+                  taskModel.status == Status.completed &&
+                  taskModel.status == Status.completed &&
+                  taskModel.isDelayed == true;
+              //--------------------Staff Wise or Category Wise Selected--------------------//
+            } else {
+              return taskModel.status == Status.completed &&
+                  taskModel.isDelayed == true;
+            }
+          }).toList());
+        }
         break;
+
+//====================Staff Wise====================//
       case TasksListCategory.staffWise:
         tasksController.addToDashboardTasksList(
             tasksList:
                 tasksController.allTasksListObs.value!.where((taskModel) {
-          return taskModel.assignedTo?.first.emailId.toString() == widget.email;
+          return taskModel.assignedTo?.first.emailId.toString() ==
+              widget.delegatedUserEmail;
         }).toList());
         break;
+
+//====================Category Wise====================//
       case TasksListCategory.categoryWise:
         tasksController.addToDashboardTasksList(
             tasksList: tasksController.allTasksListObs.value!
@@ -173,16 +331,21 @@ class _TasksScreenState extends State<TasksScreen>
                     widget.category!.toLowerCase())
                 .toList());
         break;
+
+//====================My Report====================//
       case TasksListCategory.myReport:
         tasksController.addToDashboardTasksList(
             tasksList: tasksController.myTasksListObs.value!
                 .where((taskModel) => taskModel.category == widget.category)
                 .toList());
         break;
+
+//====================Delegated Report====================//
       case TasksListCategory.delegatedReport:
         tasksController.addToDashboardTasksList(
             tasksList: tasksController.delegatedTasksListObs.value!
-                .where((item) => item.assignedTo?.first.emailId == widget.email)
+                .where((item) =>
+                    item.assignedTo?.first.emailId == widget.delegatedUserEmail)
                 .toList());
         break;
     }
@@ -215,10 +378,21 @@ class _TasksScreenState extends State<TasksScreen>
           }
           return Scaffold(
             appBar: myAppBar(
-              title:
-                  '${widget.title} - ${tasksController.dashboardTasksListObs.length}',
+              title: widget.title,
               implyLeading: true,
               profileAvatar: true,
+              trailingIcons: [
+                IconButton(
+                  visualDensity: VisualDensity.compact,
+                  onPressed: () {
+                    showRemindersListDialog();
+                  },
+                  icon: Icon(
+                    Icons.alarm,
+                    size: 24.w,
+                  ),
+                ),
+              ],
             ),
             body: Column(
               children: [

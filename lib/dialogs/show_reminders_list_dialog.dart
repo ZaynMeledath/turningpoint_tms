@@ -19,12 +19,14 @@ import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_add_personal_reminder_dialog.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/task_details_screen.dart';
 
-Future<Object?> showRemindersListDialog() async {
+Future<Object?> showRemindersListDialog({
+  String? taskId,
+}) async {
   return showGeneralDialog(
     context: Get.context!,
     barrierColor: Colors.transparent,
     transitionDuration: const Duration(milliseconds: 300),
-    pageBuilder: (context, _, __) => const RemindersListDialog(),
+    pageBuilder: (context, _, __) => RemindersListDialog(taskId: taskId),
     transitionBuilder: (context, animation, _, child) {
       final curve = Curves.easeInOut.transform(animation.value);
       return Transform.scale(
@@ -37,7 +39,11 @@ Future<Object?> showRemindersListDialog() async {
 }
 
 class RemindersListDialog extends StatefulWidget {
-  const RemindersListDialog({super.key});
+  final String? taskId;
+  const RemindersListDialog({
+    this.taskId,
+    super.key,
+  });
 
   @override
   State<RemindersListDialog> createState() => _RemindersListDialogState();
@@ -70,8 +76,16 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
     super.initState();
     tasksController.getPersonalRemindersList();
     _updateContainerHeight();
-    ever(tasksController.personalRemindersListObs,
-        (_) => _updateContainerHeight());
+    ever(tasksController.allPersonalRemindersListObs,
+        (allPersonalRemindersList) {
+      tasksController.personalRemindersListObs.value = widget.taskId != null
+          ? allPersonalRemindersList!
+              .where((personalReminder) =>
+                  personalReminder.task?.id == widget.taskId)
+              .toList()
+          : allPersonalRemindersList;
+      _updateContainerHeight();
+    });
   }
 
   void _updateContainerHeight() {

@@ -10,6 +10,7 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/model/all_categories_performance_report_model.dart';
 import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
@@ -106,6 +107,18 @@ class _TasksDashboardState extends State<TasksDashboard>
           title: 'Dashboard',
           implyLeading: false,
           profileAvatar: true,
+          trailingIcons: [
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                showRemindersListDialog();
+              },
+              icon: Icon(
+                Icons.alarm,
+                size: 24.w,
+              ),
+            ),
+          ],
         ),
         body: Column(
           children: [

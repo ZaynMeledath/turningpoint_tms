@@ -70,7 +70,8 @@ Widget delegatedReportTabBarView({
                                   title: '$name\'s Tasks',
                                   tasksListCategory:
                                       TasksListCategory.delegatedReport,
-                                  email: performanceReportModel.emailId,
+                                  delegatedUserEmail:
+                                      performanceReportModel.emailId,
                                 ),
                                 transition: Transition.zoom,
                               );

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
-import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
@@ -16,7 +15,6 @@ AppBar myAppBar({
   List<Widget>? trailingIcons,
   bool profileAvatar = false,
   bool implyLeading = true,
-  bool reminderListIcon = true,
 }) {
   final UserModel? userModel = getUserModelFromHive();
   return AppBar(
@@ -53,7 +51,7 @@ AppBar myAppBar({
             tag: 'title',
             flightShuttleBuilder: flightShuttleBuilder,
             child: SizedBox(
-              width: 198.w,
+              width: 200.w,
               child: Text(
                 title,
                 overflow: TextOverflow.ellipsis,
@@ -63,46 +61,8 @@ AppBar myAppBar({
                   fontWeight: FontWeight.w600,
                 ),
               ),
-            )
-            // .animate().slideX(
-            //       begin: -.5,
-            //       duration: const Duration(milliseconds: 800),
-            //       curve: Curves.elasticOut,
-            //     ),
-            ),
-        reminderListIcon
-            ? Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      right: profileAvatar == true ? 10.w : 6.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      // IconButton(
-                      //   visualDensity: VisualDensity.compact,
-                      //   onPressed: () {
-                      //     // showRemindersListDialog();
-                      //   },
-                      //   icon: Icon(
-                      //     Icons.notifications,
-                      //     size: 24.w,
-                      //   ),
-                      // ),
-                      IconButton(
-                        visualDensity: VisualDensity.compact,
-                        onPressed: () {
-                          showRemindersListDialog();
-                        },
-                        icon: Icon(
-                          Icons.alarm,
-                          size: 24.w,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : const SizedBox(),
+            )),
+        const Expanded(child: SizedBox()),
         trailingIcons != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.end,

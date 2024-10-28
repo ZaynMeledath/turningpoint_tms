@@ -5,6 +5,7 @@ import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/segments/tasks_filter_section.dart';
@@ -99,6 +100,18 @@ class _MyTasksScreenState extends State<MyTasksScreen>
           title: 'My Tasks',
           implyLeading: false,
           profileAvatar: true,
+          trailingIcons: [
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                showRemindersListDialog();
+              },
+              icon: Icon(
+                Icons.alarm,
+                size: 24.w,
+              ),
+            ),
+          ],
         ),
         body: Obx(
           () {
