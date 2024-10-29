@@ -22,6 +22,7 @@ class TasksController extends GetxController {
   final tasksRepository = TasksRepository();
 
   final tasksException = Rxn<Exception>();
+  final categoriesException = Rxn<Exception>();
 
   final appController = Get.put(AppController());
 
@@ -216,6 +217,7 @@ class TasksController extends GetxController {
   Future<void> getCategories() async {
     try {
       final temp = await tasksRepository.getCategories();
+      categoriesException.value = null;
       if (temp != null) {
         categoriesList.clear();
         for (var item in temp) {
@@ -223,6 +225,7 @@ class TasksController extends GetxController {
         }
       }
     } catch (e) {
+      categoriesException.value = e as Exception;
       rethrow;
     }
   }

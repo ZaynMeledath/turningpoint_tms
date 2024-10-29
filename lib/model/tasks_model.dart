@@ -97,7 +97,7 @@ class TaskModel {
       });
     }
 
-    repeat = json['repeat'] != null ? Repeat.fromJson(json) : null;
+    repeat = json['repeat'] != null ? Repeat.fromJson(json['repeat']) : null;
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
     createdAt = json['createdAt'];
@@ -348,11 +348,15 @@ class Repeat {
   List<int>? days;
   String? startDate;
 
-  Repeat({this.frequency, this.days, this.startDate});
+  Repeat({
+    this.frequency,
+    this.days,
+    this.startDate,
+  });
 
   Repeat.fromJson(Map<String, dynamic> json) {
     frequency = json['frequency'];
-    days = json['days'];
+    days = json['days'].cast<int>();
     startDate = json['startDate'];
   }
 

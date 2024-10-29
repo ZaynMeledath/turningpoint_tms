@@ -34,7 +34,8 @@ Widget taskCard({
       break;
   }
 
-  final String dueDateString = taskModel.dueDate!.dateFormat();
+  final String dueDateString =
+      taskModel.dueDate != null ? taskModel.dueDate!.dateFormat() : '-';
   final user = getUserModelFromHive();
 
   return Hero(

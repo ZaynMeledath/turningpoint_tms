@@ -21,7 +21,8 @@ Widget titleDescriptionContainer({
   String completionDateString = '';
 
   if (taskModel.status == Status.completed) {
-    completionDateString = taskModel.updatedAt!.dateFormat();
+    completionDateString =
+        taskModel.updatedAt != null ? taskModel.updatedAt!.dateFormat() : '-';
   }
 
   return Hero(

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
@@ -105,13 +106,15 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   }
 
   void getData() async {
-    await userController.getAssignTaskUsers();
+    unawaited(userController.getAssignTaskUsers());
+    unawaited(tasksController.getCategories());
   }
 
   void assignPreviousValues() {
-    titleController.text = widget.taskModel!.title ?? '';
-    descriptionController.text = widget.taskModel!.description ?? '';
-    for (AssignedTo assignedTo in widget.taskModel!.assignedTo!) {
+    final taskModel = widget.taskModel!;
+    titleController.text = taskModel.title ?? '';
+    descriptionController.text = taskModel.description ?? '';
+    for (AssignedTo assignedTo in taskModel.assignedTo!) {
       assignTaskController.assignToMap.addAll({
         assignedTo.emailId!: AssignedTo(
           name: assignedTo.name,
@@ -120,32 +123,31 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
         ),
       });
     }
-    assignTaskController.selectedCategory.value =
-        widget.taskModel?.category ?? '';
+    assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =
-        widget.taskModel!.priority ?? TaskPriority.low;
-    assignTaskController.taskDate.value =
-        DateTime.parse(widget.taskModel!.dueDate!).toLocal();
+        taskModel.priority ?? TaskPriority.low;
+    assignTaskController.taskDate.value = taskModel.dueDate != null
+        ? DateTime.parse(taskModel.dueDate!).toLocal()
+        : DateTime.now();
     assignTaskController.taskTime.value =
         TimeOfDay.fromDateTime(assignTaskController.taskDate.value);
 
-    assignTaskController.reminderList.value = widget.taskModel!.reminders ?? [];
-    if (widget.taskModel!.attachments != null) {
-      assignTaskController.voiceRecordUrlObs.value =
-          widget.taskModel!.attachments!
-              .firstWhere(
-                (attachment) => attachment.type == 'audio',
-                orElse: () => Attachment(path: '', type: ''),
-              )
-              .path!;
+    assignTaskController.reminderList.value = taskModel.reminders ?? [];
+    if (taskModel.attachments != null) {
+      assignTaskController.voiceRecordUrlObs.value = taskModel.attachments!
+          .firstWhere(
+            (attachment) => attachment.type == 'audio',
+            orElse: () => Attachment(path: '', type: ''),
+          )
+          .path!;
 
       assignTaskController.attachmentsListObs.value = widget
           .taskModel!.attachments!
           .where((attachment) => attachment.type != 'audio')
           .toList();
     }
-    if (widget.taskModel!.repeat != null) {
-      final repeat = widget.taskModel!.repeat!;
+    if (taskModel.repeat != null) {
+      final repeat = taskModel.repeat!;
       assignTaskController.shouldRepeatTask.value = true;
       assignTaskController.taskRepeatFrequency.value =
           stringToRepeatFrequencyEnum(repeatFrequency: repeat.frequency);
@@ -155,12 +157,15 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
             final key = assignTaskController.daysMap.keys.elementAt(day);
             assignTaskController.daysMap[key] = true;
           }
+          assignTaskController.scaleWeekly.value = true;
+
           break;
 
         case RepeatFrequency.monthly:
           for (int day in repeat.days ?? []) {
             assignTaskController.datesMap[day] = true;
           }
+          assignTaskController.scaleMonthly.value = true;
           break;
 
         default:

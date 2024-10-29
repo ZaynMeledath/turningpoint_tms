@@ -116,8 +116,8 @@ Widget repeatFrequencySection({
                                     .showRepeatFrequencyErrorTextObs
                                     .value = false;
                               },
-                              onChanged:
-                                  assignTaskController.repeatFrequencyOnChanged,
+                              onChanged: 
+                                  assignTaskController.repeatFrequencyOnChanged
                             ),
                           ),
                         ),
