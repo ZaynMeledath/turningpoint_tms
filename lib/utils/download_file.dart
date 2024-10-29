@@ -16,19 +16,25 @@ Future<String?> downloadFile({required String fileUrl}) async {
       size: 20,
       color: Colors.white,
     ));
-    var status = await Permission.mediaLibrary.status;
+    var status = await Permission.storage.status;
     if (!status.isGranted) {
-      status = await Permission.mediaLibrary.request();
+      status = await Permission.storage.request();
     }
-    if (status.isGranted) {
-      final attachmentName = fileUrl.split('/').last;
-      Directory appDocDir;
-      if (Platform.isAndroid) {
-        appDocDir = Directory("/storage/emulated/0/Download");
-      } else {
-        appDocDir = await getApplicationDocumentsDirectory();
-      }
-      final savePath = '${appDocDir.path}/$attachmentName';
+    final attachmentName = fileUrl.split('/').last;
+    Directory appDocDir;
+    if (Platform.isAndroid) {
+      appDocDir = Directory("/storage/emulated/0/Download");
+    } else {
+      appDocDir = await getApplicationDocumentsDirectory();
+    }
+    final savePath = '${appDocDir.path}/$attachmentName';
+
+    final file = File(savePath);
+
+    if (file.existsSync()) {
+      Get.back();
+      openFile(filePath: savePath);
+    } else {
       await dio.download(
         fileUrl,
         savePath,
@@ -46,17 +52,8 @@ Future<String?> downloadFile({required String fileUrl}) async {
           }
         },
       );
-      return savePath;
-    } else {
-      Get.back();
-      showGenericDialog(
-        iconPath: 'assets/lotties/server_error_animation.json',
-        title: 'Permission Denied',
-        content: 'Need Storage permission to download the file',
-        buttons: {'Dismiss': null},
-      );
-      return null;
     }
+    return savePath;
   } catch (_) {
     Get.back();
     showGenericDialog(
