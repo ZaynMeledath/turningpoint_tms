@@ -41,6 +41,30 @@ Widget swipeToAdd({
             return 0;
           }
 
+          if (assignTaskController.shouldRepeatTask.value == true) {
+            if (assignTaskController.taskRepeatFrequency.value ==
+                RepeatFrequency.weekly) {
+              final selectedList = assignTaskController.daysMap.values
+                  .where((value) => value == true);
+
+              if (selectedList.isEmpty) {
+                assignTaskController.showWeeklyFrequencyErrorTextObs.value =
+                    true;
+                return 0;
+              }
+            } else if (assignTaskController.taskRepeatFrequency.value ==
+                RepeatFrequency.monthly) {
+              final selectedList = assignTaskController.datesMap.values
+                  .where((value) => value == true);
+
+              if (selectedList.isEmpty) {
+                assignTaskController.showMonthlyFrequencyErrorTextObs.value =
+                    true;
+                return 0;
+              }
+            }
+          }
+
           try {
             if (isUpdating) {
               taskModel!.title = titleController.text.trim();

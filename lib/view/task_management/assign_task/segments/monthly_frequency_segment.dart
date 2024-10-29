@@ -19,6 +19,11 @@ Widget monthlyFrequencySegment({
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: AppColors.textFieldColor,
+          border: assignTaskController.showMonthlyFrequencyErrorTextObs.value
+              ? Border.all(
+                  color: Colors.red,
+                )
+              : null,
         ),
         child: Center(
           child: Column(
@@ -39,8 +44,7 @@ Widget monthlyFrequencySegment({
                     for (int j = i * rowElementsCount + 1;
                         j <= (i + 1) * rowElementsCount && j <= totalDays;
                         j++)
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 3.5.w),
+                      Expanded(
                         child: Column(
                           children: [
                             Checkbox(

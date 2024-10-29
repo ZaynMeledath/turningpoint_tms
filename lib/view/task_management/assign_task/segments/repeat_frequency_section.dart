@@ -67,8 +67,12 @@ Widget repeatFrequencySection({
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
+                                  borderSide: BorderSide(
+                                    color: assignTaskController
+                                            .showRepeatFrequencyErrorTextObs
+                                            .value
+                                        ? Colors.red
+                                        : Colors.transparent,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(

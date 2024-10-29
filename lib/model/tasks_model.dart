@@ -97,7 +97,7 @@ class TaskModel {
       });
     }
 
-    repeat = Repeat.fromJson(json);
+    repeat = json['repeat'] != null ? Repeat.fromJson(json) : null;
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
     createdAt = json['createdAt'];

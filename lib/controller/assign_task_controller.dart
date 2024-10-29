@@ -59,6 +59,8 @@ class AssignTaskController extends GetxController {
   final RxBool showCategoryEmptyErrorTextObs = false.obs;
   final RxBool showTimeErrorTextObs = false.obs;
   final RxBool showRepeatFrequencyErrorTextObs = false.obs;
+  final RxBool showWeeklyFrequencyErrorTextObs = false.obs;
+  final RxBool showMonthlyFrequencyErrorTextObs = false.obs;
 
   RxMap<String, bool> daysMap = {
     'Sun': false,
@@ -319,7 +321,7 @@ class AssignTaskController extends GetxController {
         assignedTo: null, // will be added after creating taskModel
         priority: taskPriority.value,
         dueDate: shouldRepeatTask.value ? null : dueDateString,
-        repeat: shouldRepeatTask.value
+        repeat: shouldRepeatTask.value && taskRepeatFrequency.value != null
             ? Repeat(
                 startDate:
                     dueDateString, //due date acts as start date when repeat is turned ON
@@ -509,6 +511,22 @@ String? repeatFrequencyEnumToString({
       return 'Weekly';
     case RepeatFrequency.monthly:
       return 'Monthly';
+    default:
+      return null;
+  }
+}
+
+//====================Repeat Frequency Enum to String====================//
+RepeatFrequency? stringToRepeatFrequencyEnum({
+  required String? repeatFrequency,
+}) {
+  switch (repeatFrequency) {
+    case 'Daily':
+      return RepeatFrequency.daily;
+    case 'Weekly':
+      return RepeatFrequency.weekly;
+    case 'Monthly':
+      return RepeatFrequency.monthly;
     default:
       return null;
   }

@@ -16,6 +16,11 @@ Widget weeklyFrequencySegment(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: AppColors.textFieldColor,
+          border: assignTaskController.showWeeklyFrequencyErrorTextObs.value
+              ? Border.all(
+                  color: Colors.red,
+                )
+              : null,
         ),
         child: Center(
           child: Column(

@@ -129,7 +129,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignTaskController.taskTime.value =
         TimeOfDay.fromDateTime(assignTaskController.taskDate.value);
 
-    //### Add Repeat and attachments also ###//
     assignTaskController.reminderList.value = widget.taskModel!.reminders ?? [];
     if (widget.taskModel!.attachments != null) {
       assignTaskController.voiceRecordUrlObs.value =
@@ -144,6 +143,29 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           .taskModel!.attachments!
           .where((attachment) => attachment.type != 'audio')
           .toList();
+    }
+    if (widget.taskModel!.repeat != null) {
+      final repeat = widget.taskModel!.repeat!;
+      assignTaskController.shouldRepeatTask.value = true;
+      assignTaskController.taskRepeatFrequency.value =
+          stringToRepeatFrequencyEnum(repeatFrequency: repeat.frequency);
+      switch (assignTaskController.taskRepeatFrequency.value) {
+        case RepeatFrequency.weekly:
+          for (int day in repeat.days ?? []) {
+            final key = assignTaskController.daysMap.keys.elementAt(day);
+            assignTaskController.daysMap[key] = true;
+          }
+          break;
+
+        case RepeatFrequency.monthly:
+          for (int day in repeat.days ?? []) {
+            assignTaskController.datesMap[day] = true;
+          }
+          break;
+
+        default:
+          break;
+      }
     }
   }
 

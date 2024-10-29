@@ -126,8 +126,8 @@ Widget taskDetailsAttachmentSegment({
                           child: attachmentType == TaskFileType.image
                               ? AspectRatio(
                                   aspectRatio: 4 / 4,
-                                  child: Image.network(
-                                    attachmentUrl,
+                                  child: CachedNetworkImage(
+                                    imageUrl: attachmentUrl,
                                   ),
                                 )
                               : Column(
