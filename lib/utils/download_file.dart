@@ -20,13 +20,10 @@ Future<String?> downloadFile({required String fileUrl}) async {
     if (!status.isGranted) {
       status = await Permission.storage.request();
     }
+
     final attachmentName = fileUrl.split('/').last;
-    Directory appDocDir;
-    if (Platform.isAndroid) {
-      appDocDir = Directory("/storage/emulated/0/Download");
-    } else {
-      appDocDir = await getApplicationDocumentsDirectory();
-    }
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+
     final savePath = '${appDocDir.path}/$attachmentName';
 
     final file = File(savePath);
