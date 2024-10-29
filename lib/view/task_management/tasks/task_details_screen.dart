@@ -343,12 +343,17 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 title: 'Edit',
                                 icon: Icons.edit,
                                 iconColor: Colors.blueGrey,
-                                onTap: () => Get.to(
-                                  () => AssignTaskScreen(
-                                    taskModel: taskModel,
-                                  ),
-                                  transition: Transition.downToUp,
-                                ),
+                                onTap: () {
+                                  if (taskModel.repeat != null) {
+                                    return;
+                                  }
+                                  Get.to(
+                                    () => AssignTaskScreen(
+                                      taskModel: taskModel,
+                                    ),
+                                    transition: Transition.downToUp,
+                                  );
+                                },
                                 containerColor: Colors.grey.withOpacity(.08),
                                 containerWidth: 150.w,
                                 containerHeight: 40,
