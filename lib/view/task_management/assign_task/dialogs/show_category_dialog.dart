@@ -44,7 +44,7 @@ Widget categoryDialog({
               sigmaY: 2.0,
             ),
             child: Container(
-              width: 280,
+              width: 280.w,
               height: 380.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
@@ -74,7 +74,8 @@ Widget categoryDialog({
                     Obx(
                       () {
                         if (tasksController.categoriesException.value != null) {
-                          return const SizedBox();
+                          return categoriesErrorWidget(
+                              tasksController: tasksController);
                         }
                         final categoriesList = tasksController.categoriesList;
                         return Expanded(
@@ -155,38 +156,40 @@ Widget categoryDialog({
                       },
                     ),
                     SizedBox(height: 2.h),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8.h),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
-                        onTap: () => showAddCategoryBottomSheet(
-                          categoryNameController: categoryNameController,
-                          tasksController: tasksController,
-                        ),
-                        child: Container(
-                          width: 120.w,
-                          height: 38.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.themeGreen.withOpacity(.65),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              width: 1.5.w,
-                              color: AppColors.themeGreen,
-                            ),
-                          ),
-                          child: Center(
-                            child: DefaultTextStyle(
-                              style: TextStyle(
-                                fontSize: 14.sp,
+                    tasksController.categoriesException.value != null
+                        ? Padding(
+                            padding: EdgeInsets.only(bottom: 8.h),
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () => showAddCategoryBottomSheet(
+                                categoryNameController: categoryNameController,
+                                tasksController: tasksController,
                               ),
-                              child: const Text(
-                                'Add Category',
+                              child: Container(
+                                width: 120.w,
+                                height: 38.h,
+                                decoration: BoxDecoration(
+                                  color: AppColors.themeGreen.withOpacity(.65),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    width: 1.5.w,
+                                    color: AppColors.themeGreen,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: DefaultTextStyle(
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                    ),
+                                    child: const Text(
+                                      'Add Category',
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -198,12 +201,54 @@ Widget categoryDialog({
   );
 }
 
-Widget categoriesErrorWidget() {
-  return const Column(
+Widget categoriesErrorWidget({required TasksController tasksController}) {
+  final appController = AppController();
+  return Column(
     children: [
+      SizedBox(height: 80.h),
+      Lottie.asset(
+        'assets/lotties/server_error_animation.json',
+        width: 80.w,
+      ),
       Text(
         'Error Loading Categories',
-        style: TextStyle(),
+        style: TextStyle(
+          fontSize: 14.sp,
+        ),
+      ),
+      SizedBox(height: 14.h),
+      InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () async {
+          appController.isLoadingObs.value = true;
+          await tasksController.getCategories();
+          appController.isLoadingObs.value = false;
+        },
+        child: Obx(
+          () => Container(
+              width: 90.w,
+              height: 30.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: Colors.transparent,
+                border: Border.all(
+                  color: AppColors.themeGreen,
+                ),
+              ),
+              child: Center(
+                child: appController.isLoadingObs.value
+                    ? SpinKitWave(
+                        size: 12.w,
+                        color: AppColors.themeGreen,
+                      )
+                    : Text(
+                        'Try Again',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                        ),
+                      ),
+              )),
+        ),
       ),
     ],
   );
