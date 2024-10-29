@@ -127,6 +127,8 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
 //   }
 // }
 
+Future<void> checkForPlayStoreUpdate() async {}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

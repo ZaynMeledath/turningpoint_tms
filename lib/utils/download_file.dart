@@ -16,9 +16,9 @@ Future<String?> downloadFile({required String fileUrl}) async {
       size: 20,
       color: Colors.white,
     ));
-    var status = await Permission.manageExternalStorage.status;
+    var status = await Permission.mediaLibrary.status;
     if (!status.isGranted) {
-      status = await Permission.manageExternalStorage.request();
+      status = await Permission.mediaLibrary.request();
     }
     if (status.isGranted) {
       final attachmentName = fileUrl.split('/').last;
