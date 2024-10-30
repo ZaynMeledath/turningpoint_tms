@@ -8,6 +8,7 @@ Widget swipeToAdd({
   required bool isUpdating,
   required TaskModel? taskModel,
 }) {
+  final appController = Get.put(AppController());
   return Container(
     height: 85.h,
     padding: EdgeInsets.symmetric(
@@ -29,6 +30,16 @@ Widget swipeToAdd({
       ),
       elevation: 2,
       onSubmit: () async {
+        if (appController.isLoadingObs.value) {
+          showGenericDialog(
+            iconPath: 'assets/lotties/file_upload_animation.json',
+            iconWidth: 71.w,
+            title: 'Uploading...',
+            content: 'File is being uploaded. Please wait...',
+            buttons: {'OK': null},
+          );
+          return 0;
+        }
         if (formKey.currentState!.validate()) {
           if (assignTaskController.assignToMap.isEmpty ||
               assignTaskController.selectedCategory.value.isEmpty) {

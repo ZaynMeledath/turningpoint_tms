@@ -34,8 +34,9 @@ Widget taskCard({
       break;
   }
 
-  final String dueDateString =
-      taskModel.dueDate != null ? taskModel.dueDate!.dateFormat() : '-';
+  final String dueDateString = taskModel.dueDate != null
+      ? taskModel.dueDate!.dateFormat()
+      : 'Invalid Date & Time';
   final user = getUserModelFromHive();
 
   return Hero(
@@ -328,17 +329,12 @@ Widget taskCard({
                               title: 'Edit',
                               icon: Icons.edit,
                               iconColor: Colors.blueGrey,
-                              onTap: () {
-                                if (taskModel.repeat != null) {
-                                  return;
-                                }
-                                Get.to(
-                                  () => AssignTaskScreen(
-                                    taskModel: taskModel,
-                                  ),
-                                  transition: Transition.downToUp,
-                                );
-                              },
+                              onTap: () => Get.to(
+                                () => AssignTaskScreen(
+                                  taskModel: taskModel,
+                                ),
+                                transition: Transition.downToUp,
+                              ),
                             ),
                             cardActionButton(
                               title: 'Delete',

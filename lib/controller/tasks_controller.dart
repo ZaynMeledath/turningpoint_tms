@@ -298,6 +298,16 @@ class TasksController extends GetxController {
       allUsersPerformanceReportModelList.value =
           await tasksRepository.getAllUsersPerformanceReport();
       tasksException.value = null;
+      if (allUsersPerformanceReportModelList.value != null) {
+        for (int i = 0;
+            i < (allUsersPerformanceReportModelSearchList.value?.length ?? 0);
+            i++) {
+          allUsersPerformanceReportModelSearchList.value![i] =
+              allUsersPerformanceReportModelList.value!.firstWhere((model) =>
+                  model.emailId ==
+                  allUsersPerformanceReportModelSearchList.value![i].emailId);
+        }
+      }
     } catch (e) {
       tasksException.value = e as Exception;
     }
@@ -309,6 +319,20 @@ class TasksController extends GetxController {
       allCategoriesPerformanceReportModelList.value =
           await tasksRepository.getAllCategoriesPerformanceReport();
       tasksException.value = null;
+      if (allCategoriesPerformanceReportModelList.value != null) {
+        for (int i = 0;
+            i <
+                (allCategoriesPerformanceReportModelSearchList.value?.length ??
+                    0);
+            i++) {
+          allCategoriesPerformanceReportModelSearchList.value![i] =
+              allCategoriesPerformanceReportModelList.value!.firstWhere(
+                  (model) =>
+                      model.category ==
+                      allCategoriesPerformanceReportModelSearchList
+                          .value![i].category);
+        }
+      }
     } catch (e) {
       tasksException.value = e as Exception;
     }
@@ -319,6 +343,16 @@ class TasksController extends GetxController {
     try {
       myPerformanceReportModelList.value =
           await tasksRepository.getMyPerformanceReport();
+      if (myPerformanceReportModelList.value != null) {
+        for (int i = 0;
+            i < (myPerformanceReportModelSearchList.value?.length ?? 0);
+            i++) {
+          myPerformanceReportModelSearchList.value![i] =
+              myPerformanceReportModelList.value!.firstWhere((model) =>
+                  model.category ==
+                  myPerformanceReportModelSearchList.value![i].category);
+        }
+      }
       tasksException.value = null;
     } catch (e) {
       tasksException.value = e as Exception;
@@ -331,6 +365,16 @@ class TasksController extends GetxController {
       delegatedPerformanceReportModelList.value =
           await tasksRepository.getDelegatedPerformanceReport();
       tasksException.value = null;
+      if (delegatedPerformanceReportModelList.value != null) {
+        for (int i = 0;
+            i < (delegatedPerformanceReportModelSearchList.value?.length ?? 0);
+            i++) {
+          delegatedPerformanceReportModelSearchList.value![i] =
+              delegatedPerformanceReportModelList.value!.firstWhere((model) =>
+                  model.emailId ==
+                  delegatedPerformanceReportModelSearchList.value![i].emailId);
+        }
+      }
     } catch (e) {
       tasksException.value = e as Exception;
     }
@@ -438,22 +482,28 @@ class TasksController extends GetxController {
       taskUpdateAttachmentsMapList.clear();
       if (isDelegatedObs.value == true) {
         await getDelegatedTasks();
+        unawaited(getMyTasks());
+        unawaited(getAllTasks());
       } else if (isDelegatedObs.value == false) {
         await getMyTasks();
+        unawaited(getDelegatedTasks());
+        unawaited(getAllTasks());
+      } else {
+        await getAllTasks();
+        unawaited(getMyTasks());
+        unawaited(getDelegatedTasks());
       }
-      unawaited(getAllTasks());
+      unawaited(getAllUsersPerformanceReport());
       unawaited(getMyPerformanceReport());
       unawaited(getDelegatedPerformanceReport());
-      unawaited(getAllTasks());
-      unawaited(getAllUsersPerformanceReport());
       unawaited(getAllCategoriesPerformanceReport());
-      for (int i = 0; i < dashboardTasksListObs.length; i++) {
-        if (dashboardTasksListObs[i].id == taskId) {
-          dashboardTasksListObs[i] = allTasksListObs.value!
-              .firstWhere((taskModel) => taskModel.id == taskId);
-          return;
-        }
-      }
+      // for (int i = 0; i < dashboardTasksListObs.length; i++) {
+      //   if (dashboardTasksListObs[i].id == taskId) {
+      //     dashboardTasksListObs[i] = allTasksListObs.value!
+      //         .firstWhere((taskModel) => taskModel.id == taskId);
+      //     return;
+      //   }
+      // }
     } catch (_) {
       rethrow;
     }

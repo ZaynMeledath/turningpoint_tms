@@ -342,7 +342,24 @@ class AssignTaskController extends GetxController {
       await tasksRepository.assignTask(
         taskModel: taskModel,
       );
-      await tasksController.getDelegatedTasks();
+      if (tasksController.isDelegatedObs.value == true) {
+        await tasksController.getDelegatedTasks();
+        unawaited(tasksController.getMyTasks());
+        unawaited(tasksController.getAllTasks());
+      } else if (tasksController.isDelegatedObs.value == false) {
+        await tasksController.getMyTasks();
+        unawaited(tasksController.getDelegatedTasks());
+        unawaited(tasksController.getAllTasks());
+      } else {
+        await tasksController.getAllTasks();
+        unawaited(tasksController.getMyTasks());
+        unawaited(tasksController.getDelegatedTasks());
+      }
+      unawaited(tasksController.getAllUsersPerformanceReport());
+      unawaited(tasksController.getMyPerformanceReport());
+      unawaited(tasksController.getDelegatedPerformanceReport());
+      unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getAllCategoriesPerformanceReport());
     } catch (e) {
       rethrow;
     }
@@ -431,23 +448,30 @@ class AssignTaskController extends GetxController {
       await tasksRepository.updateTask(taskModel: taskModel);
       if (tasksController.isDelegatedObs.value == true) {
         await tasksController.getDelegatedTasks();
+        unawaited(tasksController.getMyTasks());
+        unawaited(tasksController.getAllTasks());
       } else if (tasksController.isDelegatedObs.value == false) {
         await tasksController.getMyTasks();
+        unawaited(tasksController.getDelegatedTasks());
+        unawaited(tasksController.getAllTasks());
+      } else {
+        await tasksController.getAllTasks();
+        unawaited(tasksController.getMyTasks());
+        unawaited(tasksController.getDelegatedTasks());
       }
-      unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getAllUsersPerformanceReport());
       unawaited(tasksController.getMyPerformanceReport());
       unawaited(tasksController.getDelegatedPerformanceReport());
       unawaited(tasksController.getAllTasks());
-      unawaited(tasksController.getAllUsersPerformanceReport());
       unawaited(tasksController.getAllCategoriesPerformanceReport());
-      for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
-        if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
-          tasksController.dashboardTasksListObs[i] = tasksController
-              .allTasksListObs.value!
-              .firstWhere((item) => item.id == taskModel.id);
-          return;
-        }
-      }
+      // for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
+      //   if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
+      //     tasksController.dashboardTasksListObs[i] = tasksController
+      //         .allTasksListObs.value!
+      //         .firstWhere((item) => item.id == taskModel.id);
+      //     return;
+      //   }
+      // }
     } catch (e) {
       rethrow;
     }
