@@ -4,8 +4,9 @@ Widget roleDropDown({
   required UserController userController,
 }) {
   final roles = [
-    Role.user,
+    Role.admin,
     Role.teamLeader,
+    Role.user,
   ];
   return DropdownButtonFormField<String>(
     dropdownColor: AppColors.textFieldColor,
