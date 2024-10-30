@@ -346,6 +346,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                         ? 'assets/lotties/task_Completed_animation.json'
                                         : 'assets/lotties/task_In Progress_animation.json',
                                     iconWidth: 55.w,
+                                    repeatLottieAnimation: false,
                                     title: 'Task Status Updated',
                                     content:
                                         'Task status updated to "${widget.taskStatus}"',

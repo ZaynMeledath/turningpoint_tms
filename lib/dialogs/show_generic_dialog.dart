@@ -16,6 +16,7 @@ Future<Object?> showGenericDialog({
   required Map<String, ButtonFuction?> buttons,
   Color? confirmationButtonColor,
   double? iconWidth,
+  bool repeatLottieAnimation = true,
   // Size? containerSize,
 }) async {
   return Get.dialog(
@@ -26,6 +27,7 @@ Future<Object?> showGenericDialog({
       iconWidth: iconWidth,
       confirmationButtonColor: confirmationButtonColor,
       buttons: buttons,
+      repeatLottieAnimation: repeatLottieAnimation,
     ),
     // barrierDismissible: false,
     scaleAnimation: true,
@@ -37,6 +39,7 @@ Widget dialog({
   required String title,
   required String content,
   required Map<String, ButtonFuction?> buttons,
+  required bool repeatLottieAnimation,
   Color? confirmationButtonColor,
   double? iconWidth,
 }) {
@@ -63,6 +66,7 @@ Widget dialog({
                 ? Lottie.asset(
                     iconPath,
                     width: iconWidth ?? 61.w,
+                    repeat: repeatLottieAnimation,
                   )
                 : Image.asset(
                     iconPath,

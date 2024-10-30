@@ -17,6 +17,7 @@ dependencies:
   cached_network_image: ^3.4.0
   chewie: ^1.8.5
   cupertino_icons: ^1.0.6
+  custom_refresh_indicator: ^4.0.1
   dio: ^5.7.0
   dropdown_search: ^5.0.6
   file_picker: ^8.0.7
