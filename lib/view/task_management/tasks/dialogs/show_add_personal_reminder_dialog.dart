@@ -146,8 +146,9 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                 lastDate: DateTime(2030),
                               );
                               if (date != null) {
-                                assignTaskController.taskDate.value = date;
-                                assignTaskController.taskTime.value =
+                                assignTaskController.taskDueOrStartDate.value =
+                                    date;
+                                assignTaskController.taskDueOrStartTime.value =
                                     await showTimePicker(
                                           context: context,
                                           initialTime: TimeOfDay.now(),
@@ -172,7 +173,8 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                             AppColors.scaffoldBackgroundColor,
                                         shape: BoxShape.circle,
                                         border: assignTaskController
-                                                .showTimeErrorTextObs.value
+                                                .showDueOrStartDateErrorTextObs
+                                                .value
                                             ? Border.all(
                                                 color: Colors.redAccent,
                                               )
@@ -188,7 +190,7 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                   SizedBox(width: 8.w),
                                   Obx(
                                     () => Text(
-                                      '${assignTaskController.taskDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDate.value)}',
+                                      '${assignTaskController.taskDueOrStartDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDueOrStartDate.value)}',
                                       style: TextStyle(
                                         color: Colors.white70,
                                         fontSize: 14.sp,
@@ -215,7 +217,7 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
 
                               assignTaskController
                                   .isTitleAndDescriptionEnabled.value = false;
-                              assignTaskController.taskTime.value =
+                              assignTaskController.taskDueOrStartTime.value =
                                   await showTimePicker(
                                         context: context,
                                         initialTime: TimeOfDay.now(),
@@ -239,7 +241,8 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                             AppColors.scaffoldBackgroundColor,
                                         shape: BoxShape.circle,
                                         border: assignTaskController
-                                                .showTimeErrorTextObs.value
+                                                .showDueOrStartDateErrorTextObs
+                                                .value
                                             ? Border.all(
                                                 color: Colors.redAccent,
                                               )
@@ -255,7 +258,8 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                   SizedBox(width: 8.w),
                                   Obx(
                                     () => Text(
-                                      assignTaskController.taskTime.value
+                                      assignTaskController
+                                          .taskDueOrStartTime.value
                                           .format(context),
                                       style: TextStyle(
                                         color: Colors.white70,
@@ -270,7 +274,8 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                         ],
                       ),
                       Obx(() {
-                        if (assignTaskController.showTimeErrorTextObs.value) {
+                        if (assignTaskController
+                            .showDueOrStartDateErrorTextObs.value) {
                           return Column(
                             children: [
                               SizedBox(height: 4.h),
@@ -315,10 +320,10 @@ class _AddPersonalReminderDialogState extends State<AddPersonalReminderDialog> {
                                     'assets/lotties/success_animation.json',
                                 buttons: {'OK': null},
                               );
-                            } on DateTimeErrorException {
+                            } on DueOrStartDateTimeErrorException {
                               appController.isLoadingObs.value = false;
-                              assignTaskController.showTimeErrorTextObs.value =
-                                  true;
+                              assignTaskController
+                                  .showDueOrStartDateErrorTextObs.value = true;
                             } catch (e) {
                               appController.isLoadingObs.value = false;
                               showGenericDialog(

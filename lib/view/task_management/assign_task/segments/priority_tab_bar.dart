@@ -49,7 +49,7 @@ Widget priorityTabBar({
             fontSize: 16.sp,
             fontFamily: 'Lufga',
           ),
-          unselectedLabelColor: Colors.black54,
+          unselectedLabelColor: Colors.white38,
           indicator: BoxDecoration(
             color: const Color(0xff5d87ff),
             borderRadius: BorderRadius.circular(30),

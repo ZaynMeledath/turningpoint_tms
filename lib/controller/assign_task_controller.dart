@@ -30,8 +30,10 @@ class AssignTaskController extends GetxController {
   // Rxn<List<CategoryModel>> categorySearchList = Rxn<List<AllUsersModel>>();
 
 //====================Date and Time====================//
-  Rx<DateTime> taskDate = DateTime.now().obs;
-  Rx<TimeOfDay> taskTime = TimeOfDay.now().obs;
+  Rx<DateTime> taskDueOrStartDate = DateTime.now().obs;
+  Rx<TimeOfDay> taskDueOrStartTime = TimeOfDay.now().obs;
+  Rxn<DateTime> taskEndDate = Rxn<DateTime>();
+  Rxn<TimeOfDay> taskEndTime = Rxn<TimeOfDay>();
 
 //====================Reminder====================//
   RxInt reminderTime = DefaultReminder.defaultReminderTime.obs;
@@ -57,7 +59,8 @@ class AssignTaskController extends GetxController {
 
   final RxBool showAssignToEmptyErrorTextObs = false.obs;
   final RxBool showCategoryEmptyErrorTextObs = false.obs;
-  final RxBool showTimeErrorTextObs = false.obs;
+  final RxBool showDueOrStartDateErrorTextObs = false.obs;
+  final RxBool showEndDateErrorTextObs = false.obs;
   final RxBool showRepeatFrequencyErrorTextObs = false.obs;
   final RxBool showWeeklyFrequencyErrorTextObs = false.obs;
   final RxBool showMonthlyFrequencyErrorTextObs = false.obs;
@@ -262,17 +265,31 @@ class AssignTaskController extends GetxController {
     try {
       //To convert to Local
       final dueDate = DateTime(
-        taskDate.value.year,
-        taskDate.value.month,
-        taskDate.value.day,
-        taskTime.value.hour,
-        taskTime.value.minute,
+        taskDueOrStartDate.value.year,
+        taskDueOrStartDate.value.month,
+        taskDueOrStartDate.value.day,
+        taskDueOrStartTime.value.hour,
+        taskDueOrStartTime.value.minute,
       );
+
+      final endDate = taskEndDate.value != null
+          ? DateTime(
+              taskEndDate.value!.year,
+              taskEndDate.value!.month,
+              taskEndDate.value!.day,
+              taskEndDate.value!.hour,
+              taskEndDate.value!.minute,
+            )
+          : null;
 
       if (!dueDate.isAfter(DateTime.now()) ||
           dueDate.isAtSameMomentAs(DateTime.now())) {
-        throw DateTimeErrorException();
+        throw DueOrStartDateTimeErrorException();
       }
+
+      if (endDate != null &&
+          (!endDate.isAfter(DateTime.now()) ||
+              endDate.isAtSameMomentAs(DateTime.now()))) {}
 
       if (shouldRepeatTask.value) {
         if (taskRepeatFrequency.value == null) {
@@ -372,15 +389,15 @@ class AssignTaskController extends GetxController {
     try {
       //To convert to Local
       final dueDate = DateTime(
-        taskDate.value.year,
-        taskDate.value.month,
-        taskDate.value.day,
-        taskTime.value.hour,
-        taskTime.value.minute,
+        taskDueOrStartDate.value.year,
+        taskDueOrStartDate.value.month,
+        taskDueOrStartDate.value.day,
+        taskDueOrStartTime.value.hour,
+        taskDueOrStartTime.value.minute,
       );
       if (!dueDate.isAfter(DateTime.now()) ||
           dueDate.isAtSameMomentAs(DateTime.now())) {
-        throw DateTimeErrorException();
+        throw DueOrStartDateTimeErrorException();
       }
 
       if (shouldRepeatTask.value) {

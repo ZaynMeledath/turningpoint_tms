@@ -126,11 +126,11 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =
         taskModel.priority ?? TaskPriority.low;
-    assignTaskController.taskDate.value = taskModel.dueDate != null
+    assignTaskController.taskDueOrStartDate.value = taskModel.dueDate != null
         ? DateTime.parse(taskModel.dueDate!).toLocal()
         : DateTime.now();
-    assignTaskController.taskTime.value =
-        TimeOfDay.fromDateTime(assignTaskController.taskDate.value);
+    assignTaskController.taskDueOrStartTime.value =
+        TimeOfDay.fromDateTime(assignTaskController.taskDueOrStartDate.value);
 
     assignTaskController.reminderList.value = taskModel.reminders ?? [];
     if (taskModel.attachments != null) {
@@ -284,7 +284,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                       ),
                   SizedBox(height: 28.h),
                   dateAndTimeSegment(
-                    context: context,
                     assignTaskController: assignTaskController,
                   ).animate().slideY(
                         begin: 1,

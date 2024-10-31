@@ -103,8 +103,8 @@ Widget swipeToAdd({
                 buttons: {'OK': null},
               );
             }
-          } on DateTimeErrorException {
-            assignTaskController.showTimeErrorTextObs.value = true;
+          } on DueOrStartDateTimeErrorException {
+            assignTaskController.showDueOrStartDateErrorTextObs.value = true;
             return 0;
           } on RepeatFrequencyNullException {
             assignTaskController.showRepeatFrequencyErrorTextObs.value = true;

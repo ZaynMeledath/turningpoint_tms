@@ -185,8 +185,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 children: [
                   titleDescriptionContainer(
                     taskModel: taskModel,
-                    dueDateString: widget.dueDateString,
-                    creationDateString: creationDateString,
                   ),
                   SizedBox(height: 14.h),
 

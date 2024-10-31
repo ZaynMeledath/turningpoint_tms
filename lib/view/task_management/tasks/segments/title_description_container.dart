@@ -2,8 +2,6 @@ part of '../task_details_screen.dart';
 
 Widget titleDescriptionContainer({
   required TaskModel taskModel,
-  required String dueDateString,
-  required String creationDateString,
 }) {
   Color priorityFlagColor = Colors.white.withOpacity(.9);
 
@@ -19,6 +17,14 @@ Widget titleDescriptionContainer({
   }
 
   String completionDateString = '';
+
+  final String creationDateString = taskModel.createdAt != null
+      ? taskModel.createdAt!.dateFormat()
+      : 'Invalid Date & Time';
+
+  final String dueDateString = taskModel.dueDate != null
+      ? taskModel.dueDate!.dateFormat()
+      : 'Invalid Date & Time';
 
   if (taskModel.status == Status.completed) {
     completionDateString =

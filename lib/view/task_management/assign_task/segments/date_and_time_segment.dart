@@ -3,173 +3,22 @@
 part of '../assign_task_screen.dart';
 
 Widget dateAndTimeSegment({
-  required BuildContext context,
   required AssignTaskController assignTaskController,
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 6.w),
     child: Column(
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: EdgeInsets.only(left: 8.w),
-            child: Obx(
-              () => Text(
-                assignTaskController.shouldRepeatTask.value
-                    ? 'Start Date and Time'
-                    : 'Due Date and Time',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: 6.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //====================Date Picker Section====================//
-            InkWell(
-              borderRadius: BorderRadius.circular(20),
-              onTap: () async {
-                assignTaskController.showTimeErrorTextObs.value = false;
-
-                //To prevent the keyboard popping glitch
-                final currentFocus = FocusScope.of(context);
-                if (currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-
-                assignTaskController.isTitleAndDescriptionEnabled.value = false;
-                final date = await showDatePicker(
-                  context: context,
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2030),
-                );
-                if (date != null) {
-                  assignTaskController.taskDate.value = date;
-                  assignTaskController.taskTime.value = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      ) ??
-                      TimeOfDay.now();
-                }
-                Future.delayed(Duration.zero, () {
-                  assignTaskController.isTitleAndDescriptionEnabled.value =
-                      true;
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.all(5.w),
-                child: Row(
-                  children: [
-                    Obx(
-                      () => Container(
-                        width: 61.w,
-                        height: 61.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.textFieldColor,
-                          shape: BoxShape.circle,
-                          border:
-                              assignTaskController.showTimeErrorTextObs.value
-                                  ? Border.all(
-                                      color: Colors.redAccent,
-                                    )
-                                  : null,
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.calendar_month_rounded,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Obx(
-                      () => Text(
-                        '${assignTaskController.taskDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDate.value)}',
-                        style: TextStyle(
-                          color: Colors.white60,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const Expanded(
-              child: SizedBox(),
-            ),
-
-            //====================Time Picker Section====================//
-            InkWell(
-              borderRadius: BorderRadius.circular(20),
-              onTap: () async {
-                assignTaskController.showTimeErrorTextObs.value = false;
-                //To prevent the keyboard popping glitch
-                final currentFocus = FocusScope.of(context);
-                if (currentFocus.hasPrimaryFocus) {
-                  currentFocus.unfocus();
-                }
-
-                assignTaskController.isTitleAndDescriptionEnabled.value = false;
-                assignTaskController.taskTime.value = await showTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                    ) ??
-                    TimeOfDay.now();
-                Future.delayed(Duration.zero, () {
-                  assignTaskController.isTitleAndDescriptionEnabled.value =
-                      true;
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.all(5.w),
-                child: Row(
-                  children: [
-                    Obx(
-                      () => Container(
-                        width: 61.w,
-                        height: 61.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.textFieldColor,
-                          shape: BoxShape.circle,
-                          border:
-                              assignTaskController.showTimeErrorTextObs.value
-                                  ? Border.all(
-                                      color: Colors.redAccent,
-                                    )
-                                  : null,
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.access_time,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Obx(
-                      () => Text(
-                        assignTaskController.taskTime.value.format(context),
-                        style: TextStyle(
-                          color: Colors.white60,
-                          fontSize: 14.sp,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            buildDueOrStartDateSection(
+                assignTaskController: assignTaskController),
+            buildEndDateSection(assignTaskController: assignTaskController)
           ],
         ),
         Obx(() {
-          if (assignTaskController.showTimeErrorTextObs.value) {
+          if (assignTaskController.showDueOrStartDateErrorTextObs.value) {
             return Column(
               children: [
                 SizedBox(height: 4.h),
@@ -193,5 +42,218 @@ Widget dateAndTimeSegment({
         }),
       ],
     ),
+  );
+}
+
+Widget buildDueOrStartDateSection({
+  required AssignTaskController assignTaskController,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: EdgeInsets.only(left: 10.w),
+        child: Obx(
+          () => Text(
+            assignTaskController.shouldRepeatTask.value
+                ? 'Start Date'
+                : 'Due Date',
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+      SizedBox(height: 6.h),
+      InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: () async {
+          assignTaskController.showDueOrStartDateErrorTextObs.value = false;
+
+          //To prevent the keyboard popping glitch
+          final currentFocus = FocusScope.of(Get.context!);
+          if (currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+
+          assignTaskController.isTitleAndDescriptionEnabled.value = false;
+          final date = await showDatePicker(
+            context: Get.context!,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2030),
+          );
+          if (date != null) {
+            assignTaskController.taskDueOrStartDate.value = date;
+            assignTaskController.taskDueOrStartTime.value =
+                await showTimePicker(
+                      context: Get.context!,
+                      initialTime: TimeOfDay.now(),
+                    ) ??
+                    TimeOfDay.now();
+          }
+          Future.delayed(Duration.zero, () {
+            assignTaskController.isTitleAndDescriptionEnabled.value = true;
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.all(5.w),
+          child: Row(
+            children: [
+              Obx(
+                () => Container(
+                  width: 61.w,
+                  height: 61.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.textFieldColor,
+                    shape: BoxShape.circle,
+                    border: assignTaskController
+                            .showDueOrStartDateErrorTextObs.value
+                        ? Border.all(
+                            color: Colors.redAccent,
+                          )
+                        : null,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.calendar_month,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${assignTaskController.taskDueOrStartDate.value.day} ${DateFormat.MMMM().format(assignTaskController.taskDueOrStartDate.value)}',
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    Text(
+                      assignTaskController.taskDueOrStartTime.value
+                          .format(Get.context!),
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget buildEndDateSection({
+  required AssignTaskController assignTaskController,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: EdgeInsets.only(left: 10.w),
+        child: Text(
+          'End Date',
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+      SizedBox(height: 6.h),
+      InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: () async {
+          assignTaskController.showEndDateErrorTextObs.value = false;
+
+          //To prevent the keyboard popping glitch
+          final currentFocus = FocusScope.of(Get.context!);
+          if (currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+
+          assignTaskController.isTitleAndDescriptionEnabled.value = false;
+          final date = await showDatePicker(
+            context: Get.context!,
+            currentDate: assignTaskController.taskEndDate.value,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2030),
+          );
+          if (date != null) {
+            assignTaskController.taskEndDate.value = date;
+            assignTaskController.taskEndTime.value = await showTimePicker(
+                  context: Get.context!,
+                  initialTime: TimeOfDay.now(),
+                ) ??
+                TimeOfDay.now();
+          }
+          Future.delayed(Duration.zero, () {
+            assignTaskController.isTitleAndDescriptionEnabled.value = true;
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.all(5.w),
+          child: Row(
+            children: [
+              Obx(
+                () => Container(
+                  width: 61.w,
+                  height: 61.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.textFieldColor,
+                    shape: BoxShape.circle,
+                    border: assignTaskController.showEndDateErrorTextObs.value
+                        ? Border.all(
+                            color: Colors.redAccent,
+                          )
+                        : null,
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.calendar_month_rounded,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      assignTaskController.taskEndDate.value != null
+                          ? '${assignTaskController.taskEndDate.value!.day} ${DateFormat.MMMM().format(assignTaskController.taskEndDate.value!)}'
+                          : '-      ',
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                    Text(
+                      assignTaskController.taskEndTime.value != null
+                          ? assignTaskController.taskEndTime.value!
+                              .format(Get.context!)
+                          : '-      ',
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
   );
 }

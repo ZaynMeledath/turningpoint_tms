@@ -258,16 +258,16 @@ class TasksController extends GetxController {
   }) async {
     try {
       final dueDate = DateTime(
-        assignTaskController.taskDate.value.year,
-        assignTaskController.taskDate.value.month,
-        assignTaskController.taskDate.value.day,
-        assignTaskController.taskTime.value.hour,
-        assignTaskController.taskTime.value.minute,
+        assignTaskController.taskDueOrStartDate.value.year,
+        assignTaskController.taskDueOrStartDate.value.month,
+        assignTaskController.taskDueOrStartDate.value.day,
+        assignTaskController.taskDueOrStartTime.value.hour,
+        assignTaskController.taskDueOrStartTime.value.minute,
       );
 
       if (!dueDate.isAfter(DateTime.now()) ||
           dueDate.isAtSameMomentAs(DateTime.now())) {
-        throw DateTimeErrorException();
+        throw DueOrStartDateTimeErrorException();
       }
       final reminderDateString = dueDate.toIso8601String();
       await tasksRepository.addPersonalReminder(
