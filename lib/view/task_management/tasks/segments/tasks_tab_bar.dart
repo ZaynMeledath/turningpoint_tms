@@ -7,6 +7,7 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 Widget tasksTabBar({
   required TabController tabController,
   required int? allTasksCount,
+  int? unapprovedCount,
   required int? overdueTasksCount,
   required int? openTasksCount,
   required int? inProgressTasksCount,
@@ -31,6 +32,22 @@ Widget tasksTabBar({
     splashFactory: NoSplash.splashFactory,
     overlayColor: WidgetStateColor.transparent,
     tabs: [
+      if (unapprovedCount != null)
+        Row(
+          children: [
+            Icon(
+              Icons.task_alt,
+              size: 21.sp,
+            ),
+            SizedBox(width: 2.w),
+            Text(
+              'Unapproved - $unapprovedCount',
+              style: TextStyle(
+                fontSize: 16.sp,
+              ),
+            ),
+          ],
+        ),
       Row(
         children: [
           Icon(

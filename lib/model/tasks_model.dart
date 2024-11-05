@@ -40,6 +40,7 @@ class TaskModel {
   String? status;
   bool? isDelayed;
   Repeat? repeat;
+  bool? isApproved;
   List<Attachment>? attachments;
   List<Reminder>? reminders;
   List<StatusChanges>? statusChanges;
@@ -60,6 +61,7 @@ class TaskModel {
     this.status,
     this.isDelayed,
     this.repeat,
+    this.isApproved,
     this.attachments,
     this.reminders,
     this.statusChanges,
@@ -97,6 +99,8 @@ class TaskModel {
       });
     }
 
+    isApproved = json['isApproved'];
+
     repeat = json['repeat'] != null ? Repeat.fromJson(json['repeat']) : null;
     isDelayed = json['isDelayed'];
     closedAt = json['closedAt'];
@@ -130,6 +134,7 @@ class TaskModel {
       data['attachments'] = attachments!.map((item) => item.toJson()).toList();
     }
     data['attachments'] = attachments;
+    data['isApproved'] = isApproved;
     data['repeat'] = repeat?.toJson();
     data['isDelayed'] = isDelayed;
     data['closedAt'] = closedAt;

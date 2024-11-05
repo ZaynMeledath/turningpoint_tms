@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -122,6 +120,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
           phone: assignedTo.phone,
         ),
       });
+
+      filterController.assignedToFilterModel[assignedTo.emailId!] = true;
     }
     assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =

@@ -32,6 +32,9 @@ Widget cardActionButton({
       splashColor = Colors.orange;
       break;
 
+    case 'Approve':
+      splashColor = Colors.teal;
+
     default:
       break;
   }

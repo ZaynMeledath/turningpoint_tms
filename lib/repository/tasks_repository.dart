@@ -178,6 +178,25 @@ class TasksRepository {
     }
   }
 
+//====================Approve Task====================//
+  Future<void> approveTask({
+    required String taskId,
+  }) async {
+    try {
+      await ApiService().sendRequest(
+        url: '${ApiEndpoints.assignTask}/$taskId',
+        requestMethod: RequestMethod.PATCH,
+        data: {
+          'isApproved': true,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Get Personal Reminders====================//
   Future<List<PersonalReminderModel>?> getPersonalRemindersList() async {
     try {

@@ -50,6 +50,7 @@ class _TasksScreenState extends State<TasksScreen>
   int tabCount = 1;
 
   List<TaskModel> allTasksList = [];
+  List<TaskModel> unapprovedTasksList = [];
   List<TaskModel> openTasksList = [];
   List<TaskModel> inProgressTasksList = [];
   List<TaskModel> completedTasksList = [];
@@ -64,7 +65,7 @@ class _TasksScreenState extends State<TasksScreen>
         widget.tasksListCategory == TasksListCategory.categoryWise ||
         widget.tasksListCategory == TasksListCategory.myReport ||
         widget.tasksListCategory == TasksListCategory.delegatedReport) {
-      tabCount = 5;
+      tabCount = 6;
     }
 
     lottieController = AnimationController(
@@ -361,6 +362,9 @@ class _TasksScreenState extends State<TasksScreen>
         () {
           allTasksList = tasksController.dashboardTasksListObs;
           if (widget.avoidTabBar != true) {
+            unapprovedTasksList = tasksController.dashboardTasksListObs
+                .where((taskModel) => taskModel.isApproved != true)
+                .toList();
             openTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.open)
                 .toList();
@@ -423,6 +427,7 @@ class _TasksScreenState extends State<TasksScreen>
                     : tasksTabBar(
                         tabController: tabController,
                         allTasksCount: allTasksList.length,
+                        unapprovedCount: unapprovedTasksList.length,
                         overdueTasksCount: overdueTasksList.length,
                         openTasksCount: openTasksList.length,
                         inProgressTasksCount: inProgressTasksList.length,
@@ -431,10 +436,16 @@ class _TasksScreenState extends State<TasksScreen>
                 SizedBox(height: 12.h),
                 tasksController.tasksException.value == null
                     ? Expanded(
-                        child: tabCount == 5
+                        child: tabCount == 6
                             ? TabBarView(
                                 controller: tabController,
                                 children: [
+                                  taskTabBarView(
+                                    tasksList: unapprovedTasksList,
+                                    lottieController: lottieController,
+                                    tasksController: tasksController,
+                                    taskSearchController: taskSearchController,
+                                  ),
                                   taskTabBarView(
                                     tasksList: allTasksList,
                                     lottieController: lottieController,

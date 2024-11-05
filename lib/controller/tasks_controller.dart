@@ -393,7 +393,11 @@ class TasksController extends GetxController {
       } else if (isDelegatedObs.value == false) {
         await getMyTasks();
       }
-      await getAllTasks();
+      unawaited(getAllTasks());
+      unawaited(getAllUsersPerformanceReport());
+      unawaited(getMyPerformanceReport());
+      unawaited(getDelegatedPerformanceReport());
+      unawaited(getAllCategoriesPerformanceReport());
     } catch (_) {
       rethrow;
     }
@@ -504,6 +508,30 @@ class TasksController extends GetxController {
       //     return;
       //   }
       // }
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Approve Task====================//
+  Future<void> approveTask({
+    required String taskId,
+  }) async {
+    try {
+      await tasksRepository.approveTask(taskId: taskId);
+      if (isDelegatedObs.value == true) {
+        await getDelegatedTasks();
+        unawaited(getMyTasks());
+        unawaited(getAllTasks());
+      } else if (isDelegatedObs.value == false) {
+        await getMyTasks();
+        unawaited(getDelegatedTasks());
+        unawaited(getAllTasks());
+      } else {
+        await getAllTasks();
+        unawaited(getMyTasks());
+        unawaited(getDelegatedTasks());
+      }
     } catch (_) {
       rethrow;
     }

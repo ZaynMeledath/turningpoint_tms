@@ -42,7 +42,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
       duration: const Duration(milliseconds: 500),
     );
     tabController = TabController(
-      length: 5,
+      length: 6,
       vsync: this,
     );
     taskSearchController = TextEditingController();
@@ -117,6 +117,10 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
           () {
             final allDelegatedTasksList =
                 tasksController.delegatedTasksListObs.value;
+
+            final unapprovedTasksList = allDelegatedTasksList
+                ?.where((taskModel) => taskModel.isApproved != true)
+                .toList();
             final openDelegatedTasksList =
                 tasksController.openDelegatedTaskList.value;
             final inProgressDelegatedTasksList =
@@ -155,6 +159,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                 tasksTabBar(
                   tabController: tabController,
                   allTasksCount: allDelegatedTasksList?.length,
+                  unapprovedCount: unapprovedTasksList?.length,
                   overdueTasksCount: overdueDelegatedTasksList?.length,
                   openTasksCount: openDelegatedTasksList?.length,
                   inProgressTasksCount: inProgressDelegatedTasksList?.length,
@@ -166,6 +171,12 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                         child: TabBarView(
                           controller: tabController,
                           children: [
+                            taskTabBarView(
+                              tasksList: unapprovedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              taskSearchController: taskSearchController,
+                            ),
                             taskTabBarView(
                               tasksList: allDelegatedTasksList,
                               lottieController: lottieController,

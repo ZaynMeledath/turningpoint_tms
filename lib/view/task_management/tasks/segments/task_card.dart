@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/view/task_management/assign_task/assign_task_screen.dart';
@@ -321,7 +323,7 @@ Widget taskCard({
                             user?.role == Role.admin ||
                             taskModel.createdBy!.emailId == user!.emailId)
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 9.0),
+                        padding: EdgeInsets.only(top: 9.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -346,6 +348,53 @@ Widget taskCard({
                               ),
                             ),
                           ],
+                        ),
+                      )
+                    : const SizedBox(),
+                taskModel.isApproved != true &&
+                        taskModel.createdBy!.emailId == user!.emailId
+                    ? Padding(
+                        padding: EdgeInsets.only(top: 9.h),
+                        child: cardActionButton(
+                          title: 'Approve',
+                          icon: Icons.done_all,
+                          iconColor: Colors.teal,
+                          onTap: () async {
+                            try {
+                              Get.dialog(
+                                SpinKitWave(
+                                  size: 20.w,
+                                  color: AppColors.themeGreen,
+                                ),
+                                barrierColor: Colors.black45,
+                                barrierDismissible: false,
+                              );
+                              await tasksController.approveTask(
+                                  taskId: taskModel.id!);
+                              Get.back();
+                              showGenericDialog(
+                                iconPath:
+                                    'assets/lotties/success_animation.json',
+                                title: 'Task Approved',
+                                content: 'Task has been successfully approved',
+                                buttons: {
+                                  'OK': null,
+                                },
+                              );
+                            } catch (_) {
+                              Get.back();
+                              showGenericDialog(
+                                iconPath:
+                                    'assets/lotties/server_error_animation.json',
+                                title: 'Something went wrong',
+                                content:
+                                    'Something went wrong while approving task',
+                                buttons: {
+                                  'Dismiss': null,
+                                },
+                              );
+                            }
+                          },
                         ),
                       )
                     : const SizedBox(),
