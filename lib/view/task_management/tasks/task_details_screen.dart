@@ -376,58 +376,62 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           ),
                         )
                       : const SizedBox(),
-
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 9.h),
-                      child: cardActionButton(
-                        title: 'Approve',
-                        icon: Icons.done_all,
-                        iconColor: Colors.teal,
-                        onTap: () async {
-                          try {
-                            Get.dialog(
-                              SpinKitWave(
-                                size: 20.w,
-                                color: AppColors.themeGreen,
-                              ),
-                              barrierColor: Colors.black45,
-                              barrierDismissible: false,
-                            );
-                            await tasksController.approveTask(
-                                taskId: taskModel.id!);
-                            Get.back();
-                            showGenericDialog(
-                              iconPath: 'assets/lotties/success_animation.json',
-                              title: 'Task Approved',
-                              content: 'Task has been successfully approved',
-                              buttons: {
-                                'OK': null,
+                  taskModel.isApproved != true &&
+                          taskModel.createdBy!.emailId == user!.emailId
+                      ? Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 9.h),
+                            child: cardActionButton(
+                              title: 'Approve',
+                              icon: Icons.done_all,
+                              iconColor: Colors.teal,
+                              onTap: () async {
+                                try {
+                                  Get.dialog(
+                                    SpinKitWave(
+                                      size: 20.w,
+                                      color: AppColors.themeGreen,
+                                    ),
+                                    barrierColor: Colors.black45,
+                                    barrierDismissible: false,
+                                  );
+                                  await tasksController.approveTask(
+                                      taskId: taskModel.id!);
+                                  Get.back();
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/success_animation.json',
+                                    title: 'Task Approved',
+                                    content:
+                                        'Task has been successfully approved',
+                                    buttons: {
+                                      'OK': null,
+                                    },
+                                  );
+                                } catch (_) {
+                                  Get.back();
+                                  showGenericDialog(
+                                    iconPath:
+                                        'assets/lotties/server_error_animation.json',
+                                    title: 'Something went wrong',
+                                    content:
+                                        'Something went wrong while approving task',
+                                    buttons: {
+                                      'Dismiss': null,
+                                    },
+                                  );
+                                }
                               },
-                            );
-                          } catch (_) {
-                            Get.back();
-                            showGenericDialog(
-                              iconPath:
-                                  'assets/lotties/server_error_animation.json',
-                              title: 'Something went wrong',
-                              content:
-                                  'Something went wrong while approving task',
-                              buttons: {
-                                'Dismiss': null,
-                              },
-                            );
-                          }
-                        },
-                        containerColor: Colors.grey.withOpacity(.08),
-                        containerWidth: 150.w,
-                        containerHeight: 40,
-                        iconSize: 22.sp,
-                        textSize: 14.sp,
-                      ),
-                    ),
-                  ),
+                              containerColor: Colors.grey.withOpacity(.08),
+                              containerWidth: 150.w,
+                              containerHeight: 40,
+                              iconSize: 22.sp,
+                              textSize: 14.sp,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                   SizedBox(height: 14.h),
                   Container(
                     width: double.maxFinite,
