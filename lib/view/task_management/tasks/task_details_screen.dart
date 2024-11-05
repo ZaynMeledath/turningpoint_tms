@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
@@ -12,6 +13,7 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
@@ -374,6 +376,58 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           ),
                         )
                       : const SizedBox(),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 9.h),
+                      child: cardActionButton(
+                        title: 'Approve',
+                        icon: Icons.done_all,
+                        iconColor: Colors.teal,
+                        onTap: () async {
+                          try {
+                            Get.dialog(
+                              SpinKitWave(
+                                size: 20.w,
+                                color: AppColors.themeGreen,
+                              ),
+                              barrierColor: Colors.black45,
+                              barrierDismissible: false,
+                            );
+                            await tasksController.approveTask(
+                                taskId: taskModel.id!);
+                            Get.back();
+                            showGenericDialog(
+                              iconPath: 'assets/lotties/success_animation.json',
+                              title: 'Task Approved',
+                              content: 'Task has been successfully approved',
+                              buttons: {
+                                'OK': null,
+                              },
+                            );
+                          } catch (_) {
+                            Get.back();
+                            showGenericDialog(
+                              iconPath:
+                                  'assets/lotties/server_error_animation.json',
+                              title: 'Something went wrong',
+                              content:
+                                  'Something went wrong while approving task',
+                              buttons: {
+                                'Dismiss': null,
+                              },
+                            );
+                          }
+                        },
+                        containerColor: Colors.grey.withOpacity(.08),
+                        containerWidth: 150.w,
+                        containerHeight: 40,
+                        iconSize: 22.sp,
+                        textSize: 14.sp,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 14.h),
                   Container(
                     width: double.maxFinite,
