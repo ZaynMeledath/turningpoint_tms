@@ -7,6 +7,7 @@ Widget assignToAndCategorySegment({
   required TextEditingController assignToSearchController,
   required TextEditingController categoryNameController,
   required TextEditingController categorySearchController,
+  required bool isUpdating,
 }) {
   return Column(
     children: [
@@ -21,6 +22,7 @@ Widget assignToAndCategorySegment({
                 assignTaskController: assignTaskController,
                 filterController: filterController,
                 assignToSearchController: assignToSearchController,
+                isUpdating: isUpdating,
               );
               assignTaskController.showAssignToEmptyErrorTextObs.value = false;
             },

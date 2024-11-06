@@ -279,6 +279,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                     assignToSearchController: assignToSearchController,
                     categoryNameController: categoryNameController,
                     categorySearchController: categorySearchController,
+                    isUpdating: widget.taskModel != null,
                   ).animate().slideY(
                         begin: 1,
                         delay: const Duration(milliseconds: 120),

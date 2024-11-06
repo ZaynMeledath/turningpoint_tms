@@ -4,12 +4,14 @@ Future<Object?> showAssignToDialog({
   required AssignTaskController assignTaskController,
   required FilterController filterController,
   required TextEditingController assignToSearchController,
+  required bool isUpdating,
 }) async {
   return Get.dialog(
     assignToDialog(
       assignToSearchController: assignToSearchController,
       assignTaskController: assignTaskController,
       filterController: filterController,
+      isUpdating: isUpdating,
     ),
     useSafeArea: true,
     barrierColor: Colors.transparent,
@@ -21,6 +23,7 @@ Widget assignToDialog({
   required TextEditingController assignToSearchController,
   required AssignTaskController assignTaskController,
   required FilterController filterController,
+  required bool isUpdating,
 }) {
   final userController = Get.put(UserController());
   final allUsers = userController.assignTaskUsersList.value;
@@ -111,6 +114,17 @@ Widget assignToDialog({
 
                               return GestureDetector(
                                 onTap: () {
+                                  if (isUpdating) {
+                                    assignTaskController.assignToMap.value = {
+                                      email: AssignedTo(
+                                        name: name,
+                                        emailId: email,
+                                        phone: phone,
+                                      ),
+                                    };
+                                    Get.back();
+                                    return;
+                                  }
                                   filterController
                                       .selectOrUnselectAssignedToFilter(
                                           filterKey: email.toString());
@@ -169,53 +183,57 @@ Widget assignToDialog({
                                           ],
                                         ),
                                       ),
-                                      Obx(
-                                        () => Material(
-                                          color: Colors.transparent,
-                                          child: Checkbox.adaptive(
-                                            value: filterController
-                                                        .assignedToFilterModel[
-                                                    email] ??
-                                                false,
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                            fillColor: WidgetStatePropertyAll(
-                                              filterController.assignedToFilterModel[
-                                                          email] ==
-                                                      true
-                                                  ? AppColors.themeGreen
-                                                  : Colors.transparent,
-                                            ),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                            ),
-                                            onChanged: (value) {
-                                              filterController
-                                                  .selectOrUnselectAssignedToFilter(
-                                                      filterKey:
-                                                          email.toString());
+                                      !isUpdating
+                                          ? Obx(
+                                              () => Material(
+                                                color: Colors.transparent,
+                                                child: Checkbox.adaptive(
+                                                  value: filterController
+                                                              .assignedToFilterModel[
+                                                          email] ??
+                                                      false,
+                                                  visualDensity:
+                                                      VisualDensity.compact,
+                                                  fillColor:
+                                                      WidgetStatePropertyAll(
+                                                    filterController.assignedToFilterModel[
+                                                                email] ==
+                                                            true
+                                                        ? AppColors.themeGreen
+                                                        : Colors.transparent,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                  ),
+                                                  onChanged: (value) {
+                                                    filterController
+                                                        .selectOrUnselectAssignedToFilter(
+                                                            filterKey: email
+                                                                .toString());
 
-                                              if (filterController
-                                                          .assignedToFilterModel[
-                                                      email] ==
-                                                  true) {
-                                                assignTaskController
-                                                    .addToAssignToList(
-                                                  name: name,
-                                                  email: email,
-                                                  phone: phone,
-                                                );
-                                              } else {
-                                                assignTaskController
-                                                    .removeFromAssignToList(
-                                                  email: email,
-                                                );
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      ),
+                                                    if (filterController
+                                                                .assignedToFilterModel[
+                                                            email] ==
+                                                        true) {
+                                                      assignTaskController
+                                                          .addToAssignToList(
+                                                        name: name,
+                                                        email: email,
+                                                        phone: phone,
+                                                      );
+                                                    } else {
+                                                      assignTaskController
+                                                          .removeFromAssignToList(
+                                                        email: email,
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox(),
                                     ],
                                   )
                                       .animate(
