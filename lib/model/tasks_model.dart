@@ -124,9 +124,9 @@ class TaskModel {
     data['title'] = title;
     data['description'] = description;
     data['category'] = category;
-    data['createdBy'] = createdBy;
+    data['createdBy'] = createdBy?.toJson();
     data['currentUser'] = currentUser;
-    data['assignTo'] = assignedTo;
+    data['assignTo'] = assignedTo!.map((item) => item.toJson()).toList();
     data['priority'] = priority;
     data['dueDate'] = dueDate;
     data['status'] = status;
@@ -352,17 +352,23 @@ class Repeat {
   String? frequency;
   List<int>? days;
   String? startDate;
+  String? endDate;
+  int? occurrenceCount;
 
   Repeat({
     this.frequency,
     this.days,
     this.startDate,
+    this.endDate,
+    this.occurrenceCount,
   });
 
   Repeat.fromJson(Map<String, dynamic> json) {
     frequency = json['frequency'];
-    days = json['days'].cast<int>();
+    days = json['days']?.cast<int>();
     startDate = json['startDate'];
+    endDate = json['endDate'];
+    occurrenceCount = json['occurrenceCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -370,6 +376,8 @@ class Repeat {
     data['frequency'] = frequency;
     data['days'] = days;
     data['startDate'] = startDate;
+    data['endDate'] = endDate;
+    data['occurrenceCount'] = occurrenceCount;
     return data;
   }
 }

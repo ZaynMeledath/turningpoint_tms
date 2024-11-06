@@ -112,16 +112,18 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     final taskModel = widget.taskModel!;
     titleController.text = taskModel.title ?? '';
     descriptionController.text = taskModel.description ?? '';
-    for (AssignedTo assignedTo in taskModel.assignedTo!) {
-      assignTaskController.assignToMap.addAll({
-        assignedTo.emailId!: AssignedTo(
-          name: assignedTo.name,
-          emailId: assignedTo.emailId,
-          phone: assignedTo.phone,
-        ),
-      });
 
-      filterController.assignedToFilterModel[assignedTo.emailId!] = true;
+    //Adding AssignTo
+    if (taskModel.assignedTo != null) {
+      for (AssignedTo assignedTo in taskModel.assignedTo!) {
+        assignTaskController.addToAssignToList(
+          name: assignedTo.name!,
+          email: assignedTo.emailId!,
+          phone: assignedTo.phone!,
+        );
+
+        filterController.assignedToFilterModel[assignedTo.emailId!] = true;
+      }
     }
     assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =

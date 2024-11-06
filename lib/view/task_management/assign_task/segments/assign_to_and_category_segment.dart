@@ -32,7 +32,7 @@ Widget assignToAndCategorySegment({
                   color: AppColors.textFieldColor,
                   borderRadius: BorderRadius.circular(20),
                   border:
-                      assignTaskController.showCategoryEmptyErrorTextObs.value
+                      assignTaskController.showAssignToEmptyErrorTextObs.value
                           ? Border.all(
                               color: Colors.redAccent,
                             )
@@ -52,7 +52,8 @@ Widget assignToAndCategorySegment({
                               right: 8.w,
                             ),
                             child: nameLetterAvatar(
-                              name: assignToMap.values.elementAt(index).name!,
+                              name: assignToMap.values.elementAt(index).name ??
+                                  'patty',
                               circleDiameter: 30.w,
                             ),
                           );

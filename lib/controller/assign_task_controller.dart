@@ -357,11 +357,12 @@ class AssignTaskController extends GetxController {
       );
 
       //assignTo is added before fetching the assign Task API
-      assignToMap.forEach(
-        (email, assignedToModel) => taskModel.assignedTo == null
-            ? taskModel.assignedTo = [assignedToModel]
-            : taskModel.assignedTo!.add(assignedToModel),
-      );
+      taskModel.assignedTo = assignToMap.values.toList();
+      // assignToMap.forEach(
+      //   (email, assignedToModel) => taskModel.assignedTo == null
+      //       ? taskModel.assignedTo = [assignedToModel]
+      //       : taskModel.assignedTo!.add(assignedToModel),
+      // );
 
       await tasksRepository.assignTask(
         taskModel: taskModel,
@@ -466,11 +467,12 @@ class AssignTaskController extends GetxController {
         );
       }
       taskModel.category = selectedCategory.value;
-      assignToMap.forEach(
-        (email, assignedToModel) => taskModel.assignedTo == null
-            ? taskModel.assignedTo = [assignedToModel]
-            : taskModel.assignedTo?.add(assignedToModel),
-      );
+      taskModel.assignedTo = assignToMap.values.toList();
+      // assignToMap.forEach(
+      //   (email, assignedToModel) => taskModel.assignedTo == null
+      //       ? taskModel.assignedTo = [assignedToModel]
+      //       : taskModel.assignedTo?.add(assignedToModel),
+      // );
 
       taskModel.priority = taskPriority.value;
       taskModel.dueDate = shouldRepeatTask.value ? null : dueOrStartDateString;
