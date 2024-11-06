@@ -13,6 +13,7 @@ class ApiEndpoints {
   static const getMyTasks = '$baseUrl/tasks/mytasks';
   static const getDelegatedTasks = '$baseUrl/tasks/delegatedtasks';
   static const assignTask = '$baseUrl/tasks';
+  static const approveTask = '$baseUrl/tasks/approveTask';
   static const getCategories = '$baseUrl/category/getCategories';
   static const allUsersPerformanceReport =
       '$baseUrl/dashboard/allusersperformance';

@@ -86,13 +86,31 @@ Widget taskCard({
                       children: [
                         SizedBox(
                           width: 192.w,
-                          child: Text(
-                            taskModel.title.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18.sp,
-                            ),
+                          child: Row(
+                            children: [
+                              taskModel.isApproved == true
+                                  ? Padding(
+                                      padding: EdgeInsets.only(right: 6.w),
+                                      child: Icon(
+                                        Icons.verified,
+                                        size: 26.w,
+                                        color: Colors.teal,
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(
+                                width:
+                                    taskModel.isApproved == true ? 160.w : 188,
+                                child: Text(
+                                  taskModel.title.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: 4.w),
@@ -265,7 +283,9 @@ Widget taskCard({
                             user?.role == Role.admin ||
                             taskModel.createdBy!.emailId == user!.emailId)
                     ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: taskModel.isApproved == true
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.spaceEvenly,
                         children: [
                           cardActionButton(
                             title: 'Delete',
@@ -276,16 +296,19 @@ Widget taskCard({
                               taskModel: taskModel,
                             ),
                           ),
-                          cardActionButton(
-                            title: 'Re Open',
-                            icon: StatusIcons.inProgress,
-                            iconColor: StatusColor.open,
-                            onTap: () => TaskCrudOperations.updateTaskStatus(
-                              taskId: taskModel.id.toString(),
-                              taskStatus: Status.open,
-                              tasksController: tasksController,
-                            ),
-                          ),
+                          taskModel.isApproved != true
+                              ? cardActionButton(
+                                  title: 'Re Open',
+                                  icon: StatusIcons.inProgress,
+                                  iconColor: StatusColor.open,
+                                  onTap: () =>
+                                      TaskCrudOperations.updateTaskStatus(
+                                    taskId: taskModel.id.toString(),
+                                    taskStatus: Status.open,
+                                    tasksController: tasksController,
+                                  ),
+                                )
+                              : const SizedBox(),
                         ],
                       )
                     : !isTaskCompleted
@@ -351,13 +374,14 @@ Widget taskCard({
                         ),
                       )
                     : const SizedBox(),
-                taskModel.isApproved != true &&
+                taskModel.status == Status.completed &&
+                        taskModel.isApproved != true &&
                         taskModel.createdBy!.emailId == user!.emailId
                     ? Padding(
                         padding: EdgeInsets.only(top: 9.h),
                         child: cardActionButton(
                           title: 'Approve',
-                          icon: Icons.done_all,
+                          icon: Icons.verified,
                           iconColor: Colors.teal,
                           onTap: () async {
                             try {

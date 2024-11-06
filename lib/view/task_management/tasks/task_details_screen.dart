@@ -239,7 +239,9 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                             horizontal: 14.w,
                           ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: taskModel.isApproved == true
+                                ? MainAxisAlignment.center
+                                : MainAxisAlignment.spaceBetween,
                             children: [
                               cardActionButton(
                                 title: 'Delete',
@@ -258,23 +260,26 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 iconSize: 22.sp,
                                 textSize: 14.sp,
                               ),
-                              cardActionButton(
-                                title: 'Re Open',
-                                icon: StatusIcons.inProgress,
-                                iconColor: StatusColor.open,
-                                onTap: () {
-                                  TaskCrudOperations.updateTaskStatus(
-                                    taskId: taskModel.id.toString(),
-                                    taskStatus: Status.open,
-                                    tasksController: tasksController,
-                                  );
-                                },
-                                containerColor: Colors.grey.withOpacity(.08),
-                                containerWidth: 150.w,
-                                containerHeight: 40,
-                                iconSize: 22.sp,
-                                textSize: 14.sp,
-                              ),
+                              taskModel.isApproved != true
+                                  ? cardActionButton(
+                                      title: 'Re Open',
+                                      icon: StatusIcons.inProgress,
+                                      iconColor: StatusColor.open,
+                                      onTap: () {
+                                        TaskCrudOperations.updateTaskStatus(
+                                          taskId: taskModel.id.toString(),
+                                          taskStatus: Status.open,
+                                          tasksController: tasksController,
+                                        );
+                                      },
+                                      containerColor:
+                                          Colors.grey.withOpacity(.08),
+                                      containerWidth: 150.w,
+                                      containerHeight: 40,
+                                      iconSize: 22.sp,
+                                      textSize: 14.sp,
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
                         )
@@ -376,7 +381,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           ),
                         )
                       : const SizedBox(),
-                  taskModel.isApproved != true &&
+                  taskModel.status == Status.completed &&
+                          taskModel.isApproved != true &&
                           taskModel.createdBy!.emailId == user!.emailId
                       ? Align(
                           alignment: Alignment.center,
@@ -384,7 +390,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                             padding: EdgeInsets.only(top: 9.h),
                             child: cardActionButton(
                               title: 'Approve',
-                              icon: Icons.done_all,
+                              icon: Icons.verified,
                               iconColor: Colors.teal,
                               onTap: () async {
                                 try {

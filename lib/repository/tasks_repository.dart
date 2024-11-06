@@ -184,10 +184,10 @@ class TasksRepository {
   }) async {
     try {
       await ApiService().sendRequest(
-        url: '${ApiEndpoints.assignTask}/$taskId',
+        url: '${ApiEndpoints.approveTask}/$taskId',
         requestMethod: RequestMethod.PATCH,
         data: {
-          'isApproved': true,
+          // 'isApproved': true,
         },
         fieldNameForFiles: null,
         isTokenRequired: true,

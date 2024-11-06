@@ -46,6 +46,33 @@ Widget titleDescriptionContainer({
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //--------------------Title Segment--------------------//
+            taskModel.isApproved == true
+                ? Padding(
+                    padding: EdgeInsets.only(bottom: 4.h),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(right: 6.w),
+                          child: Icon(
+                            Icons.verified,
+                            size: 26.w,
+                            color: Colors.teal,
+                          ),
+                        ),
+                        Text(
+                          'Task Approved',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white54,
+                            decoration: TextDecoration.underline,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : const SizedBox(),
+
             Text(
               taskModel.title.toString(),
               style: TextStyle(
