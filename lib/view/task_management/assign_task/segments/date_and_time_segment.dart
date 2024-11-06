@@ -9,13 +9,21 @@ Widget dateAndTimeSegment({
     padding: EdgeInsets.symmetric(horizontal: 6.w),
     child: Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            buildDueOrStartDateSection(
-                assignTaskController: assignTaskController),
-            buildEndDateSection(assignTaskController: assignTaskController)
-          ],
+        Obx(
+          () => Row(
+            mainAxisAlignment:
+                assignTaskController.shouldRepeatTask.value == true
+                    ? MainAxisAlignment.spaceBetween
+                    : MainAxisAlignment.start,
+            children: [
+              buildDueOrStartDateSection(
+                  assignTaskController: assignTaskController),
+              assignTaskController.shouldRepeatTask.value == true
+                  ? buildEndDateSection(
+                      assignTaskController: assignTaskController)
+                  : const SizedBox()
+            ],
+          ),
         ),
         Obx(() {
           if (assignTaskController.showDueOrStartDateErrorTextObs.value) {

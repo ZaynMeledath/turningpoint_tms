@@ -264,7 +264,7 @@ class AssignTaskController extends GetxController {
   }) async {
     try {
       //To convert to Local
-      final dueDate = DateTime(
+      final dueOrStartDate = DateTime(
         taskDueOrStartDate.value.year,
         taskDueOrStartDate.value.month,
         taskDueOrStartDate.value.day,
@@ -282,14 +282,17 @@ class AssignTaskController extends GetxController {
             )
           : null;
 
-      if (!dueDate.isAfter(DateTime.now()) ||
-          dueDate.isAtSameMomentAs(DateTime.now())) {
+      if (dueOrStartDate.isBefore(DateTime.now()) ||
+          dueOrStartDate.isAtSameMomentAs(DateTime.now())) {
         throw DueOrStartDateTimeErrorException();
       }
 
       if (endDate != null &&
-          (!endDate.isAfter(DateTime.now()) ||
-              endDate.isAtSameMomentAs(DateTime.now()))) {}
+          (endDate.isBefore(DateTime.now()) ||
+              endDate.isAtSameMomentAs(DateTime.now())) &&
+          endDate.isBefore(dueOrStartDate)) {
+        throw EndDateTimeErrorException();
+      }
 
       if (shouldRepeatTask.value) {
         if (taskRepeatFrequency.value == null) {
@@ -297,7 +300,8 @@ class AssignTaskController extends GetxController {
         }
       }
 
-      final dueDateString = dueDate.toIso8601String();
+      final dueOrStartDateString = dueOrStartDate.toIso8601String();
+      final endDateString = endDate?.toIso8601String();
 
       List<int>? days;
 
@@ -337,14 +341,17 @@ class AssignTaskController extends GetxController {
         category: selectedCategory.value,
         assignedTo: null, // will be added after creating taskModel
         priority: taskPriority.value,
-        dueDate: shouldRepeatTask.value ? null : dueDateString,
+        dueDate: shouldRepeatTask.value ? null : dueOrStartDateString,
         repeat: shouldRepeatTask.value && taskRepeatFrequency.value != null
             ? Repeat(
                 startDate:
-                    dueDateString, //due date acts as start date when repeat is turned ON
+                    dueOrStartDateString, //due date acts as start date when repeat is turned ON
                 frequency: repeatFrequencyEnumToString(
                     repeatFrequency: taskRepeatFrequency.value),
-                days: days)
+                days: days,
+                endDate: endDateString,
+                occurrenceCount: 0,
+              )
             : null,
         attachments: taskAttachments,
       );
@@ -388,16 +395,34 @@ class AssignTaskController extends GetxController {
   }) async {
     try {
       //To convert to Local
-      final dueDate = DateTime(
+      final dueOrStartDate = DateTime(
         taskDueOrStartDate.value.year,
         taskDueOrStartDate.value.month,
         taskDueOrStartDate.value.day,
         taskDueOrStartTime.value.hour,
         taskDueOrStartTime.value.minute,
       );
-      if (!dueDate.isAfter(DateTime.now()) ||
-          dueDate.isAtSameMomentAs(DateTime.now())) {
+
+      final endDate = taskEndDate.value != null
+          ? DateTime(
+              taskEndDate.value!.year,
+              taskEndDate.value!.month,
+              taskEndDate.value!.day,
+              taskEndDate.value!.hour,
+              taskEndDate.value!.minute,
+            )
+          : null;
+
+      if (dueOrStartDate.isBefore(DateTime.now()) ||
+          dueOrStartDate.isAtSameMomentAs(DateTime.now())) {
         throw DueOrStartDateTimeErrorException();
+      }
+
+      if (endDate != null &&
+          (endDate.isBefore(DateTime.now()) ||
+              endDate.isAtSameMomentAs(DateTime.now())) &&
+          endDate.isBefore(dueOrStartDate)) {
+        throw EndDateTimeErrorException();
       }
 
       if (shouldRepeatTask.value) {
@@ -406,7 +431,8 @@ class AssignTaskController extends GetxController {
         }
       }
 
-      final dueDateString = dueDate.toIso8601String();
+      final dueOrStartDateString = dueOrStartDate.toIso8601String();
+      final endDateString = endDate?.toIso8601String();
 
       List<int>? days;
 
@@ -447,14 +473,16 @@ class AssignTaskController extends GetxController {
       );
 
       taskModel.priority = taskPriority.value;
-      taskModel.dueDate = shouldRepeatTask.value ? null : dueDateString;
+      taskModel.dueDate = shouldRepeatTask.value ? null : dueOrStartDateString;
       taskModel.repeat = shouldRepeatTask.value
           ? Repeat(
               startDate:
-                  dueDateString, //due date acts as start date when repeat is turned ON
+                  dueOrStartDateString, //due date acts as start date when repeat is turned ON
               frequency: repeatFrequencyEnumToString(
                   repeatFrequency: taskRepeatFrequency.value),
               days: days,
+              endDate: endDateString,
+              occurrenceCount: 0,
             )
           : null;
       taskModel.attachments =
@@ -509,32 +537,42 @@ Map<int, bool> createDateMap() {
 //====================Week Days to Index====================//
 List<int> weekDaysToIndex({required List<String> weekDays}) {
   final weekDaysIndexList = <int>[];
+  final weekDaysMap = {
+    'Sun': 0,
+    'Mon': 1,
+    'Tue': 2,
+    'Wed': 3,
+    'Thu': 4,
+    'Fri': 5,
+    'Sat': 6,
+  };
   for (String day in weekDays) {
-    switch (day) {
-      case 'Sun':
-        weekDaysIndexList.add(0);
-        break;
-      case 'Mon':
-        weekDaysIndexList.add(1);
-        break;
-      case 'Tue':
-        weekDaysIndexList.add(2);
-        break;
-      case 'Wed':
-        weekDaysIndexList.add(3);
-        break;
-      case 'Thu':
-        weekDaysIndexList.add(4);
-        break;
-      case 'Fri':
-        weekDaysIndexList.add(5);
-        break;
-      case 'Sat':
-        weekDaysIndexList.add(6);
-        break;
-      default:
-        break;
-    }
+    weekDaysIndexList.add(weekDaysMap[day]!);
+    // switch (day) {
+    //   case 'Sun':
+    //     weekDaysIndexList.add(0);
+    //     break;
+    //   case 'Mon':
+    //     weekDaysIndexList.add(1);
+    //     break;
+    //   case 'Tue':
+    //     weekDaysIndexList.add(2);
+    //     break;
+    //   case 'Wed':
+    //     weekDaysIndexList.add(3);
+    //     break;
+    //   case 'Thu':
+    //     weekDaysIndexList.add(4);
+    //     break;
+    //   case 'Fri':
+    //     weekDaysIndexList.add(5);
+    //     break;
+    //   case 'Sat':
+    //     weekDaysIndexList.add(6);
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
   return weekDaysIndexList;
 }

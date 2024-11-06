@@ -75,6 +75,7 @@ class _TasksScreenState extends State<TasksScreen>
     tabController = TabController(
       length: tabCount,
       vsync: this,
+      initialIndex: 1,
     );
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
@@ -363,7 +364,9 @@ class _TasksScreenState extends State<TasksScreen>
           allTasksList = tasksController.dashboardTasksListObs;
           if (widget.avoidTabBar != true) {
             unapprovedTasksList = tasksController.dashboardTasksListObs
-                .where((taskModel) => taskModel.isApproved != true)
+                .where((taskModel) =>
+                    taskModel.status == Status.completed &&
+                    taskModel.isApproved != true)
                 .toList();
             openTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) => taskModel.status == Status.open)

@@ -126,11 +126,22 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =
         taskModel.priority ?? TaskPriority.low;
+
+    //Task Due or Start Date assigning
     assignTaskController.taskDueOrStartDate.value = taskModel.dueDate != null
         ? DateTime.parse(taskModel.dueDate!).toLocal()
         : DateTime.now();
     assignTaskController.taskDueOrStartTime.value =
         TimeOfDay.fromDateTime(assignTaskController.taskDueOrStartDate.value);
+
+    //Task End Date assigning
+    assignTaskController.taskEndDate.value = taskModel.repeat?.endDate != null
+        ? DateTime.parse(taskModel.repeat!.endDate!).toLocal()
+        : null;
+    assignTaskController.taskEndTime.value =
+        assignTaskController.taskEndDate.value != null
+            ? TimeOfDay.fromDateTime(assignTaskController.taskEndDate.value!)
+            : null;
 
     assignTaskController.reminderList.value = taskModel.reminders ?? [];
     if (taskModel.attachments != null) {

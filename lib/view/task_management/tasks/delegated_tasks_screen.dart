@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
@@ -44,6 +45,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
     tabController = TabController(
       length: 6,
       vsync: this,
+      initialIndex: 1,
     );
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();
@@ -119,7 +121,9 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                 tasksController.delegatedTasksListObs.value;
 
             final unapprovedTasksList = allDelegatedTasksList
-                ?.where((taskModel) => taskModel.isApproved != true)
+                ?.where((taskModel) =>
+                    taskModel.status == Status.completed &&
+                    taskModel.isApproved != true)
                 .toList();
             final openDelegatedTasksList =
                 tasksController.openDelegatedTaskList.value;
