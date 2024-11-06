@@ -31,11 +31,32 @@ Widget dateAndTimeSegment({
               children: [
                 SizedBox(height: 4.h),
                 Align(
-                  // alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     !assignTaskController.shouldRepeatTask.value
-                        ? 'Due date and time should be in the future'
-                        : 'Start Date and time should be in the future',
+                        ? 'Select a valid due date'
+                        : 'Select a valid start date',
+                    style: TextStyle(
+                      fontSize: 12.5.sp,
+                      color: Colors.redAccent.shade100,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
+        Obx(() {
+          if (assignTaskController.showEndDateErrorTextObs.value) {
+            return Column(
+              children: [
+                SizedBox(height: 4.h),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Select a valid end date',
                     style: TextStyle(
                       fontSize: 12.5.sp,
                       color: Colors.redAccent.shade100,

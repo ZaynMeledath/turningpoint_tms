@@ -106,8 +106,12 @@ Widget swipeToAdd({
           } on DueOrStartDateTimeErrorException {
             assignTaskController.showDueOrStartDateErrorTextObs.value = true;
             return 0;
+          } on EndDateTimeErrorException {
+            assignTaskController.showEndDateErrorTextObs.value = true;
+            return 0;
           } on RepeatFrequencyNullException {
             assignTaskController.showRepeatFrequencyErrorTextObs.value = true;
+            return 0;
           } catch (_) {
             return showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',

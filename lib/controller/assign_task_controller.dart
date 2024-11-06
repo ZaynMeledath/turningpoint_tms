@@ -289,8 +289,8 @@ class AssignTaskController extends GetxController {
 
       if (endDate != null &&
           (endDate.isBefore(DateTime.now()) ||
-              endDate.isAtSameMomentAs(DateTime.now())) &&
-          endDate.isBefore(dueOrStartDate)) {
+              endDate.isAtSameMomentAs(DateTime.now()) ||
+              endDate.isBefore(dueOrStartDate))) {
         throw EndDateTimeErrorException();
       }
 
