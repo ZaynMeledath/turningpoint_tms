@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -15,6 +16,7 @@ import 'package:turningpoint_tms/notification/awesome_notification_controller.da
 import 'package:turningpoint_tms/preferences/app_preferences.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/home/tasks_home.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() async {
@@ -140,9 +142,15 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: AppColors.scaffoldBackgroundColor,
         ),
-        home: user == null || authToken == null
-            ? const LoginScreen()
-            : const TasksHome(),
+        home: UpgradeAlert(
+          showIgnore: false,
+          dialogStyle: Platform.isIOS
+              ? UpgradeDialogStyle.cupertino
+              : UpgradeDialogStyle.material,
+          child: user == null || authToken == null
+              ? const LoginScreen()
+              : const TasksHome(),
+        ),
       ),
     );
   }
