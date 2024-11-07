@@ -195,16 +195,14 @@ class UserController extends GetxController {
       final fcmToken = await FirebaseMessaging.instance.getToken();
       if (fcmToken != null) {
         await UserRepository.logOut(fcmToken: fcmToken);
-        final tasksController = Get.put(TasksController());
-        tasksController.allTasksListObs.value = null;
-        tasksController.myTasksListObs.value = null;
-        tasksController.delegatedTasksListObs.value = null;
-        tasksController.dashboardTasksListObs.clear();
-        deleteUserModelFromHive();
-        AppPreferences.clearSharedPreferences();
-      } else {
-        throw FcmTokenNullException();
       }
+      final tasksController = Get.put(TasksController());
+      tasksController.allTasksListObs.value = null;
+      tasksController.myTasksListObs.value = null;
+      tasksController.delegatedTasksListObs.value = null;
+      tasksController.dashboardTasksListObs.clear();
+      deleteUserModelFromHive();
+      AppPreferences.clearSharedPreferences();
     } catch (_) {
       rethrow;
     }

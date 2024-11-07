@@ -383,21 +383,14 @@ class TasksController extends GetxController {
 //====================Delete Task====================//
   Future<void> deleteTask({required String taskId}) async {
     try {
-      await tasksRepository.deleteTask(taskId: taskId);
-      Get.back();
       if (Get.currentRoute == '/TaskDetailsScreen') {
+        unawaited(tasksRepository.deleteTask(taskId: taskId));
+        Get.back();
+        Get.back();
+      } else {
+        await tasksRepository.deleteTask(taskId: taskId);
         Get.back();
       }
-      if (isDelegatedObs.value == true) {
-        await getDelegatedTasks();
-      } else if (isDelegatedObs.value == false) {
-        await getMyTasks();
-      }
-      unawaited(getAllTasks());
-      unawaited(getAllUsersPerformanceReport());
-      unawaited(getMyPerformanceReport());
-      unawaited(getDelegatedPerformanceReport());
-      unawaited(getAllCategoriesPerformanceReport());
     } catch (_) {
       rethrow;
     }
@@ -484,30 +477,23 @@ class TasksController extends GetxController {
       tasksException.value = null;
       taskUpdateAttachmentsFileList.clear();
       taskUpdateAttachmentsMapList.clear();
-      if (isDelegatedObs.value == true) {
-        await getDelegatedTasks();
-        unawaited(getMyTasks());
-        unawaited(getAllTasks());
-      } else if (isDelegatedObs.value == false) {
-        await getMyTasks();
-        unawaited(getDelegatedTasks());
-        unawaited(getAllTasks());
-      } else {
-        await getAllTasks();
-        unawaited(getMyTasks());
-        unawaited(getDelegatedTasks());
-      }
-      unawaited(getAllUsersPerformanceReport());
-      unawaited(getMyPerformanceReport());
-      unawaited(getDelegatedPerformanceReport());
-      unawaited(getAllCategoriesPerformanceReport());
-      // for (int i = 0; i < dashboardTasksListObs.length; i++) {
-      //   if (dashboardTasksListObs[i].id == taskId) {
-      //     dashboardTasksListObs[i] = allTasksListObs.value!
-      //         .firstWhere((taskModel) => taskModel.id == taskId);
-      //     return;
-      //   }
+      // if (isDelegatedObs.value == true) {
+      //   await getDelegatedTasks();
+      //   unawaited(getMyTasks());
+      //   unawaited(getAllTasks());
+      // } else if (isDelegatedObs.value == false) {
+      //   await getMyTasks();
+      //   unawaited(getDelegatedTasks());
+      //   unawaited(getAllTasks());
+      // } else {
+      //   await getAllTasks();
+      //   unawaited(getMyTasks());
+      //   unawaited(getDelegatedTasks());
       // }
+      // unawaited(getAllUsersPerformanceReport());
+      // unawaited(getMyPerformanceReport());
+      // unawaited(getDelegatedPerformanceReport());
+      // unawaited(getAllCategoriesPerformanceReport());
     } catch (_) {
       rethrow;
     }

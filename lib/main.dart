@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,6 +15,7 @@ import 'package:turningpoint_tms/notification/awesome_notification_controller.da
 import 'package:turningpoint_tms/preferences/app_preferences.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/home/tasks_home.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,13 +25,39 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onMessage.listen(_firebasePushHandler);
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
-  // RemoteMessage? initialMessage =
-  //     await FirebaseMessaging.instance.getInitialMessage();
 
-  // if (initialMessage != null) {
-  //   _handleFirebaseMessage(initialMessage);
-  // }
-  // FirebaseMessaging.onMessageOpenedApp.listen(_handleFirebaseMessage);
+//====================WebSocket Setup====================//
+  final wsUrl = Uri.parse('ws://192.168.1.141:5001');
+  final channel = WebSocketChannel.connect(wsUrl);
+  await channel.ready;
+  final tasksController = Get.put(TasksController());
+  final userModel = getUserModelFromHive();
+  final isAdminOrLeader =
+      userModel?.role == Role.admin || userModel?.role == Role.teamLeader;
+
+  channel.stream.listen((message) async {
+    if (tasksController.isDelegatedObs.value == true) {
+      await tasksController.getDelegatedTasks();
+      unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getMyTasks());
+    } else if (tasksController.isDelegatedObs.value == false) {
+      await tasksController.getMyTasks();
+      unawaited(tasksController.getAllTasks());
+      unawaited(tasksController.getDelegatedTasks());
+    } else {
+      await tasksController.getAllTasks();
+      unawaited(tasksController.getDelegatedTasks());
+      unawaited(tasksController.getMyTasks());
+    }
+    if (isAdminOrLeader) {
+      unawaited(tasksController.getAllUsersPerformanceReport());
+      unawaited(tasksController.getAllCategoriesPerformanceReport());
+      unawaited(tasksController.getDelegatedPerformanceReport());
+    }
+    unawaited(tasksController.getMyPerformanceReport());
+  });
+
+//====================Awesome Notification Initialization====================//
   AwesomeNotifications().initialize(
     'resource://drawable/notification_icon',
     [
@@ -73,13 +101,8 @@ void main() async {
   ]).then((value) => runApp(const MyApp()));
 }
 
+//====================Firebase Notification Handler====================//
 Future<void> _firebasePushHandler(RemoteMessage message) async {
-  // if (message.data['type'] == 'task')
-  // {
-  final tasksController = Get.put(TasksController());
-  final userModel = getUserModelFromHive();
-  final isAdminOrLeader =
-      userModel?.role == Role.admin || userModel?.role == Role.teamLeader;
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: DateTime.now().millisecondsSinceEpoch.remainder(1000),
@@ -88,44 +111,7 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
       body: message.notification!.body,
     ),
   );
-
-//To ensure that the data is up to date
-  switch (message.data['type']) {
-    case 'task':
-      await tasksController.getMyTasks();
-      await tasksController.getDelegatedTasks();
-      await tasksController.getAllTasks();
-      if (isAdminOrLeader) {
-        await tasksController.getAllUsersPerformanceReport();
-        await tasksController.getAllCategoriesPerformanceReport();
-        await tasksController.getMyPerformanceReport();
-        await tasksController.getDelegatedPerformanceReport();
-      } else {
-        await tasksController.getMyPerformanceReport();
-      }
-      break;
-
-    case 'profile':
-      break;
-
-    default:
-      break;
-  }
-  // }
 }
-
-// void _handleFirebaseMessage(RemoteMessage message) {
-//   if (message.notification != null) {
-//     switch (message.data['type']) {
-//       case 'task':
-//         break;
-//       case 'profile':
-//         break;
-//       default:
-//         break;
-//     }
-//   }
-// }
 
 Future<void> checkForPlayStoreUpdate() async {}
 

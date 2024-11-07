@@ -358,33 +358,28 @@ class AssignTaskController extends GetxController {
 
       //assignTo is added before fetching the assign Task API
       taskModel.assignedTo = assignToMap.values.toList();
-      // assignToMap.forEach(
-      //   (email, assignedToModel) => taskModel.assignedTo == null
-      //       ? taskModel.assignedTo = [assignedToModel]
-      //       : taskModel.assignedTo!.add(assignedToModel),
-      // );
 
       await tasksRepository.assignTask(
         taskModel: taskModel,
       );
-      if (tasksController.isDelegatedObs.value == true) {
-        await tasksController.getDelegatedTasks();
-        unawaited(tasksController.getMyTasks());
-        unawaited(tasksController.getAllTasks());
-      } else if (tasksController.isDelegatedObs.value == false) {
-        await tasksController.getMyTasks();
-        unawaited(tasksController.getDelegatedTasks());
-        unawaited(tasksController.getAllTasks());
-      } else {
-        await tasksController.getAllTasks();
-        unawaited(tasksController.getMyTasks());
-        unawaited(tasksController.getDelegatedTasks());
-      }
-      unawaited(tasksController.getAllUsersPerformanceReport());
-      unawaited(tasksController.getMyPerformanceReport());
-      unawaited(tasksController.getDelegatedPerformanceReport());
-      unawaited(tasksController.getAllTasks());
-      unawaited(tasksController.getAllCategoriesPerformanceReport());
+      // if (tasksController.isDelegatedObs.value == true) {
+      //   await tasksController.getDelegatedTasks();
+      //   unawaited(tasksController.getMyTasks());
+      //   unawaited(tasksController.getAllTasks());
+      // } else if (tasksController.isDelegatedObs.value == false) {
+      //   await tasksController.getMyTasks();
+      //   unawaited(tasksController.getDelegatedTasks());
+      //   unawaited(tasksController.getAllTasks());
+      // } else {
+      //   await tasksController.getAllTasks();
+      //   unawaited(tasksController.getMyTasks());
+      //   unawaited(tasksController.getDelegatedTasks());
+      // }
+      // unawaited(tasksController.getAllUsersPerformanceReport());
+      // unawaited(tasksController.getMyPerformanceReport());
+      // unawaited(tasksController.getDelegatedPerformanceReport());
+      // unawaited(tasksController.getAllTasks());
+      // unawaited(tasksController.getAllCategoriesPerformanceReport());
     } catch (e) {
       rethrow;
     }
@@ -443,9 +438,8 @@ class AssignTaskController extends GetxController {
 
         case RepeatFrequency.weekly:
           days = weekDaysToIndex(
-              weekDays: daysMap.keys.where((key) {
-            return daysMap[key] == true;
-          }).toList());
+              weekDays:
+                  daysMap.keys.where((key) => daysMap[key] == true).toList());
           break;
 
         case RepeatFrequency.monthly:
@@ -468,11 +462,6 @@ class AssignTaskController extends GetxController {
       }
       taskModel.category = selectedCategory.value;
       taskModel.assignedTo = assignToMap.values.toList();
-      // assignToMap.forEach(
-      //   (email, assignedToModel) => taskModel.assignedTo == null
-      //       ? taskModel.assignedTo = [assignedToModel]
-      //       : taskModel.assignedTo?.add(assignedToModel),
-      // );
 
       taskModel.priority = taskPriority.value;
       taskModel.dueDate = shouldRepeatTask.value ? null : dueOrStartDateString;
@@ -492,33 +481,25 @@ class AssignTaskController extends GetxController {
               ? null
               : taskAttachments;
 
-      await tasksRepository.updateTask(taskModel: taskModel);
-      if (tasksController.isDelegatedObs.value == true) {
-        await tasksController.getDelegatedTasks();
-        unawaited(tasksController.getMyTasks());
-        unawaited(tasksController.getAllTasks());
-      } else if (tasksController.isDelegatedObs.value == false) {
-        await tasksController.getMyTasks();
-        unawaited(tasksController.getDelegatedTasks());
-        unawaited(tasksController.getAllTasks());
-      } else {
-        await tasksController.getAllTasks();
-        unawaited(tasksController.getMyTasks());
-        unawaited(tasksController.getDelegatedTasks());
-      }
-      unawaited(tasksController.getAllUsersPerformanceReport());
-      unawaited(tasksController.getMyPerformanceReport());
-      unawaited(tasksController.getDelegatedPerformanceReport());
-      unawaited(tasksController.getAllTasks());
-      unawaited(tasksController.getAllCategoriesPerformanceReport());
-      // for (int i = 0; i < tasksController.dashboardTasksListObs.length; i++) {
-      //   if (tasksController.dashboardTasksListObs[i].id == taskModel.id) {
-      //     tasksController.dashboardTasksListObs[i] = tasksController
-      //         .allTasksListObs.value!
-      //         .firstWhere((item) => item.id == taskModel.id);
-      //     return;
-      //   }
+      // await tasksRepository.updateTask(taskModel: taskModel);
+      // if (tasksController.isDelegatedObs.value == true) {
+      //   await tasksController.getDelegatedTasks();
+      //   unawaited(tasksController.getMyTasks());
+      //   unawaited(tasksController.getAllTasks());
+      // } else if (tasksController.isDelegatedObs.value == false) {
+      //   await tasksController.getMyTasks();
+      //   unawaited(tasksController.getDelegatedTasks());
+      //   unawaited(tasksController.getAllTasks());
+      // } else {
+      //   await tasksController.getAllTasks();
+      //   unawaited(tasksController.getMyTasks());
+      //   unawaited(tasksController.getDelegatedTasks());
       // }
+      // unawaited(tasksController.getAllUsersPerformanceReport());
+      // unawaited(tasksController.getMyPerformanceReport());
+      // unawaited(tasksController.getDelegatedPerformanceReport());
+      // unawaited(tasksController.getAllTasks());
+      // unawaited(tasksController.getAllCategoriesPerformanceReport());
     } catch (e) {
       rethrow;
     }

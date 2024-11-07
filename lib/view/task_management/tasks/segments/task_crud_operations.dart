@@ -32,13 +32,13 @@ class TaskCrudOperations {
             // if (shouldDoubleBack == true) {
             //   Get.back();
             // }
+            appController.isLoadingObs.value = false;
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
               title: 'Task Deleted!',
               content: 'Task Successfully deleted',
               buttons: {'OK': null},
             );
-            appController.isLoadingObs.value = false;
           } catch (_) {
             Get.back();
             showGenericDialog(
