@@ -522,9 +522,6 @@ class TasksController extends GetxController {
       rethrow;
     }
   }
-
-//====================Reset Task Controller====================//
-  void resetTasksController() {}
 }
 
 class TaskPriority {

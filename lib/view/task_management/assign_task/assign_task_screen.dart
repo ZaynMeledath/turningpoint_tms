@@ -189,7 +189,9 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
 
   @override
   void dispose() {
+    super.dispose();
     tabController.dispose();
+    tasksController.dispose();
     titleController.dispose();
     descriptionController.dispose();
     assignToSearchController.dispose();
@@ -198,7 +200,6 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignTaskController.dispose();
     recorder.dispose();
     audioPlayer.dispose();
-    super.dispose();
   }
 
   @override

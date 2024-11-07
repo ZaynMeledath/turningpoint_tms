@@ -380,7 +380,7 @@ class AssignTaskController extends GetxController {
       // unawaited(tasksController.getDelegatedPerformanceReport());
       // unawaited(tasksController.getAllTasks());
       // unawaited(tasksController.getAllCategoriesPerformanceReport());
-    } catch (e) {
+    } catch (_) {
       rethrow;
     }
   }

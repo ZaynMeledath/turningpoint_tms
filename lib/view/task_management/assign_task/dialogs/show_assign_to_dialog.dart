@@ -126,7 +126,7 @@ Widget assignToDialog({
                                     return;
                                   }
                                   filterController
-                                      .selectOrUnselectAssignedToFilter(
+                                      .selectOrUnselectAssignToUsers(
                                           filterKey: email.toString());
 
                                   if (filterController
@@ -209,7 +209,7 @@ Widget assignToDialog({
                                                   ),
                                                   onChanged: (value) {
                                                     filterController
-                                                        .selectOrUnselectAssignedToFilter(
+                                                        .selectOrUnselectAssignToUsers(
                                                             filterKey: email
                                                                 .toString());
 

@@ -133,6 +133,19 @@ class FilterController extends GetxController {
     filterTasks();
   }
 
+//====================Select or Unselect Assign To Filters====================//
+  void selectOrUnselectAssignToUsers({
+    required String filterKey,
+  }) {
+    assignedToFilterModel[filterKey] = !assignedToFilterModel[filterKey]!;
+
+    if (assignedToFilterModel[filterKey] == true) {
+      selectedAssignedToList.add(filterKey);
+    } else {
+      selectedAssignedToList.remove(filterKey);
+    }
+  }
+
 //====================Select or Unselect Frequency Filters====================//
   void selectOrUnselectFrequencyFilter({
     required String filterKey,

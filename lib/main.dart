@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,16 +30,17 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
 
 //====================WebSocket Setup====================//
-  final wsUrl = Uri.parse('ws://192.168.1.141:5001');
+  final wsUrl = Uri.parse('ws://13.126.184.197/tms/api');
   final channel = WebSocketChannel.connect(wsUrl);
   await channel.ready;
   final tasksController = Get.put(TasksController());
-  final userModel = getUserModelFromHive();
+  final user = getUserModelFromHive();
   final isAdminOrLeader =
-      userModel?.role == Role.admin || userModel?.role == Role.teamLeader;
+      user?.role == Role.admin || user?.role == Role.teamLeader;
 
   channel.stream.listen((message) async {
     if (tasksController.isDelegatedObs.value == true) {
+      log('MESSAGE FOR WEBSOCKET : $message');
       await tasksController.getDelegatedTasks();
       unawaited(tasksController.getAllTasks());
       unawaited(tasksController.getMyTasks());

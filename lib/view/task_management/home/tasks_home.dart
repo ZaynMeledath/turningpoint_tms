@@ -67,7 +67,6 @@ class _TasksHomeState extends State<TasksHome> {
         const MyTasksScreen(),
       ];
     }
-
     super.initState();
   }
 
