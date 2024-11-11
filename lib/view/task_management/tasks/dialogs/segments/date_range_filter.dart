@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' show Obx;
 import 'package:turningpoint_tms/constants/app_constants.dart';
@@ -29,7 +30,15 @@ Widget dateRangeFilter({
                 ),
               ),
             ],
-          ),
+          )
+              .animate(
+                key: GlobalKey(),
+              )
+              .slideX(
+                begin: -.06,
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.elasticOut,
+              ),
           SizedBox(height: 20.h),
           Row(
             children: [
@@ -46,7 +55,16 @@ Widget dateRangeFilter({
                         ),
                       ),
                     ),
-                  ),
+                  )
+                      .animate(
+                        key: GlobalKey(),
+                      )
+                      .slideX(
+                        begin: -.06,
+                        delay: const Duration(milliseconds: 30),
+                        duration: const Duration(milliseconds: 700),
+                        curve: Curves.elasticOut,
+                      ),
                   SizedBox(height: 16.h),
                   SizedBox(
                     height: 48.w,
@@ -58,7 +76,16 @@ Widget dateRangeFilter({
                         ),
                       ),
                     ),
-                  ),
+                  )
+                      .animate(
+                        key: GlobalKey(),
+                      )
+                      .slideX(
+                        begin: -.06,
+                        delay: const Duration(milliseconds: 90),
+                        duration: const Duration(milliseconds: 700),
+                        curve: Curves.elasticOut,
+                      ),
                 ],
               ),
               SizedBox(width: 12.w),
@@ -93,7 +120,16 @@ Widget dateRangeFilter({
                             ),
                           ),
                         ),
-                      );
+                      )
+                          .animate(
+                            key: GlobalKey(),
+                          )
+                          .slideX(
+                            begin: -.06,
+                            delay: const Duration(milliseconds: 60),
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.elasticOut,
+                          );
                     },
                   ),
                   SizedBox(height: 16.h),
@@ -124,7 +160,16 @@ Widget dateRangeFilter({
                             ),
                           ),
                         ),
-                      );
+                      )
+                          .animate(
+                            key: GlobalKey(),
+                          )
+                          .slideX(
+                            begin: -.06,
+                            delay: const Duration(milliseconds: 120),
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.elasticOut,
+                          );
                     },
                   ),
                 ],
