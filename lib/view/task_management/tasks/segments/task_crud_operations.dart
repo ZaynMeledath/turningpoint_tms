@@ -12,9 +12,75 @@ class TaskCrudOperations {
   static void deleteTask({
     required TasksController tasksController,
     required TaskModel taskModel,
-    bool? shouldDoubleBack,
   }) {
     final appController = Get.put(AppController());
+    if (taskModel.repeat != null) {
+      showGenericDialog(
+        iconPath: 'assets/lotties/delete_animation.json',
+        title: 'Delete all or just this?',
+        content:
+            'Do you want to delete all recurring tasks associated with this or just this one?',
+        confirmationButtonColor: Colors.red,
+        secondaryButtonBorderColor: Colors.red,
+        iconWidth: 100.w,
+        buttons: {
+          'All Recurring': () async {
+            try {
+              appController.isLoadingObs.value = true;
+              await tasksController.deleteTask(
+                taskId: taskModel.id.toString(),
+                groupId: taskModel.groupId,
+              );
+
+              appController.isLoadingObs.value = false;
+              showGenericDialog(
+                iconPath: 'assets/lotties/deleted_animation.json',
+                title: 'Tasks Deleted!',
+                content: 'All associated tasks successfully deleted',
+                buttons: {'OK': null},
+              );
+            } catch (_) {
+              Get.back();
+              showGenericDialog(
+                iconPath: 'assets/lotties/server_error_animation.json',
+                title: 'Something Went Wrong',
+                content: 'Something went wrong while connecting to the server',
+                buttons: {
+                  'Dismiss': null,
+                },
+              );
+            }
+          },
+          'Just This': () async {
+            try {
+              appController.isLoadingObs.value = true;
+              await tasksController.deleteTask(
+                taskId: taskModel.id.toString(),
+              );
+
+              appController.isLoadingObs.value = false;
+              showGenericDialog(
+                iconPath: 'assets/lotties/deleted_animation.json',
+                title: 'Task Deleted!',
+                content: 'Task Successfully deleted',
+                buttons: {'OK': null},
+              );
+            } catch (_) {
+              Get.back();
+              showGenericDialog(
+                iconPath: 'assets/lotties/server_error_animation.json',
+                title: 'Something Went Wrong',
+                content: 'Something went wrong while connecting to the server',
+                buttons: {
+                  'Dismiss': null,
+                },
+              );
+            }
+          }
+        },
+      );
+      return;
+    }
     showGenericDialog(
       iconPath: 'assets/lotties/delete_animation.json',
       title: 'Delete Task',
@@ -29,9 +95,7 @@ class TaskCrudOperations {
             await tasksController.deleteTask(
               taskId: taskModel.id.toString(),
             );
-            // if (shouldDoubleBack == true) {
-            //   Get.back();
-            // }
+
             appController.isLoadingObs.value = false;
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',

@@ -1,8 +1,8 @@
 class ApiEndpoints {
   // static const baseUrl = 'https://api.turningpointvapi.com/tms/api';
   // static const webSocketUrl = 'ws://api.turningpointvapi.com/tms/';
-  static const baseUrl = 'http://192.168.1.130:5001/api';
-  static const webSocketUrl = 'ws://192.168.1.130:5001/api';
+  static const baseUrl = 'http://192.168.1.121:5001/api';
+  static const webSocketUrl = 'ws://192.168.1.121:5001/';
 
   static const register = '$baseUrl/auth/register';
   static const logIn = '$baseUrl/auth/login';

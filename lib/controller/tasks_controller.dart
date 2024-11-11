@@ -381,14 +381,23 @@ class TasksController extends GetxController {
   }
 
 //====================Delete Task====================//
-  Future<void> deleteTask({required String taskId}) async {
+  Future<void> deleteTask({
+    required String taskId,
+    String? groupId,
+  }) async {
     try {
       if (Get.currentRoute == '/TaskDetailsScreen') {
-        unawaited(tasksRepository.deleteTask(taskId: taskId));
+        unawaited(tasksRepository.deleteTask(
+          taskId: taskId,
+          groupId: groupId,
+        ));
         Get.back();
         Get.back();
       } else {
-        await tasksRepository.deleteTask(taskId: taskId);
+        await tasksRepository.deleteTask(
+          taskId: taskId,
+          groupId: groupId,
+        );
         Get.back();
       }
     } catch (_) {

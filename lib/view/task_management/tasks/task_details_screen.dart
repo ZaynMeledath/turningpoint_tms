@@ -251,7 +251,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                   TaskCrudOperations.deleteTask(
                                     tasksController: tasksController,
                                     taskModel: taskModel,
-                                    shouldDoubleBack: true,
                                   );
                                 },
                                 containerColor: Colors.grey.withOpacity(.08),
@@ -368,7 +367,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                   TaskCrudOperations.deleteTask(
                                     tasksController: tasksController,
                                     taskModel: taskModel,
-                                    shouldDoubleBack: true,
                                   );
                                 },
                                 containerColor: Colors.grey.withOpacity(.08),

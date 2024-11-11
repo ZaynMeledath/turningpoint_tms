@@ -15,6 +15,7 @@ Future<Object?> showGenericDialog({
   required String content,
   required Map<String, ButtonFuction?> buttons,
   Color? confirmationButtonColor,
+  Color? secondaryButtonBorderColor,
   double? iconWidth,
   bool repeatLottieAnimation = true,
   // Size? containerSize,
@@ -28,6 +29,7 @@ Future<Object?> showGenericDialog({
       confirmationButtonColor: confirmationButtonColor,
       buttons: buttons,
       repeatLottieAnimation: repeatLottieAnimation,
+      secondaryButtonBorderColor: secondaryButtonBorderColor,
     ),
     // barrierDismissible: false,
     scaleAnimation: true,
@@ -40,6 +42,7 @@ Widget dialog({
   required String content,
   required Map<String, ButtonFuction?> buttons,
   required bool repeatLottieAnimation,
+  Color? secondaryButtonBorderColor,
   Color? confirmationButtonColor,
   double? iconWidth,
 }) {
@@ -124,7 +127,8 @@ Widget dialog({
                                           AppColors.themeGreen,
                                   border: Border.all(
                                     color: i == 0
-                                        ? AppColors.themeGreen
+                                        ? secondaryButtonBorderColor ??
+                                            AppColors.themeGreen
                                         : Colors.transparent,
                                   ),
                                 ),
@@ -133,7 +137,8 @@ Widget dialog({
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w500,
                                     color: i == 0
-                                        ? AppColors.themeGreen
+                                        ? secondaryButtonBorderColor ??
+                                            AppColors.themeGreen
                                         : Colors.white,
                                   ),
                                   child: Center(
