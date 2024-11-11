@@ -12,6 +12,7 @@ Widget customTextField({
   bool? isNum,
   bool? isEmail,
   bool? ignoreValidations,
+  TextInputType? keyboardType,
   EdgeInsetsGeometry? contentPadding,
   void Function(String)? onChanged,
 }) {
@@ -20,6 +21,7 @@ Widget customTextField({
       () => textField(
         controller: controller,
         hintText: hintText,
+        keyboardType: keyboardType,
         userController: userController,
         backgroundColor: backgroundColor,
         borderColor: borderColor,
@@ -36,6 +38,7 @@ Widget customTextField({
       controller: controller,
       hintText: hintText,
       userController: null,
+      keyboardType: keyboardType,
       backgroundColor: backgroundColor,
       borderColor: borderColor,
       isPassword: isPassword,
@@ -58,6 +61,7 @@ Widget textField({
   bool? isNum,
   bool? isEmail,
   bool? ignoreValidations,
+  TextInputType? keyboardType,
   EdgeInsetsGeometry? contentPadding,
   void Function(String)? onChanged,
 }) {
@@ -71,11 +75,12 @@ Widget textField({
         : false,
     keyboardAppearance: Brightness.dark,
     cursorOpacityAnimates: true,
-    keyboardType: isEmail == true
-        ? TextInputType.emailAddress
-        : isNum == true
-            ? TextInputType.phone
-            : null,
+    keyboardType: keyboardType ??
+        (isEmail == true
+            ? TextInputType.emailAddress
+            : isNum == true
+                ? TextInputType.phone
+                : null),
     decoration: InputDecoration(
       counterText: '',
       suffixIcon: userController != null
@@ -150,9 +155,9 @@ Widget textField({
           return 'Enter a valid phone number';
         }
       }
-      if (value.length < 3) {
-        return '$hintText cannot be less than 3 letters';
-      }
+      // if (value.length < 3) {
+      //   return '$hintText cannot be less than 3 letters';
+      // }
 
       return null;
     },

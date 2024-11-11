@@ -166,6 +166,10 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     }
     if (taskModel.repeat != null) {
       final repeat = taskModel.repeat!;
+      occurrenceController.text = taskModel.repeat!.occurrenceCount != null &&
+              taskModel.repeat!.occurrenceCount != 0
+          ? taskModel.repeat!.occurrenceCount.toString()
+          : '';
       assignTaskController.shouldRepeatTask.value = true;
       assignTaskController.taskRepeatFrequency.value =
           stringToRepeatFrequencyEnum(repeatFrequency: repeat.frequency);

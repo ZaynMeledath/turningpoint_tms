@@ -370,12 +370,13 @@ Widget buildOccurrencesSection({
             child: customTextField(
                 controller: occurrenceController,
                 hintText: 'Occurrence',
-                isNum: true,
+                keyboardType: TextInputType.number,
+                ignoreValidations: true,
                 onChanged: (value) {
                   assignTaskController.taskEndDate.value = null;
                   assignTaskController.taskEndTime.value = null;
                   assignTaskController.taskOccurrencesCount.value =
-                      int.tryParse(value) ?? 0;
+                      int.tryParse(value.trim()) ?? 0;
                 }),
           ),
         ],
