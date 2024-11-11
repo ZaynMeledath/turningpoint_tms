@@ -386,17 +386,17 @@ class TasksController extends GetxController {
     String? groupId,
   }) async {
     try {
+      //if group id is not null group id is passed as id and if it's null, taskId is passed
+      final id = groupId ?? taskId;
       if (Get.currentRoute == '/TaskDetailsScreen') {
         unawaited(tasksRepository.deleteTask(
-          taskId: taskId,
-          groupId: groupId,
+          id: id,
         ));
         Get.back();
         Get.back();
       } else {
         await tasksRepository.deleteTask(
-          taskId: taskId,
-          groupId: groupId,
+          id: id,
         );
         Get.back();
       }

@@ -65,8 +65,8 @@ Widget dateAndTimeSegment({
                             },
                             effect: WormEffect(
                               activeDotColor: AppColors.themeGreen,
-                              dotWidth: 12.w,
-                              dotHeight: 12.w,
+                              dotWidth: 10.w,
+                              dotHeight: 10.w,
                             ),
                             count: 2,
                           ),
