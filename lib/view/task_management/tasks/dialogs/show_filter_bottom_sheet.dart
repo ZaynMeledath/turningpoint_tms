@@ -7,6 +7,7 @@ import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/assigned_filter_segment.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/category_filter_segment.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/date_range_filter.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/filter_item.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/frequency_filter_segment.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/segments/priority_filter_segment.dart';
@@ -27,6 +28,7 @@ Future<Object?> showFilterBottomSheet({
   int assignedToAnimationFlag = -1;
   int frequencyAnimationFlag = -1;
   int priorityAnimationFlag = -1;
+  int dateRangeAnimationFlag = -1;
   filterController.selectFilterOption(filterOption: FilterOptions.category);
   return Get.bottomSheet(
     Obx(
@@ -67,6 +69,15 @@ Future<Object?> showFilterBottomSheet({
 
           case FilterOptions.priority:
             priorityAnimationFlag++;
+            categoryAnimationFlag = -1;
+            assignedByAnimationFlag = -1;
+            assignedToAnimationFlag = -1;
+            frequencyAnimationFlag = -1;
+            break;
+
+          case FilterOptions.dateRange:
+            dateRangeAnimationFlag++;
+            priorityAnimationFlag = -1;
             categoryAnimationFlag = -1;
             assignedByAnimationFlag = -1;
             assignedToAnimationFlag = -1;
@@ -261,12 +272,22 @@ Future<Object?> showFilterBottomSheet({
                                               animationFlag:
                                                   frequencyAnimationFlag,
                                             )
-                                          : priorityFilterSegment(
-                                              filterController:
-                                                  filterController,
-                                              animationFlag:
-                                                  priorityAnimationFlag,
-                                            ),
+                                          : filterController
+                                                      .selectedFilterOption
+                                                      .value ==
+                                                  FilterOptions.priority
+                                              ? priorityFilterSegment(
+                                                  filterController:
+                                                      filterController,
+                                                  animationFlag:
+                                                      priorityAnimationFlag,
+                                                )
+                                              : dateRangeFilter(
+                                                  filterController:
+                                                      filterController,
+                                                  animationFlag:
+                                                      dateRangeAnimationFlag,
+                                                ),
                           filterResetSegment(
                             filterController: filterController,
                             categorySearchController: categorySearchController,

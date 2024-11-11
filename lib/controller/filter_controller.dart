@@ -7,12 +7,22 @@ final priorityList = ['High', 'Medium', 'Low'];
 
 final frequencyList = ['Once', 'Daily', 'Weekly', 'Monthly'];
 
-class FilterOptions {
-  static const category = 'category';
-  static const assignedBy = 'assignedBy';
-  static const assignedTo = 'assignedTo';
-  static const frequency = 'frequency';
-  static const priority = 'priority';
+// class FilterOptions {
+//   static const category = 'category';
+//   static const assignedBy = 'assignedBy';
+//   static const assignedTo = 'assignedTo';
+//   static const frequency = 'frequency';
+//   static const priority = 'priority';
+//   static const dateRange = 'dateRange';
+// }
+
+enum FilterOptions {
+  category,
+  assignedBy,
+  assignedTo,
+  frequency,
+  priority,
+  dateRange,
 }
 
 class FilterController extends GetxController {
@@ -30,7 +40,7 @@ class FilterController extends GetxController {
   //   'priority': false,
   // }.obs;
 
-  RxList<String> filterOptionSelectedMap = [
+  RxList<FilterOptions> filterOptionSelectedMap = [
     FilterOptions.category,
     FilterOptions.assignedBy,
     FilterOptions.assignedTo,
@@ -39,7 +49,7 @@ class FilterController extends GetxController {
   ].obs;
 
 //Defines the currently selected filter bottom sheet option
-  Rx<String> selectedFilterOption = 'category'.obs;
+  Rx<FilterOptions> selectedFilterOption = FilterOptions.category.obs;
 
   final RxMap<String, bool> categoryFilterModel = <String, bool>{}.obs;
   final RxMap<String, bool> assignedByFilterModel = <String, bool>{}.obs;
@@ -87,7 +97,7 @@ class FilterController extends GetxController {
   }
 
 //====================Select Filter====================//
-  void selectFilterOption({required String filterOption}) {
+  void selectFilterOption({required FilterOptions filterOption}) {
     selectedFilterOption.value = filterOption;
   }
 
