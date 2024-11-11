@@ -203,6 +203,18 @@ class FilterController extends GetxController {
 // (filterController.selectedFrequencyList.isNotEmpty ? filterController.selectedFrequencyList.contains(item.)) &&
             (selectedPriorityList.isNotEmpty
                 ? selectedPriorityList.contains(item.priority)
+                : true) &&
+            (selectedStartDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isAfter(selectedStartDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedStartDate.value!)
+                : true) &&
+            (selectedEndDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isBefore(selectedEndDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
@@ -225,6 +237,18 @@ class FilterController extends GetxController {
 // (filterController.selectedFrequencyList.isNotEmpty ? filterController.selectedFrequencyList.contains(item.)) &&
             (selectedPriorityList.isNotEmpty
                 ? selectedPriorityList.contains(item.priority)
+                : true) &&
+            (selectedStartDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isAfter(selectedStartDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedStartDate.value!)
+                : true) &&
+            (selectedEndDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isBefore(selectedEndDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
@@ -248,6 +272,18 @@ class FilterController extends GetxController {
 // (filterController.selectedFrequencyList.isNotEmpty ? filterController.selectedFrequencyList.contains(item.)) &&
             (selectedPriorityList.isNotEmpty
                 ? selectedPriorityList.contains(item.priority)
+                : true) &&
+            (selectedStartDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isAfter(selectedStartDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedStartDate.value!)
+                : true) &&
+            (selectedEndDate.value != null
+                ? DateTime.parse(item.dueDate!)
+                        .isBefore(selectedEndDate.value!) ||
+                    DateTime.parse(item.dueDate!)
+                        .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
