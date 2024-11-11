@@ -75,7 +75,7 @@ class _TasksScreenState extends State<TasksScreen>
     tabController = TabController(
       length: tabCount,
       vsync: this,
-      initialIndex: 1,
+      initialIndex: widget.avoidTabBar == true ? 0 : 1,
     );
     taskSearchController = TextEditingController();
     categorySearchController = TextEditingController();

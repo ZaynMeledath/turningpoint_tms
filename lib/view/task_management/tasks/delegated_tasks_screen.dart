@@ -125,6 +125,11 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                     taskModel.status == Status.completed &&
                     taskModel.isApproved != true)
                 .toList();
+            final scheduledTaskList = allDelegatedTasksList
+                ?.where((taskModel) =>
+                    taskModel.repeat != null &&
+                    taskModel.status != Status.completed)
+                .toList();
             final openDelegatedTasksList =
                 tasksController.openDelegatedTaskList.value;
             final inProgressDelegatedTasksList =

@@ -23,7 +23,7 @@ Widget customButton({
               duration: const Duration(milliseconds: 500),
               padding: EdgeInsets.symmetric(
                 horizontal: 14.w,
-                vertical: 8.h,
+                vertical: 10.h,
               ),
               width: width,
               height: height,

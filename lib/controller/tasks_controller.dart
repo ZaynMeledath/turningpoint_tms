@@ -17,7 +17,7 @@ import 'package:turningpoint_tms/repository/tasks_repository.dart';
 
 class TasksController extends GetxController {
   TasksController() {
-    getCategories();
+    // getCategories();
   }
   final tasksRepository = TasksRepository();
 

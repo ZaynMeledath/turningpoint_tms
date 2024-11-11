@@ -34,6 +34,7 @@ class AssignTaskController extends GetxController {
   Rx<TimeOfDay> taskDueOrStartTime = TimeOfDay.now().obs;
   Rxn<DateTime> taskEndDate = Rxn<DateTime>();
   Rxn<TimeOfDay> taskEndTime = Rxn<TimeOfDay>();
+  RxInt taskOccurrencesCount = RxInt(0);
 
 //====================Reminder====================//
   RxInt reminderTime = DefaultReminder.defaultReminderTime.obs;
@@ -350,7 +351,7 @@ class AssignTaskController extends GetxController {
                     repeatFrequency: taskRepeatFrequency.value),
                 days: days,
                 endDate: endDateString,
-                occurrenceCount: 0,
+                occurrenceCount: taskOccurrencesCount.value,
               )
             : null,
         attachments: taskAttachments,
@@ -362,24 +363,6 @@ class AssignTaskController extends GetxController {
       await tasksRepository.assignTask(
         taskModel: taskModel,
       );
-      // if (tasksController.isDelegatedObs.value == true) {
-      //   await tasksController.getDelegatedTasks();
-      //   unawaited(tasksController.getMyTasks());
-      //   unawaited(tasksController.getAllTasks());
-      // } else if (tasksController.isDelegatedObs.value == false) {
-      //   await tasksController.getMyTasks();
-      //   unawaited(tasksController.getDelegatedTasks());
-      //   unawaited(tasksController.getAllTasks());
-      // } else {
-      //   await tasksController.getAllTasks();
-      //   unawaited(tasksController.getMyTasks());
-      //   unawaited(tasksController.getDelegatedTasks());
-      // }
-      // unawaited(tasksController.getAllUsersPerformanceReport());
-      // unawaited(tasksController.getMyPerformanceReport());
-      // unawaited(tasksController.getDelegatedPerformanceReport());
-      // unawaited(tasksController.getAllTasks());
-      // unawaited(tasksController.getAllCategoriesPerformanceReport());
     } catch (_) {
       rethrow;
     }
@@ -473,7 +456,7 @@ class AssignTaskController extends GetxController {
                   repeatFrequency: taskRepeatFrequency.value),
               days: days,
               endDate: endDateString,
-              occurrenceCount: 0,
+              occurrenceCount: taskOccurrencesCount.value,
             )
           : null;
       taskModel.attachments =
@@ -481,25 +464,7 @@ class AssignTaskController extends GetxController {
               ? null
               : taskAttachments;
 
-      // await tasksRepository.updateTask(taskModel: taskModel);
-      // if (tasksController.isDelegatedObs.value == true) {
-      //   await tasksController.getDelegatedTasks();
-      //   unawaited(tasksController.getMyTasks());
-      //   unawaited(tasksController.getAllTasks());
-      // } else if (tasksController.isDelegatedObs.value == false) {
-      //   await tasksController.getMyTasks();
-      //   unawaited(tasksController.getDelegatedTasks());
-      //   unawaited(tasksController.getAllTasks());
-      // } else {
-      //   await tasksController.getAllTasks();
-      //   unawaited(tasksController.getMyTasks());
-      //   unawaited(tasksController.getDelegatedTasks());
-      // }
-      // unawaited(tasksController.getAllUsersPerformanceReport());
-      // unawaited(tasksController.getMyPerformanceReport());
-      // unawaited(tasksController.getDelegatedPerformanceReport());
-      // unawaited(tasksController.getAllTasks());
-      // unawaited(tasksController.getAllCategoriesPerformanceReport());
+      await tasksRepository.updateTask(taskModel: taskModel);
     } catch (e) {
       rethrow;
     }

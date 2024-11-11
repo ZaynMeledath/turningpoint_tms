@@ -15,6 +15,7 @@ import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/firebase_options.dart';
 import 'package:turningpoint_tms/notification/awesome_notification_controller.dart';
 import 'package:turningpoint_tms/preferences/app_preferences.dart';
+import 'package:turningpoint_tms/service/api/api_endpoints.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/home/tasks_home.dart';
 import 'package:upgrader/upgrader.dart';
@@ -30,36 +31,44 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
 
 //====================WebSocket Setup====================//
-  final wsUrl = Uri.parse('ws://13.126.184.197/tms/api');
-  final channel = WebSocketChannel.connect(wsUrl);
-  await channel.ready;
-  final tasksController = Get.put(TasksController());
-  final user = getUserModelFromHive();
-  final isAdminOrLeader =
-      user?.role == Role.admin || user?.role == Role.teamLeader;
+  void initializeWebSocket() async {
+    try {
+      final wsUrl = Uri.parse(ApiEndpoints.webSocketUrl);
+      final channel = WebSocketChannel.connect(wsUrl);
+      await channel.ready;
+      final tasksController = Get.put(TasksController());
+      final user = getUserModelFromHive();
+      final isAdminOrLeader =
+          user?.role == Role.admin || user?.role == Role.teamLeader;
 
-  channel.stream.listen((message) async {
-    if (tasksController.isDelegatedObs.value == true) {
-      log('MESSAGE FOR WEBSOCKET : $message');
-      await tasksController.getDelegatedTasks();
-      unawaited(tasksController.getAllTasks());
-      unawaited(tasksController.getMyTasks());
-    } else if (tasksController.isDelegatedObs.value == false) {
-      await tasksController.getMyTasks();
-      unawaited(tasksController.getAllTasks());
-      unawaited(tasksController.getDelegatedTasks());
-    } else {
-      await tasksController.getAllTasks();
-      unawaited(tasksController.getDelegatedTasks());
-      unawaited(tasksController.getMyTasks());
+      channel.stream.listen((message) async {
+        log('MESSAGE FROM WEBSOCKET: $message');
+        if (tasksController.isDelegatedObs.value == true) {
+          await tasksController.getDelegatedTasks();
+          unawaited(tasksController.getAllTasks());
+          unawaited(tasksController.getMyTasks());
+        } else if (tasksController.isDelegatedObs.value == false) {
+          await tasksController.getMyTasks();
+          unawaited(tasksController.getAllTasks());
+          unawaited(tasksController.getDelegatedTasks());
+        } else {
+          await tasksController.getAllTasks();
+          unawaited(tasksController.getDelegatedTasks());
+          unawaited(tasksController.getMyTasks());
+        }
+        if (isAdminOrLeader) {
+          unawaited(tasksController.getAllUsersPerformanceReport());
+          unawaited(tasksController.getAllCategoriesPerformanceReport());
+          unawaited(tasksController.getDelegatedPerformanceReport());
+        }
+        unawaited(tasksController.getMyPerformanceReport());
+      });
+    } catch (_) {
+      initializeWebSocket();
     }
-    if (isAdminOrLeader) {
-      unawaited(tasksController.getAllUsersPerformanceReport());
-      unawaited(tasksController.getAllCategoriesPerformanceReport());
-      unawaited(tasksController.getDelegatedPerformanceReport());
-    }
-    unawaited(tasksController.getMyPerformanceReport());
-  });
+  }
+
+  initializeWebSocket();
 
 //====================Awesome Notification Initialization====================//
   AwesomeNotifications().initialize(

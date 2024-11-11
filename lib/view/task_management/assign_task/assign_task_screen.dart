@@ -11,6 +11,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:slide_to_act/slide_to_act.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
@@ -63,6 +64,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
   late final TextEditingController categorySearchController;
   late final TextEditingController reminderTimeTextController;
   late final TextEditingController categoryNameController;
+  late final PageController pageController;
+  late final TextEditingController occurrenceController;
   final filterController = FilterController();
   final assignTaskController = AssignTaskController();
   final tasksController = TasksController();
@@ -81,6 +84,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     assignToSearchController = TextEditingController();
     categorySearchController = TextEditingController();
     categoryNameController = TextEditingController();
+    occurrenceController = TextEditingController();
+    pageController = PageController();
     reminderTimeTextController = TextEditingController(
         text: DefaultReminder.defaultReminderTime.toString());
 
@@ -300,6 +305,8 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
                   SizedBox(height: 28.h),
                   dateAndTimeSegment(
                     assignTaskController: assignTaskController,
+                    pageController: pageController,
+                    occurrenceController: occurrenceController,
                   ).animate().slideY(
                         begin: 1,
                         delay: const Duration(milliseconds: 200),
