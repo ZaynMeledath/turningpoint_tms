@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
@@ -43,7 +44,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
       duration: const Duration(milliseconds: 500),
     );
     tabController = TabController(
-      length: 5,
+      length: 6,
       vsync: this,
     );
     taskSearchController = TextEditingController();
@@ -121,6 +122,11 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                 tasksController.inProgressTaskList.value;
             final completedTasksList = tasksController.completedTaskList.value;
             final overdueTasksList = tasksController.overdueTaskList.value;
+            final recurringTasksList = allTasksList
+                ?.where((taskModel) =>
+                    taskModel.repeat != null &&
+                    taskModel.status != Status.completed)
+                .toList();
             return Column(
               children: [
                 tasksFilterSection(
@@ -154,6 +160,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                   openTasksCount: openTasksList?.length,
                   inProgressTasksCount: inProgressTasksList?.length,
                   completedTasksCount: completedTasksList?.length,
+                  recurringTasksCount: recurringTasksList?.length,
                 ),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
@@ -187,6 +194,12 @@ class _MyTasksScreenState extends State<MyTasksScreen>
                             ),
                             taskTabBarView(
                               tasksList: completedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: recurringTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,

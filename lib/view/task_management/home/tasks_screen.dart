@@ -55,6 +55,7 @@ class _TasksScreenState extends State<TasksScreen>
   List<TaskModel> inProgressTasksList = [];
   List<TaskModel> completedTasksList = [];
   List<TaskModel> overdueTasksList = [];
+  List<TaskModel> recurringTasksList = [];
 
   final AppController appController = AppController();
   int animationCounter = 0;
@@ -65,7 +66,7 @@ class _TasksScreenState extends State<TasksScreen>
         widget.tasksListCategory == TasksListCategory.categoryWise ||
         widget.tasksListCategory == TasksListCategory.myReport ||
         widget.tasksListCategory == TasksListCategory.delegatedReport) {
-      tabCount = 6;
+      tabCount = 7;
     }
 
     lottieController = AnimationController(
@@ -382,6 +383,12 @@ class _TasksScreenState extends State<TasksScreen>
                     taskModel.isDelayed == true &&
                     taskModel.status != Status.completed)
                 .toList();
+
+            recurringTasksList = allTasksList
+                .where((taskModel) =>
+                    taskModel.repeat != null &&
+                    taskModel.status != Status.completed)
+                .toList();
           }
           return Scaffold(
             appBar: myAppBar(
@@ -435,11 +442,12 @@ class _TasksScreenState extends State<TasksScreen>
                         openTasksCount: openTasksList.length,
                         inProgressTasksCount: inProgressTasksList.length,
                         completedTasksCount: completedTasksList.length,
+                        recurringTasksCount: recurringTasksList.length,
                       ),
                 SizedBox(height: 12.h),
                 tasksController.tasksException.value == null
                     ? Expanded(
-                        child: tabCount == 6
+                        child: tabCount == 7
                             ? TabBarView(
                                 controller: tabController,
                                 children: [
@@ -475,6 +483,12 @@ class _TasksScreenState extends State<TasksScreen>
                                   ),
                                   taskTabBarView(
                                     tasksList: completedTasksList,
+                                    lottieController: lottieController,
+                                    tasksController: tasksController,
+                                    taskSearchController: taskSearchController,
+                                  ),
+                                  taskTabBarView(
+                                    tasksList: recurringTasksList,
                                     lottieController: lottieController,
                                     tasksController: tasksController,
                                     taskSearchController: taskSearchController,

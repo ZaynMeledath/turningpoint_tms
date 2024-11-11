@@ -12,6 +12,7 @@ Widget tasksTabBar({
   required int? openTasksCount,
   required int? inProgressTasksCount,
   required int? completedTasksCount,
+  required int? recurringTasksCount,
 }) {
   return TabBar(
     controller: tabController,
@@ -121,6 +122,22 @@ Widget tasksTabBar({
           SizedBox(width: 2.w),
           Text(
             '${Status.completed} - ${completedTasksCount ?? 0}',
+            style: TextStyle(
+              fontSize: 16.sp,
+            ),
+          ),
+        ],
+      ),
+      Row(
+        children: [
+          Icon(
+            Icons.repeat,
+            size: 20.sp,
+            color: StatusColor.completed,
+          ),
+          SizedBox(width: 2.w),
+          Text(
+            'Recurring - ${recurringTasksCount ?? 0}',
             style: TextStyle(
               fontSize: 16.sp,
             ),

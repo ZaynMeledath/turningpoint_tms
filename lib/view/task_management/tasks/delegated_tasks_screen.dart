@@ -43,7 +43,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
       duration: const Duration(milliseconds: 500),
     );
     tabController = TabController(
-      length: 6,
+      length: 7,
       vsync: this,
       initialIndex: 1,
     );
@@ -125,7 +125,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                     taskModel.status == Status.completed &&
                     taskModel.isApproved != true)
                 .toList();
-            final scheduledTaskList = allDelegatedTasksList
+            final recurringDelegatedTasksList = allDelegatedTasksList
                 ?.where((taskModel) =>
                     taskModel.repeat != null &&
                     taskModel.status != Status.completed)
@@ -173,6 +173,7 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                   openTasksCount: openDelegatedTasksList?.length,
                   inProgressTasksCount: inProgressDelegatedTasksList?.length,
                   completedTasksCount: completedDelegatedTasksList?.length,
+                  recurringTasksCount: recurringDelegatedTasksList?.length,
                 ),
                 SizedBox(height: 10.h),
                 tasksController.tasksException.value == null
@@ -212,6 +213,12 @@ class _DelegatedTasksScreenState extends State<DelegatedTasksScreen>
                             ),
                             taskTabBarView(
                               tasksList: completedDelegatedTasksList,
+                              lottieController: lottieController,
+                              tasksController: tasksController,
+                              taskSearchController: taskSearchController,
+                            ),
+                            taskTabBarView(
+                              tasksList: recurringDelegatedTasksList,
                               lottieController: lottieController,
                               tasksController: tasksController,
                               taskSearchController: taskSearchController,
