@@ -67,6 +67,8 @@ class FilterController extends GetxController {
   final RxList selectedAssignedToList = [].obs;
   final RxList selectedFrequencyList = [].obs;
   final RxList selectedPriorityList = [].obs;
+  final Rxn<DateTime> selectedStartDate = Rxn<DateTime>();
+  final Rxn<DateTime> selectedEndDate = Rxn<DateTime>();
 
 //====================Assign Values to Models====================//
   void assignValuesToModels() {

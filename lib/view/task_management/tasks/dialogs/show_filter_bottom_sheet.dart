@@ -227,6 +227,18 @@ Future<Object?> showFilterBottomSheet({
                                       FilterOptions.priority,
                             ),
                           ),
+                          SizedBox(height: 6.h),
+                          InkWell(
+                            onTap: () => filterController.selectFilterOption(
+                              filterOption: FilterOptions.dateRange,
+                            ),
+                            child: filterItem(
+                              title: 'Date Range',
+                              isActive:
+                                  filterController.selectedFilterOption.value ==
+                                      FilterOptions.dateRange,
+                            ),
+                          ),
                         ],
                       ),
                     ),

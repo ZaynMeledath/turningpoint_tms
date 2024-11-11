@@ -56,8 +56,8 @@ extension StringExtensions on String {
     final String time =
         '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')} $period';
 
-    final String dueDateString = '$weekDay, $date $month $time';
+    final String dateString = '$weekDay, $date $month $time';
 
-    return dueDateString;
+    return dateString;
   }
 }
