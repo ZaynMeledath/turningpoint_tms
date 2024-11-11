@@ -56,6 +56,13 @@ Widget dateAndTimeSegment({
                           padding: EdgeInsets.only(right: 10.w),
                           child: SmoothPageIndicator(
                             controller: pageController,
+                            onDotClicked: (index) {
+                              pageController.animateToPage(
+                                index,
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.linear,
+                              );
+                            },
                             effect: WormEffect(
                               activeDotColor: AppColors.themeGreen,
                               dotWidth: 12.w,
