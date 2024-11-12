@@ -179,6 +179,19 @@ class AssignTaskController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
+        if (await file.length() > 52400000) {
+          appController.isLoadingObs.value = false;
+          attachmentsListObs.removeLast();
+          showGenericDialog(
+            iconPath: 'assets/lotties/file_upload_animation.json',
+            title: 'File Size too Large',
+            content: 'File Size should be less than 50MB',
+            buttons: {
+              'OK': null,
+            },
+          );
+          return;
+        }
         attachmentsListObs
             .add(Attachment()); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
@@ -205,7 +218,16 @@ class AssignTaskController extends GetxController {
         appController.isLoadingObs.value = false;
       }
     } catch (_) {
-      rethrow;
+      appController.isLoadingObs.value = false;
+      attachmentsListObs.removeLast();
+      showGenericDialog(
+        iconPath: 'assets/lotties/server_error_animation.json',
+        title: 'Something went wrong',
+        content: 'Something went wrong while uploading attachment',
+        buttons: {
+          'OK': null,
+        },
+      );
     }
   }
 

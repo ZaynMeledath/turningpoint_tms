@@ -114,6 +114,7 @@ Widget dateRangeFilter({
                             firstDate: DateTime(2024),
                             lastDate: DateTime(2030),
                           );
+                          filterController.filterTasks();
                         },
                         child: Container(
                           width: 130.w,
@@ -168,6 +169,7 @@ Widget dateRangeFilter({
                             firstDate: DateTime(2024),
                             lastDate: DateTime(2030),
                           );
+                          filterController.filterTasks();
                         },
                         child: Container(
                           width: 130.w,

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 
 final priorityList = ['High', 'Medium', 'Low'];
@@ -188,6 +189,16 @@ class FilterController extends GetxController {
 
 //====================Filter Tasks====================//
   void filterTasks() {
+    if (selectedStartDate.value != null && selectedEndDate.value != null) {
+      if (selectedStartDate.value!.isAfter(selectedEndDate.value!)) {
+        showGenericDialog(
+            iconPath: 'assets/lotties/task_Open_animation.json',
+            title: 'Date Order Mismatch',
+            content: 'End date should be after start date',
+            buttons: {'OK': null});
+        return;
+      }
+    }
     if (tasksController.isDelegatedObs.value == true) {
       tasksController.delegatedTasksListObs.value =
           tasksController.tempDelegatedTasksListObs.value?.where((item) {
@@ -259,8 +270,9 @@ class FilterController extends GetxController {
                                 .isAfter(selectedStartDate.value!))
                     : DateTime.parse(item.dueDate!)
                             .isBefore(selectedEndDate.value!) ||
-                        DateTime.parse(item.dueDate!)
-                            .isAtSameMomentAs(selectedEndDate.value!)
+                        DateTime.parse(item.dueDate!).isAtSameMomentAs(
+                          selectedEndDate.value!.add(const Duration(days: 1)),
+                        )
                 : true)) {
           return true;
         } else {
@@ -296,9 +308,7 @@ class FilterController extends GetxController {
                             DateTime.parse(item.dueDate!)
                                 .isAfter(selectedStartDate.value!))
                     : DateTime.parse(item.dueDate!)
-                            .isBefore(selectedEndDate.value!) ||
-                        DateTime.parse(item.dueDate!)
-                            .isAtSameMomentAs(selectedEndDate.value!)
+                        .isBefore(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {

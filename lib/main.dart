@@ -62,6 +62,12 @@ void main() async {
           unawaited(tasksController.getDelegatedPerformanceReport());
         }
         unawaited(tasksController.getMyPerformanceReport());
+      }, onError: (e) {
+        log('WebSocket Error: $e');
+        initializeWebSocket();
+      }, onDone: () {
+        log('WebSocket DONE');
+        initializeWebSocket();
       });
     } catch (_) {
       initializeWebSocket();
