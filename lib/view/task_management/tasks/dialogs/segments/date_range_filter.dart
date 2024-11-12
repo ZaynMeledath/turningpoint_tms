@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart' show Obx;
+import 'package:get/get.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 
@@ -105,37 +105,49 @@ Widget dateRangeFilter({
                       final year =
                           filterController.selectedStartDate.value?.year;
 
-                      return Container(
-                        width: 130.w,
-                        height: 48.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: AppColors.textFieldColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            filterController.selectedStartDate.value != null
-                                ? '$date/$month/$year'
-                                : 'dd/mm/yyyy',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color:
-                                  filterController.selectedEndDate.value == null
-                                      ? Colors.white38
-                                      : null,
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () async {
+                          filterController.selectedStartDate.value =
+                              await showDatePicker(
+                            context: Get.context!,
+                            firstDate: DateTime(2024),
+                            lastDate: DateTime(2030),
+                          );
+                        },
+                        child: Container(
+                          width: 130.w,
+                          height: 48.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: AppColors.textFieldColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              filterController.selectedStartDate.value != null
+                                  ? '$date/$month/$year'
+                                  : 'dd/mm/yyyy',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color:
+                                    filterController.selectedStartDate.value ==
+                                            null
+                                        ? Colors.white38
+                                        : null,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                          .animate(
-                            key: GlobalKey(),
-                          )
-                          .slideX(
-                            begin: -.06,
-                            delay: const Duration(milliseconds: 60),
-                            duration: const Duration(milliseconds: 700),
-                            curve: Curves.elasticOut,
-                          );
+                        )
+                            .animate(
+                              key: GlobalKey(),
+                            )
+                            .slideX(
+                              begin: -.06,
+                              delay: const Duration(milliseconds: 60),
+                              duration: const Duration(milliseconds: 700),
+                              curve: Curves.elasticOut,
+                            ),
+                      );
                     },
                   ),
                   SizedBox(height: 16.h),
@@ -147,37 +159,48 @@ Widget dateRangeFilter({
                       final month =
                           filterController.selectedEndDate.value?.month;
                       final year = filterController.selectedEndDate.value?.year;
-                      return Container(
-                        width: 130.w,
-                        height: 48.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: AppColors.textFieldColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            filterController.selectedEndDate.value != null
-                                ? '$date/$month/$year'
-                                : 'dd/mm/yyyy',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              color:
-                                  filterController.selectedEndDate.value == null
-                                      ? Colors.white38
-                                      : null,
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(16),
+                        onTap: () async {
+                          filterController.selectedEndDate.value =
+                              await showDatePicker(
+                            context: Get.context!,
+                            firstDate: DateTime(2024),
+                            lastDate: DateTime(2030),
+                          );
+                        },
+                        child: Container(
+                          width: 130.w,
+                          height: 48.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: AppColors.textFieldColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              filterController.selectedEndDate.value != null
+                                  ? '$date/$month/$year'
+                                  : 'dd/mm/yyyy',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: filterController.selectedEndDate.value ==
+                                        null
+                                    ? Colors.white38
+                                    : null,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                          .animate(
-                            key: GlobalKey(),
-                          )
-                          .slideX(
-                            begin: -.06,
-                            delay: const Duration(milliseconds: 120),
-                            duration: const Duration(milliseconds: 700),
-                            curve: Curves.elasticOut,
-                          );
+                        )
+                            .animate(
+                              key: GlobalKey(),
+                            )
+                            .slideX(
+                              begin: -.06,
+                              delay: const Duration(milliseconds: 120),
+                              duration: const Duration(milliseconds: 700),
+                              curve: Curves.elasticOut,
+                            ),
+                      );
                     },
                   ),
                 ],

@@ -30,6 +30,14 @@ Future<Object?> showFilterBottomSheet({
   int priorityAnimationFlag = -1;
   int dateRangeAnimationFlag = -1;
   filterController.selectFilterOption(filterOption: FilterOptions.category);
+  int startDay = 0;
+  int startMonth = 0;
+  int startYear = 0;
+
+  int endDay = 0;
+  int endMonth = 0;
+  int endYear = 0;
+
   return Get.bottomSheet(
     Obx(
       () {
@@ -84,6 +92,18 @@ Future<Object?> showFilterBottomSheet({
             frequencyAnimationFlag = -1;
             break;
         }
+        if (filterController.selectedStartDate.value != null) {
+          startDay = filterController.selectedStartDate.value!.day;
+          startMonth = filterController.selectedStartDate.value!.month;
+          startYear = filterController.selectedStartDate.value!.year;
+        }
+
+        if (filterController.selectedEndDate.value != null) {
+          endDay = filterController.selectedEndDate.value!.day;
+          endMonth = filterController.selectedEndDate.value!.month;
+          endYear = filterController.selectedEndDate.value!.year;
+        }
+
         return Container(
           // height: 480.h,
           decoration: const BoxDecoration(
@@ -142,6 +162,17 @@ Future<Object?> showFilterBottomSheet({
                       filterList: filterController.selectedPriorityList,
                     )
                   : const SizedBox(),
+              if (filterController.selectedStartDate.value != null)
+                selectedFilter(
+                  title: 'Start Date',
+                  filterList: ['$startDay/$startMonth/$startYear'],
+                ),
+              SizedBox(width: 12.w),
+              if (filterController.selectedEndDate.value != null)
+                selectedFilter(
+                  title: 'End Date',
+                  filterList: ['$endDay/$endMonth/$endYear'],
+                ),
               Container(
                 width: double.maxFinite,
                 height: 1,
@@ -151,96 +182,117 @@ Future<Object?> showFilterBottomSheet({
                 child: Row(
                   children: [
                     //--------------------Filter Key Part--------------------//
-                    Container(
-                      width: 140.w,
-                      padding: EdgeInsets.all(2.w),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(.15),
-                      ),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () => filterController.selectFilterOption(
-                              filterOption: FilterOptions.category,
+                    Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: 140.w,
+                            padding: EdgeInsets.all(2.w),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(.15),
                             ),
-                            child: filterItem(
-                              title: 'Category',
-                              isActive:
-                                  filterController.selectedFilterOption.value ==
-                                      FilterOptions.category,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () =>
+                                        filterController.selectFilterOption(
+                                      filterOption: FilterOptions.category,
+                                    ),
+                                    child: filterItem(
+                                      title: 'Category',
+                                      isActive: filterController
+                                              .selectedFilterOption.value ==
+                                          FilterOptions.category,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  isAllTasks != true &&
+                                          tasksController
+                                                  .isDelegatedObs.value !=
+                                              true
+                                      ? InkWell(
+                                          onTap: () => filterController
+                                              .selectFilterOption(
+                                            filterOption:
+                                                FilterOptions.assignedBy,
+                                          ),
+                                          child: filterItem(
+                                            title: 'Assigned By',
+                                            isActive: filterController
+                                                    .selectedFilterOption
+                                                    .value ==
+                                                FilterOptions.assignedBy,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  isAllTasks == true ||
+                                          tasksController
+                                                  .isDelegatedObs.value ==
+                                              true ||
+                                          tasksController
+                                                  .isDelegatedObs.value ==
+                                              null
+                                      ? InkWell(
+                                          onTap: () => filterController
+                                              .selectFilterOption(
+                                            filterOption:
+                                                FilterOptions.assignedTo,
+                                          ),
+                                          child: filterItem(
+                                            title: 'Assigned To',
+                                            isActive: filterController
+                                                    .selectedFilterOption
+                                                    .value ==
+                                                FilterOptions.assignedTo,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                  SizedBox(height: 6.h),
+                                  InkWell(
+                                    onTap: () =>
+                                        filterController.selectFilterOption(
+                                      filterOption: FilterOptions.frequency,
+                                    ),
+                                    child: filterItem(
+                                      title: 'Frequency',
+                                      isActive: filterController
+                                              .selectedFilterOption.value ==
+                                          FilterOptions.frequency,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  InkWell(
+                                    onTap: () =>
+                                        filterController.selectFilterOption(
+                                      filterOption: FilterOptions.priority,
+                                    ),
+                                    child: filterItem(
+                                      title: 'Priority',
+                                      isActive: filterController
+                                              .selectedFilterOption.value ==
+                                          FilterOptions.priority,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6.h),
+                                  InkWell(
+                                    onTap: () =>
+                                        filterController.selectFilterOption(
+                                      filterOption: FilterOptions.dateRange,
+                                    ),
+                                    child: filterItem(
+                                      title: 'Date Range',
+                                      isActive: filterController
+                                              .selectedFilterOption.value ==
+                                          FilterOptions.dateRange,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          SizedBox(height: 6.h),
-                          isAllTasks != true &&
-                                  tasksController.isDelegatedObs.value != true
-                              ? InkWell(
-                                  onTap: () =>
-                                      filterController.selectFilterOption(
-                                    filterOption: FilterOptions.assignedBy,
-                                  ),
-                                  child: filterItem(
-                                    title: 'Assigned By',
-                                    isActive: filterController
-                                            .selectedFilterOption.value ==
-                                        FilterOptions.assignedBy,
-                                  ),
-                                )
-                              : const SizedBox(),
-                          isAllTasks == true ||
-                                  tasksController.isDelegatedObs.value ==
-                                      true ||
-                                  tasksController.isDelegatedObs.value == null
-                              ? InkWell(
-                                  onTap: () =>
-                                      filterController.selectFilterOption(
-                                    filterOption: FilterOptions.assignedTo,
-                                  ),
-                                  child: filterItem(
-                                    title: 'Assigned To',
-                                    isActive: filterController
-                                            .selectedFilterOption.value ==
-                                        FilterOptions.assignedTo,
-                                  ),
-                                )
-                              : const SizedBox(),
-                          SizedBox(height: 6.h),
-                          InkWell(
-                            onTap: () => filterController.selectFilterOption(
-                              filterOption: FilterOptions.frequency,
-                            ),
-                            child: filterItem(
-                              title: 'Frequency',
-                              isActive:
-                                  filterController.selectedFilterOption.value ==
-                                      FilterOptions.frequency,
-                            ),
-                          ),
-                          SizedBox(height: 6.h),
-                          InkWell(
-                            onTap: () => filterController.selectFilterOption(
-                              filterOption: FilterOptions.priority,
-                            ),
-                            child: filterItem(
-                              title: 'Priority',
-                              isActive:
-                                  filterController.selectedFilterOption.value ==
-                                      FilterOptions.priority,
-                            ),
-                          ),
-                          SizedBox(height: 6.h),
-                          InkWell(
-                            onTap: () => filterController.selectFilterOption(
-                              filterOption: FilterOptions.dateRange,
-                            ),
-                            child: filterItem(
-                              title: 'Date Range',
-                              isActive:
-                                  filterController.selectedFilterOption.value ==
-                                      FilterOptions.dateRange,
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     //--------------------Filter Value Part--------------------//
                     Expanded(

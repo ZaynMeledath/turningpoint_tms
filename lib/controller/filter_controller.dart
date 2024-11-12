@@ -211,10 +211,19 @@ class FilterController extends GetxController {
                         .isAtSameMomentAs(selectedStartDate.value!)
                 : true) &&
             (selectedEndDate.value != null
-                ? DateTime.parse(item.dueDate!)
-                        .isBefore(selectedEndDate.value!) ||
-                    DateTime.parse(item.dueDate!)
-                        .isAtSameMomentAs(selectedEndDate.value!)
+                ? selectedStartDate.value != null
+                    ? (DateTime.parse(item.dueDate!)
+                                .isBefore(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!)) ||
+                        (DateTime.parse(item.dueDate!)
+                                .isAtSameMomentAs(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!))
+                    : DateTime.parse(item.dueDate!)
+                            .isBefore(selectedEndDate.value!) ||
+                        DateTime.parse(item.dueDate!)
+                            .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
@@ -238,17 +247,20 @@ class FilterController extends GetxController {
             (selectedPriorityList.isNotEmpty
                 ? selectedPriorityList.contains(item.priority)
                 : true) &&
-            (selectedStartDate.value != null
-                ? DateTime.parse(item.dueDate!)
-                        .isAfter(selectedStartDate.value!) ||
-                    DateTime.parse(item.dueDate!)
-                        .isAtSameMomentAs(selectedStartDate.value!)
-                : true) &&
             (selectedEndDate.value != null
-                ? DateTime.parse(item.dueDate!)
-                        .isBefore(selectedEndDate.value!) ||
-                    DateTime.parse(item.dueDate!)
-                        .isAtSameMomentAs(selectedEndDate.value!)
+                ? selectedStartDate.value != null
+                    ? (DateTime.parse(item.dueDate!)
+                                .isBefore(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!)) ||
+                        (DateTime.parse(item.dueDate!)
+                                .isAtSameMomentAs(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!))
+                    : DateTime.parse(item.dueDate!)
+                            .isBefore(selectedEndDate.value!) ||
+                        DateTime.parse(item.dueDate!)
+                            .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
@@ -273,17 +285,20 @@ class FilterController extends GetxController {
             (selectedPriorityList.isNotEmpty
                 ? selectedPriorityList.contains(item.priority)
                 : true) &&
-            (selectedStartDate.value != null
-                ? DateTime.parse(item.dueDate!)
-                        .isAfter(selectedStartDate.value!) ||
-                    DateTime.parse(item.dueDate!)
-                        .isAtSameMomentAs(selectedStartDate.value!)
-                : true) &&
             (selectedEndDate.value != null
-                ? DateTime.parse(item.dueDate!)
-                        .isBefore(selectedEndDate.value!) ||
-                    DateTime.parse(item.dueDate!)
-                        .isAtSameMomentAs(selectedEndDate.value!)
+                ? selectedStartDate.value != null
+                    ? (DateTime.parse(item.dueDate!)
+                                .isBefore(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!)) ||
+                        (DateTime.parse(item.dueDate!)
+                                .isAtSameMomentAs(selectedEndDate.value!) &&
+                            DateTime.parse(item.dueDate!)
+                                .isAfter(selectedStartDate.value!))
+                    : DateTime.parse(item.dueDate!)
+                            .isBefore(selectedEndDate.value!) ||
+                        DateTime.parse(item.dueDate!)
+                            .isAtSameMomentAs(selectedEndDate.value!)
                 : true)) {
           return true;
         } else {
@@ -325,6 +340,8 @@ class FilterController extends GetxController {
     selectedAssignedToList.value = [];
     selectedFrequencyList.value = [];
     selectedPriorityList.value = [];
+    selectedStartDate.value = null;
+    selectedEndDate.value = null;
 
     if (tasksController.isDelegatedObs.value == true) {
       tasksController.getDelegatedTasks(getFromLocalStorage: true);

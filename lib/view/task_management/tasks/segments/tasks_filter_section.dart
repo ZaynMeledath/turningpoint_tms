@@ -65,7 +65,11 @@ Widget tasksFilterSection({
                                     filterController
                                         .selectedFrequencyList.isNotEmpty ||
                                     filterController
-                                        .selectedPriorityList.isNotEmpty
+                                        .selectedPriorityList.isNotEmpty ||
+                                    filterController.selectedStartDate.value !=
+                                        null ||
+                                    filterController.selectedEndDate.value !=
+                                        null
                                 ? Positioned(
                                     right: 2.w,
                                     top: 2.w,
