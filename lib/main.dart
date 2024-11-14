@@ -51,6 +51,7 @@ void main() async {
             if (Get.currentRoute == '/TaskDetailsScreen') {
               Get.back();
             }
+            Get.back();
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
               title: 'Task Deleted!',
@@ -61,6 +62,7 @@ void main() async {
             if (Get.currentRoute == '/TaskDetailsScreen') {
               Get.back();
             }
+            Get.back();
             showGenericDialog(
               iconPath: 'assets/lotties/deleted_animation.json',
               title: 'Tasks Deleted!',
@@ -173,7 +175,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       ///Add maxScreen width to the ScreenUtil package file to ensure UI quality (On line 216 of screen_util.dart (pub package))
       ///  double get scaleWidth => !_enableScaleWH() ? 1 : (screenWidth > 550 ? 550 : screenWidth) / _uiSize.width;
-
+      minTextAdapt: true,
       designSize: const Size(412, 915),
       builder: (context, child) => GetMaterialApp(
         debugShowCheckedModeBanner: false,
