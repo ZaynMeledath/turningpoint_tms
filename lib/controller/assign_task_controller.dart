@@ -175,6 +175,18 @@ class AssignTaskController extends GetxController {
 //====================Add File Attachments====================//
   Future<void> addFileAttachment() async {
     try {
+      if (appController.isLoadingObs.value) {
+        showGenericDialog(
+          iconPath: 'assets/lotties/file_upload_animation.json',
+          title: 'File upload in progress',
+          content:
+              'A file is currently being uploaded. Please wait till it gets finished',
+          buttons: {
+            'OK': null,
+          },
+        );
+        return;
+      }
       FilePickerResult? result = await FilePicker.platform.pickFiles();
 
       if (result != null) {

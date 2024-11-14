@@ -139,11 +139,14 @@ class TasksRepository {
 
 //====================Delete Task====================//
   Future<void> deleteTask({
-    required String id,
+    required String taskId,
+    required String? groupId,
   }) async {
     try {
       await ApiService().sendRequest(
-        url: '${ApiEndpoints.assignTask}/$id',
+        url: groupId != null
+            ? '${ApiEndpoints.assignTask}/repeat/$groupId'
+            : '${ApiEndpoints.assignTask}/$taskId',
         requestMethod: RequestMethod.DELETE,
         data: {},
         fieldNameForFiles: null,

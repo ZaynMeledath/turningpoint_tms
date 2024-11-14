@@ -33,14 +33,9 @@ class TaskCrudOperations {
               );
 
               appController.isLoadingObs.value = false;
-              showGenericDialog(
-                iconPath: 'assets/lotties/deleted_animation.json',
-                title: 'Tasks Deleted!',
-                content: 'All associated tasks successfully deleted',
-                buttons: {'OK': null},
-              );
+//########## Task Deleted Dialog code is written inside the ws initialization method in main.dart ##########//
             } catch (_) {
-              Get.back();
+              appController.isLoadingObs.value = false;
               showGenericDialog(
                 iconPath: 'assets/lotties/server_error_animation.json',
                 title: 'Something Went Wrong',
@@ -59,14 +54,9 @@ class TaskCrudOperations {
               );
 
               appController.isLoadingObs.value = false;
-              showGenericDialog(
-                iconPath: 'assets/lotties/deleted_animation.json',
-                title: 'Task Deleted!',
-                content: 'Task Successfully deleted',
-                buttons: {'OK': null},
-              );
+//########## Task Deleted Dialog code is written inside the ws initialization method in main.dart ##########//
             } catch (_) {
-              Get.back();
+              appController.isLoadingObs.value = false;
               showGenericDialog(
                 iconPath: 'assets/lotties/server_error_animation.json',
                 title: 'Something Went Wrong',
@@ -97,14 +87,9 @@ class TaskCrudOperations {
             );
 
             appController.isLoadingObs.value = false;
-            showGenericDialog(
-              iconPath: 'assets/lotties/deleted_animation.json',
-              title: 'Task Deleted!',
-              content: 'Task Successfully deleted',
-              buttons: {'OK': null},
-            );
+//########## Task Deleted Dialog code is written inside the WS initialization method in main.dart ##########//
           } catch (_) {
-            Get.back();
+            appController.isLoadingObs.value = false;
             showGenericDialog(
               iconPath: 'assets/lotties/server_error_animation.json',
               title: 'Something Went Wrong',
