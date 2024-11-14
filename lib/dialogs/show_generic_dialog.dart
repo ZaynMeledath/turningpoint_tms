@@ -163,8 +163,10 @@ Widget dialog({
                 : GestureDetector(
                     onTap: buttons.values.first ?? () => Get.back(),
                     child: Container(
-                      width: 102.w,
-                      height: 36.h,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.h,
+                      ),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: AppColors.themeGreen,

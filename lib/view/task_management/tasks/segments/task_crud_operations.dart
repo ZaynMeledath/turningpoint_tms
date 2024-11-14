@@ -6,6 +6,7 @@ import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_change_status_bottom_sheet.dart';
+import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_delete_recurring_tasks_dialog.dart';
 
 class TaskCrudOperations {
 //====================Delete Task====================//
@@ -15,60 +16,15 @@ class TaskCrudOperations {
   }) {
     final appController = Get.put(AppController());
     if (taskModel.repeat != null) {
-      showGenericDialog(
+      showDeleteRecurringTasksDialog(
         iconPath: 'assets/lotties/delete_animation.json',
         title: 'Delete all or just this?',
         content:
             'Do you want to delete all recurring tasks associated with this or just this one?',
-        confirmationButtonColor: Colors.red,
-        secondaryButtonBorderColor: Colors.red,
-        iconWidth: 100.w,
-        buttons: {
-          'All Recurring': () async {
-            try {
-              appController.isLoadingObs.value = true;
-              await tasksController.deleteTask(
-                taskId: taskModel.id.toString(),
-                groupId: taskModel.groupId,
-              );
-
-              appController.isLoadingObs.value = false;
-//########## Task Deleted Dialog code is written inside the ws initialization method in main.dart ##########//
-            } catch (_) {
-              appController.isLoadingObs.value = false;
-              showGenericDialog(
-                iconPath: 'assets/lotties/server_error_animation.json',
-                title: 'Something Went Wrong',
-                content: 'Something went wrong while connecting to the server',
-                buttons: {
-                  'Dismiss': null,
-                },
-              );
-            }
-          },
-          'Just This': () async {
-            try {
-              appController.isLoadingObs.value = true;
-              await tasksController.deleteTask(
-                taskId: taskModel.id.toString(),
-              );
-
-              appController.isLoadingObs.value = false;
-//########## Task Deleted Dialog code is written inside the ws initialization method in main.dart ##########//
-            } catch (_) {
-              appController.isLoadingObs.value = false;
-              showGenericDialog(
-                iconPath: 'assets/lotties/server_error_animation.json',
-                title: 'Something Went Wrong',
-                content: 'Something went wrong while connecting to the server',
-                buttons: {
-                  'Dismiss': null,
-                },
-              );
-            }
-          }
-        },
+        tasksController: tasksController,
+        taskModel: taskModel,
       );
+
       return;
     }
     showGenericDialog(
