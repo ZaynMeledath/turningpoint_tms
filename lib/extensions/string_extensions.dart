@@ -20,6 +20,7 @@ extension StringExtensions on String {
   }
 
   String dateFormat() {
+    //Week starts from monday to support the DateTime class
     final weekList = [
       'Mon',
       'Tue',
