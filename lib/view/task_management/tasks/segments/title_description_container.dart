@@ -489,7 +489,7 @@ Widget titleDescriptionContainer({
                   ),
                   SizedBox(height: 14.h),
 
-                  //--------------------Description Segment--------------------//
+                  //====================Description====================//
                   taskModel.description != null &&
                           taskModel.description!.isNotEmpty
                       ? Text(
@@ -504,7 +504,7 @@ Widget titleDescriptionContainer({
                   SizedBox(height: 6.h),
                   Text(
                     taskModel.description.toString(),
-                    style: TextStyle(fontSize: 14.sp),
+                    style: TextStyle(fontSize: 15.sp),
                   ),
                   SizedBox(height: 6.h),
                 ],
