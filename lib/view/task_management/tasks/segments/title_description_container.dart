@@ -19,16 +19,17 @@ Widget titleDescriptionContainer({
   String completionDateString = '';
 
   final String creationDateString = taskModel.createdAt != null
-      ? taskModel.createdAt!.dateFormat()
+      ? taskModel.createdAt!.dateFormatWithYear()
       : 'Invalid Date & Time';
 
   final String dueDateString = taskModel.dueDate != null
-      ? taskModel.dueDate!.dateFormat()
+      ? taskModel.dueDate!.dateFormatWithYear()
       : 'Invalid Date & Time';
 
   if (taskModel.status == Status.completed) {
-    completionDateString =
-        taskModel.updatedAt != null ? taskModel.updatedAt!.dateFormat() : '-';
+    completionDateString = taskModel.updatedAt != null
+        ? taskModel.updatedAt!.dateFormatWithYear()
+        : '-';
   }
 
 //Week starts from sunday
@@ -194,7 +195,7 @@ Widget titleDescriptionContainer({
                               const Text(':'),
                               SizedBox(width: 14.w),
                               Icon(
-                                Icons.alarm,
+                                Icons.schedule,
                                 size: 17.sp,
                                 color: Colors.white.withOpacity(.75),
                               ),
@@ -328,8 +329,14 @@ Widget titleDescriptionContainer({
                         SizedBox(width: 6.w),
                         const Text(':'),
                         SizedBox(width: 14.w),
+                        Icon(
+                          Icons.schedule,
+                          size: 17.sp,
+                          color: Colors.white.withOpacity(.75),
+                        ),
+                        SizedBox(width: 3.w),
                         Text(
-                          taskModel.repeat!.startDate!.dateFormat(),
+                          taskModel.repeat!.startDate!.dateFormatWithYear(),
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
@@ -358,8 +365,14 @@ Widget titleDescriptionContainer({
                             SizedBox(width: 6.w),
                             const Text(':'),
                             SizedBox(width: 14.w),
+                            Icon(
+                              Icons.schedule,
+                              size: 17.sp,
+                              color: Colors.white.withOpacity(.75),
+                            ),
+                            SizedBox(width: 3.w),
                             Text(
-                              taskModel.repeat!.endDate!.dateFormat(),
+                              taskModel.repeat!.endDate!.dateFormatWithYear(),
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
