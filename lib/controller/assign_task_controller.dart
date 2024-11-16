@@ -191,13 +191,13 @@ class AssignTaskController extends GetxController {
 
       if (result != null) {
         File file = File(result.files.single.path!);
-        if (await file.length() > 52400000) {
+        if (await file.length() > 104857600) {
           appController.isLoadingObs.value = false;
           attachmentsListObs.removeLast();
           showGenericDialog(
             iconPath: 'assets/lotties/file_upload_animation.json',
             title: 'File Size too Large',
-            content: 'File Size should be less than 50MB',
+            content: 'File Size should be less than 100MB',
             buttons: {
               'OK': null,
             },
