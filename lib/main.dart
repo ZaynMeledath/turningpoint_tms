@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -13,7 +12,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
-import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/firebase_options.dart';
 import 'package:turningpoint_tms/notification/awesome_notification_controller.dart';
 import 'package:turningpoint_tms/preferences/app_preferences.dart';
@@ -44,35 +42,6 @@ void main() async {
           user?.role == Role.admin || user?.role == Role.teamLeader;
 
       channel.stream.listen((message) async {
-        try {
-          final decodedMessage = jsonDecode(message);
-
-          if (decodedMessage['type'] == 'TASK_DELETED') {
-            if (Get.currentRoute == '/TaskDetailsScreen') {
-              Get.back();
-            }
-            Get.back();
-            showGenericDialog(
-              iconPath: 'assets/lotties/deleted_animation.json',
-              title: 'Task Deleted!',
-              content: 'Task Successfully deleted',
-              buttons: {'OK': null},
-            );
-          } else if (decodedMessage['type'] == 'TASK_GROUPID_DELETED') {
-            if (Get.currentRoute == '/TaskDetailsScreen') {
-              Get.back();
-            }
-            Get.back();
-            showGenericDialog(
-              iconPath: 'assets/lotties/deleted_animation.json',
-              title: 'Tasks Deleted!',
-              content: 'All associated tasks successfully deleted',
-              buttons: {'OK': null},
-            );
-          }
-        } catch (e) {
-          log('ERROR : $e');
-        }
         log('MESSAGE FROM WEBSOCKET: $message');
         if (tasksController.isDelegatedObs.value == true) {
           await tasksController.getDelegatedTasks();

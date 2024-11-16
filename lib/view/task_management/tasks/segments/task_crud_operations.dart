@@ -43,7 +43,18 @@ class TaskCrudOperations {
             );
 
             appController.isLoadingObs.value = false;
-//########## Task Deleted Dialog code is written inside the WS initialization method in main.dart ##########//
+
+            Future.delayed(
+                Duration(
+                    milliseconds:
+                        Get.currentRoute == '/TaskDetailsScreen' ? 40 : 0), () {
+              showGenericDialog(
+                iconPath: 'assets/lotties/deleted_animation.json',
+                title: 'Task Deleted!',
+                content: 'Task Successfully deleted',
+                buttons: {'OK': null},
+              );
+            });
           } catch (_) {
             appController.isLoadingObs.value = false;
             showGenericDialog(

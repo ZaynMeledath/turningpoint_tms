@@ -18,6 +18,7 @@ import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/utils/download_file.dart';
+import 'package:turningpoint_tms/utils/widgets/custom_refresh_indicator.dart';
 import 'package:turningpoint_tms/utils/widgets/image_viewer.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
@@ -157,117 +158,160 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
       ),
       body: Obx(
         () {
-          if (tasksController.isDelegatedObs.value == true) {
-            taskModel = tasksController.delegatedTasksListObs.value!.firstWhere(
-              (taskModel) => taskModel.id == widget.taskModel.id,
-              orElse: () => TaskModel(),
-            );
-          } else if (tasksController.isDelegatedObs.value == false) {
-            taskModel = tasksController.myTasksListObs.value!.firstWhere(
-              (taskModel) => taskModel.id == widget.taskModel.id,
-              orElse: () => TaskModel(),
-            );
-          } else {
-            taskModel = tasksController.allTasksListObs.value!.firstWhere(
-              (taskModel) => taskModel.id == widget.taskModel.id,
-              orElse: () => TaskModel(),
-            );
+          try {
+            if (tasksController.isDelegatedObs.value == true) {
+              taskModel =
+                  tasksController.delegatedTasksListObs.value!.firstWhere(
+                (taskModel) => taskModel.id == widget.taskModel.id,
+              );
+            } else if (tasksController.isDelegatedObs.value == false) {
+              taskModel = tasksController.myTasksListObs.value!.firstWhere(
+                (taskModel) => taskModel.id == widget.taskModel.id,
+              );
+            } else {
+              taskModel = tasksController.allTasksListObs.value!.firstWhere(
+                (taskModel) => taskModel.id == widget.taskModel.id,
+              );
+            }
+            isTaskCompleted = taskModel.status == Status.completed;
+          } catch (_) {
+            Get.back();
           }
-          isTaskCompleted = taskModel.status == Status.completed;
 
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 14.w,
-                vertical: 14.h,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  titleDescriptionContainer(
-                    taskModel: taskModel,
-                  ),
-                  SizedBox(height: 14.h),
+          return customRefreshIndicator(
+            onRefresh: () async {
+              if (tasksController.isDelegatedObs.value == true) {
+                await tasksController.getDelegatedTasks();
+              } else if (tasksController.isDelegatedObs.value == false) {
+                await tasksController.getMyTasks();
+              } else {
+                await tasksController.getAllTasks();
+              }
+            },
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 14.w,
+                  vertical: 14.h,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    titleDescriptionContainer(
+                      taskModel: taskModel,
+                    ),
+                    SizedBox(height: 14.h),
 
-                  //====================Attachments Section====================//
-                  taskModel.attachments != null &&
-                          taskModel.attachments!.isNotEmpty
-                      ? taskDetailsAttachmentSegment(
-                          attachments: attachments,
-                          assignTaskController: assignTaskController,
-                          audioPlayer: audioPlayer,
-                          audioUrl: audioUrl,
-                          dio: dio,
-                        )
-                      : const SizedBox(),
+                    //====================Attachments Section====================//
+                    taskModel.attachments != null &&
+                            taskModel.attachments!.isNotEmpty
+                        ? taskDetailsAttachmentSegment(
+                            attachments: attachments,
+                            assignTaskController: assignTaskController,
+                            audioPlayer: audioPlayer,
+                            audioUrl: audioUrl,
+                            dio: dio,
+                          )
+                        : const SizedBox(),
 
-                  //====================Assigned By and To Section====================//
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      taskDetailsAssignedContainer(
-                        name: taskModel.createdBy != null
-                            ? taskModel.createdBy!.name!.nameFormat()
-                            : '-',
-                        email: taskModel.createdBy != null
-                            ? taskModel.createdBy!.emailId!
-                            : '-',
-                        isAssignedBy: true,
-                      ),
-                      Icon(
-                        Icons.arrow_right_alt,
-                        size: 28.w,
-                      ),
-                      taskDetailsAssignedContainer(
-                        name:
-                            '${taskModel.assignedTo?.first.name}'.nameFormat(),
-                        email: '${taskModel.assignedTo?.first.emailId}',
-                        isAssignedBy: false,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 14.h),
+                    //====================Assigned By and To Section====================//
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        taskDetailsAssignedContainer(
+                          name: taskModel.createdBy != null
+                              ? taskModel.createdBy!.name!.nameFormat()
+                              : '-',
+                          email: taskModel.createdBy != null
+                              ? taskModel.createdBy!.emailId!
+                              : '-',
+                          isAssignedBy: true,
+                        ),
+                        Icon(
+                          Icons.arrow_right_alt,
+                          size: 28.w,
+                        ),
+                        taskDetailsAssignedContainer(
+                          name: '${taskModel.assignedTo?.first.name}'
+                              .nameFormat(),
+                          email: '${taskModel.assignedTo?.first.emailId}',
+                          isAssignedBy: false,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 14.h),
 
-                  //====================Action Buttons Section====================//
-                  isTaskCompleted &&
-                          (tasksController.isDelegatedObs.value == true ||
-                              user?.role == Role.admin ||
-                              taskModel.createdBy!.emailId == user!.emailId)
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 14.w,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: taskModel.isApproved == true
-                                ? MainAxisAlignment.center
-                                : MainAxisAlignment.spaceBetween,
-                            children: [
-                              cardActionButton(
-                                title: 'Delete',
-                                icon: Icons.delete,
-                                iconColor: Colors.red,
-                                onTap: () {
-                                  TaskCrudOperations.deleteTask(
-                                    tasksController: tasksController,
-                                    taskModel: taskModel,
-                                  );
-                                },
-                                containerColor: Colors.grey.withOpacity(.08),
-                                containerWidth: 150.w,
-                                containerHeight: 40,
-                                iconSize: 22.sp,
-                                textSize: 14.sp,
-                              ),
-                              taskModel.isApproved != true
-                                  ? cardActionButton(
-                                      title: 'Re Open',
+                    //====================Action Buttons Section====================//
+                    isTaskCompleted &&
+                            (tasksController.isDelegatedObs.value == true ||
+                                user?.role == Role.admin ||
+                                taskModel.createdBy!.emailId == user!.emailId)
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 14.w,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: taskModel.isApproved == true
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.spaceBetween,
+                              children: [
+                                cardActionButton(
+                                  title: 'Delete',
+                                  icon: Icons.delete,
+                                  iconColor: Colors.red,
+                                  onTap: () {
+                                    TaskCrudOperations.deleteTask(
+                                      tasksController: tasksController,
+                                      taskModel: taskModel,
+                                    );
+                                  },
+                                  containerColor: Colors.grey.withOpacity(.08),
+                                  containerWidth: 150.w,
+                                  containerHeight: 40,
+                                  iconSize: 22.sp,
+                                  textSize: 14.sp,
+                                ),
+                                taskModel.isApproved != true
+                                    ? cardActionButton(
+                                        title: 'Re Open',
+                                        icon: StatusIcons.inProgress,
+                                        iconColor: StatusColor.open,
+                                        onTap: () {
+                                          TaskCrudOperations.updateTaskStatus(
+                                            taskId: taskModel.id.toString(),
+                                            taskStatus: Status.open,
+                                            tasksController: tasksController,
+                                          );
+                                        },
+                                        containerColor:
+                                            Colors.grey.withOpacity(.08),
+                                        containerWidth: 150.w,
+                                        containerHeight: 40,
+                                        iconSize: 22.sp,
+                                        textSize: 14.sp,
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                          )
+                        : !isTaskCompleted
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 14.w,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    cardActionButton(
+                                      title: 'In Progress',
                                       icon: StatusIcons.inProgress,
-                                      iconColor: StatusColor.open,
+                                      iconColor: StatusColor.inProgress,
                                       onTap: () {
                                         TaskCrudOperations.updateTaskStatus(
                                           taskId: taskModel.id.toString(),
-                                          taskStatus: Status.open,
+                                          taskStatus: Status.inProgress,
                                           tasksController: tasksController,
                                         );
                                       },
@@ -277,97 +321,124 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                       containerHeight: 40,
                                       iconSize: 22.sp,
                                       textSize: 14.sp,
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        )
-                      : !isTaskCompleted
-                          ? Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 14.w,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  cardActionButton(
-                                    title: 'In Progress',
-                                    icon: StatusIcons.inProgress,
-                                    iconColor: StatusColor.inProgress,
-                                    onTap: () {
-                                      TaskCrudOperations.updateTaskStatus(
-                                        taskId: taskModel.id.toString(),
-                                        taskStatus: Status.inProgress,
-                                        tasksController: tasksController,
-                                      );
-                                    },
-                                    containerColor:
-                                        Colors.grey.withOpacity(.08),
-                                    containerWidth: 150.w,
-                                    containerHeight: 40,
-                                    iconSize: 22.sp,
-                                    textSize: 14.sp,
-                                  ),
-                                  cardActionButton(
-                                    title: 'Completed',
-                                    icon: StatusIcons.completed,
-                                    iconColor: StatusColor.completed,
-                                    onTap: () {
-                                      TaskCrudOperations.updateTaskStatus(
-                                        taskId: taskModel.id.toString(),
-                                        taskStatus: Status.completed,
-                                        tasksController: tasksController,
-                                      );
-                                    },
-                                    containerColor:
-                                        Colors.grey.withOpacity(.08),
-                                    containerWidth: 150.w,
-                                    containerHeight: 40,
-                                    iconSize: 22.sp,
-                                    textSize: 14.sp,
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const SizedBox(),
-                  SizedBox(height: isTaskCompleted ? 0 : 9.h),
-                  !isTaskCompleted &&
-                          (tasksController.isDelegatedObs.value == true ||
-                              user?.role == Role.admin ||
-                              taskModel.createdBy!.emailId == user!.emailId)
-                      ? Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 14.w,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              cardActionButton(
-                                title: 'Edit',
-                                icon: Icons.edit,
-                                iconColor: Colors.blueGrey,
-                                onTap: () => Get.to(
-                                  () => AssignTaskScreen(
-                                    taskModel: taskModel,
-                                  ),
-                                  transition: Transition.downToUp,
+                                    ),
+                                    cardActionButton(
+                                      title: 'Completed',
+                                      icon: StatusIcons.completed,
+                                      iconColor: StatusColor.completed,
+                                      onTap: () {
+                                        TaskCrudOperations.updateTaskStatus(
+                                          taskId: taskModel.id.toString(),
+                                          taskStatus: Status.completed,
+                                          tasksController: tasksController,
+                                        );
+                                      },
+                                      containerColor:
+                                          Colors.grey.withOpacity(.08),
+                                      containerWidth: 150.w,
+                                      containerHeight: 40,
+                                      iconSize: 22.sp,
+                                      textSize: 14.sp,
+                                    ),
+                                  ],
                                 ),
-                                containerColor: Colors.grey.withOpacity(.08),
-                                containerWidth: 150.w,
-                                containerHeight: 40,
-                                iconSize: 22.sp,
-                                textSize: 14.sp,
-                              ),
-                              cardActionButton(
-                                title: 'Delete',
-                                icon: Icons.delete,
-                                iconColor: Colors.red,
-                                onTap: () {
-                                  TaskCrudOperations.deleteTask(
-                                    tasksController: tasksController,
-                                    taskModel: taskModel,
-                                  );
+                              )
+                            : const SizedBox(),
+                    SizedBox(height: isTaskCompleted ? 0 : 9.h),
+                    !isTaskCompleted &&
+                            (tasksController.isDelegatedObs.value == true ||
+                                user?.role == Role.admin ||
+                                taskModel.createdBy!.emailId == user!.emailId)
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 14.w,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                cardActionButton(
+                                  title: 'Edit',
+                                  icon: Icons.edit,
+                                  iconColor: Colors.blueGrey,
+                                  onTap: () => Get.to(
+                                    () => AssignTaskScreen(
+                                      taskModel: taskModel,
+                                    ),
+                                    transition: Transition.downToUp,
+                                  ),
+                                  containerColor: Colors.grey.withOpacity(.08),
+                                  containerWidth: 150.w,
+                                  containerHeight: 40,
+                                  iconSize: 22.sp,
+                                  textSize: 14.sp,
+                                ),
+                                cardActionButton(
+                                  title: 'Delete',
+                                  icon: Icons.delete,
+                                  iconColor: Colors.red,
+                                  onTap: () {
+                                    TaskCrudOperations.deleteTask(
+                                      tasksController: tasksController,
+                                      taskModel: taskModel,
+                                    );
+                                  },
+                                  containerColor: Colors.grey.withOpacity(.08),
+                                  containerWidth: 150.w,
+                                  containerHeight: 40,
+                                  iconSize: 22.sp,
+                                  textSize: 14.sp,
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
+                    taskModel.status == Status.completed &&
+                            taskModel.isApproved != true &&
+                            taskModel.createdBy!.emailId == user!.emailId
+                        ? Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 9.h),
+                              child: cardActionButton(
+                                title: 'Approve',
+                                icon: Icons.verified,
+                                iconColor: Colors.teal,
+                                onTap: () async {
+                                  try {
+                                    Get.dialog(
+                                      SpinKitWave(
+                                        size: 20.w,
+                                        color: AppColors.themeGreen,
+                                      ),
+                                      barrierColor: Colors.black45,
+                                      barrierDismissible: false,
+                                    );
+                                    await tasksController.approveTask(
+                                        taskId: taskModel.id!);
+                                    Get.back();
+                                    showGenericDialog(
+                                      iconPath:
+                                          'assets/lotties/success_animation.json',
+                                      title: 'Task Approved',
+                                      content:
+                                          'Task has been successfully approved',
+                                      buttons: {
+                                        'OK': null,
+                                      },
+                                    );
+                                  } catch (_) {
+                                    Get.back();
+                                    showGenericDialog(
+                                      iconPath:
+                                          'assets/lotties/server_error_animation.json',
+                                      title: 'Something went wrong',
+                                      content:
+                                          'Something went wrong while approving task',
+                                      buttons: {
+                                        'Dismiss': null,
+                                      },
+                                    );
+                                  }
                                 },
                                 containerColor: Colors.grey.withOpacity(.08),
                                 containerWidth: 150.w,
@@ -375,81 +446,24 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                                 iconSize: 22.sp,
                                 textSize: 14.sp,
                               ),
-                            ],
-                          ),
-                        )
-                      : const SizedBox(),
-                  taskModel.status == Status.completed &&
-                          taskModel.isApproved != true &&
-                          taskModel.createdBy!.emailId == user!.emailId
-                      ? Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 9.h),
-                            child: cardActionButton(
-                              title: 'Approve',
-                              icon: Icons.verified,
-                              iconColor: Colors.teal,
-                              onTap: () async {
-                                try {
-                                  Get.dialog(
-                                    SpinKitWave(
-                                      size: 20.w,
-                                      color: AppColors.themeGreen,
-                                    ),
-                                    barrierColor: Colors.black45,
-                                    barrierDismissible: false,
-                                  );
-                                  await tasksController.approveTask(
-                                      taskId: taskModel.id!);
-                                  Get.back();
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/success_animation.json',
-                                    title: 'Task Approved',
-                                    content:
-                                        'Task has been successfully approved',
-                                    buttons: {
-                                      'OK': null,
-                                    },
-                                  );
-                                } catch (_) {
-                                  Get.back();
-                                  showGenericDialog(
-                                    iconPath:
-                                        'assets/lotties/server_error_animation.json',
-                                    title: 'Something went wrong',
-                                    content:
-                                        'Something went wrong while approving task',
-                                    buttons: {
-                                      'Dismiss': null,
-                                    },
-                                  );
-                                }
-                              },
-                              containerColor: Colors.grey.withOpacity(.08),
-                              containerWidth: 150.w,
-                              containerHeight: 40,
-                              iconSize: 22.sp,
-                              textSize: 14.sp,
                             ),
-                          ),
-                        )
-                      : const SizedBox(),
-                  SizedBox(height: 14.h),
-                  Container(
-                    width: double.maxFinite,
-                    height: 1,
-                    color: Colors.white12,
-                  ),
-                  SizedBox(height: 12.h),
+                          )
+                        : const SizedBox(),
+                    SizedBox(height: 14.h),
+                    Container(
+                      width: double.maxFinite,
+                      height: 1,
+                      color: Colors.white12,
+                    ),
+                    SizedBox(height: 12.h),
 
-                  //====================Task Updates Section====================//
-                  taskUpdateSection(
-                    taskModel: taskModel,
-                    dio: dio,
-                  ),
-                ],
+                    //====================Task Updates Section====================//
+                    taskUpdateSection(
+                      taskModel: taskModel,
+                      dio: dio,
+                    ),
+                  ],
+                ),
               ),
             ),
           );
