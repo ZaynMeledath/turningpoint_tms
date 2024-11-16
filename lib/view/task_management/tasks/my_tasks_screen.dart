@@ -35,9 +35,10 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      tasksController.isDelegatedObs.value = false;
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   tasksController.isDelegatedObs.value = false;
+    // });
+    tasksController.isDelegatedObs.value = false;
 
     lottieController = AnimationController(
       vsync: this,
@@ -79,7 +80,7 @@ class _MyTasksScreenState extends State<MyTasksScreen>
 
   @override
   void dispose() {
-    tasksController.isDelegatedObs.value = null;
+    // tasksController.isDelegatedObs.value = null;
     appController.isLoadingObs.value = false;
     filterController.resetFilters();
     lottieController.dispose();

@@ -114,8 +114,8 @@ Widget titleDescriptionContainer({
                           'Creation',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontSize: 14.w,
-                            color: Colors.white70,
+                            fontSize: 14.sp,
+                            color: Colors.white.withOpacity(.75),
                           ),
                         ),
                       ),
@@ -125,14 +125,15 @@ Widget titleDescriptionContainer({
                       Icon(
                         Icons.schedule,
                         size: 17.sp,
-                        color: Colors.white70,
+                        color: Colors.white.withOpacity(.75),
                       ),
                       SizedBox(width: 3.w),
                       Text(
                         creationDateString,
                         style: TextStyle(
-                          fontSize: 14.w,
-                          color: Colors.white70,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white.withOpacity(.75),
                         ),
                       ),
                     ],
@@ -144,8 +145,12 @@ Widget titleDescriptionContainer({
                     children: [
                       SizedBox(
                         width: 90.w,
-                        child: const Text(
+                        child: Text(
                           'Due Date',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.white.withOpacity(.75),
+                          ),
                         ),
                       ),
                       SizedBox(width: 6.w),
@@ -154,7 +159,7 @@ Widget titleDescriptionContainer({
                       Icon(
                         Icons.alarm,
                         size: 17.sp,
-                        color: Colors.white70,
+                        color: Colors.white.withOpacity(.75),
                       ),
                       SizedBox(width: 3.w),
                       Text(
@@ -177,8 +182,12 @@ Widget titleDescriptionContainer({
                             children: [
                               SizedBox(
                                 width: 90.w,
-                                child: const Text(
+                                child: Text(
                                   'Completion',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: Colors.white.withOpacity(.75),
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 6.w),
@@ -187,7 +196,7 @@ Widget titleDescriptionContainer({
                               Icon(
                                 Icons.alarm,
                                 size: 17.sp,
-                                color: Colors.white70,
+                                color: Colors.white.withOpacity(.75),
                               ),
                               SizedBox(width: 3.w),
                               Text(
@@ -226,14 +235,30 @@ Widget titleDescriptionContainer({
                   ],
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      'Repeat',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        decoration: TextDecoration.underline,
+                        decorationStyle: TextDecorationStyle.dashed,
+                        decorationColor: Colors.white.withOpacity(.8),
+                        color: Colors.white.withOpacity(.8),
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
                     //====================Repeat Frequency====================//
                     Row(
                       children: [
                         SizedBox(
                           width: 90.w,
-                          child: const Text(
-                            'Repeat Frequency',
+                          child: Text(
+                            'Frequency',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.white.withOpacity(.75),
+                            ),
                           ),
                         ),
                         SizedBox(width: 6.w),
@@ -241,8 +266,10 @@ Widget titleDescriptionContainer({
                         SizedBox(width: 14.w),
                         Text(
                           taskModel.repeat!.frequency.toString(),
-                          style: const TextStyle(
+                          style: TextStyle(
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
+                            color: Colors.white.withOpacity(.75),
                           ),
                         )
                       ],
@@ -257,8 +284,14 @@ Widget titleDescriptionContainer({
                           children: [
                             SizedBox(
                               width: 90.w,
-                              child: const Text(
-                                'Repeat Days',
+                              child: Text(
+                                taskModel.repeat!.frequency == 'Monthly'
+                                    ? 'Dates'
+                                    : 'Days',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.white.withOpacity(.75),
+                                ),
                               ),
                             ),
                             SizedBox(width: 6.w),
@@ -268,8 +301,10 @@ Widget titleDescriptionContainer({
                               taskModel.repeat!.frequency == 'Monthly'
                                   ? taskModel.repeat!.days!.join(', ')
                                   : repeatWeekDays.join(', '),
-                              style: const TextStyle(
+                              style: TextStyle(
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
+                                color: Colors.white.withOpacity(.75),
                               ),
                             )
                           ],
@@ -282,8 +317,12 @@ Widget titleDescriptionContainer({
                       children: [
                         SizedBox(
                           width: 90.w,
-                          child: const Text(
+                          child: Text(
                             'Start Date',
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.white.withOpacity(.75),
+                            ),
                           ),
                         ),
                         SizedBox(width: 6.w),
@@ -291,9 +330,10 @@ Widget titleDescriptionContainer({
                         SizedBox(width: 14.w),
                         Text(
                           taskModel.repeat!.startDate!.dateFormat(),
-                          style: const TextStyle(
+                          style: TextStyle(
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white70,
+                            color: Colors.white.withOpacity(.75),
                           ),
                         )
                       ],
@@ -307,8 +347,12 @@ Widget titleDescriptionContainer({
                           children: [
                             SizedBox(
                               width: 90.w,
-                              child: const Text(
+                              child: Text(
                                 'End Date',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.white.withOpacity(.75),
+                                ),
                               ),
                             ),
                             SizedBox(width: 6.w),
@@ -316,9 +360,10 @@ Widget titleDescriptionContainer({
                             SizedBox(width: 14.w),
                             Text(
                               taskModel.repeat!.endDate!.dateFormat(),
-                              style: const TextStyle(
+                              style: TextStyle(
+                                fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.white70,
+                                color: Colors.white.withOpacity(.75),
                               ),
                             )
                           ],
@@ -332,8 +377,12 @@ Widget titleDescriptionContainer({
                         children: [
                           SizedBox(
                             width: 90.w,
-                            child: const Text(
+                            child: Text(
                               'Occurrences',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.white.withOpacity(.75),
+                              ),
                             ),
                           ),
                           SizedBox(width: 6.w),
@@ -341,8 +390,10 @@ Widget titleDescriptionContainer({
                           SizedBox(width: 14.w),
                           Text(
                             taskModel.repeat!.occurrenceCount!.toString(),
-                            style: const TextStyle(
+                            style: TextStyle(
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
+                              color: Colors.white.withOpacity(.75),
                             ),
                           )
                         ],
@@ -362,8 +413,12 @@ Widget titleDescriptionContainer({
                     children: [
                       SizedBox(
                         width: 90.w,
-                        child: const Text(
+                        child: Text(
                           'Category',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.white.withOpacity(.75),
+                          ),
                         ),
                       ),
                       SizedBox(width: 6.w),
@@ -371,8 +426,10 @@ Widget titleDescriptionContainer({
                       SizedBox(width: 14.w),
                       Text(
                         taskModel.category.toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
+                          color: Colors.white.withOpacity(.75),
                         ),
                       )
                     ],
@@ -384,8 +441,12 @@ Widget titleDescriptionContainer({
                     children: [
                       SizedBox(
                         width: 90.w,
-                        child: const Text(
+                        child: Text(
                           'Priority',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.white.withOpacity(.75),
+                          ),
                         ),
                       ),
                       SizedBox(width: 6.w),
@@ -400,8 +461,9 @@ Widget titleDescriptionContainer({
                         taskModel.priority.toString(),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontSize: 15.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
+                          color: Colors.white.withOpacity(.75),
                         ),
                       ),
                     ],
@@ -421,7 +483,7 @@ Widget titleDescriptionContainer({
                           'Description',
                           style: TextStyle(
                             fontSize: 14.sp,
-                            color: Colors.white70,
+                            color: Colors.white.withOpacity(.75),
                             decoration: TextDecoration.underline,
                           ),
                         )
@@ -429,7 +491,7 @@ Widget titleDescriptionContainer({
                   SizedBox(height: 6.h),
                   Text(
                     taskModel.description.toString(),
-                    style: TextStyle(fontSize: 15.sp),
+                    style: TextStyle(fontSize: 14.sp),
                   ),
                   SizedBox(height: 6.h),
                 ],
