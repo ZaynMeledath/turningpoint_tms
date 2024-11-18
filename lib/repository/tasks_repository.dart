@@ -91,8 +91,8 @@ class TasksRepository {
     }
   }
 
-//====================Upload Attachment====================//
-  Future<String> uploadAttachment({required File file}) async {
+//====================Upload File====================//
+  Future<String> uploadFile({required File file}) async {
     final response = await ApiService().sendRequest(
       url: ApiEndpoints.uploadFile,
       requestMethod: RequestMethod.POST,

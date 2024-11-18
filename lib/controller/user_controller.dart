@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -97,6 +99,22 @@ class UserController extends GetxController {
       userModel.phone = phone;
       userModel.emailId = email;
       await UserRepository.updateProfile(userModel: userModel);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+//====================Update Profile Picture====================//
+  Future<void> updateProfilePicture() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+      );
+
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        final url = await UserRepository.uploadFile(file: file);
+      }
     } catch (_) {
       rethrow;
     }

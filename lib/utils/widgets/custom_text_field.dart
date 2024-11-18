@@ -5,6 +5,7 @@ typedef SuffixFunction = void Function();
 Widget customTextField({
   required TextEditingController controller,
   required String hintText,
+  int? maxLines = 1,
   UserController? userController,
   Color? backgroundColor,
   Color? borderColor,
@@ -21,6 +22,7 @@ Widget customTextField({
       () => textField(
         controller: controller,
         hintText: hintText,
+        maxLines: maxLines,
         keyboardType: keyboardType,
         userController: userController,
         backgroundColor: backgroundColor,
@@ -37,6 +39,7 @@ Widget customTextField({
     return textField(
       controller: controller,
       hintText: hintText,
+      maxLines: maxLines,
       userController: null,
       keyboardType: keyboardType,
       backgroundColor: backgroundColor,
@@ -54,6 +57,7 @@ Widget customTextField({
 Widget textField({
   required TextEditingController controller,
   required String hintText,
+  int? maxLines,
   UserController? userController,
   Color? backgroundColor,
   Color? borderColor,
@@ -68,7 +72,7 @@ Widget textField({
   return TextFormField(
     controller: controller,
     style: GoogleFonts.roboto(),
-    maxLines: 1,
+    maxLines: maxLines,
     maxLength: isNum == true ? 10 : null,
     obscureText: userController != null && isPassword == true
         ? userController.isObScure.value
@@ -106,6 +110,7 @@ Widget textField({
           fontSize: 16.sp,
         ),
       ),
+      alignLabelWithHint: true,
       contentPadding: contentPadding ??
           EdgeInsets.symmetric(
             horizontal: 14.w,

@@ -21,10 +21,11 @@ Widget customButton({
             onTap: onTap,
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 500),
-              padding: EdgeInsets.symmetric(
-                horizontal: 14.w,
-                vertical: 10.h,
-              ),
+              padding: buttonPadding ??
+                  EdgeInsets.symmetric(
+                    horizontal: 14.w,
+                    vertical: 10.h,
+                  ),
               width: width,
               height: height,
               decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'dart:developer' show log;
 import 'dart:convert';
+import 'dart:io';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
@@ -100,6 +101,18 @@ class UserRepository {
     } catch (_) {
       rethrow;
     }
+  }
+
+//====================Upload File====================//
+  static Future<String> uploadFile({required File file}) async {
+    final response = await ApiService().sendRequest(
+      url: ApiEndpoints.uploadFile,
+      requestMethod: RequestMethod.POST,
+      data: file,
+      fieldNameForFiles: 'attachments',
+      isTokenRequired: true,
+    );
+    return response.first as String;
   }
 
 //====================Change Password====================//

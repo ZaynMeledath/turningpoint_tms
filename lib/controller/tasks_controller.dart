@@ -422,7 +422,7 @@ class TasksController extends GetxController {
     if (imageFile != null) {
       appController.isLoadingObs.value = true;
       taskUpdateAttachmentsMapList.add({
-        'path': await tasksRepository.uploadAttachment(file: imageFile),
+        'path': await tasksRepository.uploadFile(file: imageFile),
         'type': TaskFileType.image,
       });
       taskUpdateAttachmentsFileList.add(imageFile);
@@ -439,7 +439,7 @@ class TasksController extends GetxController {
       if (result != null) {
         File file = File(result.files.single.path!);
         appController.isLoadingObs.value = true;
-        final url = await tasksRepository.uploadAttachment(file: file);
+        final url = await tasksRepository.uploadFile(file: file);
         final fileExtension = file.path.split('.').last;
         final fileType = fileExtension == 'mp4' ||
                 fileExtension == 'mkv' ||

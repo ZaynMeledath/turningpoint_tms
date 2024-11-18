@@ -207,7 +207,7 @@ class AssignTaskController extends GetxController {
         attachmentsListObs
             .add(Attachment()); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
-        final url = await tasksRepository.uploadAttachment(file: file);
+        final url = await tasksRepository.uploadFile(file: file);
         attachmentsListObs
             .removeLast(); //The one used for the loader is removed
         final fileExtension = file.path.split('.').last;
@@ -253,7 +253,7 @@ class AssignTaskController extends GetxController {
         voiceRecordPathObs.value = await recorder.stop() ?? '';
         isRecordingObs.value = false;
         appController.isLoadingObs.value = true;
-        voiceRecordUrlObs.value = await tasksRepository.uploadAttachment(
+        voiceRecordUrlObs.value = await tasksRepository.uploadFile(
             file: File(voiceRecordPathObs.value));
         appController.isLoadingObs.value = false;
       } else {

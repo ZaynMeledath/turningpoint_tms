@@ -13,6 +13,8 @@ import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/task_management/profile/profile_picture_view_screen.dart';
+import 'package:turningpoint_tms/view/tickets/raise_ticket_screen.dart';
 
 part 'segments/section_title_container.dart';
 part 'segments/profile_option.dart';
@@ -49,9 +51,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: 14.w),
           child: Column(
             children: [
-              nameLetterAvatar(
-                name: '${userModel?.name}',
-                circleDiameter: 80.w,
+              Stack(
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: () {
+                      Get.to(
+                        () => ProfilePictureViewScreen(),
+                        transition: Transition.zoom,
+                      );
+                    },
+                    child: nameLetterAvatar(
+                      name: '${userModel?.name}',
+                      circleDiameter: 80.w,
+                    ),
+                  ),
+                  Positioned(
+                    right: 4.w,
+                    bottom: 0,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      onTap: () {},
+                      child: Container(
+                        width: 22.5.w,
+                        height: 22.5.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.lightBlue,
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.edit,
+                            size: 15.w,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10.h),
               Text(
@@ -76,13 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.white70,
                 ),
               ),
-              // Container(
-              //   width: 250.w,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(8),
-              //     gradient:
-              //   ),
-              // ),
               SizedBox(height: 8.h),
               sectionTitleContainer(title: 'Account Management'),
               InkWell(
@@ -93,7 +123,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: profileOption(title: 'Edit Profile'),
               ),
-
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () => showChangePasswordBottomSheet(
@@ -102,7 +131,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: profileOption(title: 'Change Password'),
               ),
-
               sectionTitleContainer(title: 'Support'),
               InkWell(
                 borderRadius: BorderRadius.circular(12),
@@ -117,9 +145,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.snackbar(
-                    'Feature Unavailable',
-                    'Feature not accessible right now',
+                  Get.to(
+                    () => RaiseTicketScreen(),
+                    transition: Transition.rightToLeft,
                   );
                 },
                 child: profileOption(title: 'Raise a Ticket'),
