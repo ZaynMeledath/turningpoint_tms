@@ -14,6 +14,7 @@ import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
+import 'package:turningpoint_tms/model/personal_reminder_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/tasks/dialogs/show_add_personal_reminder_dialog.dart';
@@ -240,8 +241,12 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
                 motion: const DrawerMotion(),
                 children: _buildSlidableActions(index),
               ),
-              child:
-                  _buildReminderCard(reminder, reminderDate, hour, timeSuffix),
+              child: _buildReminderCard(
+                reminder: reminder,
+                reminderDate: reminderDate,
+                hour: hour,
+                timeSuffix: timeSuffix,
+              ),
             ),
           );
         },
@@ -334,7 +339,10 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
   }
 
   Widget _buildReminderCard(
-      reminder, DateTime reminderDate, int hour, String timeSuffix) {
+      {required PersonalReminderModel reminder,
+      required DateTime reminderDate,
+      required int hour,
+      required String timeSuffix}) {
     final hourString = hour.toString().padLeft(2, '0');
     final minuteString = reminderDate.minute.toString().padLeft(2, '0');
 
@@ -355,7 +363,10 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(reminder.message.toString(), style: TextStyle(fontSize: 16.sp)),
+          Text(
+            reminder.message.toString(),
+            style: TextStyle(fontSize: 16.sp),
+          ),
           SizedBox(height: 4.w),
           Row(
             children: [

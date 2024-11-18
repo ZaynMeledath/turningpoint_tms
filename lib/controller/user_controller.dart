@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
@@ -15,6 +14,8 @@ import 'package:turningpoint_tms/repository/user_repository.dart';
 
 class UserController extends GetxController {
   final userException = Rxn<Exception>();
+
+  final userObs = Rxn<UserModel>();
 
   RxBool isObScure = true.obs;
   final Rxn<List<AllUsersModel>> myTeamList = Rxn<List<AllUsersModel>>();
@@ -79,9 +80,10 @@ class UserController extends GetxController {
   }
 
 //====================Get User By ID====================//
-  Future<void> getUserById({required String userId}) async {
+  Future<void> getUserById() async {
     try {
-      await UserRepository.getUserById(userId: userId);
+      final user = getUserModelFromHive()!;
+      userObs.value = await UserRepository.getUserById(userId: user.id!);
     } catch (e) {
       userException.value = e as Exception;
     }
@@ -114,6 +116,8 @@ class UserController extends GetxController {
       if (result != null) {
         File file = File(result.files.single.path!);
         final url = await UserRepository.uploadFile(file: file);
+        await UserRepository.updateProfileImage(profileImageUrl: url);
+        await getUserById();
       }
     } catch (_) {
       rethrow;

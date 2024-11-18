@@ -103,6 +103,24 @@ class UserRepository {
     }
   }
 
+//====================Update Profile Image====================//
+  static Future<void> updateProfileImage(
+      {required String profileImageUrl}) async {
+    try {
+      await ApiService().sendRequest(
+        url: ApiEndpoints.updateProfile,
+        requestMethod: RequestMethod.PUT,
+        data: {
+          'profileImg': profileImageUrl,
+        },
+        fieldNameForFiles: null,
+        isTokenRequired: true,
+      );
+    } catch (_) {
+      rethrow;
+    }
+  }
+
 //====================Upload File====================//
   static Future<String> uploadFile({required File file}) async {
     final response = await ApiService().sendRequest(

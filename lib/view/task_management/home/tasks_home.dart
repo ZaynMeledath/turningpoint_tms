@@ -26,7 +26,7 @@ class TasksHome extends StatefulWidget {
 class _TasksHomeState extends State<TasksHome> {
   int activeIndex = 1;
   StatefulWidget? activeWidget;
-  UserModel? userModel;
+  UserModel? user;
 
   final tasksController = TasksController();
   final userController = Get.put(UserController());
@@ -44,13 +44,13 @@ class _TasksHomeState extends State<TasksHome> {
 
   @override
   void initState() {
-    userModel = getUserModelFromHive();
+    user = getUserModelFromHive();
     final token = AppPreferences.getValueShared(AppConstants.authTokenKey);
     log('TOKEN : $token');
     getData();
 
-    if (userModel != null &&
-        (userModel!.role == Role.admin || userModel!.role == Role.teamLeader)) {
+    if (user != null &&
+        (user!.role == Role.admin || user!.role == Role.teamLeader)) {
       isAdminOrLeader = true;
       activeIndex = 0;
       titleIconMap = {
@@ -71,7 +71,7 @@ class _TasksHomeState extends State<TasksHome> {
   }
 
   Future<void> getData() async {
-    await userController.getUserById(userId: userModel!.id!);
+    await userController.getUserById();
     await userController.getAssignTaskUsers();
   }
 

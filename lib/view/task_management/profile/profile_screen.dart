@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +10,6 @@ import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/exception/user_exceptions.dart';
-import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
@@ -31,17 +32,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final passwordController = TextEditingController();
   final userController = Get.put(UserController());
   final appController = Get.put(AppController());
+  final profileImageLoadingController = AppController();
+
+  final profileImageSize = 85.w;
 
   @override
   void dispose() {
     passwordController.dispose();
+    profileImageLoadingController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserModel? userModel = getUserModelFromHive();
-
     return Scaffold(
       appBar: myAppBar(
         title: 'Profile',
@@ -51,48 +54,110 @@ class _ProfileScreenState extends State<ProfileScreen> {
           padding: EdgeInsets.symmetric(horizontal: 14.w),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () {
-                      Get.to(
-                        () => ProfilePictureViewScreen(),
-                        transition: Transition.zoom,
-                      );
-                    },
-                    child: nameLetterAvatar(
-                      name: '${userModel?.name}',
-                      circleDiameter: 80.w,
-                    ),
-                  ),
-                  Positioned(
-                    right: 4.w,
-                    bottom: 0,
-                    child: InkWell(
+              Obx(
+                () => Stack(
+                  children: [
+                    InkWell(
                       borderRadius: BorderRadius.circular(100),
-                      onTap: () {},
-                      child: Container(
-                        width: 22.5.w,
-                        height: 22.5.w,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.lightBlue,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.edit,
-                            size: 15.w,
+                      onTap: () {
+                        Get.to(
+                          () => ProfilePictureViewScreen(),
+                          transition: Transition.zoom,
+                        );
+                      },
+                      child: userController.userObs.value?.profileImg != null
+                          ? Container(
+                              width: profileImageSize,
+                              height: profileImageSize,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.themeGreen.withOpacity(.6),
+                                  width: 2.w,
+                                ),
+                              ),
+                              child: Center(
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl: userController
+                                        .userObs.value!.profileImg!,
+                                    fit: BoxFit.cover,
+                                    width: profileImageSize,
+                                    height: profileImageSize,
+                                    placeholder: (context, url) => Center(
+                                      child: CupertinoActivityIndicator(
+                                          radius: 15.w),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : nameLetterAvatar(
+                              name: '${userController.userObs.value?.name}',
+                              circleDiameter: profileImageSize,
+                            ),
+                    ),
+                    Positioned(
+                      right: 4.w,
+                      bottom: 0,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () async {
+                          if (profileImageLoadingController
+                              .isLoadingObs.value) {
+                            return;
+                          }
+                          try {
+                            profileImageLoadingController.isLoadingObs.value =
+                                true;
+                            await userController.updateProfilePicture();
+                            profileImageLoadingController.isLoadingObs.value =
+                                false;
+                          } catch (_) {
+                            profileImageLoadingController.isLoadingObs.value =
+                                false;
+                            showGenericDialog(
+                              iconPath:
+                                  'assets/lotties/server_error_animation.json',
+                              title: 'Something went wrong',
+                              content:
+                                  'Something went wrong while changing profile image',
+                              buttons: {
+                                'OK': null,
+                              },
+                            );
+                          }
+                        },
+                        child: Obx(
+                          () => Container(
+                            width: 22.5.w,
+                            height: 22.5.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue,
+                            ),
+                            child: Center(
+                              child: profileImageLoadingController
+                                      .isLoadingObs.value
+                                  ? CupertinoActivityIndicator(
+                                      radius: 7.w,
+                                      color: Colors.white,
+                                    )
+                                  : Icon(
+                                      Icons.edit,
+                                      size: 15.w,
+                                    ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(height: 10.h),
               Text(
-                '${userModel?.name}',
+                '${userController.userObs.value?.name}',
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
@@ -100,14 +165,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 4.h),
               Text(
-                '${userModel?.emailId}',
+                '${userController.userObs.value?.emailId}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.white70,
                 ),
               ),
               Text(
-                '+91 ${userModel?.phone}',
+                '+91 ${userController.userObs.value?.phone}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: Colors.white70,

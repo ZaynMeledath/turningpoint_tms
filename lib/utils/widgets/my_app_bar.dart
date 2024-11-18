@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
@@ -16,7 +18,8 @@ AppBar myAppBar({
   bool profileAvatar = false,
   bool implyLeading = true,
 }) {
-  final UserModel? userModel = getUserModelFromHive();
+  final UserModel? user = getUserModelFromHive();
+  final profileImageSize = 40.w;
   return AppBar(
     automaticallyImplyLeading: false,
     elevation: 10,
@@ -87,10 +90,31 @@ AppBar myAppBar({
                       () => const ProfileScreen(),
                       transition: Transition.rightToLeft,
                     ),
-                    child: nameLetterAvatar(
-                      name: '${userModel?.name}',
-                      circleDiameter: 40.h,
-                    ),
+                    child: user?.profileImg != null
+                        ? Container(
+                            width: profileImageSize,
+                            height: profileImageSize,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: AppColors.themeGreen,
+                              ),
+                            ),
+                            child: Center(
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: user!.profileImg!,
+                                  fit: BoxFit.cover,
+                                  width: profileImageSize,
+                                  height: profileImageSize,
+                                ),
+                              ),
+                            ),
+                          )
+                        : nameLetterAvatar(
+                            name: '${user?.name}',
+                            circleDiameter: profileImageSize,
+                          ),
                   ),
                 ),
               )
