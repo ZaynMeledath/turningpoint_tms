@@ -55,104 +55,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               Obx(
-                () => Stack(
-                  children: [
-                    InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () {
-                        Get.to(
-                          () => ProfilePictureViewScreen(),
-                          transition: Transition.zoom,
-                        );
-                      },
-                      child: userController.userObs.value?.profileImg != null
-                          ? Container(
-                              width: profileImageSize,
-                              height: profileImageSize,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.themeGreen.withOpacity(.6),
-                                  width: 2.w,
-                                ),
-                              ),
-                              child: Center(
-                                child: ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl: userController
-                                        .userObs.value!.profileImg!,
-                                    fit: BoxFit.cover,
-                                    width: profileImageSize,
-                                    height: profileImageSize,
-                                    placeholder: (context, url) => Center(
-                                      child: CupertinoActivityIndicator(
-                                          radius: 15.w),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : nameLetterAvatar(
-                              name: '${userController.userObs.value?.name}',
-                              circleDiameter: profileImageSize,
-                            ),
-                    ),
-                    Positioned(
-                      right: 4.w,
-                      bottom: 0,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(100),
-                        onTap: () async {
-                          if (profileImageLoadingController
-                              .isLoadingObs.value) {
-                            return;
-                          }
-                          try {
-                            profileImageLoadingController.isLoadingObs.value =
-                                true;
-                            await userController.updateProfilePicture();
-                            profileImageLoadingController.isLoadingObs.value =
-                                false;
-                          } catch (_) {
-                            profileImageLoadingController.isLoadingObs.value =
-                                false;
-                            showGenericDialog(
-                              iconPath:
-                                  'assets/lotties/server_error_animation.json',
-                              title: 'Something went wrong',
-                              content:
-                                  'Something went wrong while changing profile image',
-                              buttons: {
-                                'OK': null,
-                              },
-                            );
-                          }
-                        },
-                        child: Obx(
-                          () => Container(
-                            width: 22.5.w,
-                            height: 22.5.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.blue,
-                            ),
-                            child: Center(
-                              child: profileImageLoadingController
-                                      .isLoadingObs.value
-                                  ? CupertinoActivityIndicator(
-                                      radius: 7.w,
-                                      color: Colors.white,
-                                    )
-                                  : Icon(
-                                      Icons.edit,
-                                      size: 15.w,
-                                    ),
+                () => InkWell(
+                  borderRadius: BorderRadius.circular(100),
+                  onTap: () {
+                    Get.to(
+                      () => ProfilePictureViewScreen(),
+                      transition: Transition.zoom,
+                    );
+                  },
+                  child: userController.userObs.value?.profileImg != null
+                      ? Container(
+                          width: profileImageSize,
+                          height: profileImageSize,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: AppColors.themeGreen.withOpacity(.6),
+                              width: 2.w,
                             ),
                           ),
+                          child: Center(
+                            child: ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    userController.userObs.value!.profileImg!,
+                                fit: BoxFit.cover,
+                                width: profileImageSize,
+                                height: profileImageSize,
+                              ),
+                            ),
+                          ),
+                        )
+                      : nameLetterAvatar(
+                          name: '${userController.userObs.value?.name}',
+                          circleDiameter: profileImageSize,
                         ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
               SizedBox(height: 10.h),
