@@ -46,9 +46,9 @@ Widget dialog({
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-        width: 255.w,
+        width: 260.w,
         padding: EdgeInsets.symmetric(
-          horizontal: 20.w,
+          horizontal: 16.w,
           vertical: 20.h,
         ),
         // margin: EdgeInsets.symmetric(horizontal: 58.w),
@@ -60,7 +60,7 @@ Widget dialog({
           children: [
             Lottie.asset(
               iconPath,
-              width: 61.w,
+              width: 100.w,
             ),
             SizedBox(
               height: 6.h,
@@ -131,10 +131,8 @@ Widget dialog({
                     () {
                       final isLoading = deleteAllController.isLoadingObs.value;
                       return Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 8.h,
-                        ),
+                        width: 100.w,
+                        height: 30.w,
                         margin: EdgeInsets.only(right: 12.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -205,13 +203,15 @@ Widget dialog({
                       final isLoading =
                           deleteSingleController.isLoadingObs.value;
                       return Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 8.h,
-                        ),
+                        width: 100.w,
+                        height: 30.w,
+                        // padding: EdgeInsets.symmetric(
+                        //   horizontal: 16.w,
+                        //   vertical: 8.h,
+                        // ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
-                          color: AppColors.themeGreen,
+                          color: Colors.red,
                         ),
                         child: DefaultTextStyle(
                           style: GoogleFonts.roboto(
