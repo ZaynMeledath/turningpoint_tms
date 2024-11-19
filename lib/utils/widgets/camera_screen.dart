@@ -60,16 +60,42 @@ class _CameraScreenState extends State<CameraScreen>
         children: [
           AspectRatio(
             aspectRatio: 3 / 4.5,
-            child: CameraPreview(
-              cameraController!,
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                if (details.delta.dx > 0) {
+                  // Drag from right to left
+                  tabController.index = 0;
+                } else if (details.delta.dx < 0) {
+                  // Drag from left to right
+                  tabController.index = 1;
+                }
+                setState(() {});
+              },
+              child: CameraPreview(
+                cameraController!,
+              ),
             ),
           ),
           SizedBox(height: 6.h),
           SizedBox(
-            width: 160.w,
+            width: 150.w,
             child: TabBar(
+              // padding: EdgeInsets.zero,
+              onTap: (index) {
+                setState(() {});
+              },
+              splashBorderRadius: BorderRadius.circular(16),
               controller: tabController,
               dividerColor: Colors.transparent,
+              labelStyle: TextStyle(
+                color: Colors.yellow,
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+              indicatorColor: Colors.transparent,
               tabs: [
                 Text(
                   'Photo',
@@ -87,29 +113,34 @@ class _CameraScreenState extends State<CameraScreen>
             ),
           ),
           SizedBox(height: 30.h),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                width: 60.w,
-                height: 60.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 4.w,
+          InkWell(
+            borderRadius: BorderRadius.circular(100),
+            onTap: () {},
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 60.w,
+                  height: 60.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 4.w,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                width: 45.w,
-                height: 45.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red,
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  width: 45.w,
+                  height: 45.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: tabController.index == 0 ? Colors.white : Colors.red,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           // SizedBox(height: 15.h),
         ],
