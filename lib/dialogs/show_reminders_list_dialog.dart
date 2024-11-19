@@ -161,6 +161,11 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
                                   ),
                                   child: customButton(
                                     buttonTitle: 'New Reminder',
+                                    buttonPadding: EdgeInsets.symmetric(
+                                      horizontal: 12.w,
+                                      vertical: 6.w,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16),
                                     onTap: () {
                                       Get.back();
                                       showAddPersonalReminderDialog(

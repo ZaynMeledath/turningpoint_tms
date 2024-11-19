@@ -50,12 +50,10 @@ Widget dashboardStatusOverviewSection({
       } else if (tasksController.dashboardTabIndexObs.value == 3) {
         //When Delegated Report tab is selected
         overdueTasksCount = tasksController.allTasksListObs.value
-                ?.where(
-                  (taskModel) =>
-                      taskModel.createdBy!.emailId == user!.emailId &&
-                      taskModel.isDelayed == true &&
-                      taskModel.status != Status.completed,
-                )
+                ?.where((taskModel) =>
+                    taskModel.createdBy!.emailId == user!.emailId &&
+                    taskModel.status != Status.completed &&
+                    DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!)))
                 .length ??
             0;
         openTasksCount = tasksController.allTasksListObs.value
@@ -87,7 +85,10 @@ Widget dashboardStatusOverviewSection({
                   (taskModel) =>
                       taskModel.createdBy!.emailId == user!.emailId &&
                       taskModel.status == Status.completed &&
-                      taskModel.isDelayed != true,
+                      (DateTime.parse(taskModel.closedAt!)
+                              .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                          DateTime.parse(taskModel.closedAt!).isAtSameMomentAs(
+                              DateTime.parse(taskModel.dueDate!))),
                 )
                 .length ??
             0;
@@ -96,15 +97,16 @@ Widget dashboardStatusOverviewSection({
                   (taskModel) =>
                       taskModel.createdBy!.emailId == user!.emailId &&
                       taskModel.status == Status.completed &&
-                      taskModel.isDelayed == true,
+                      DateTime.parse(taskModel.closedAt!)
+                          .isAfter(DateTime.parse(taskModel.dueDate!)),
                 )
                 .length ??
             0;
       } else {
         overdueTasksCount = tasksController.allTasksListObs.value
                 ?.where((taskModel) =>
-                    taskModel.isDelayed == true &&
-                    taskModel.status != Status.completed)
+                    taskModel.status != Status.completed &&
+                    DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!)))
                 .length ??
             0;
         openTasksCount = tasksController.allTasksListObs.value
@@ -122,13 +124,17 @@ Widget dashboardStatusOverviewSection({
         onTimeTasksCount = tasksController.allTasksListObs.value
                 ?.where((taskModel) =>
                     taskModel.status == Status.completed &&
-                    taskModel.isDelayed != true)
+                    (DateTime.parse(taskModel.closedAt!)
+                            .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                        DateTime.parse(taskModel.closedAt!).isAtSameMomentAs(
+                            DateTime.parse(taskModel.dueDate!))))
                 .length ??
             0;
         delayedTasksCount = tasksController.allTasksListObs.value
                 ?.where((taskModel) =>
                     taskModel.status == Status.completed &&
-                    taskModel.isDelayed == true)
+                    DateTime.parse(taskModel.closedAt!)
+                        .isAfter(DateTime.parse(taskModel.dueDate!)))
                 .length ??
             0;
       }

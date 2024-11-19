@@ -128,8 +128,8 @@ class _TasksScreenState extends State<TasksScreen>
           tasksController.addToDashboardTasksList(
               tasksList:
                   tasksController.myTasksListObs.value!.where((taskModel) {
-            return taskModel.isDelayed == true &&
-                taskModel.status != Status.completed;
+            return taskModel.status != Status.completed &&
+                DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!));
           }).toList());
         } else {
           tasksController.addToDashboardTasksList(
@@ -138,19 +138,19 @@ class _TasksScreenState extends State<TasksScreen>
             //--------------------My Report Tab Selected--------------------//
             if (tasksController.dashboardTabIndexObs.value == 2) {
               return taskModel.assignedTo!.first.emailId == user.emailId &&
-                  taskModel.isDelayed == true &&
-                  taskModel.status != Status.completed;
+                  taskModel.status != Status.completed &&
+                  DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!));
 
               //--------------------Delegated Report Tab Selected--------------------//
             } else if (tasksController.dashboardTabIndexObs.value == 3) {
               return taskModel.createdBy!.emailId == user.emailId &&
-                  taskModel.isDelayed == true &&
-                  taskModel.status != Status.completed;
+                  taskModel.status != Status.completed &&
+                  DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!));
 
               //--------------------Staff Wise or Category Wise Selected--------------------//
             } else {
-              return taskModel.isDelayed == true &&
-                  taskModel.status != Status.completed;
+              return taskModel.status != Status.completed &&
+                  DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!));
             }
           }).toList());
         }
@@ -253,7 +253,10 @@ class _TasksScreenState extends State<TasksScreen>
               tasksList:
                   tasksController.myTasksListObs.value!.where((taskModel) {
             return taskModel.status == Status.completed &&
-                taskModel.isDelayed != true;
+                (DateTime.parse(taskModel.closedAt!)
+                        .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                    DateTime.parse(taskModel.closedAt!)
+                        .isAtSameMomentAs(DateTime.parse(taskModel.dueDate!)));
           }).toList());
         } else {
           tasksController.addToDashboardTasksList(
@@ -263,18 +266,26 @@ class _TasksScreenState extends State<TasksScreen>
             if (tasksController.dashboardTabIndexObs.value == 2) {
               return taskModel.assignedTo!.first.emailId == user.emailId &&
                   taskModel.status == Status.completed &&
-                  taskModel.isDelayed != true;
+                  (DateTime.parse(taskModel.closedAt!)
+                          .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                      DateTime.parse(taskModel.closedAt!).isAtSameMomentAs(
+                          DateTime.parse(taskModel.dueDate!)));
 
               //--------------------Delegated Report Tab Selected--------------------//
             } else if (tasksController.dashboardTabIndexObs.value == 3) {
               return taskModel.createdBy!.emailId == user.emailId &&
                   taskModel.status == Status.completed &&
-                  taskModel.status == Status.completed &&
-                  taskModel.isDelayed != true;
+                  (DateTime.parse(taskModel.closedAt!)
+                          .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                      DateTime.parse(taskModel.closedAt!).isAtSameMomentAs(
+                          DateTime.parse(taskModel.dueDate!)));
               //--------------------Staff Wise or Category Wise Selected--------------------//
             } else {
               return taskModel.status == Status.completed &&
-                  taskModel.isDelayed != true;
+                  (DateTime.parse(taskModel.closedAt!)
+                          .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                      DateTime.parse(taskModel.closedAt!).isAtSameMomentAs(
+                          DateTime.parse(taskModel.dueDate!)));
             }
           }).toList());
         }
@@ -288,7 +299,8 @@ class _TasksScreenState extends State<TasksScreen>
               tasksList:
                   tasksController.myTasksListObs.value!.where((taskModel) {
             return taskModel.status == Status.completed &&
-                taskModel.isDelayed == true;
+                DateTime.parse(taskModel.closedAt!)
+                    .isAfter(DateTime.parse(taskModel.dueDate!));
           }).toList());
         } else {
           tasksController.addToDashboardTasksList(
@@ -298,18 +310,20 @@ class _TasksScreenState extends State<TasksScreen>
             if (tasksController.dashboardTabIndexObs.value == 2) {
               return taskModel.assignedTo!.first.emailId == user.emailId &&
                   taskModel.status == Status.completed &&
-                  taskModel.isDelayed == true;
+                  DateTime.parse(taskModel.closedAt!)
+                      .isAfter(DateTime.parse(taskModel.dueDate!));
 
               //--------------------Delegated Report Tab Selected--------------------//
             } else if (tasksController.dashboardTabIndexObs.value == 3) {
               return taskModel.createdBy!.emailId == user.emailId &&
                   taskModel.status == Status.completed &&
-                  taskModel.status == Status.completed &&
-                  taskModel.isDelayed == true;
+                  DateTime.parse(taskModel.closedAt!)
+                      .isAfter(DateTime.parse(taskModel.dueDate!));
               //--------------------Staff Wise or Category Wise Selected--------------------//
             } else {
               return taskModel.status == Status.completed &&
-                  taskModel.isDelayed == true;
+                  DateTime.parse(taskModel.closedAt!)
+                      .isAfter(DateTime.parse(taskModel.dueDate!));
             }
           }).toList());
         }
@@ -380,8 +394,8 @@ class _TasksScreenState extends State<TasksScreen>
                 .toList();
             overdueTasksList = tasksController.dashboardTasksListObs
                 .where((taskModel) =>
-                    taskModel.isDelayed == true &&
-                    taskModel.status != Status.completed)
+                    taskModel.status != Status.completed &&
+                    DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!)))
                 .toList();
 
             recurringTasksList = allTasksList

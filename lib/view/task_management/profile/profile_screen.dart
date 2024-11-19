@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -138,8 +137,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.snackbar(
-                    'Feature Unavailable',
-                    'Feature not accessible right now',
+                    'Coming Soon...',
+                    'Feature will be available shortly',
                   );
                 },
                 child: profileOption(title: 'My Tickets'),
@@ -151,6 +150,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     () => RaiseTicketScreen(),
                     transition: Transition.rightToLeft,
                   );
+                  // Get.snackbar(
+                  //   'Coming Soon...',
+                  //   'Feature will be available shortly',
+                  // );
                 },
                 child: profileOption(title: 'Raise a Ticket'),
               ),

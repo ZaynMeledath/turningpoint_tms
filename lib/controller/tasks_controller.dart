@@ -146,18 +146,26 @@ class TasksController extends GetxController {
           .toList();
       overdueTaskList.value = myTasksListObs.value!
           .where((item) =>
-              item.isDelayed == true && item.status != Status.completed)
+              item.status != Status.completed &&
+              DateTime.now().isAfter(DateTime.parse(item.dueDate!)))
           .toList();
 
       completedOnTimeMyTasksList.value = myTasksListObs.value!
-          .where((taskModel) =>
-              taskModel.status == Status.completed &&
-              taskModel.isDelayed != true)
+          .where(
+            (taskModel) =>
+                taskModel.status == Status.completed &&
+                (DateTime.parse(taskModel.closedAt!)
+                        .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                    DateTime.parse(taskModel.closedAt!)
+                        .isAtSameMomentAs(DateTime.parse(taskModel.dueDate!))),
+          )
           .toList();
+
       completedDelayedMyTasksList.value = myTasksListObs.value!
           .where((taskModel) =>
               taskModel.status == Status.completed &&
-              taskModel.isDelayed == true)
+              DateTime.parse(taskModel.closedAt!)
+                  .isAfter(DateTime.parse(taskModel.dueDate!)))
           .toList();
     } catch (e) {
       tasksException.value = e as Exception;
@@ -194,18 +202,23 @@ class TasksController extends GetxController {
           .toList();
       overdueDelegatedTaskList.value = delegatedTasksListObs.value!
           .where((item) =>
-              item.isDelayed == true && item.status != Status.completed)
+              item.status != Status.completed &&
+              DateTime.now().isAfter(DateTime.parse(item.dueDate!)))
           .toList();
 
       completedOnTimeDelegatedTasksList.value = delegatedTasksListObs.value!
           .where((taskModel) =>
               taskModel.status == Status.completed &&
-              taskModel.isDelayed != true)
+              (DateTime.parse(taskModel.closedAt!)
+                      .isBefore(DateTime.parse(taskModel.dueDate!)) ||
+                  DateTime.parse(taskModel.closedAt!)
+                      .isAtSameMomentAs(DateTime.parse(taskModel.dueDate!))))
           .toList();
       completedDelayedDelegatedTasksList.value = delegatedTasksListObs.value!
           .where((taskModel) =>
               taskModel.status == Status.completed &&
-              taskModel.isDelayed == true)
+              DateTime.parse(taskModel.closedAt!)
+                  .isAfter(DateTime.parse(taskModel.dueDate!)))
           .toList();
     } catch (e) {
       tasksException.value = e as Exception;

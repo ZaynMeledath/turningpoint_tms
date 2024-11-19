@@ -41,6 +41,19 @@ Widget taskCard({
       : 'Invalid Date & Time';
   final user = getUserModelFromHive();
 
+  bool isDelayed = false;
+
+  if (taskModel.status == Status.completed) {
+    if (DateTime.parse(taskModel.closedAt!)
+        .isAfter(DateTime.parse(taskModel.dueDate!))) {
+      isDelayed = true;
+    }
+  } else {
+    if (DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!))) {
+      isDelayed = true;
+    }
+  }
+
   return Hero(
     tag: 'task_card${taskModel.id}',
     child: Material(
@@ -244,7 +257,7 @@ Widget taskCard({
                               Text(
                                 dueDateString,
                                 style: TextStyle(
-                                  color: taskModel.isDelayed == true
+                                  color: isDelayed == true
                                       ? Colors.red
                                       : Colors.green,
                                   fontSize: 13.5.sp,

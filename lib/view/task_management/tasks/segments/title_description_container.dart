@@ -27,9 +27,22 @@ Widget titleDescriptionContainer({
       : 'Invalid Date & Time';
 
   if (taskModel.status == Status.completed) {
-    completionDateString = taskModel.updatedAt != null
-        ? taskModel.updatedAt!.dateFormatWithYear()
+    completionDateString = taskModel.closedAt != null
+        ? taskModel.closedAt!.dateFormatWithYear()
         : '-';
+  }
+
+  bool isDelayed = false;
+
+  if (taskModel.status == Status.completed) {
+    if (DateTime.parse(taskModel.closedAt!)
+        .isAfter(DateTime.parse(taskModel.dueDate!))) {
+      isDelayed = true;
+    }
+  } else {
+    if (DateTime.now().isAfter(DateTime.parse(taskModel.dueDate!))) {
+      isDelayed = true;
+    }
   }
 
 //Week starts from sunday
@@ -166,9 +179,7 @@ Widget titleDescriptionContainer({
                       Text(
                         dueDateString,
                         style: TextStyle(
-                          color: taskModel.isDelayed == true
-                              ? Colors.red
-                              : Colors.green,
+                          color: isDelayed == true ? Colors.red : Colors.green,
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
                         ),
@@ -203,7 +214,7 @@ Widget titleDescriptionContainer({
                               Text(
                                 completionDateString,
                                 style: TextStyle(
-                                  color: taskModel.isDelayed == true
+                                  color: isDelayed == true
                                       ? Colors.red
                                       : Colors.green,
                                   fontSize: 14.sp,
