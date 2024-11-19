@@ -430,7 +430,7 @@ class TasksController extends GetxController {
   }
 
 //====================Click Image with Camera====================//
-  Future<File?> clickImageWithCamera() async {
+  Future<File?> fetchFromCamera() async {
     final ImagePicker picker = ImagePicker();
     try {
       final XFile? imageXFile = await picker.pickImage(
@@ -453,7 +453,7 @@ class TasksController extends GetxController {
   }) async {
     File? imageFile;
     if (clickWithCamera == true) {
-      imageFile = await clickImageWithCamera();
+      imageFile = await fetchFromCamera();
     } else {
       imageFile = await fetchImageFromStorage();
     }

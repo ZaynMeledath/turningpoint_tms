@@ -173,7 +173,9 @@ class AssignTaskController extends GetxController {
   }
 
 //====================Add File Attachments====================//
-  Future<void> addFileAttachment() async {
+  Future<void> addFileAttachment({
+    bool? useCamera,
+  }) async {
     try {
       if (appController.isLoadingObs.value) {
         showGenericDialog(
@@ -187,11 +189,18 @@ class AssignTaskController extends GetxController {
         );
         return;
       }
-      FilePickerResult? result = await FilePicker.platform.pickFiles();
+      File? file;
+      if (useCamera == true) {
+        file = await tasksController.fetchFromCamera();
+      } else {
+        final result = await FilePicker.platform.pickFiles();
+        if (result != null) {
+          file = File(result.files.single.path!);
+        }
+      }
 
-      if (result != null) {
-        File file = File(result.files.single.path!);
-        if (await file.length() > 104857600) {
+      if (file != null) {
+        if (await file.length() > (100 * 1024 * 1024)) {
           appController.isLoadingObs.value = false;
           attachmentsListObs.removeLast();
           showGenericDialog(

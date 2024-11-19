@@ -166,7 +166,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                           //====================Attachment====================//
                           Row(
                             children: [
-                              // Add File
+                              //====================Add File Attachment====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
@@ -181,13 +181,14 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
-                                    Icons.attachment,
+                                    Icons.upload_file,
                                     size: 24.w,
                                   ),
                                 ),
                               ),
                               SizedBox(width: 10.w),
-                              //Add Image
+
+                              //====================Add Image From Storage====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
@@ -209,7 +210,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               ),
                               SizedBox(width: 10.w),
 
-                              // Click image
+                              //====================Click Image====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
@@ -226,6 +227,28 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                   ),
                                   child: Icon(
                                     Icons.camera_alt_outlined,
+                                    size: 24.w,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 10.w),
+                              //====================Record Audio====================//
+                              InkWell(
+                                borderRadius: BorderRadius.circular(100),
+                                onTap: () async {
+                                  await tasksController
+                                      .addImageToTaskUpdateAttachments(
+                                          clickWithCamera: true);
+                                },
+                                child: Container(
+                                  width: 42.w,
+                                  height: 42.w,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black26,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.mic,
                                     size: 24.w,
                                   ),
                                 ),

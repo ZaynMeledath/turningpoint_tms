@@ -73,7 +73,7 @@ Widget attachmentSegment({
               ),
             ),
           ),
-          SizedBox(width: 18.w),
+          SizedBox(width: 16.w),
 
           //====================Add File====================//
           InkWell(
@@ -93,7 +93,29 @@ Widget attachmentSegment({
               ),
             ),
           ),
-          SizedBox(width: 18.w),
+          SizedBox(width: 16.w),
+
+          //====================Click Image====================//
+          InkWell(
+            borderRadius: BorderRadius.circular(100),
+            onTap: () async {
+              await assignTaskController.addFileAttachment(
+                useCamera: true,
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.camera_alt_outlined,
+                color: Colors.white,
+                size: 25.w,
+              ),
+            ),
+          ),
+          SizedBox(width: 16.w),
 
           //====================Record Audio Icon====================//
           InkWell(
@@ -128,7 +150,7 @@ Widget attachmentSegment({
                 ? Row(
                     children: [
                       Container(
-                        width: 180.w,
+                        width: 140.w,
                         height: 52.h,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
@@ -226,6 +248,7 @@ Widget attachmentSegment({
                                     ],
                                   ),
                       ),
+                      SizedBox(width: 2.w),
 
                       //--------------------Delete Icon--------------------//
                       !assignTaskController.isRecordingObs.value &&
@@ -411,10 +434,10 @@ Widget attachmentSegment({
                                     Get.back();
                                     showGenericDialog(
                                       iconPath:
-                                          'assets/lotties/deleted_animation.json',
-                                      title: 'Deleted',
+                                          'assets/lotties/server_error_animation.json',
+                                      title: 'Something Went Wrong',
                                       content:
-                                          'Recording has been successfully deleted',
+                                          'Something went wrong while deleting the recording',
                                       buttons: {'OK': null},
                                     );
                                   }
