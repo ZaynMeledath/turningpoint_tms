@@ -168,7 +168,12 @@ class TasksController extends GetxController {
                   .isAfter(DateTime.parse(taskModel.dueDate!)))
           .toList();
     } catch (e) {
-      tasksException.value = e as Exception;
+      try {
+        tasksException.value = e as Exception;
+      } catch (_) {
+        return;
+      }
+      return;
     }
   }
 
@@ -221,7 +226,11 @@ class TasksController extends GetxController {
                   .isAfter(DateTime.parse(taskModel.dueDate!)))
           .toList();
     } catch (e) {
-      tasksException.value = e as Exception;
+      try {
+        tasksException.value = e as Exception;
+      } catch (_) {
+        return;
+      }
       return;
     }
   }

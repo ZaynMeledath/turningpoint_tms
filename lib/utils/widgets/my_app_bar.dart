@@ -24,7 +24,7 @@ AppBar myAppBar({
     automaticallyImplyLeading: false,
     elevation: 10,
     titleSpacing: 0,
-    toolbarHeight: 60.w,
+    toolbarHeight: 58.w,
     surfaceTintColor: Colors.transparent,
     backgroundColor: backgroundColor ?? Colors.transparent,
     title: Row(

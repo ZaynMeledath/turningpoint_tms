@@ -90,39 +90,45 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         onTap: () {
                           Get.to(
                             () => ProfilePictureViewScreen(),
-                            transition: Transition.zoom,
                           );
                         },
                         child: userController.userObs.value?.profileImg != null
-                            ? Container(
-                                width: profileImageSize,
-                                height: profileImageSize,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.themeGreen.withOpacity(.6),
-                                    width: 2.w,
+                            ? Hero(
+                                tag: 'profile_picture',
+                                child: Container(
+                                  width: profileImageSize,
+                                  height: profileImageSize,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color:
+                                          AppColors.themeGreen.withOpacity(.6),
+                                      width: 2.w,
+                                    ),
                                   ),
-                                ),
-                                child: Center(
-                                  child: ClipOval(
-                                    child: CachedNetworkImage(
-                                      imageUrl: userController
-                                          .userObs.value!.profileImg!,
-                                      fit: BoxFit.cover,
-                                      width: profileImageSize,
-                                      height: profileImageSize,
-                                      placeholder: (context, url) => Center(
-                                        child: CupertinoActivityIndicator(
-                                            radius: 14.w),
+                                  child: Center(
+                                    child: ClipOval(
+                                      child: CachedNetworkImage(
+                                        imageUrl: userController
+                                            .userObs.value!.profileImg!,
+                                        fit: BoxFit.cover,
+                                        width: profileImageSize,
+                                        height: profileImageSize,
+                                        placeholder: (context, url) => Center(
+                                          child: CupertinoActivityIndicator(
+                                              radius: 14.w),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               )
-                            : nameLetterAvatar(
-                                name: '${userController.userObs.value?.name}',
-                                circleDiameter: profileImageSize,
+                            : Hero(
+                                tag: 'profile_picture',
+                                child: nameLetterAvatar(
+                                  name: '${userController.userObs.value?.name}',
+                                  circleDiameter: profileImageSize,
+                                ),
                               ),
                       ),
                       Positioned(

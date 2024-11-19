@@ -7,6 +7,7 @@ import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
+import 'package:turningpoint_tms/utils/widgets/camera_screen.dart';
 
 Future<Object?> showChangeStatusBottomSheet({
   required String taskId,
@@ -214,9 +215,10 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
-                                  await tasksController
-                                      .addImageToTaskUpdateAttachments(
-                                          clickWithCamera: true);
+                                  // await tasksController
+                                  //     .addImageToTaskUpdateAttachments(
+                                  //         clickWithCamera: true);
+                                  Get.to(() => CameraScreen());
                                 },
                                 child: Container(
                                   width: 42.w,
@@ -235,11 +237,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               //====================Record Audio====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
-                                onTap: () async {
-                                  await tasksController
-                                      .addImageToTaskUpdateAttachments(
-                                          clickWithCamera: true);
-                                },
+                                onTap: () async {},
                                 child: Container(
                                   width: 42.w,
                                   height: 42.w,

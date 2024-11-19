@@ -105,4 +105,19 @@ extension StringExtensions on String {
 
     return dateString;
   }
+
+  String getFirstLettersOfName() {
+    final nameSplitArray = split(' ');
+    final firstName = nameSplitArray.first;
+    String lastName = nameSplitArray.last;
+    if (nameSplitArray.length > 1) {
+      lastName = nameSplitArray[1];
+    }
+    final firstLetter = firstName.characters.first.toUpperCase();
+    final secondLetter = firstName == lastName
+        ? lastName.characters.elementAt(1).toUpperCase()
+        : lastName.characters.first.toUpperCase();
+
+    return '$firstLetter$secondLetter';
+  }
 }
