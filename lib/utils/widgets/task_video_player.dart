@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,19 +23,15 @@ class _TaskVideoPlayerState extends State<TaskVideoPlayer> {
   ChewieController? _chewieController;
 
   Future<bool> initVideoPlayer() async {
-    log('EXECUTED INIT');
     _videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     await _videoPlayerController!.initialize();
-    // setState(() {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController!,
       aspectRatio: _videoPlayerController!.value.aspectRatio,
       autoPlay: true,
       looping: false,
     );
-    log('EXECUTED INIT');
-    // });
     return true;
   }
 

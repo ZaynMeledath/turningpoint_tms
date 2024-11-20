@@ -183,7 +183,8 @@ class _CameraScreenState extends State<CameraScreen>
             borderRadius: BorderRadius.circular(100),
             onTap: () async {
               if (myCameraController.cameraTabIndexObs.value == 0) {
-                cameraController!.takePicture();
+                myCameraController.takePicture(
+                    cameraController: cameraController!);
               } else {
                 myCameraController.recordVideo(
                     cameraController: cameraController!);
@@ -214,9 +215,6 @@ class _CameraScreenState extends State<CameraScreen>
                       width: containerSize,
                       height: containerSize,
                       decoration: BoxDecoration(
-                        // shape: myCameraController.isRecordingVideoObs.value
-                        //     ? BoxShape.rectangle
-                        //     : BoxShape.circle,
                         borderRadius:
                             myCameraController.isRecordingVideoObs.value
                                 ? BorderRadius.circular(4)
@@ -231,7 +229,6 @@ class _CameraScreenState extends State<CameraScreen>
               ],
             ),
           ),
-          // SizedBox(height: 15.h),
         ],
       ),
     );
