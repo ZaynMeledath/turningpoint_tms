@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:turningpoint_tms/controller/my_camera_controller.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -11,18 +13,43 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   CameraController? cameraController;
   late final TabController tabController;
+  final myCameraController = MyCameraController();
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     tabController = TabController(
       length: 2,
       vsync: this,
     );
+
     initCamera();
+
     super.initState();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (cameraController == null ||
+        cameraController?.value.isInitialized != true) {
+      return;
+    }
+
+    if (state == AppLifecycleState.inactive) {
+      cameraController!.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      initCamera();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cameraController?.dispose();
+    myCameraController.dispose();
   }
 
   void initCamera() async {
@@ -33,6 +60,14 @@ class _CameraScreenState extends State<CameraScreen>
         return;
       }
       setState(() {});
+
+      cameraController?.addListener(() {
+        if (cameraController?.value.isRecordingVideo == true) {
+          myCameraController.isRecordingVideoObs.value = true;
+        } else {
+          myCameraController.isRecordingVideoObs.value = false;
+        }
+      });
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -58,64 +93,102 @@ class _CameraScreenState extends State<CameraScreen>
       body: Column(
         // alignment: Alignment.center,
         children: [
-          AspectRatio(
-            aspectRatio: 3 / 4.5,
+          SizedBox(
+            width: double.maxFinite,
+            height: 650.h,
             child: GestureDetector(
               onHorizontalDragUpdate: (details) {
+                if (cameraController!.value.isRecordingVideo) {
+                  return;
+                }
                 if (details.delta.dx > 0) {
                   // Drag from right to left
-                  tabController.index = 0;
+                  myCameraController.cameraTabIndexObs.value = 0;
                 } else if (details.delta.dx < 0) {
                   // Drag from left to right
-                  tabController.index = 1;
+                  myCameraController.cameraTabIndexObs.value = 1;
                 }
-                setState(() {});
               },
               child: CameraPreview(
                 cameraController!,
               ),
             ),
           ),
-          SizedBox(height: 6.h),
-          SizedBox(
-            width: 150.w,
-            child: TabBar(
-              // padding: EdgeInsets.zero,
-              onTap: (index) {
-                setState(() {});
-              },
-              splashBorderRadius: BorderRadius.circular(16),
-              controller: tabController,
-              dividerColor: Colors.transparent,
-              labelStyle: TextStyle(
-                color: Colors.yellow,
-                fontWeight: FontWeight.w600,
-              ),
-              unselectedLabelStyle: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
-              ),
-              indicatorColor: Colors.transparent,
-              tabs: [
-                Text(
-                  'Photo',
-                  style: TextStyle(
-                    fontSize: 15.sp,
+          SizedBox(height: 8.h),
+          // cameraController!.value.isRecordingVideo
+          //     ? SizedBox()
+          //     :
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                InkWell(
+                  borderRadius: BorderRadius.circular(10),
+                  onTap: () {
+                    myCameraController.cameraTabIndexObs.value = 0;
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 6.w,
+                      vertical: 3.w,
+                    ),
+                    child: Text(
+                      'Photo',
+                      style: TextStyle(
+                        color: myCameraController.cameraTabIndexObs.value == 0
+                            ? Colors.yellow
+                            : Colors.white,
+                        fontWeight:
+                            myCameraController.cameraTabIndexObs.value == 0
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                        fontSize: 15.sp,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  'Video',
-                  style: TextStyle(
-                    fontSize: 15.sp,
+                SizedBox(width: 25.w),
+                InkWell(
+                  borderRadius: BorderRadius.circular(8),
+                  onTap: () {
+                    myCameraController.cameraTabIndexObs.value = 1;
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 6.w,
+                      vertical: 3.w,
+                    ),
+                    child: Text(
+                      'Video',
+                      style: TextStyle(
+                        color: myCameraController.cameraTabIndexObs.value == 1
+                            ? Colors.yellow
+                            : Colors.white,
+                        fontWeight:
+                            myCameraController.cameraTabIndexObs.value == 1
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                        fontSize: 15.sp,
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: 30.h),
+
+          SizedBox(height: 24.h),
           InkWell(
             borderRadius: BorderRadius.circular(100),
-            onTap: () {},
+            onTap: () async {
+              if (myCameraController.cameraTabIndexObs.value == 0) {
+                cameraController!.takePicture();
+              } else {
+                myCameraController.recordVideo(
+                    cameraController: cameraController!);
+              }
+            },
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -130,14 +203,30 @@ class _CameraScreenState extends State<CameraScreen>
                     ),
                   ),
                 ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  width: 45.w,
-                  height: 45.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: tabController.index == 0 ? Colors.white : Colors.red,
-                  ),
+                Obx(
+                  () {
+                    final containerSize =
+                        myCameraController.isRecordingVideoObs.value
+                            ? 25.w
+                            : 45.w;
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      width: containerSize,
+                      height: containerSize,
+                      decoration: BoxDecoration(
+                        // shape: myCameraController.isRecordingVideoObs.value
+                        //     ? BoxShape.rectangle
+                        //     : BoxShape.circle,
+                        borderRadius:
+                            myCameraController.isRecordingVideoObs.value
+                                ? BorderRadius.circular(4)
+                                : BorderRadius.circular(100),
+                        color: myCameraController.cameraTabIndexObs.value == 0
+                            ? Colors.white
+                            : Colors.red,
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

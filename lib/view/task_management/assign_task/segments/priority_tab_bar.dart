@@ -43,13 +43,13 @@ Widget priorityTabBar({
           enableFeedback: true,
           splashFactory: NoSplash.splashFactory,
           overlayColor: WidgetStateColor.transparent,
-          indicatorSize: TabBarIndicatorSize.tab,
           labelColor: Colors.white,
           labelStyle: TextStyle(
             fontSize: 16.sp,
             fontFamily: 'Lufga',
           ),
           unselectedLabelColor: Colors.white38,
+          indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
             color: const Color(0xff5d87ff),
             borderRadius: BorderRadius.circular(30),

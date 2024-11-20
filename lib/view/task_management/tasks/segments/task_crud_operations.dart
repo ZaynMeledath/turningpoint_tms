@@ -44,17 +44,14 @@ class TaskCrudOperations {
 
             appController.isLoadingObs.value = false;
 
-            Future.delayed(
-                Duration(
-                    milliseconds:
-                        Get.currentRoute == '/TaskDetailsScreen' ? 40 : 0), () {
+            if (Get.currentRoute != '/TaskDetailsScreen') {
               showGenericDialog(
                 iconPath: 'assets/lotties/deleted_animation.json',
                 title: 'Task Deleted!',
                 content: 'Task Successfully deleted',
                 buttons: {'OK': null},
               );
-            });
+            }
           } catch (_) {
             appController.isLoadingObs.value = false;
             showGenericDialog(

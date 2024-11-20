@@ -101,19 +101,14 @@ Widget dialog({
                       );
 
                       deleteAllController.isLoadingObs.value = false;
-                      Future.delayed(
-                          Duration(
-                              milliseconds:
-                                  Get.currentRoute == '/TaskDetailsScreen'
-                                      ? 40
-                                      : 0), () {
+                      if (Get.currentRoute != '/TaskDetailsScreen') {
                         showGenericDialog(
                           iconPath: 'assets/lotties/deleted_animation.json',
                           title: 'Tasks Deleted!',
                           content: 'All associated tasks successfully deleted',
                           buttons: {'OK': null},
                         );
-                      });
+                      }
                     } catch (_) {
                       deleteAllController.isLoadingObs.value = false;
                       showGenericDialog(
@@ -172,19 +167,14 @@ Widget dialog({
                       );
 
                       deleteSingleController.isLoadingObs.value = false;
-                      Future.delayed(
-                          Duration(
-                              milliseconds:
-                                  Get.currentRoute == '/TaskDetailsScreen'
-                                      ? 40
-                                      : 0), () {
+                      if (Get.currentRoute != '/TaskDetailsScreen') {
                         showGenericDialog(
                           iconPath: 'assets/lotties/deleted_animation.json',
                           title: 'Task Deleted!',
                           content: 'Task Successfully deleted',
                           buttons: {'OK': null},
                         );
-                      });
+                      }
                     } catch (_) {
                       deleteSingleController.isLoadingObs.value = false;
                       showGenericDialog(

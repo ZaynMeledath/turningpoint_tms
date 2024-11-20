@@ -176,6 +176,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             isTaskCompleted = taskModel.status == Status.completed;
           } catch (_) {
             Get.back();
+            showGenericDialog(
+              iconPath: 'assets/lotties/deleted_animation.json',
+              title: 'Task Deleted!',
+              content: 'Task Successfully deleted',
+              buttons: {'OK': null},
+            );
           }
 
           return customRefreshIndicator(
