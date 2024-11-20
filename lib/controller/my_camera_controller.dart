@@ -23,6 +23,7 @@ class MyCameraController extends GetxController {
               title: 'Image Viewer',
               file: clickedPhotoFileObs.value!,
               isVideo: false,
+              onSubmit: () {},
             ));
       }
     } catch (_) {
@@ -44,18 +45,22 @@ class MyCameraController extends GetxController {
       if (cameraController.value.isRecordingVideo) {
         isRecordingVideoObs.value = false;
 
-        recordedVideoFileObs.value =
-            File((await cameraController.stopVideoRecording()).path);
+        final videoPath = (await cameraController.stopVideoRecording()).path;
+        final newPath = videoPath.replaceAll('.temp', '.mp4');
+        final videoFile = File(videoPath);
+        recordedVideoFileObs.value = await videoFile.rename(newPath);
 
         if (recordedVideoFileObs.value != null) {
           Get.to(() => CameraResultViewer(
                 title: 'Video Player',
                 file: recordedVideoFileObs.value!,
                 isVideo: true,
+                onSubmit: () {},
               ));
         }
       } else {
         isRecordingVideoObs.value = true;
+        await cameraController.prepareForVideoRecording();
         await cameraController.startVideoRecording();
       }
     } catch (_) {

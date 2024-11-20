@@ -194,7 +194,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
                                   await tasksController
-                                      .addImageToTaskUpdateAttachments();
+                                      .addMediaToTaskUpdateAttachments();
                                 },
                                 child: Container(
                                   width: 42.w,

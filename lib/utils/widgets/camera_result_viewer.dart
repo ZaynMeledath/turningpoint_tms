@@ -15,10 +15,12 @@ class CameraResultViewer extends StatefulWidget {
   final String title;
   final File file;
   final bool isVideo;
+  final void Function() onSubmit;
   const CameraResultViewer({
     required this.title,
     required this.file,
     required this.isVideo,
+    required this.onSubmit,
     super.key,
   });
 
@@ -32,7 +34,9 @@ class _CameraResultViewerState extends State<CameraResultViewer> {
   @override
   void initState() {
     final extension = path.extension(widget.file.path);
+    final extension2 = widget.file.path.split('.').last;
     log('EXTENSION : $extension');
+    log('EXTENSION2 : $extension2');
     if (widget.isVideo) {
       initVideoPlayer();
     }

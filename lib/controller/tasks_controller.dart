@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/assign_task_controller.dart';
@@ -422,14 +423,12 @@ class TasksController extends GetxController {
   }
 
 //====================Fetch Image from Storage====================//
-  Future<File?> fetchImageFromStorage() async {
+  Future<File?> fetchMediaFromStorage() async {
     final ImagePicker picker = ImagePicker();
     try {
-      final XFile? imageXFile = await picker.pickImage(
-        source: ImageSource.gallery,
-      );
-      if (imageXFile != null) {
-        return File(imageXFile.path);
+      final XFile? mediaFile = await picker.pickMedia();
+      if (mediaFile != null) {
+        return File(mediaFile.path);
       } else {
         return null;
       }
@@ -457,20 +456,31 @@ class TasksController extends GetxController {
   }
 
 //====================Add Image to task update attachments====================//
-  Future<void> addImageToTaskUpdateAttachments({
-    bool? clickWithCamera,
-  }) async {
+  Future<void> addMediaToTaskUpdateAttachments({File? file}) async {
     File? imageFile;
-    if (clickWithCamera == true) {
-      imageFile = await fetchFromCamera();
+    if (file != null) {
+      imageFile = file;
     } else {
-      imageFile = await fetchImageFromStorage();
+      imageFile = await fetchMediaFromStorage();
     }
     if (imageFile != null) {
       appController.isLoadingObs.value = true;
+      final fileExtension = path.extension(imageFile.path);
+      final fileType = fileExtension == 'mp4' ||
+              fileExtension == 'mkv' ||
+              fileExtension == 'hevc'
+          ? TaskFileType.video
+          : fileExtension == 'jpg' ||
+                  fileExtension == 'jpeg' ||
+                  fileExtension == 'png' ||
+                  fileExtension == 'heif'
+              ? TaskFileType.image
+              : TaskFileType.others;
+
+      final url = await tasksRepository.uploadFile(file: imageFile);
       taskUpdateAttachmentsMapList.add({
-        'path': await tasksRepository.uploadFile(file: imageFile),
-        'type': TaskFileType.image,
+        'path': url,
+        'type': fileType,
       });
       taskUpdateAttachmentsFileList.add(imageFile);
 

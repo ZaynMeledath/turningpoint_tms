@@ -61,13 +61,13 @@ class _CameraScreenState extends State<CameraScreen>
       }
       setState(() {});
 
-      cameraController?.addListener(() {
-        if (cameraController?.value.isRecordingVideo == true) {
-          myCameraController.isRecordingVideoObs.value = true;
-        } else {
-          myCameraController.isRecordingVideoObs.value = false;
-        }
-      });
+      // cameraController?.addListener(() {
+      //   if (cameraController?.value.isRecordingVideo == true) {
+      //     myCameraController.isRecordingVideoObs.value = true;
+      //   } else {
+      //     myCameraController.isRecordingVideoObs.value = false;
+      //   }
+      // });
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {

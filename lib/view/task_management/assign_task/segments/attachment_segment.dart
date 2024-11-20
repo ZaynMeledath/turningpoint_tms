@@ -98,11 +98,7 @@ Widget attachmentSegment({
           //====================Click Image====================//
           InkWell(
             borderRadius: BorderRadius.circular(100),
-            onTap: () async {
-              await assignTaskController.addFileAttachment(
-                useCamera: true,
-              );
-            },
+            onTap: () async {},
             child: Container(
               padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(
