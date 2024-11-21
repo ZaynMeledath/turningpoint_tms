@@ -114,7 +114,7 @@ class _TasksHomeState extends State<TasksHome> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar.builder(
-        height: 56.h,
+        height: 56.w,
         itemCount: titleIconMap.length,
         tabBuilder: (index, isActive) {
           return Column(
