@@ -4,8 +4,11 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
+import 'package:turningpoint_tms/controller/assign_task_controller.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,12 +16,14 @@ class CameraResultViewer extends StatefulWidget {
   final String title;
   final File file;
   final bool isVideo;
-  final void Function() onSubmit;
+  final String currentRoute;
+  final AssignTaskController? assignTaskController;
   const CameraResultViewer({
     required this.title,
     required this.file,
     required this.isVideo,
-    required this.onSubmit,
+    required this.currentRoute,
+    required this.assignTaskController,
     super.key,
   });
 
@@ -28,6 +33,7 @@ class CameraResultViewer extends StatefulWidget {
 
 class _CameraResultViewerState extends State<CameraResultViewer> {
   VideoPlayerController? videoController;
+  final tasksController = Get.put(TasksController());
 
   @override
   void initState() {
@@ -68,7 +74,27 @@ class _CameraResultViewerState extends State<CameraResultViewer> {
         backgroundColor: Colors.black,
         trailingIcons: [
           TextButton(
-            onPressed: widget.onSubmit,
+            onPressed: () async {
+              switch (widget.currentRoute) {
+                case '/ChangeStatusBottomSheet':
+                  tasksController.addMediaToTaskUpdateAttachments(
+                    file: widget.file,
+                  );
+                  Get.back();
+                  Get.back();
+                  break;
+
+                case '/AssignTaskScreen':
+                  widget.assignTaskController
+                      ?.addFileAttachment(mediaFile: widget.file);
+                  Get.back();
+                  Get.back();
+                  break;
+
+                default:
+                  break;
+              }
+            },
             child: Text(
               'Done',
               style: TextStyle(

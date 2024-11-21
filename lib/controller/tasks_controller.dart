@@ -437,23 +437,23 @@ class TasksController extends GetxController {
     }
   }
 
-//====================Click Image with Camera====================//
-  Future<File?> fetchFromCamera() async {
-    final ImagePicker picker = ImagePicker();
-    try {
-      final XFile? imageXFile = await picker.pickImage(
-        source: ImageSource.camera,
-        preferredCameraDevice: CameraDevice.rear,
-      );
-      if (imageXFile != null) {
-        return File(imageXFile.path);
-      } else {
-        return null;
-      }
-    } catch (_) {
-      rethrow;
-    }
-  }
+// //====================Click Image with Camera====================//
+//   Future<File?> fetchFromCamera() async {
+//     final ImagePicker picker = ImagePicker();
+//     try {
+//       final XFile? imageXFile = await picker.pickImage(
+//         source: ImageSource.camera,
+//         preferredCameraDevice: CameraDevice.rear,
+//       );
+//       if (imageXFile != null) {
+//         return File(imageXFile.path);
+//       } else {
+//         return null;
+//       }
+//     } catch (_) {
+//       rethrow;
+//     }
+//   }
 
 //====================Add Image to task update attachments====================//
   Future<void> addMediaToTaskUpdateAttachments({File? file}) async {

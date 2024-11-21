@@ -211,14 +211,14 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               ),
                               SizedBox(width: 10.w),
 
-                              //====================Click Image====================//
+                              //====================Add from Camera====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
-                                  // await tasksController
-                                  //     .addImageToTaskUpdateAttachments(
-                                  //         clickWithCamera: true);
-                                  Get.to(() => CameraScreen());
+                                  Get.to(() => CameraScreen(
+                                        currentRoute:
+                                            '/ChangeStatusBottomSheet',
+                                      ));
                                 },
                                 child: Container(
                                   width: 42.w,

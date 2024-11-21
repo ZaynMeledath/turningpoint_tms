@@ -95,10 +95,16 @@ Widget attachmentSegment({
           ),
           SizedBox(width: 16.w),
 
-          //====================Click Image====================//
+          //====================Fetch Media from Camera====================//
           InkWell(
             borderRadius: BorderRadius.circular(100),
-            onTap: () async {},
+            onTap: () async {
+              final currentRoute = Get.currentRoute;
+              Get.to(() => CameraScreen(
+                    currentRoute: currentRoute,
+                    assignTaskController: assignTaskController,
+                  ));
+            },
             child: Container(
               padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(

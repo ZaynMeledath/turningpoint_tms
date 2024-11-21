@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
-import 'package:turningpoint_tms/controller/tasks_controller.dart';
+import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/utils/widgets/camera_result_viewer.dart';
 
@@ -11,26 +11,23 @@ class MyCameraController extends GetxController {
 
   final Rxn<File> clickedPhotoFileObs = Rxn<File>();
   final Rxn<File> recordedVideoFileObs = Rxn<File>();
-  final tasksController = Get.put(TasksController());
 
   void takePicture({
     required CameraController cameraController,
+    required String currentRoute,
+    required AssignTaskController? assignTaskController,
   }) async {
     try {
       clickedPhotoFileObs.value =
           File((await cameraController.takePicture()).path);
       if (clickedPhotoFileObs.value != null) {
         Get.to(() => CameraResultViewer(
-            title: 'Image Viewer',
-            file: clickedPhotoFileObs.value!,
-            isVideo: false,
-            onSubmit: () {
-              tasksController.addMediaToTaskUpdateAttachments(
-                file: clickedPhotoFileObs.value,
-              );
-              Get.back();
-              Get.back();
-            }));
+              title: 'Image Viewer',
+              file: clickedPhotoFileObs.value!,
+              isVideo: false,
+              currentRoute: currentRoute,
+              assignTaskController: assignTaskController,
+            ));
       }
     } catch (_) {
       showGenericDialog(
@@ -46,6 +43,8 @@ class MyCameraController extends GetxController {
 
   void recordVideo({
     required CameraController cameraController,
+    required String currentRoute,
+    required AssignTaskController? assignTaskController,
   }) async {
     try {
       if (cameraController.value.isRecordingVideo) {
@@ -61,13 +60,8 @@ class MyCameraController extends GetxController {
                 title: 'Video Player',
                 file: recordedVideoFileObs.value!,
                 isVideo: true,
-                onSubmit: () {
-                  tasksController.addMediaToTaskUpdateAttachments(
-                    file: recordedVideoFileObs.value,
-                  );
-                  Get.back();
-                  Get.back();
-                },
+                currentRoute: currentRoute,
+                assignTaskController: assignTaskController,
               ));
         }
       } else {

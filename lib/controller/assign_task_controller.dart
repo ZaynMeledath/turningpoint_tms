@@ -174,7 +174,7 @@ class AssignTaskController extends GetxController {
 
 //====================Add File Attachments====================//
   Future<void> addFileAttachment({
-    bool? useCamera,
+    File? mediaFile,
   }) async {
     try {
       if (appController.isLoadingObs.value) {
@@ -190,8 +190,8 @@ class AssignTaskController extends GetxController {
         return;
       }
       File? file;
-      if (useCamera == true) {
-        file = await tasksController.fetchFromCamera();
+      if (mediaFile != null) {
+        file = mediaFile;
       } else {
         final result = await FilePicker.platform.pickFiles();
         if (result != null) {

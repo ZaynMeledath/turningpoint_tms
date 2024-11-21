@@ -23,6 +23,7 @@ import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/exceptions/tms_exceptions.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/service/api/api_exceptions.dart';
+import 'package:turningpoint_tms/utils/widgets/camera_screen.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';

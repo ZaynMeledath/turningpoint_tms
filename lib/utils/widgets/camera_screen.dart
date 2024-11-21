@@ -1,12 +1,21 @@
+import 'dart:developer';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:turningpoint_tms/controller/assign_task_controller.dart';
 import 'package:turningpoint_tms/controller/my_camera_controller.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 
 class CameraScreen extends StatefulWidget {
-  const CameraScreen({super.key});
+  final String currentRoute;
+  final AssignTaskController? assignTaskController;
+  const CameraScreen({
+    required this.currentRoute,
+    this.assignTaskController,
+    super.key,
+  });
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -20,6 +29,7 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   void initState() {
+    log('CURRENT ROUTE : ${widget.currentRoute} ');
     WidgetsBinding.instance.addObserver(this);
     tabController = TabController(
       length: 2,
@@ -184,10 +194,16 @@ class _CameraScreenState extends State<CameraScreen>
             onTap: () async {
               if (myCameraController.cameraTabIndexObs.value == 0) {
                 myCameraController.takePicture(
-                    cameraController: cameraController!);
+                  cameraController: cameraController!,
+                  currentRoute: widget.currentRoute,
+                  assignTaskController: widget.assignTaskController,
+                );
               } else {
                 myCameraController.recordVideo(
-                    cameraController: cameraController!);
+                  cameraController: cameraController!,
+                  currentRoute: widget.currentRoute,
+                  assignTaskController: widget.assignTaskController,
+                );
               }
             },
             child: Stack(
