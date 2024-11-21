@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:path/path.dart' as path;
 import 'package:photo_view/photo_view.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
@@ -33,10 +31,6 @@ class _CameraResultViewerState extends State<CameraResultViewer> {
 
   @override
   void initState() {
-    final extension = path.extension(widget.file.path);
-    final extension2 = widget.file.path.split('.').last;
-    log('EXTENSION : $extension');
-    log('EXTENSION2 : $extension2');
     if (widget.isVideo) {
       initVideoPlayer();
     }
@@ -74,7 +68,7 @@ class _CameraResultViewerState extends State<CameraResultViewer> {
         backgroundColor: Colors.black,
         trailingIcons: [
           TextButton(
-            onPressed: () {},
+            onPressed: widget.onSubmit,
             child: Text(
               'Done',
               style: TextStyle(

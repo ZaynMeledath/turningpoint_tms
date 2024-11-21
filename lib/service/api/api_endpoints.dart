@@ -1,11 +1,13 @@
 class ApiEndpoints {
   // static const baseUrl = 'https://api.turningpointvapi.com/tms/api';
   // static const webSocketUrl = 'ws://api.turningpointvapi.com/tms/';
+
+  // static const localIp = '192.169.1.123:5001';
+  // static const baseUrl = 'http://$localIp/api';
+  // static const webSocketUrl = 'ws://$localIp/';
+
   static const baseUrl = 'http://13.203.53.210/api';
   static const webSocketUrl = 'ws://13.203.53.210/';
-
-  // static const baseUrl = 'http://192.168.1.134:5001/api';
-  // static const webSocketUrl = 'ws://192.168.1.134:5001/';
 
   static const register = '$baseUrl/auth/register';
   static const logIn = '$baseUrl/auth/login';

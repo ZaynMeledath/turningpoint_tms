@@ -189,7 +189,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               ),
                               SizedBox(width: 10.w),
 
-                              //====================Add Image From Storage====================//
+                              //====================Add Media From Storage====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
                                 onTap: () async {
@@ -285,7 +285,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                               child: tasksController
                                                               .taskUpdateAttachmentsMapList[
                                                           index]['type'] ==
-                                                      'image'
+                                                      TaskFileType.image
                                                   ? AspectRatio(
                                                       aspectRatio: 4 / 4,
                                                       child: Image.file(
@@ -294,35 +294,80 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                                             index],
                                                       ),
                                                     )
-                                                  : Padding(
-                                                      padding: EdgeInsets.only(
-                                                          right: 6.w),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Image.asset(
-                                                            'assets/icons/file_icon.png',
-                                                            width: 52.w,
+                                                  : tasksController
+                                                                  .taskUpdateAttachmentsMapList[
+                                                              index]['type'] ==
+                                                          TaskFileType.video
+                                                      ? Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  right: 6.w),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 54.w,
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/icons/video_icon.png',
+                                                                  width: 51.w,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 12.w),
+                                                              Text(
+                                                                tasksController
+                                                                    .taskUpdateAttachmentsFileList[
+                                                                        index]
+                                                                    .path
+                                                                    .split('/')
+                                                                    .last,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                ),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              )
+                                                            ],
                                                           ),
-                                                          Text(
-                                                            tasksController
-                                                                .taskUpdateAttachmentsFileList[
-                                                                    index]
-                                                                .path
-                                                                .split('/')
-                                                                .last,
-                                                            style: TextStyle(
-                                                              fontSize: 14.sp,
-                                                            ),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                        )
+                                                      : Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  right: 6.w),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Image.asset(
+                                                                'assets/icons/file_icon.png',
+                                                                width: 52.w,
+                                                              ),
+                                                              Text(
+                                                                tasksController
+                                                                    .taskUpdateAttachmentsFileList[
+                                                                        index]
+                                                                    .path
+                                                                    .split('/')
+                                                                    .last,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      14.sp,
+                                                                ),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
                                             ),
                                           ),
                                           IconButton(

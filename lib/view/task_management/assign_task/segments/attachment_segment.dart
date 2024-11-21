@@ -350,26 +350,56 @@ Widget attachmentSegment({
                                             attachmentsList[index].path!,
                                           ),
                                         )
-                                      : Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/file_icon.png',
-                                              width: 52.w,
-                                            ),
-                                            Text(
-                                              attachmentsList[index]
-                                                  .path!
-                                                  .split('/')
-                                                  .last,
-                                              style: TextStyle(
-                                                fontSize: 14.sp,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                                      : assignTaskController
+                                                  .attachmentsListObs[index]
+                                                  .type ==
+                                              TaskFileType.video
+                                          ? Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: 58.w,
+                                                  child: Image.asset(
+                                                    'assets/icons/video_icon.png',
+                                                    width: 50.w,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 8.w),
+                                                Text(
+                                                  attachmentsList[index]
+                                                      .path!
+                                                      .split('/')
+                                                      .last,
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )
+                                              ],
                                             )
-                                          ],
-                                        )
+                                          : Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/file_icon.png',
+                                                  width: 52.w,
+                                                ),
+                                                Text(
+                                                  attachmentsList[index]
+                                                      .path!
+                                                      .split('/')
+                                                      .last,
+                                                  style: TextStyle(
+                                                    fontSize: 14.sp,
+                                                  ),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )
+                                              ],
+                                            )
                                   : attachmentsList.isNotEmpty
                                       ? Column(
                                           children: [

@@ -205,34 +205,61 @@ Widget taskUpdateSection({
                                                                 .path!,
                                                       ),
                                                     )
-                                                  : Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Image.asset(
-                                                          changesAttachments
-                                                                      .type ==
-                                                                  TaskFileType
-                                                                      .video
-                                                              ? 'assets/icons/video_icon.png'
-                                                              : 'assets/icons/file_icon.png',
-                                                          height: 60.w,
-                                                        ),
-                                                        SizedBox(height: 6.w),
-                                                        Text(
-                                                          changesAttachments
-                                                              .path!
-                                                              .split('/')
-                                                              .last,
-                                                          style: TextStyle(
-                                                            fontSize: 14.sp,
-                                                          ),
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
+                                                  : changesAttachments.type ==
+                                                          TaskFileType.video
+                                                      ? Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 50.w,
+                                                              child:
+                                                                  Image.asset(
+                                                                'assets/icons/video_icon.png',
+                                                                width: 48.w,
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                                height: 12.w),
+                                                            Text(
+                                                              changesAttachments
+                                                                  .path!
+                                                                  .split('/')
+                                                                  .last,
+                                                              style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            )
+                                                          ],
                                                         )
-                                                      ],
-                                                    ),
+                                                      : Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Image.asset(
+                                                              'assets/icons/file_icon.png',
+                                                              height: 60.w,
+                                                            ),
+                                                            SizedBox(height: 4),
+                                                            Text(
+                                                              changesAttachments
+                                                                  .path!
+                                                                  .split('/')
+                                                                  .last,
+                                                              style: TextStyle(
+                                                                fontSize: 14.sp,
+                                                              ),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            )
+                                                          ],
+                                                        ),
                                             ),
                                           ),
                                         );

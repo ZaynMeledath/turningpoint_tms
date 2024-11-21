@@ -130,22 +130,45 @@ Widget taskDetailsAttachmentSegment({
                                     imageUrl: attachmentUrl,
                                   ),
                                 )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/icons/file_icon.png',
-                                      height: 70.w,
-                                    ),
-                                    Text(
-                                      attachmentUrl.split('/').last,
-                                      style: TextStyle(
-                                        fontSize: 14.sp,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
+                              : attachmentType == TaskFileType.video
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          height: 70.w,
+                                          child: Image.asset(
+                                            'assets/icons/video_icon.png',
+                                            width: 55.w,
+                                          ),
+                                        ),
+                                        SizedBox(height: 2.w),
+                                        Text(
+                                          attachmentUrl.split('/').last,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
                                     )
-                                  ],
-                                ),
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/file_icon.png',
+                                          height: 70.w,
+                                        ),
+                                        Text(
+                                          attachmentUrl.split('/').last,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
+                                    ),
                         ),
                       ),
                     ),

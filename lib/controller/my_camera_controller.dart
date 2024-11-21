@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:get/get.dart';
+import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/utils/widgets/camera_result_viewer.dart';
 
@@ -11,6 +11,7 @@ class MyCameraController extends GetxController {
 
   final Rxn<File> clickedPhotoFileObs = Rxn<File>();
   final Rxn<File> recordedVideoFileObs = Rxn<File>();
+  final tasksController = Get.put(TasksController());
 
   void takePicture({
     required CameraController cameraController,
@@ -20,11 +21,16 @@ class MyCameraController extends GetxController {
           File((await cameraController.takePicture()).path);
       if (clickedPhotoFileObs.value != null) {
         Get.to(() => CameraResultViewer(
-              title: 'Image Viewer',
-              file: clickedPhotoFileObs.value!,
-              isVideo: false,
-              onSubmit: () {},
-            ));
+            title: 'Image Viewer',
+            file: clickedPhotoFileObs.value!,
+            isVideo: false,
+            onSubmit: () {
+              tasksController.addMediaToTaskUpdateAttachments(
+                file: clickedPhotoFileObs.value,
+              );
+              Get.back();
+              Get.back();
+            }));
       }
     } catch (_) {
       showGenericDialog(
@@ -55,7 +61,13 @@ class MyCameraController extends GetxController {
                 title: 'Video Player',
                 file: recordedVideoFileObs.value!,
                 isVideo: true,
-                onSubmit: () {},
+                onSubmit: () {
+                  tasksController.addMediaToTaskUpdateAttachments(
+                    file: recordedVideoFileObs.value,
+                  );
+                  Get.back();
+                  Get.back();
+                },
               ));
         }
       } else {

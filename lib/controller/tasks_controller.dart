@@ -457,32 +457,32 @@ class TasksController extends GetxController {
 
 //====================Add Image to task update attachments====================//
   Future<void> addMediaToTaskUpdateAttachments({File? file}) async {
-    File? imageFile;
+    File? mediaFile;
     if (file != null) {
-      imageFile = file;
+      mediaFile = file;
     } else {
-      imageFile = await fetchMediaFromStorage();
+      mediaFile = await fetchMediaFromStorage();
     }
-    if (imageFile != null) {
+    if (mediaFile != null) {
       appController.isLoadingObs.value = true;
-      final fileExtension = path.extension(imageFile.path);
-      final fileType = fileExtension == 'mp4' ||
-              fileExtension == 'mkv' ||
-              fileExtension == 'hevc'
+      final fileExtension = path.extension(mediaFile.path);
+      final fileType = fileExtension == '.mp4' ||
+              fileExtension == '.mkv' ||
+              fileExtension == '.hevc'
           ? TaskFileType.video
-          : fileExtension == 'jpg' ||
-                  fileExtension == 'jpeg' ||
-                  fileExtension == 'png' ||
-                  fileExtension == 'heif'
+          : fileExtension == '.jpg' ||
+                  fileExtension == '.jpeg' ||
+                  fileExtension == '.png' ||
+                  fileExtension == '.heif'
               ? TaskFileType.image
               : TaskFileType.others;
 
-      final url = await tasksRepository.uploadFile(file: imageFile);
+      final url = await tasksRepository.uploadFile(file: mediaFile);
       taskUpdateAttachmentsMapList.add({
         'path': url,
         'type': fileType,
       });
-      taskUpdateAttachmentsFileList.add(imageFile);
+      taskUpdateAttachmentsFileList.add(mediaFile);
 
       appController.isLoadingObs.value = false;
     }
@@ -497,15 +497,15 @@ class TasksController extends GetxController {
         File file = File(result.files.single.path!);
         appController.isLoadingObs.value = true;
         final url = await tasksRepository.uploadFile(file: file);
-        final fileExtension = file.path.split('.').last;
-        final fileType = fileExtension == 'mp4' ||
-                fileExtension == 'mkv' ||
-                fileExtension == 'hevc'
+        final fileExtension = path.extension(file.path);
+        final fileType = fileExtension == '.mp4' ||
+                fileExtension == '.mkv' ||
+                fileExtension == '.hevc'
             ? TaskFileType.video
-            : fileExtension == 'jpg' ||
-                    fileExtension == 'jpeg' ||
-                    fileExtension == 'png' ||
-                    fileExtension == 'heif'
+            : fileExtension == '.jpg' ||
+                    fileExtension == '.jpeg' ||
+                    fileExtension == '.png' ||
+                    fileExtension == '.heif'
                 ? TaskFileType.image
                 : TaskFileType.others;
 
