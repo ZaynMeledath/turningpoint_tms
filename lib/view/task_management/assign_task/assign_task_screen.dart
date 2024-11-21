@@ -155,7 +155,7 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     if (taskModel.attachments != null) {
       assignTaskController.voiceRecordUrlObs.value = taskModel.attachments!
           .firstWhere(
-            (attachment) => attachment.type == 'audio',
+            (attachment) => attachment.type == TaskFileType.audio,
             orElse: () => Attachment(path: '', type: ''),
           )
           .path!;

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:record/record.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
@@ -40,6 +44,8 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   late final TextEditingController textController;
   final tasksController = Get.put(TasksController());
   final appController = Get.put(AppController());
+  final audioPlayer = AudioPlayer();
+  final recorder = AudioRecorder();
   final GlobalKey<FormState> _formKey = GlobalKey();
   Color? taskStatusColor;
 
@@ -47,14 +53,27 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   void initState() {
     textController = TextEditingController();
     changeTaskStatusColor();
+    audioPlayer.positionStream.listen((position) {
+      tasksController.voiceRecordPositionObs.value = position.inSeconds;
+
+      if (position.inMilliseconds > 0 &&
+          position.inMilliseconds == audioPlayer.duration?.inMilliseconds) {
+        audioPlayer.stop();
+        audioPlayer.seek(const Duration(seconds: 0));
+
+        tasksController.isPlayingObs.value = false;
+      }
+    });
     super.initState();
   }
 
   @override
   void dispose() {
+    super.dispose();
     textController.dispose();
     tasksController.taskUpdateAttachmentsFileList.clear();
-    super.dispose();
+    audioPlayer.dispose();
+    recorder.dispose();
   }
 
   void changeTaskStatusColor() {
@@ -237,7 +256,12 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               //====================Record Audio====================//
                               InkWell(
                                 borderRadius: BorderRadius.circular(100),
-                                onTap: () async {},
+                                onTap: () async {
+                                  tasksController.recordAudioForTaskUpdate(
+                                    recorder: recorder,
+                                    appController: appController,
+                                  );
+                                },
                                 child: Container(
                                   width: 42.w,
                                   height: 42.w,
@@ -251,6 +275,8 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 8.w),
+                              buildRecordingContainer(),
                             ],
                           ),
                           SizedBox(height: 10.h),
@@ -480,6 +506,158 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget buildRecordingContainer() {
+    return Obx(
+      () => tasksController.isRecordingObs.value ||
+              tasksController.voiceRecordPathObs.isNotEmpty ||
+              tasksController.voiceRecordUrlListObs.isNotEmpty
+          ? Row(
+              children: [
+                Container(
+                  width: 140.w,
+                  height: 50.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color.fromRGBO(48, 78, 85, .4),
+                        Color.fromRGBO(29, 36, 41, 1),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: tasksController.isRecordingObs.value
+
+                      //--------------------Recording Animation--------------------//
+                      ? Center(
+                          child: Lottie.asset(
+                            'assets/lotties/voice_recording_animation.json',
+                          ),
+                        )
+                      : appController.isLoadingObs.value
+                          ? Center(
+                              child: SpinKitThreeBounce(
+                                size: 21.h,
+                                color: AppColors.themeGreen.withOpacity(.7),
+                              ),
+                            )
+
+                          //--------------------Play Voice Record Container--------------------//
+                          : Row(
+                              children: [
+                                SizedBox(width: 4.w),
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(100),
+                                  onTap: () async {
+                                    if (audioPlayer.playing) {
+                                      audioPlayer.stop();
+                                      tasksController.isPlayingObs.value =
+                                          false;
+                                    } else {
+                                      if (tasksController
+                                              .voiceRecordPathObs.isEmpty &&
+                                          tasksController.voiceRecordUrlListObs
+                                              .isNotEmpty) {
+                                        await audioPlayer.setUrl(tasksController
+                                            .voiceRecordUrlListObs[0]);
+                                      } else {
+                                        await audioPlayer.setFilePath(
+                                          tasksController
+                                              .voiceRecordPathObs.value,
+                                        );
+                                      }
+                                      audioPlayer.play();
+                                      tasksController.isPlayingObs.value = true;
+                                    }
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(4.w),
+                                    child: Icon(
+                                      tasksController.isPlayingObs.value
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      size: 24.w,
+                                      color:
+                                          AppColors.themeGreen.withOpacity(.8),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: LinearPercentIndicator(
+                                    padding: EdgeInsets.only(
+                                      left: 2.w,
+                                      right: 12.w,
+                                    ),
+                                    lineHeight: 8.h,
+                                    percent: tasksController
+                                            .voiceRecordPositionObs.value /
+                                        (audioPlayer.duration?.inSeconds ?? 1),
+                                    backgroundColor: Colors.white24,
+                                    barRadius: const Radius.circular(16),
+                                    progressColor:
+                                        AppColors.themeGreen.withOpacity(.9),
+                                  ),
+                                )
+                              ],
+                            ),
+                ),
+                SizedBox(width: 2.w),
+
+                //--------------------Delete Icon--------------------//
+                !tasksController.isRecordingObs.value &&
+                        !appController.isLoadingObs.value
+                    ? InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () async {
+                          showGenericDialog(
+                            iconPath: 'assets/lotties/delete_animation.json',
+                            title: 'Delete Recording?',
+                            content:
+                                'Are you sure you want to delete this recording?',
+                            confirmationButtonColor: Colors.red,
+                            iconWidth: 100.w,
+                            buttons: {
+                              'Cancel': null,
+                              'Delete': () async {
+                                appController.isLoadingObs.value = true;
+                                tasksController.voiceRecordPathObs.value = '';
+                                tasksController.voiceRecordUrlListObs.clear();
+                                await audioPlayer.seek(
+                                  const Duration(seconds: 0),
+                                );
+                                audioPlayer.stop();
+                                appController.isLoadingObs.value = false;
+                                Get.back();
+
+                                showGenericDialog(
+                                  iconPath:
+                                      'assets/lotties/deleted_animation.json',
+                                  title: 'Deleted',
+                                  content:
+                                      'Recording has been successfully deleted',
+                                  buttons: {'OK': null},
+                                );
+                              }
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                            size: 22.w,
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            )
+          : SizedBox(height: 52.h),
     );
   }
 }

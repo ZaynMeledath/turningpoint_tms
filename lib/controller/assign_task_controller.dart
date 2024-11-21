@@ -13,7 +13,7 @@ import 'package:turningpoint_tms/exceptions/tms_exceptions.dart';
 import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/repository/tasks_repository.dart';
-import 'package:path_provider/path_provider.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 class AssignTaskController extends GetxController {
   final tasksRepository = TasksRepository();
@@ -267,7 +267,7 @@ class AssignTaskController extends GetxController {
         appController.isLoadingObs.value = false;
       } else {
         if (await recorder.hasPermission()) {
-          final appDir = await path.getApplicationDocumentsDirectory();
+          final appDir = await getApplicationDocumentsDirectory();
           recorder.start(
             const RecordConfig(),
             path: '${appDir.path}/voice_note.wav',
