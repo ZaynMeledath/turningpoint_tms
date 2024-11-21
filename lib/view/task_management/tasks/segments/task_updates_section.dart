@@ -3,6 +3,8 @@ part of '../task_details_screen.dart';
 Widget taskUpdateSection({
   required TaskModel taskModel,
   required Dio dio,
+  required AudioPlayer audioPlayer,
+  required TasksController tasksController,
 }) {
   final statusChangesList = taskModel.statusChanges ?? [];
   return Column(
@@ -24,6 +26,17 @@ Widget taskUpdateSection({
                   Builder(
                     builder: (context) {
                       final statusChangesModel = statusChangesList[i];
+                      final audioUrl = statusChangesModel.changesAttachments!
+                          .firstWhere(
+                            (element) => element.type == TaskFileType.audio,
+                            orElse: () => Attachment(),
+                          )
+                          .path;
+                      final fileAttachmentsList = statusChangesModel
+                          .changesAttachments!
+                          .where(
+                              (element) => element.type != TaskFileType.audio)
+                          .toList();
                       return Container(
                         width: double.maxFinite,
                         padding: EdgeInsets.symmetric(
@@ -138,48 +151,51 @@ Widget taskUpdateSection({
                               ),
                             ),
 
-                            statusChangesModel.changesAttachments != null &&
-                                    statusChangesModel
-                                        .changesAttachments!.isNotEmpty
+                            if (audioUrl != null && audioUrl.isNotEmpty)
+                              buildAudioContainer(
+                                tasksController: tasksController,
+                                audioPlayer: audioPlayer,
+                                audioUrl: audioUrl,
+                              ),
+
+                            fileAttachmentsList.isNotEmpty
                                 ? Container(
                                     height: 102.w,
                                     margin: EdgeInsets.only(top: 10.h),
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: statusChangesModel
-                                          .changesAttachments?.length,
+                                      itemCount: fileAttachmentsList.length,
                                       itemBuilder: (context, index) {
-                                        final changesAttachments =
-                                            statusChangesModel
-                                                .changesAttachments![index];
+                                        final changesAttachment =
+                                            fileAttachmentsList[index];
                                         return Padding(
                                           padding: EdgeInsets.only(right: 6.w),
                                           child: InkWell(
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                             onTap: () async {
-                                              if (changesAttachments.type ==
+                                              if (changesAttachment.type ==
                                                   TaskFileType.image) {
                                                 Get.to(
                                                   () => ImageViewer(
                                                       imageUrl:
-                                                          changesAttachments
+                                                          changesAttachment
                                                               .path!),
                                                   transition: Transition.zoom,
                                                 );
-                                              } else if (changesAttachments
+                                              } else if (changesAttachment
                                                       .type ==
                                                   TaskFileType.video) {
                                                 Get.to(
                                                   () => TaskVideoPlayer(
                                                       videoUrl:
-                                                          changesAttachments
+                                                          changesAttachment
                                                               .path!),
                                                   transition: Transition.zoom,
                                                 );
                                               } else {
                                                 downloadFile(
-                                                    fileUrl: changesAttachments
+                                                    fileUrl: changesAttachment
                                                         .path!);
                                               }
                                             },
@@ -195,17 +211,17 @@ Widget taskUpdateSection({
                                                 borderRadius:
                                                     BorderRadius.circular(12),
                                               ),
-                                              child: changesAttachments.type ==
+                                              child: changesAttachment.type ==
                                                       TaskFileType.image
                                                   ? AspectRatio(
                                                       aspectRatio: 16 / 9,
                                                       child: CachedNetworkImage(
                                                         imageUrl:
-                                                            changesAttachments
+                                                            changesAttachment
                                                                 .path!,
                                                       ),
                                                     )
-                                                  : changesAttachments.type ==
+                                                  : changesAttachment.type ==
                                                           TaskFileType.video
                                                       ? Column(
                                                           mainAxisAlignment:
@@ -223,7 +239,7 @@ Widget taskUpdateSection({
                                                             SizedBox(
                                                                 height: 12.w),
                                                             Text(
-                                                              changesAttachments
+                                                              changesAttachment
                                                                   .path!
                                                                   .split('/')
                                                                   .last,
@@ -247,7 +263,7 @@ Widget taskUpdateSection({
                                                             ),
                                                             SizedBox(height: 4),
                                                             Text(
-                                                              changesAttachments
+                                                              changesAttachment
                                                                   .path!
                                                                   .split('/')
                                                                   .last,
@@ -281,5 +297,76 @@ Widget taskUpdateSection({
               ),
             ),
     ],
+  );
+}
+
+Widget buildAudioContainer({
+  required TasksController tasksController,
+  required AudioPlayer audioPlayer,
+  required String audioUrl,
+}) {
+  return Align(
+    alignment: Alignment.centerLeft,
+    child: Obx(
+      () => Container(
+        width: 180.w,
+        height: 52.h,
+        margin: EdgeInsets.only(top: 6.h),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: const LinearGradient(
+            colors: [
+              Color.fromRGBO(48, 78, 85, .4),
+              Color.fromRGBO(29, 36, 41, 1),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Row(
+          children: [
+            SizedBox(width: 4.w),
+            InkWell(
+              borderRadius: BorderRadius.circular(100),
+              onTap: () async {
+                if (audioPlayer.playing) {
+                  audioPlayer.stop();
+                  tasksController.isPlayingObs.value = false;
+                } else {
+                  await audioPlayer.setUrl(audioUrl);
+                  audioPlayer.play();
+                  tasksController.isPlayingObs.value = true;
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(4.w),
+                child: Icon(
+                  tasksController.isPlayingObs.value
+                      ? Icons.pause
+                      : Icons.play_arrow,
+                  size: 24.w,
+                  color: AppColors.themeGreen.withOpacity(.8),
+                ),
+              ),
+            ),
+            Expanded(
+              child: LinearPercentIndicator(
+                padding: EdgeInsets.only(
+                  left: 2.w,
+                  right: 12.w,
+                ),
+                lineHeight: 8.h,
+                percent: 0,
+                // tasksController.voiceRecordPositionObs.value /
+                //     (audioPlayer.duration?.inSeconds ?? 1),
+                backgroundColor: Colors.white24,
+                barRadius: const Radius.circular(16),
+                progressColor: AppColors.themeGreen.withOpacity(.9),
+              ),
+            )
+          ],
+        ),
+      ),
+    ),
   );
 }

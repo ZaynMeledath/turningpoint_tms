@@ -72,6 +72,9 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
     super.dispose();
     textController.dispose();
     tasksController.taskUpdateAttachmentsFileList.clear();
+    tasksController.taskUpdateAttachmentsMapList.clear();
+    tasksController.voiceRecordPathObs.value = '';
+    tasksController.voiceRecordUrlObs.value = '';
     audioPlayer.dispose();
     recorder.dispose();
   }
@@ -513,7 +516,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
     return Obx(
       () => tasksController.isRecordingObs.value ||
               tasksController.voiceRecordPathObs.isNotEmpty ||
-              tasksController.voiceRecordUrlListObs.isNotEmpty
+              tasksController.voiceRecordUrlObs.isNotEmpty
           ? Row(
               children: [
                 Container(
@@ -560,10 +563,10 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                     } else {
                                       if (tasksController
                                               .voiceRecordPathObs.isEmpty &&
-                                          tasksController.voiceRecordUrlListObs
-                                              .isNotEmpty) {
+                                          tasksController
+                                              .voiceRecordUrlObs.isNotEmpty) {
                                         await audioPlayer.setUrl(tasksController
-                                            .voiceRecordUrlListObs[0]);
+                                            .voiceRecordUrlObs.value);
                                       } else {
                                         await audioPlayer.setFilePath(
                                           tasksController
@@ -625,7 +628,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               'Delete': () async {
                                 appController.isLoadingObs.value = true;
                                 tasksController.voiceRecordPathObs.value = '';
-                                tasksController.voiceRecordUrlListObs.clear();
+                                tasksController.voiceRecordUrlObs.value = '';
                                 await audioPlayer.seek(
                                   const Duration(seconds: 0),
                                 );

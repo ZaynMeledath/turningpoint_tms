@@ -120,6 +120,12 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         assignTaskController.isPlayingObs.value = false;
       }
     });
+
+//====================Task Update Voice Records====================//
+
+    // for(Attachment attachment in audioAttachmentsList) {
+    //   tasksController.voiceRecordIdUrlMap.addAll({ :attachment.path!});
+    // }
   }
 
   @override
@@ -467,6 +473,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                     taskUpdateSection(
                       taskModel: taskModel,
                       dio: dio,
+                      audioPlayer: audioPlayer,
+                      tasksController: tasksController,
                     ),
                   ],
                 ),

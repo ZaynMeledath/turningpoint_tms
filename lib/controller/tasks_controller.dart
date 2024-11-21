@@ -98,8 +98,10 @@ class TasksController extends GetxController {
   RxBool isRecordingObs = false.obs;
   RxBool isPlayingObs = false.obs;
   RxString voiceRecordPathObs = ''.obs;
-  RxList<String> voiceRecordUrlListObs = RxList<String>();
   RxInt voiceRecordPositionObs = 0.obs;
+  RxString voiceRecordUrlObs = ''.obs;
+  RxMap<String, String> voiceRecordIdUrlMap = RxMap<String, String>();
+  RxMap<String, String> voiceRecordIdPositionMap = RxMap<String, String>();
 
 //====================Personal Reminder====================//
   final allPersonalRemindersListObs = Rxn<List<PersonalReminderModel>>();
@@ -543,9 +545,14 @@ class TasksController extends GetxController {
         voiceRecordPathObs.value = await recorder.stop() ?? '';
         isRecordingObs.value = false;
         appController.isLoadingObs.value = true;
-        voiceRecordUrlListObs.clear();
-        voiceRecordUrlListObs.add(await tasksRepository.uploadFile(
-            file: File(voiceRecordPathObs.value)));
+
+        voiceRecordUrlObs.value = await tasksRepository.uploadFile(
+            file: File(voiceRecordPathObs.value));
+
+        taskUpdateAttachmentsMapList.add({
+          'path': voiceRecordUrlObs.value,
+          'type': TaskFileType.audio,
+        });
         appController.isLoadingObs.value = false;
       } else {
         if (await recorder.hasPermission()) {
