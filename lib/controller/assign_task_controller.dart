@@ -151,16 +151,18 @@ class AssignTaskController extends GetxController {
   }
 
   //====================Add user to AssignToList====================//
-  void addToAssignToList({
+  void addToAssignToMap({
     required String name,
     required String email,
     required String phone,
+    required String? profileImage,
   }) {
     assignToMap.addAll({
       email: AssignedTo(
         name: name,
         emailId: email,
         phone: phone,
+        profileImg: profileImage,
       ),
     });
   }

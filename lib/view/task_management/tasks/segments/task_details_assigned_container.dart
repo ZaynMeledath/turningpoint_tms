@@ -49,6 +49,9 @@ Widget taskDetailsAssignedContainer({
                   ? circularUserImage(
                       imageUrl: profileImg,
                       imageSize: profileImageSize,
+                      border: Border.all(
+                        color: color,
+                      ),
                     )
                   : nameLetterAvatar(
                       name: name,

@@ -132,10 +132,11 @@ Widget assignToDialog({
                                   if (filterController
                                           .assignedToFilterModel[email] ==
                                       true) {
-                                    assignTaskController.addToAssignToList(
+                                    assignTaskController.addToAssignToMap(
                                       name: name,
                                       email: email,
                                       phone: phone,
+                                      profileImage: allUsers[index].profileImg,
                                     );
                                   } else {
                                     assignTaskController.removeFromAssignToList(
@@ -224,10 +225,13 @@ Widget assignToDialog({
                                                             email] ==
                                                         true) {
                                                       assignTaskController
-                                                          .addToAssignToList(
+                                                          .addToAssignToMap(
                                                         name: name,
                                                         email: email,
                                                         phone: phone,
+                                                        profileImage:
+                                                            allUsers[index]
+                                                                .profileImg,
                                                       );
                                                     } else {
                                                       assignTaskController

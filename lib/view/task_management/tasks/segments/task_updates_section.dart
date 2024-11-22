@@ -63,6 +63,19 @@ Widget taskUpdateSection({
 //====================Avatar, Name, Time and Task Update Sections====================//
                             Row(
                               children: [
+                                // statusChangesModel.taskUpdatedBy?.profileImg !=
+                                //         null
+                                //     ? circularUserImage(
+                                //         imageUrl: statusChangesModel
+                                //             .taskUpdatedBy!.profileImg!,
+                                //         imageSize: profileImageSize,
+                                //       )
+                                //     :
+                                //  nameLetterAvatar(
+                                //     name:
+                                //         '${statusChangesModel.taskUpdatedBy?.name}',
+                                //     circleDiameter: profileImageSize,
+                                //   ),
                                 nameLetterAvatar(
                                   name:
                                       '${statusChangesModel.taskUpdatedBy?.split('@').first}',

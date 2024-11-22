@@ -4,6 +4,7 @@ Widget delegatedReportTabBarView({
   required TasksController tasksController,
   required TextEditingController delegatedSearchController,
 }) {
+  final profileImageSize = 34.w;
   return Obx(
     () {
       List<DelegatedPerformanceReportModel>? performanceReportModelList =
@@ -101,11 +102,19 @@ Widget delegatedReportTabBarView({
                                     //====================Avatar, Name and Progress Indicator====================//
                                     Row(
                                       children: [
-                                        nameLetterAvatar(
-                                          name:
-                                              '${performanceReportModel.userName}',
-                                          circleDiameter: 34.w,
-                                        ),
+                                        performanceReportModel.profileImg !=
+                                                null
+                                            ? circularUserImage(
+                                                imageUrl: performanceReportModel
+                                                    .profileImg!,
+                                                imageSize: profileImageSize,
+                                              )
+                                            : nameLetterAvatar(
+                                                name:
+                                                    '${performanceReportModel.userName}',
+                                                circleDiameter:
+                                                    profileImageSize,
+                                              ),
                                         SizedBox(width: 7.w),
                                         Column(
                                           children: [

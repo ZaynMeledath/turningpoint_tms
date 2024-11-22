@@ -32,12 +32,14 @@ class AllUsersPerformanceReportModelResponse {
 class AllUsersPerformanceReportModel {
   String? userName;
   String? emailId;
+  String? profileImg;
   String? role;
   Stats? stats;
 
   AllUsersPerformanceReportModel({
     this.userName,
     this.emailId,
+    this.profileImg,
     this.role,
     this.stats,
   });
@@ -45,6 +47,7 @@ class AllUsersPerformanceReportModel {
   AllUsersPerformanceReportModel.fromJson(Map<String, dynamic> json) {
     userName = json['userName'];
     emailId = json['emailID'];
+    profileImg = json['profileImg'];
     role = json['role'];
     stats = json['stats'] != null ? Stats.fromJson(json['stats']) : null;
   }
@@ -53,6 +56,7 @@ class AllUsersPerformanceReportModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['userName'] = userName;
     data['emailID'] = emailId;
+    data['profileImg'] = profileImg;
     data['role'] = role;
     if (stats != null) {
       data['stats'] = stats!.toJson();

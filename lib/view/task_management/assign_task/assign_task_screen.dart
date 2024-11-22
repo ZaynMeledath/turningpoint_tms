@@ -121,17 +121,24 @@ class _AssignTaskScreenState extends State<AssignTaskScreen>
     descriptionController.text = taskModel.description ?? '';
 
     //Adding AssignTo
-    if (taskModel.assignedTo != null) {
-      for (AssignedTo assignedTo in taskModel.assignedTo!) {
-        assignTaskController.addToAssignToList(
-          name: assignedTo.name!,
-          email: assignedTo.emailId!,
-          phone: assignedTo.phone!,
-        );
+    ever(userController.assignTaskUsersList, (_) {
+      if (taskModel.assignedTo != null) {
+        for (AssignedTo assignedTo in taskModel.assignedTo!) {
+          final assignedToUser = userController.assignTaskUsersList.value
+              ?.where((allUsersModel) =>
+                  allUsersModel.emailId == assignedTo.emailId)
+              .first;
+          assignTaskController.addToAssignToMap(
+            name: assignedTo.name!,
+            email: assignedTo.emailId!,
+            phone: assignedTo.phone!,
+            profileImage: assignedToUser?.profileImg,
+          );
 
-        filterController.assignedToFilterModel[assignedTo.emailId!] = true;
+          filterController.assignedToFilterModel[assignedTo.emailId!] = true;
+        }
       }
-    }
+    });
     assignTaskController.selectedCategory.value = taskModel.category ?? '';
     assignTaskController.taskPriority.value =
         taskModel.priority ?? TaskPriority.low;

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
-import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
 import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
@@ -18,7 +17,8 @@ AppBar myAppBar({
   bool profileAvatar = false,
   bool implyLeading = true,
 }) {
-  final UserModel? user = getUserModelFromHive();
+  final userController = Get.put(UserController());
+
   final profileImageSize = 40.w;
   return AppBar(
     automaticallyImplyLeading: false,
@@ -80,33 +80,38 @@ AppBar myAppBar({
               )
             : const SizedBox(),
         profileAvatar
-            ? Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 12.w),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(100),
-                    onTap: () => Get.to(
-                      () => const ProfileScreen(),
-                      transition: Transition.rightToLeft,
-                    ),
-                    child: user?.profileImg != null
-                        ? Hero(
-                            tag: 'profile_image',
-                            child: circularUserImage(
-                              imageUrl: user!.profileImg!,
-                              imageSize: profileImageSize,
-                              border: Border.all(
-                                color: AppColors.themeGreen,
+            ? Obx(
+                () {
+                  final user = userController.userObs.value;
+                  return Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 12.w),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () => Get.to(
+                          () => const ProfileScreen(),
+                          transition: Transition.rightToLeft,
+                        ),
+                        child: user?.profileImg != null
+                            ? Hero(
+                                tag: 'profile_picture',
+                                child: circularUserImage(
+                                  imageUrl: user!.profileImg!,
+                                  imageSize: profileImageSize,
+                                  border: Border.all(
+                                    color: AppColors.themeGreen,
+                                  ),
+                                ),
+                              )
+                            : nameLetterAvatar(
+                                name: '${user?.name}',
+                                circleDiameter: profileImageSize,
                               ),
-                            ),
-                          )
-                        : nameLetterAvatar(
-                            name: '${user?.name}',
-                            circleDiameter: profileImageSize,
-                          ),
-                  ),
-                ),
+                      ),
+                    ),
+                  );
+                },
               )
             : const SizedBox(),
       ],

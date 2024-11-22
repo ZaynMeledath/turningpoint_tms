@@ -30,16 +30,20 @@ class DelegatedPerformanceReportModelResponse {
 class DelegatedPerformanceReportModel {
   String? userName;
   String? emailId;
+  String? profileImg;
   Stats? stats;
 
   DelegatedPerformanceReportModel({
     this.userName,
+    this.emailId,
+    this.profileImg,
     this.stats,
   });
 
   DelegatedPerformanceReportModel.fromJson(Map<String, dynamic> json) {
     userName = json['userName'];
     emailId = json['emailID'];
+    profileImg = json['profileImg'];
     stats = json['stats'] != null ? Stats.fromJson(json['stats']) : null;
   }
 
@@ -47,6 +51,7 @@ class DelegatedPerformanceReportModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['userName'] = userName;
     data['emailID'] = emailId;
+    data['profileImg'] = profileImg;
     if (stats != null) {
       data['stats'] = stats!.toJson();
     }

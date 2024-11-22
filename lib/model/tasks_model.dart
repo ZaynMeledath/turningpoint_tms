@@ -291,6 +291,32 @@ class Reminder {
   }
 }
 
+class TaskUpdatedBy {
+  String? name;
+  String? emailId;
+  String? profileImg;
+
+  TaskUpdatedBy({
+    this.name,
+    this.emailId,
+    this.profileImg,
+  });
+
+  TaskUpdatedBy.fromJson(Map<String, dynamic> json) {
+    name = json['userName'];
+    emailId = json['emailID'];
+    profileImg = json['profileImg'];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> data = {};
+    data['userName'] = name;
+    data['emailID'] = emailId;
+    data['profileImg'] = profileImg;
+    return data;
+  }
+}
+
 class Attachment {
   String? path;
   String? type;
@@ -318,6 +344,7 @@ class StatusChanges {
   String? id;
   String? status;
   String? note;
+  // TaskUpdatedBy? taskUpdatedBy;
   String? taskUpdatedBy;
   List<Attachment>? changesAttachments;
   String? changedAt;
@@ -335,6 +362,9 @@ class StatusChanges {
     id = json['_id'];
     status = json['status'];
     note = json['note'];
+    // taskUpdatedBy = json['taskUpdatedBy'] != null
+    //     ? TaskUpdatedBy.fromJson(json['taskUpdatedBy'])
+    //     : null;
     taskUpdatedBy = json['taskUpdatedBy'];
     if (json['changesAttachments'] != null) {
       changesAttachments = [];
@@ -350,6 +380,7 @@ class StatusChanges {
     data['_id'] = id;
     data['status'] = status;
     data['note'] = note;
+    // data['taskUpdatedBy'] = taskUpdatedBy?.toJson();
     data['taskUpdatedBy'] = taskUpdatedBy;
     if (changesAttachments != null) {
       data['changesAttachments'] =

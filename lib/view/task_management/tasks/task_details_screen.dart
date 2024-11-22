@@ -51,6 +51,7 @@ class TaskDetailsScreen extends StatefulWidget {
 
 class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   final tasksController = Get.put(TasksController());
+  final userController = Get.put(UserController());
   final assignTaskController = AssignTaskController();
 
   bool isTaskCompleted = false;
@@ -123,6 +124,22 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             tasksController.currentlyPlayingUrl.value] = false;
       }
     });
+  }
+
+  String? getAssignToProfileImage() {
+    final user = userController.assignTaskUsersList.value
+        ?.where((userModel) =>
+            userModel.emailId == taskModel.assignedTo?.first.emailId)
+        .first;
+    return user?.profileImg;
+  }
+
+  String? getCreatedByProfileImage() {
+    final user = userController.assignTaskUsersList.value
+        ?.where(
+            (userModel) => userModel.emailId == taskModel.createdBy?.emailId)
+        .first;
+    return user?.profileImg;
   }
 
   @override
@@ -235,7 +252,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           email: taskModel.createdBy != null
                               ? taskModel.createdBy!.emailId!
                               : '-',
-                          profileImg: taskModel.createdBy?.profileImg,
+                          profileImg: getCreatedByProfileImage(),
                           isAssignedBy: true,
                         ),
                         Icon(
@@ -246,7 +263,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           name: '${taskModel.assignedTo?.first.name}'
                               .nameFormat(),
                           email: '${taskModel.assignedTo?.first.emailId}',
-                          profileImg: taskModel.assignedTo?.first.profileImg,
+                          profileImg: getAssignToProfileImage(),
                           isAssignedBy: false,
                         ),
                       ],
