@@ -9,6 +9,7 @@ Widget assignToAndCategorySegment({
   required TextEditingController categorySearchController,
   required bool isUpdating,
 }) {
+  final profileImageSize = 30.w;
   return Column(
     children: [
       Row(
@@ -27,65 +28,73 @@ Widget assignToAndCategorySegment({
               assignTaskController.showAssignToEmptyErrorTextObs.value = false;
             },
             child: Obx(
-              () => Container(
-                width: 156.w,
-                height: 56.h,
-                decoration: BoxDecoration(
-                  color: AppColors.textFieldColor,
-                  borderRadius: BorderRadius.circular(20),
-                  border:
-                      assignTaskController.showAssignToEmptyErrorTextObs.value
-                          ? Border.all(
-                              color: Colors.redAccent,
-                            )
-                          : null,
-                ),
-                child: Obx(
-                  () {
-                    final assignToMap = assignTaskController.assignToMap;
-                    if (assignToMap.isNotEmpty) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: assignToMap.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              left: index == 0 ? 8.w : 0,
-                              right: 8.w,
-                            ),
-                            child: nameLetterAvatar(
-                              name: assignToMap.values.elementAt(index).name ??
-                                  'patty',
-                              circleDiameter: 30.w,
-                            ),
-                          );
-                        },
-                      );
-                    } else {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Assign To',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                color: Colors.white70,
+              () {
+                return Container(
+                  width: 156.w,
+                  height: 56.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.textFieldColor,
+                    borderRadius: BorderRadius.circular(20),
+                    border:
+                        assignTaskController.showAssignToEmptyErrorTextObs.value
+                            ? Border.all(
+                                color: Colors.redAccent,
+                              )
+                            : null,
+                  ),
+                  child: Obx(
+                    () {
+                      final assignToMap = assignTaskController.assignToMap;
+                      if (assignToMap.isNotEmpty) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: assignToMap.length,
+                          itemBuilder: (context, index) {
+                            final assignToMapOfIndex =
+                                assignToMap.values.elementAt(index);
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                left: index == 0 ? 8.w : 0,
+                                right: 8.w,
                               ),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.white70,
-                              size: 24.w,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
+                              child: assignToMapOfIndex.profileImg != null
+                                  ? circularUserImage(
+                                      imageUrl: assignToMapOfIndex.profileImg!,
+                                      imageSize: profileImageSize,
+                                    )
+                                  : nameLetterAvatar(
+                                      name: assignToMapOfIndex.name ?? '',
+                                      circleDiameter: profileImageSize,
+                                    ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Assign To',
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.white70,
+                                size: 24.w,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                );
+              },
             ),
           ),
 

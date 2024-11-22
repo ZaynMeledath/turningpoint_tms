@@ -2,7 +2,7 @@ part of '../task_details_screen.dart';
 
 Widget taskDetailsAttachmentSegment({
   required List<Attachment> attachments,
-  required AssignTaskController assignTaskController,
+  required TasksController tasksController,
   required AudioPlayer audioPlayer,
   required String audioUrl,
   required Dio dio,
@@ -43,17 +43,22 @@ Widget taskDetailsAttachmentSegment({
                     onTap: () async {
                       if (audioPlayer.playing) {
                         audioPlayer.stop();
-                        assignTaskController.isPlayingObs.value = false;
+                        tasksController.currentlyPlayingUrl.value = '';
+                        tasksController.voiceRecordUrlIsPlayingMap[audioUrl] =
+                            false;
                       } else {
                         await audioPlayer.setUrl(audioUrl);
                         audioPlayer.play();
-                        assignTaskController.isPlayingObs.value = true;
+                        tasksController.currentlyPlayingUrl.value = audioUrl;
+                        tasksController.voiceRecordUrlIsPlayingMap[audioUrl] =
+                            true;
                       }
                     },
                     child: Container(
                       padding: EdgeInsets.all(4.w),
                       child: Icon(
-                        assignTaskController.isPlayingObs.value
+                        tasksController.voiceRecordUrlIsPlayingMap[audioUrl] ==
+                                true
                             ? Icons.pause
                             : Icons.play_arrow,
                         size: 24.w,
@@ -68,9 +73,10 @@ Widget taskDetailsAttachmentSegment({
                         right: 12.w,
                       ),
                       lineHeight: 8.h,
-                      percent:
-                          assignTaskController.voiceRecordPositionObs.value /
-                              (audioPlayer.duration?.inSeconds ?? 1),
+                      percent: (tasksController
+                                  .voiceRecordUrlPositionMap[audioUrl] ??
+                              0) /
+                          (audioPlayer.duration?.inSeconds ?? 1),
                       backgroundColor: Colors.white24,
                       barRadius: const Radius.circular(16),
                       progressColor: AppColors.themeGreen.withOpacity(.9),

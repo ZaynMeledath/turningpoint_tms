@@ -27,6 +27,7 @@ class AllUsersModel {
   String? department;
   String? emailId;
   String? phone;
+  String? profileImg;
   String? role;
   bool? isBlocked;
   String? reportingTo;
@@ -40,6 +41,7 @@ class AllUsersModel {
     this.department,
     this.emailId,
     this.phone,
+    this.profileImg,
     this.role,
     this.isBlocked,
     this.reportingTo,
@@ -54,6 +56,7 @@ class AllUsersModel {
     department = json['department'];
     emailId = json['emailID'];
     phone = json['phone'];
+    profileImg = json['profileImg'];
     role = json['role'];
     isBlocked = json['isBlocked'];
     reportingTo = json['reportingTo'];
@@ -68,6 +71,7 @@ class AllUsersModel {
     data['department'] = department;
     data['emailID'] = emailId;
     data['phone'] = phone;
+    data['profileImg'] = profileImg;
     data['role'] = role;
     data['isBlocked'] = isBlocked;
     data['reportingTo'] = reportingTo;

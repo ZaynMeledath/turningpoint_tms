@@ -331,17 +331,19 @@ Widget buildAudioContainer({
               onTap: () async {
                 if (audioPlayer.playing) {
                   audioPlayer.stop();
-                  tasksController.isPlayingObs.value = false;
+                  tasksController.currentlyPlayingUrl.value = '';
+                  tasksController.voiceRecordUrlIsPlayingMap[audioUrl] = false;
                 } else {
                   await audioPlayer.setUrl(audioUrl);
                   audioPlayer.play();
-                  tasksController.isPlayingObs.value = true;
+                  tasksController.currentlyPlayingUrl.value = audioUrl;
+                  tasksController.voiceRecordUrlIsPlayingMap[audioUrl] = true;
                 }
               },
               child: Container(
                 padding: EdgeInsets.all(4.w),
                 child: Icon(
-                  tasksController.isPlayingObs.value
+                  tasksController.voiceRecordUrlIsPlayingMap[audioUrl] == true
                       ? Icons.pause
                       : Icons.play_arrow,
                   size: 24.w,
@@ -356,9 +358,9 @@ Widget buildAudioContainer({
                   right: 12.w,
                 ),
                 lineHeight: 8.h,
-                percent: 0,
-                // tasksController.voiceRecordPositionObs.value /
-                //     (audioPlayer.duration?.inSeconds ?? 1),
+                percent:
+                    (tasksController.voiceRecordUrlPositionMap[audioUrl] ?? 0) /
+                        (audioPlayer.duration?.inSeconds ?? 1),
                 backgroundColor: Colors.white24,
                 barRadius: const Radius.circular(16),
                 progressColor: AppColors.themeGreen.withOpacity(.9),

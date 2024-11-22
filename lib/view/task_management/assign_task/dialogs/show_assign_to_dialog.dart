@@ -148,10 +148,16 @@ Widget assignToDialog({
                                   margin: EdgeInsets.only(bottom: 16.h),
                                   child: Row(
                                     children: [
-                                      nameLetterAvatar(
-                                        name: name.toString(),
-                                        circleDiameter: 32.w,
-                                      ),
+                                      allUsers[index].profileImg != null
+                                          ? circularUserImage(
+                                              imageUrl:
+                                                  allUsers[index].profileImg!,
+                                              imageSize: 32.w,
+                                            )
+                                          : nameLetterAvatar(
+                                              name: name.toString(),
+                                              circleDiameter: 32.w,
+                                            ),
                                       SizedBox(width: 8.w),
                                       SizedBox(
                                         width: 270.w,

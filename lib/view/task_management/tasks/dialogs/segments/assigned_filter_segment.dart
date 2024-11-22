@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/filter_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
+import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 
@@ -14,6 +15,7 @@ Widget assignedFilterSegment({
   required bool isAssignedBy,
   required int animationFlag,
 }) {
+  final profileImageSize = 32.w;
   bool shouldAnimate = animationFlag < 1;
   final userController = Get.put(UserController());
   final allUsers = userController.assignTaskUsersList.value ?? [];
@@ -72,6 +74,7 @@ Widget assignedFilterSegment({
             itemBuilder: (context, index) {
               String name = '';
               String email = '';
+              String profileImg = '';
 
               if (isAssignedBy) {
                 name = filterController.assignedBySearchList.isEmpty &&
@@ -89,6 +92,14 @@ Widget assignedFilterSegment({
                         '')
                     : filterController.assignedBySearchList[index].emailId ??
                         '';
+
+                profileImg = filterController.assignedBySearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].profileImg ??
+                        '')
+                    : filterController.assignedBySearchList[index].profileImg ??
+                        '';
               } else {
                 name = filterController.assignedToSearchList.isEmpty &&
                         assignedSearchController.text.trim().isEmpty
@@ -104,6 +115,14 @@ Widget assignedFilterSegment({
                             .assignTaskUsersList.value?[index].emailId ??
                         '')
                     : filterController.assignedToSearchList[index].emailId ??
+                        '';
+
+                profileImg = filterController.assignedToSearchList.isEmpty &&
+                        assignedSearchController.text.trim().isEmpty
+                    ? (userController
+                            .assignTaskUsersList.value?[index].profileImg ??
+                        '')
+                    : filterController.assignedToSearchList[index].profileImg ??
                         '';
               }
 
@@ -121,10 +140,15 @@ Widget assignedFilterSegment({
                   padding: EdgeInsets.only(bottom: 16.h),
                   child: Row(
                     children: [
-                      nameLetterAvatar(
-                        name: name,
-                        circleDiameter: 32.w,
-                      ),
+                      profileImg.isNotEmpty
+                          ? circularUserImage(
+                              imageUrl: profileImg,
+                              imageSize: profileImageSize,
+                            )
+                          : nameLetterAvatar(
+                              name: name,
+                              circleDiameter: profileImageSize,
+                            ),
                       SizedBox(width: 8.w),
                       SizedBox(
                         width: 165.w,

@@ -206,17 +206,20 @@ class AssignedTo {
   String? name;
   String? emailId;
   String? phone;
+  String? profileImg;
 
   AssignedTo({
     this.name,
     this.emailId,
     this.phone,
+    this.profileImg,
   });
 
   AssignedTo.fromJson(Map<String, dynamic> json) {
     name = json['userName'];
     emailId = json['emailID'];
     phone = json['phone'];
+    profileImg = json['profileImg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -224,6 +227,7 @@ class AssignedTo {
     data['userName'] = name;
     data['emailID'] = emailId;
     data['phone'] = phone;
+    data['profileImg'] = profileImg;
     return data;
   }
 }
@@ -232,17 +236,20 @@ class CreatedBy {
   String? name;
   String? emailId;
   String? phone;
+  String? profileImg;
 
   CreatedBy({
     this.name,
     this.emailId,
     this.phone,
+    this.profileImg,
   });
 
   CreatedBy.fromJson(Map<String, dynamic> json) {
     name = json['userName'];
     emailId = json['emailID'];
     phone = json['phone'];
+    profileImg = json['profileImg'];
   }
 
   Map<String, dynamic> toJson() {
@@ -250,6 +257,7 @@ class CreatedBy {
     data['userName'] = name;
     data['emailID'] = emailId;
     data['phone'] = phone;
+    data['profileImg'] = profileImg;
     return data;
   }
 }

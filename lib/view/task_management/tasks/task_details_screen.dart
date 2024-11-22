@@ -110,14 +110,16 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
     }
 
     audioPlayer.positionStream.listen((position) {
-      assignTaskController.voiceRecordPositionObs.value = position.inSeconds;
+      tasksController.voiceRecordUrlPositionMap[
+          tasksController.currentlyPlayingUrl.value] = position.inSeconds;
 
       if (position.inMilliseconds > 0 &&
           position.inMilliseconds == audioPlayer.duration?.inMilliseconds) {
         audioPlayer.stop();
         audioPlayer.seek(const Duration(seconds: 0));
 
-        assignTaskController.isPlayingObs.value = false;
+        tasksController.voiceRecordUrlIsPlayingMap[
+            tasksController.currentlyPlayingUrl.value] = false;
       }
     });
 
@@ -220,7 +222,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                             taskModel.attachments!.isNotEmpty
                         ? taskDetailsAttachmentSegment(
                             attachments: attachments,
-                            assignTaskController: assignTaskController,
+                            tasksController: tasksController,
                             audioPlayer: audioPlayer,
                             audioUrl: audioUrl,
                             dio: dio,

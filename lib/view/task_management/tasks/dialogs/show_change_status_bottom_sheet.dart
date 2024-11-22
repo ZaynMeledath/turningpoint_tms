@@ -74,7 +74,6 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
     tasksController.taskUpdateAttachmentsFileList.clear();
     tasksController.taskUpdateAttachmentsMapList.clear();
     tasksController.voiceRecordPathObs.value = '';
-    tasksController.voiceRecordUrlObs.value = '';
     audioPlayer.dispose();
     recorder.dispose();
   }
@@ -515,8 +514,7 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
   Widget buildRecordingContainer() {
     return Obx(
       () => tasksController.isRecordingObs.value ||
-              tasksController.voiceRecordPathObs.isNotEmpty ||
-              tasksController.voiceRecordUrlObs.isNotEmpty
+              tasksController.voiceRecordPathObs.isNotEmpty
           ? Row(
               children: [
                 Container(
@@ -561,18 +559,11 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                                       tasksController.isPlayingObs.value =
                                           false;
                                     } else {
-                                      if (tasksController
-                                              .voiceRecordPathObs.isEmpty &&
-                                          tasksController
-                                              .voiceRecordUrlObs.isNotEmpty) {
-                                        await audioPlayer.setUrl(tasksController
-                                            .voiceRecordUrlObs.value);
-                                      } else {
-                                        await audioPlayer.setFilePath(
-                                          tasksController
-                                              .voiceRecordPathObs.value,
-                                        );
-                                      }
+                                      await audioPlayer.setFilePath(
+                                        tasksController
+                                            .voiceRecordPathObs.value,
+                                      );
+
                                       audioPlayer.play();
                                       tasksController.isPlayingObs.value = true;
                                     }
@@ -628,7 +619,6 @@ class ChangeStatusBottomSheetState extends State<ChangeStatusBottomSheet> {
                               'Delete': () async {
                                 appController.isLoadingObs.value = true;
                                 tasksController.voiceRecordPathObs.value = '';
-                                tasksController.voiceRecordUrlObs.value = '';
                                 await audioPlayer.seek(
                                   const Duration(seconds: 0),
                                 );

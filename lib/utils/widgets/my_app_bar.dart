@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,7 @@ import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/model/user_model.dart';
 import 'package:turningpoint_tms/utils/flight_shuttle_builder.dart';
+import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/task_management/profile/profile_screen.dart';
 
@@ -91,23 +91,13 @@ AppBar myAppBar({
                       transition: Transition.rightToLeft,
                     ),
                     child: user?.profileImg != null
-                        ? Container(
-                            width: profileImageSize,
-                            height: profileImageSize,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
+                        ? Hero(
+                            tag: 'profile_image',
+                            child: circularUserImage(
+                              imageUrl: user!.profileImg!,
+                              imageSize: profileImageSize,
                               border: Border.all(
                                 color: AppColors.themeGreen,
-                              ),
-                            ),
-                            child: Center(
-                              child: ClipOval(
-                                child: CachedNetworkImage(
-                                  imageUrl: user!.profileImg!,
-                                  fit: BoxFit.cover,
-                                  width: profileImageSize,
-                                  height: profileImageSize,
-                                ),
                               ),
                             ),
                           )

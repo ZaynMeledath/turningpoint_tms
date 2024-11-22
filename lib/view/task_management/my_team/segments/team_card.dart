@@ -49,11 +49,16 @@ Widget teamCard({
           children: [
             Row(
               children: [
-                nameLetterAvatar(
-                  name: allUsersModel.userName.toString(),
-                  circleDiameter: 34,
-                  backgroundColor: Colors.blue,
-                ),
+                allUsersModel.profileImg != null
+                    ? circularUserImage(
+                        imageUrl: allUsersModel.profileImg!,
+                        imageSize: 34.w,
+                      )
+                    : nameLetterAvatar(
+                        name: allUsersModel.userName.toString(),
+                        circleDiameter: 34.w,
+                        backgroundColor: Colors.blue,
+                      ),
                 SizedBox(width: 8.w),
                 SizedBox(
                   width: 200.w,
