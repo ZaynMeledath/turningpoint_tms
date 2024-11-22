@@ -3,6 +3,7 @@ part of '../task_details_screen.dart';
 Future<Object?> showTaskDetailsAssignedContainerDialog({
   required String name,
   required String email,
+  required String? profileImg,
   required bool isAssignedBy,
   required subContainersColor,
 }) async {
@@ -10,6 +11,7 @@ Future<Object?> showTaskDetailsAssignedContainerDialog({
     taskDetailsAssignedContainerDialog(
       name: name,
       email: email,
+      profileImg: profileImg,
       isAssignedBy: isAssignedBy,
       subContainersColor: subContainersColor,
     ),
@@ -23,9 +25,11 @@ Future<Object?> showTaskDetailsAssignedContainerDialog({
 Widget taskDetailsAssignedContainerDialog({
   required String name,
   required String email,
+  required String? profileImg,
   required bool isAssignedBy,
   required subContainersColor,
 }) {
+  final profileImageSize = 45.w;
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -64,11 +68,16 @@ Widget taskDetailsAssignedContainerDialog({
               SizedBox(height: 8.h),
               Row(
                 children: [
-                  nameLetterAvatar(
-                    name: name,
-                    circleDiameter: 45.w,
-                    backgroundColor: subContainersColor,
-                  ),
+                  profileImg != null
+                      ? circularUserImage(
+                          imageUrl: profileImg,
+                          imageSize: profileImageSize,
+                        )
+                      : nameLetterAvatar(
+                          name: name,
+                          circleDiameter: profileImageSize,
+                          backgroundColor: subContainersColor,
+                        ),
                   SizedBox(width: 6.w),
                   Expanded(
                     child: Container(

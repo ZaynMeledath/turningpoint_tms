@@ -3,16 +3,19 @@ part of '../task_details_screen.dart';
 Widget taskDetailsAssignedContainer({
   required String name,
   required String email,
+  required String? profileImg,
   required bool isAssignedBy,
 }) {
   final color =
       isAssignedBy ? const Color(0xcc00ACAC) : const Color(0xcc0079D1);
+  final profileImageSize = 32.w;
   return InkWell(
     borderRadius: BorderRadius.circular(10),
     onTap: () {
       showTaskDetailsAssignedContainerDialog(
         name: name,
         email: email,
+        profileImg: profileImg,
         isAssignedBy: isAssignedBy,
         subContainersColor: color,
       );
@@ -42,11 +45,16 @@ Widget taskDetailsAssignedContainer({
           SizedBox(height: 8.h),
           Row(
             children: [
-              nameLetterAvatar(
-                name: name,
-                circleDiameter: 32.w,
-                backgroundColor: color,
-              ),
+              profileImg != null
+                  ? circularUserImage(
+                      imageUrl: profileImg,
+                      imageSize: profileImageSize,
+                    )
+                  : nameLetterAvatar(
+                      name: name,
+                      circleDiameter: profileImageSize,
+                      backgroundColor: color,
+                    ),
               SizedBox(width: 6.w),
               Expanded(
                 child: Container(

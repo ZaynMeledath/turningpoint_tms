@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/exception/user_exceptions.dart';
+import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
@@ -64,27 +64,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: userController.userObs.value?.profileImg != null
                       ? Hero(
                           tag: 'profile_picture',
-                          child: Container(
-                            width: profileImageSize,
-                            height: profileImageSize,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.themeGreen.withOpacity(.6),
-                                width: 2.w,
-                              ),
-                            ),
-                            child: Center(
-                              child: ClipOval(
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      userController.userObs.value!.profileImg!,
-                                  fit: BoxFit.cover,
-                                  width: profileImageSize,
-                                  height: profileImageSize,
-                                ),
-                              ),
-                            ),
+                          child: circularUserImage(
+                            imageUrl: userController.userObs.value!.profileImg!,
+                            imageSize: profileImageSize,
                           ),
                         )
                       : Hero(

@@ -18,6 +18,7 @@ import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/utils/download_file.dart';
+import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/custom_refresh_indicator.dart';
 import 'package:turningpoint_tms/utils/widgets/image_viewer.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
@@ -122,12 +123,6 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
             tasksController.currentlyPlayingUrl.value] = false;
       }
     });
-
-//====================Task Update Voice Records====================//
-
-    // for(Attachment attachment in audioAttachmentsList) {
-    //   tasksController.voiceRecordIdUrlMap.addAll({ :attachment.path!});
-    // }
   }
 
   @override
@@ -240,6 +235,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           email: taskModel.createdBy != null
                               ? taskModel.createdBy!.emailId!
                               : '-',
+                          profileImg: taskModel.createdBy?.profileImg,
                           isAssignedBy: true,
                         ),
                         Icon(
@@ -250,6 +246,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           name: '${taskModel.assignedTo?.first.name}'
                               .nameFormat(),
                           email: '${taskModel.assignedTo?.first.emailId}',
+                          profileImg: taskModel.assignedTo?.first.profileImg,
                           isAssignedBy: false,
                         ),
                       ],
