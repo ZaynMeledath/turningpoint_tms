@@ -15,6 +15,7 @@ import 'package:turningpoint_tms/controller/tasks_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/dialogs/show_reminders_list_dialog.dart';
+import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/extensions/string_extensions.dart';
 import 'package:turningpoint_tms/utils/download_file.dart';
@@ -84,6 +85,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
         setAudioAndOtherAttachments();
       });
     }
+    userController.getAssignTaskUsers();
 
     super.initState();
   }
@@ -491,6 +493,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                       dio: dio,
                       audioPlayer: audioPlayer,
                       tasksController: tasksController,
+                      userController: userController,
                     ),
                   ],
                 ),

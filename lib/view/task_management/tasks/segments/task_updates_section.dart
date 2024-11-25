@@ -5,8 +5,11 @@ Widget taskUpdateSection({
   required Dio dio,
   required AudioPlayer audioPlayer,
   required TasksController tasksController,
+  required UserController userController,
 }) {
   final statusChangesList = taskModel.statusChanges ?? [];
+  final profileImageSize = 34.w;
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -37,6 +40,23 @@ Widget taskUpdateSection({
                           .where(
                               (element) => element.type != TaskFileType.audio)
                           .toList();
+
+                      final taskUpdatedBy = userController
+                          .assignTaskUsersList.value
+                          ?.firstWhere(
+                              (element) =>
+                                  element.emailId ==
+                                  statusChangesModel.taskUpdatedBy,
+                              orElse: () => AllUsersModel())
+                          .userName;
+                      final profileImg = userController
+                          .assignTaskUsersList.value
+                          ?.firstWhere(
+                              (element) =>
+                                  element.emailId ==
+                                  statusChangesModel.taskUpdatedBy,
+                              orElse: () => AllUsersModel())
+                          .profileImg;
                       return Container(
                         width: double.maxFinite,
                         padding: EdgeInsets.symmetric(
@@ -63,24 +83,15 @@ Widget taskUpdateSection({
 //====================Avatar, Name, Time and Task Update Sections====================//
                             Row(
                               children: [
-                                // statusChangesModel.taskUpdatedBy?.profileImg !=
-                                //         null
-                                //     ? circularUserImage(
-                                //         imageUrl: statusChangesModel
-                                //             .taskUpdatedBy!.profileImg!,
-                                //         imageSize: profileImageSize,
-                                //       )
-                                //     :
-                                //  nameLetterAvatar(
-                                //     name:
-                                //         '${statusChangesModel.taskUpdatedBy?.name}',
-                                //     circleDiameter: profileImageSize,
-                                //   ),
-                                nameLetterAvatar(
-                                  name:
-                                      '${statusChangesModel.taskUpdatedBy?.split('@').first}',
-                                  circleDiameter: 34.w,
-                                ),
+                                profileImg != null
+                                    ? circularUserImage(
+                                        imageUrl: profileImg,
+                                        imageSize: profileImageSize,
+                                      )
+                                    : nameLetterAvatar(
+                                        name: '$taskUpdatedBy',
+                                        circleDiameter: profileImageSize,
+                                      ),
                                 SizedBox(width: 8.w),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,11 +99,9 @@ Widget taskUpdateSection({
                                     SizedBox(
                                       width: 180.w,
                                       child: Text(
-                                        statusChangesModel.taskUpdatedBy
-                                                ?.split('@')
-                                                .first
-                                                .nameFormat() ??
-                                            '',
+                                        taskUpdatedBy?.nameFormat() ??
+                                            statusChangesModel.taskUpdatedBy ??
+                                            '-',
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 15.sp,
