@@ -25,6 +25,9 @@ class _CameraScreenState extends State<CameraScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   CameraController? cameraController;
   late final TabController tabController;
+  int cameraIndex = 0;
+  List<CameraDescription> cameras = [];
+
   final myCameraController = MyCameraController();
 
   @override
@@ -63,21 +66,49 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   void initCamera() async {
-    final cameras = await availableCameras();
-    cameraController = CameraController(cameras[1], ResolutionPreset.high);
+    cameras = await availableCameras();
+    cameraIndex = cameras.indexOf(cameras
+        .where((camera) => camera.lensDirection == CameraLensDirection.back)
+        .first);
+    cameraController =
+        CameraController(cameras[cameraIndex], ResolutionPreset.high);
     cameraController!.initialize().then((_) {
       if (!mounted) {
         return;
       }
       setState(() {});
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            // Handle access errors here.
+            break;
+          default:
+            // Handle other errors here.
+            break;
+        }
+      }
+    });
+  }
 
-      // cameraController?.addListener(() {
-      //   if (cameraController?.value.isRecordingVideo == true) {
-      //     myCameraController.isRecordingVideoObs.value = true;
-      //   } else {
-      //     myCameraController.isRecordingVideoObs.value = false;
-      //   }
-      // });
+  void switchCamera() {
+    if (cameras[cameraIndex].lensDirection == CameraLensDirection.back) {
+      log('EXECUTED');
+      cameraIndex = cameras.indexOf(cameras
+          .where((camera) => camera.lensDirection == CameraLensDirection.front)
+          .first);
+    } else {
+      cameraIndex = cameras.indexOf(cameras
+          .where((camera) => camera.lensDirection == CameraLensDirection.back)
+          .first);
+    }
+    cameraController =
+        CameraController(cameras[cameraIndex], ResolutionPreset.high);
+    cameraController!.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
     }).catchError((Object e) {
       if (e is CameraException) {
         switch (e.code) {
@@ -189,59 +220,79 @@ class _CameraScreenState extends State<CameraScreen>
           ),
 
           SizedBox(height: 24.h),
-          InkWell(
-            borderRadius: BorderRadius.circular(100),
-            onTap: () async {
-              if (myCameraController.cameraTabIndexObs.value == 0) {
-                myCameraController.takePicture(
-                  cameraController: cameraController!,
-                  currentRoute: widget.currentRoute,
-                  assignTaskController: widget.assignTaskController,
-                );
-              } else {
-                myCameraController.recordVideo(
-                  cameraController: cameraController!,
-                  currentRoute: widget.currentRoute,
-                  assignTaskController: widget.assignTaskController,
-                );
-              }
-            },
+          SizedBox(
+            width: double.maxFinite,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Container(
-                  width: 60.w,
-                  height: 60.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 4.w,
-                    ),
+                InkWell(
+                  borderRadius: BorderRadius.circular(100),
+                  onTap: () async {
+                    if (myCameraController.cameraTabIndexObs.value == 0) {
+                      myCameraController.takePicture(
+                        cameraController: cameraController!,
+                        currentRoute: widget.currentRoute,
+                        assignTaskController: widget.assignTaskController,
+                      );
+                    } else {
+                      myCameraController.recordVideo(
+                        cameraController: cameraController!,
+                        currentRoute: widget.currentRoute,
+                        assignTaskController: widget.assignTaskController,
+                      );
+                    }
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 60.w,
+                        height: 60.w,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 4.w,
+                          ),
+                        ),
+                      ),
+                      Obx(
+                        () {
+                          final containerSize =
+                              myCameraController.isRecordingVideoObs.value
+                                  ? 25.w
+                                  : 45.w;
+                          return AnimatedContainer(
+                            duration: const Duration(milliseconds: 250),
+                            width: containerSize,
+                            height: containerSize,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  myCameraController.isRecordingVideoObs.value
+                                      ? BorderRadius.circular(4)
+                                      : BorderRadius.circular(100),
+                              color:
+                                  myCameraController.cameraTabIndexObs.value ==
+                                          0
+                                      ? Colors.white
+                                      : Colors.red,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                Obx(
-                  () {
-                    final containerSize =
-                        myCameraController.isRecordingVideoObs.value
-                            ? 25.w
-                            : 45.w;
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      width: containerSize,
-                      height: containerSize,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            myCameraController.isRecordingVideoObs.value
-                                ? BorderRadius.circular(4)
-                                : BorderRadius.circular(100),
-                        color: myCameraController.cameraTabIndexObs.value == 0
-                            ? Colors.white
-                            : Colors.red,
-                      ),
-                    );
-                  },
-                ),
+                Positioned(
+                  right: 20.w,
+                  child: IconButton(
+                    onPressed: switchCamera,
+                    icon: Icon(
+                      Icons.cameraswitch_outlined,
+                      size: 30.w,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
