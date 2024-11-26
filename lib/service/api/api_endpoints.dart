@@ -32,4 +32,5 @@ class ApiEndpoints {
   static const uploadFile = '$baseUrl/upload';
   static const addCategory = '$baseUrl/category';
   static const personalReminder = '$baseUrl/notification/reminder';
+  static const tickets = '$baseUrl/ticket';
 }
