@@ -145,7 +145,7 @@ class TasksRepository {
     try {
       await ApiService().sendRequest(
         url: groupId != null
-            ? '${ApiEndpoints.assignTask}/repeat/$groupId'
+            ? '${ApiEndpoints.assignTask}/repeat/$groupId/$taskId'
             : '${ApiEndpoints.assignTask}/$taskId',
         requestMethod: RequestMethod.DELETE,
         data: {},
@@ -191,9 +191,7 @@ class TasksRepository {
       await ApiService().sendRequest(
         url: '${ApiEndpoints.approveTask}/$taskId',
         requestMethod: RequestMethod.PATCH,
-        data: {
-          // 'isApproved': true,
-        },
+        data: {},
         fieldNameForFiles: null,
         isTokenRequired: true,
       );
