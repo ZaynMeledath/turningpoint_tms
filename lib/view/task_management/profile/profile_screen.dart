@@ -14,6 +14,7 @@ import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 import 'package:turningpoint_tms/view/task_management/profile/profile_picture_view_screen.dart';
+import 'package:turningpoint_tms/view/tickets/my_tickets_screen.dart';
 import 'package:turningpoint_tms/view/tickets/raise_ticket_screen.dart';
 
 part 'segments/section_title_container.dart';
@@ -127,9 +128,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.snackbar(
-                    'Coming Soon...',
-                    'Feature will be available shortly',
+                  // Get.snackbar(
+                  //   'Coming Soon...',
+                  //   'Feature will be available shortly',
+                  // );
+
+                  Get.to(
+                    () => MyTicketsScreen(),
+                    transition: Transition.rightToLeft,
                   );
                 },
                 child: profileOption(title: 'My Tickets'),

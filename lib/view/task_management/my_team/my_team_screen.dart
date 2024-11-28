@@ -113,8 +113,7 @@ class _MyTeamScreenState extends State<MyTeamScreen>
                       .toList()
                   : [];
             }
-            final myTeamList = userController.myTeamSearchList.isNotEmpty ||
-                    teamSearchController.text.trim().isNotEmpty
+            final myTeamList = teamSearchController.text.trim().isNotEmpty
                 ? userController.myTeamSearchList
                 : userController.myTeamList.value;
 

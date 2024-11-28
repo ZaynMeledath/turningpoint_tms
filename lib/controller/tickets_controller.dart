@@ -5,6 +5,7 @@ import 'package:turningpoint_tms/repository/tickets_repository.dart';
 class TicketsController extends GetxController {
   final ticketsRepository = TicketsRepository();
   Rxn<List<TicketModel>> myTickets = Rxn<List<TicketModel>>();
+  Rxn<Exception> ticketsException = Rxn<Exception>();
 
 //====================Raise Ticket====================//
   Future<void> raiseTicket({
@@ -22,17 +23,12 @@ class TicketsController extends GetxController {
   }
 
 //====================Get My Tickets====================//
-  Future<void> getMyTickets({
-    required String title,
-    required String description,
-  }) async {
+  Future<void> getMyTickets() async {
     try {
-      await ticketsRepository.getMyTickets(
-        title: title,
-        description: description,
-      );
-    } catch (_) {
-      rethrow;
+      myTickets.value = (await ticketsRepository.getMyTickets())?.tickets;
+      ticketsException.value = null;
+    } catch (e) {
+      ticketsException.value = e as Exception;
     }
   }
 }

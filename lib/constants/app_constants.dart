@@ -19,3 +19,10 @@ class Role {
   static const teamLeader = 'Team Leader';
   static const user = 'User';
 }
+
+class TicketStatus {
+  static const open = 'Open';
+  static const inProgress = 'In Progress';
+  static const resolved = 'Resolved';
+  static const closed = 'Closed';
+}

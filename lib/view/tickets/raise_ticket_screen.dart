@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:turningpoint_tms/controller/tickets_controller.dart';
+import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
 
@@ -13,6 +15,7 @@ class RaiseTicketScreen extends StatefulWidget {
 class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
   late final TextEditingController titleController;
   late final TextEditingController descriptionController;
+  final TicketsController ticketsController = TicketsController();
 
   @override
   void initState() {
@@ -25,6 +28,8 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+    ticketsController.dispose();
+
     super.dispose();
   }
 
@@ -60,7 +65,35 @@ class _RaiseTicketScreenState extends State<RaiseTicketScreen> {
                 SizedBox(height: 28.w),
                 customButton(
                   buttonTitle: 'Submit',
-                  onTap: () {},
+                  onTap: () async {
+                    try {
+                      await ticketsController.raiseTicket(
+                        title: titleController.text.trim(),
+                        description: descriptionController.text.trim(),
+                      );
+                      titleController.clear();
+                      descriptionController.clear();
+                      showGenericDialog(
+                        iconPath: 'assets/lotties/success_animation.json',
+                        title: 'Raised a Ticket',
+                        content:
+                            'Ticket has been raised and our team will be responding to it shortly',
+                        buttons: {
+                          'OK': null,
+                        },
+                      );
+                    } catch (_) {
+                      showGenericDialog(
+                        iconPath: 'assets/lotties/server_error_animation.json',
+                        title: 'Something went wrong',
+                        content:
+                            'Something went wrong while raising the ticket',
+                        buttons: {
+                          'Dismiss': null,
+                        },
+                      );
+                    }
+                  },
                   borderRadius: BorderRadius.circular(12),
                   buttonPadding: EdgeInsets.symmetric(
                     horizontal: 20.w,

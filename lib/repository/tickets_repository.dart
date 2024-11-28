@@ -1,3 +1,4 @@
+import 'package:turningpoint_tms/model/tickets_model.dart';
 import 'package:turningpoint_tms/service/api/api_endpoints.dart';
 import 'package:turningpoint_tms/service/api/api_service.dart';
 
@@ -24,18 +25,16 @@ class TicketsRepository {
   }
 
 //====================Get My Tickets====================//
-  Future<void> getMyTickets({
-    required String title,
-    required String description,
-  }) async {
+  Future<TicketsModelResponse?> getMyTickets() async {
     try {
-      await ApiService().sendRequest(
+      final response = await ApiService().sendRequest(
         url: ApiEndpoints.tickets,
         requestMethod: RequestMethod.GET,
         data: {},
         fieldNameForFiles: null,
         isTokenRequired: true,
       );
+      return TicketsModelResponse.fromJson(response);
     } catch (_) {
       rethrow;
     }

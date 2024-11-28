@@ -1,11 +1,14 @@
 part of '../tasks_dashboard.dart';
 
-Widget shimmerListLoading() {
+Widget shimmerListLoading({
+  double? containerHeight,
+  int? containerCount,
+}) {
   return Shimmer.fromColors(
     baseColor: const Color.fromRGBO(90, 90, 90, .2),
     highlightColor: const Color.fromRGBO(48, 78, 85, 0.8),
     child: ListView.builder(
-      itemCount: 5,
+      itemCount: containerCount ?? 5,
       padding: EdgeInsets.only(
         top: 8.h,
         bottom: 60.h,
@@ -17,7 +20,7 @@ Widget shimmerListLoading() {
           ),
           child: Container(
             width: double.maxFinite,
-            height: 120,
+            height: containerHeight ?? 120.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               gradient: const LinearGradient(
