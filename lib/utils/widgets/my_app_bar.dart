@@ -99,6 +99,7 @@ AppBar myAppBar({
                                 child: circularUserImage(
                                   imageUrl: user!.profileImg!,
                                   imageSize: profileImageSize,
+                                  userName: '${user.name}',
                                   border: Border.all(
                                     color: AppColors.themeGreen,
                                   ),

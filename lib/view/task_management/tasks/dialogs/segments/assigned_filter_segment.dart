@@ -144,6 +144,7 @@ Widget assignedFilterSegment({
                           ? circularUserImage(
                               imageUrl: profileImg,
                               imageSize: profileImageSize,
+                              userName: name,
                             )
                           : nameLetterAvatar(
                               name: name,

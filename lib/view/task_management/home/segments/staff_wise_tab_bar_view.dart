@@ -108,6 +108,9 @@ Widget staffWiseTabBarView({
                                                 imageUrl: performanceReportModel
                                                     .profileImg!,
                                                 imageSize: profileImageSize,
+                                                userName: performanceReportModel
+                                                    .userName
+                                                    .toString(),
                                               )
                                             : nameLetterAvatar(
                                                 name:

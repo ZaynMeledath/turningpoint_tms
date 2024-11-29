@@ -53,6 +53,7 @@ Widget teamCard({
                     ? circularUserImage(
                         imageUrl: allUsersModel.profileImg!,
                         imageSize: 34.w,
+                        userName: allUsersModel.userName.toString(),
                       )
                     : nameLetterAvatar(
                         name: allUsersModel.userName.toString(),

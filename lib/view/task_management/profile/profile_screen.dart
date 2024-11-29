@@ -68,6 +68,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: circularUserImage(
                             imageUrl: userController.userObs.value!.profileImg!,
                             imageSize: profileImageSize,
+                            userName:
+                                userController.userObs.value!.name.toString(),
                             border: Border.all(
                               color: AppColors.themeGreen,
                               width: 2.w,

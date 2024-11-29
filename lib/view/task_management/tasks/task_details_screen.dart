@@ -129,18 +129,18 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   }
 
   String? getAssignToProfileImage() {
-    final user = userController.assignTaskUsersList.value
-        ?.where((userModel) =>
-            userModel.emailId == taskModel.assignedTo?.first.emailId)
-        .first;
+    final user = userController.assignTaskUsersList.value?.firstWhere(
+      (userModel) => userModel.emailId == taskModel.assignedTo?.first.emailId,
+      orElse: () => AllUsersModel(),
+    );
     return user?.profileImg;
   }
 
   String? getCreatedByProfileImage() {
-    final user = userController.assignTaskUsersList.value
-        ?.where(
-            (userModel) => userModel.emailId == taskModel.createdBy?.emailId)
-        .first;
+    final user = userController.assignTaskUsersList.value?.firstWhere(
+      (userModel) => userModel.emailId == taskModel.createdBy?.emailId,
+      orElse: () => AllUsersModel(),
+    );
     return user?.profileImg;
   }
 

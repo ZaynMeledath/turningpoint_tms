@@ -154,6 +154,9 @@ Widget assignToDialog({
                                               imageUrl:
                                                   allUsers[index].profileImg!,
                                               imageSize: 32.w,
+                                              userName: allUsers[index]
+                                                  .userName
+                                                  .toString(),
                                             )
                                           : nameLetterAvatar(
                                               name: name.toString(),

@@ -49,6 +49,7 @@ Widget taskDetailsAssignedContainer({
                   ? circularUserImage(
                       imageUrl: profileImg,
                       imageSize: profileImageSize,
+                      userName: name,
                       border: Border.all(
                         color: color,
                       ),

@@ -87,6 +87,7 @@ Widget taskUpdateSection({
                                     ? circularUserImage(
                                         imageUrl: profileImg,
                                         imageSize: profileImageSize,
+                                        userName: '$taskUpdatedBy',
                                       )
                                     : nameLetterAvatar(
                                         name: '$taskUpdatedBy',

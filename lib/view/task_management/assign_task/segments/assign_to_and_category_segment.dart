@@ -61,6 +61,8 @@ Widget assignToAndCategorySegment({
                                   ? circularUserImage(
                                       imageUrl: assignToMapOfIndex.profileImg!,
                                       imageSize: profileImageSize,
+                                      userName:
+                                          assignToMapOfIndex.name.toString(),
                                     )
                                   : nameLetterAvatar(
                                       name: assignToMapOfIndex.name ?? '',
