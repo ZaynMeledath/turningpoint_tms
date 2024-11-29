@@ -254,7 +254,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           email: taskModel.createdBy != null
                               ? taskModel.createdBy!.emailId!
                               : '-',
-                          profileImg: getCreatedByProfileImage(),
+                          // profileImg: getCreatedByProfileImage(),
+                          profileImg: taskModel.createdBy?.profileImg,
                           isAssignedBy: true,
                         ),
                         Icon(
@@ -265,7 +266,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                           name: '${taskModel.assignedTo?.first.name}'
                               .nameFormat(),
                           email: '${taskModel.assignedTo?.first.emailId}',
-                          profileImg: getAssignToProfileImage(),
+                          // profileImg: getAssignToProfileImage(),
+                          profileImg: taskModel.assignedTo?.first.profileImg,
                           isAssignedBy: false,
                         ),
                       ],
