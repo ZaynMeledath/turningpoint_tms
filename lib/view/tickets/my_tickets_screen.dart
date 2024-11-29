@@ -84,7 +84,7 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
                 return Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 14.w,
-                    vertical: 12.h,
+                    vertical: 10.h,
                   ),
                   margin: EdgeInsets.only(bottom: 10.h),
                   decoration: BoxDecoration(
@@ -125,7 +125,12 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 4.h),
+                      SizedBox(height: 7.h),
+                      Container(
+                        height: 1,
+                        color: Colors.white12,
+                      ),
+                      SizedBox(height: 12.h),
                       Text(
                         ticket.description.toString(),
                         style: TextStyle(
