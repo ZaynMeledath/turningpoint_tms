@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "810991594594",
     "project_id": "turning-point-tms",
-    "storage_bucket": "turning-point-tms.appspot.com"
+    "storage_bucket": "turning-point-tms.firebasestorage.app"
   },
   "client": [
     {

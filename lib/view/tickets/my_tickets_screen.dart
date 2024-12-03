@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/constants/tasks_management_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
@@ -40,7 +41,8 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
       appBar: myAppBar(title: 'My Tickets'),
       body: Obx(
         () {
-          List<TicketModel>? ticketsList = ticketsController.myTickets.value;
+          List<TicketModel>? ticketsList =
+              ticketsController.myTicketsListObs.value;
 
           if (ticketsController.ticketsException.value != null) {
             return Center(
@@ -142,7 +144,7 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
                 );
               },
             );
-          } else {
+          } else if (ticketsController.myTicketsListObs.value == null) {
             return Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 12.w,
@@ -151,6 +153,18 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
               child: shimmerListLoading(
                 containerHeight: 100.h,
                 containerCount: 8,
+              ),
+            );
+          } else {
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 40.h),
+                  Lottie.asset(
+                    'assets/lotties/empty_list_animation.json',
+                    width: 150.w,
+                  ),
+                ],
               ),
             );
           }

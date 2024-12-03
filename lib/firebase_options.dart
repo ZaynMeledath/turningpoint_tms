@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
     appId: '1:810991594594:android:9cfa22f8b09ea7bc30753b',
     messagingSenderId: '810991594594',
     projectId: 'turning-point-tms',
-    storageBucket: 'turning-point-tms.appspot.com',
+    storageBucket: 'turning-point-tms.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:810991594594:ios:bc4146106eb3b36a30753b',
     messagingSenderId: '810991594594',
     projectId: 'turning-point-tms',
-    storageBucket: 'turning-point-tms.appspot.com',
+    storageBucket: 'turning-point-tms.firebasestorage.app',
     iosBundleId: 'com.example.turningPointTasksApp',
   );
 
