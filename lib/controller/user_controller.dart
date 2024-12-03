@@ -218,10 +218,11 @@ class UserController extends GetxController {
       if (fcmToken != null) {
         await UserRepository.logOut(fcmToken: fcmToken);
         final tasksController = Get.put(TasksController());
+        tasksController.dashboardTasksListObs.clear();
         tasksController.allTasksListObs.value = null;
         tasksController.myTasksListObs.value = null;
         tasksController.delegatedTasksListObs.value = null;
-        tasksController.dashboardTasksListObs.clear();
+
         deleteUserModelFromHive();
         AppPreferences.clearSharedPreferences();
       }
@@ -246,19 +247,27 @@ Future<void> addUserModelToHive({
 
 //====================Delete user from Hive Box====================//
 Future<void> deleteUserModelFromHive() async {
-  final userBox = Hive.box(AppConstants.appDb);
-  userBox.delete(AppConstants.userModelStorageKey);
+  try {
+    final userBox = Hive.box(AppConstants.appDb);
+    userBox.delete(AppConstants.userModelStorageKey);
+  } catch (_) {
+    return;
+  }
 }
 
 //====================Get user from Hive Box====================//
 UserModel? getUserModelFromHive() {
-  final userBox = Hive.box(AppConstants.appDb);
-  final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
-  if (userModelResponseJson != null) {
-    final userModelResponse =
-        UserModelResponse.fromJson(jsonDecode(userModelResponseJson));
-    return userModelResponse.user;
-  } else {
-    return null;
+  try {
+    final userBox = Hive.box(AppConstants.appDb);
+    final userModelResponseJson = userBox.get(AppConstants.userModelStorageKey);
+    if (userModelResponseJson != null) {
+      final userModelResponse =
+          UserModelResponse.fromJson(jsonDecode(userModelResponseJson));
+      return userModelResponse.user;
+    } else {
+      return null;
+    }
+  } catch (_) {
+    rethrow;
   }
 }

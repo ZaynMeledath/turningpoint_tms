@@ -87,7 +87,7 @@ class AddTeamMemberBottomSheetState extends State<AddTeamMemberBottomSheet> {
                     vertical: 14.h,
                   ),
                   child: Text(
-                    'Add to Team',
+                    widget.userModel != null ? 'Update Member' : 'Add to Team',
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w600,
@@ -318,7 +318,7 @@ Future<void> onSubmit({
         allUsersModel.role = userController.roleObs.value ?? Role.user;
         allUsersModel.reportingTo =
             userController.reportingManagerObs.value ?? user.name;
-        allUsersModel.password = null;
+        allUsersModel.password = passwordController.text;
         await userController.updateTeamMember(userModel: allUsersModel);
         Get.back();
 
@@ -336,7 +336,7 @@ Future<void> onSubmit({
           department: userController.departmentObs.value ?? user.department,
           role: userController.roleObs.value ?? Role.user,
           reportingTo: userController.reportingManagerObs.value ?? user.name,
-          password: passwordController.text.trim(),
+          password: passwordController.text,
         );
         await userController.addTeamMember(userModel: userModel);
         Get.back();

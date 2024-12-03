@@ -68,8 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: circularUserImage(
                             imageUrl: userController.userObs.value!.profileImg!,
                             imageSize: profileImageSize,
-                            userName:
-                                userController.userObs.value!.name.toString(),
+                            userName: '${userController.userObs.value?.name}',
                             border: Border.all(
                               color: AppColors.themeGreen,
                               width: 2.w,
@@ -178,7 +177,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 appController.isLoadingObs.value = true;
                                 await userController.logOut();
                                 appController.isLoadingObs.value = false;
-
                                 Get.offAll(
                                   () => const LoginScreen(),
                                 );

@@ -149,7 +149,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'Overdue Tasks - $overdueTasksCount',
+                        title: 'Overdue Tasks',
                         avoidTabBar: true,
                         tasksListCategory: TasksListCategory.overdue,
                       ));
@@ -167,7 +167,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'Open Tasks - $openTasksCount',
+                        title: 'Open Tasks',
                         tasksListCategory: TasksListCategory.open,
                         avoidTabBar: true,
                       ));
@@ -185,7 +185,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'In Progress - $inProgressTasksCount',
+                        title: 'In Progress',
                         tasksListCategory: TasksListCategory.inProgress,
                         avoidTabBar: true,
                       ));
@@ -213,7 +213,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'Completed Tasks - $completedTasksCount',
+                        title: 'Completed Tasks',
                         tasksListCategory: TasksListCategory.completed,
                         avoidTabBar: true,
                       ));
@@ -231,7 +231,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'On Time Tasks - $onTimeTasksCount',
+                        title: 'On Time Tasks',
                         tasksListCategory: TasksListCategory.onTime,
                         avoidTabBar: true,
                       ));
@@ -249,7 +249,7 @@ Widget dashboardStatusOverviewSection({
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
                   Get.to(() => TasksScreen(
-                        title: 'Delayed Tasks - $delayedTasksCount',
+                        title: 'Delayed Tasks',
                         tasksListCategory: TasksListCategory.delayed,
                         avoidTabBar: true,
                       ));

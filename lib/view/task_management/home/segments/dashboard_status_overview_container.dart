@@ -6,8 +6,10 @@ Widget dashboardStatusOverviewContainer({
   required IconData icon,
   required Color iconColor,
 }) {
+  final screenWidth = MediaQuery.of(Get.context!).size.width;
   return Container(
-    width: 120.w,
+    width: screenWidth * .29,
+    // width: 120.w,
     height: 64.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12),
