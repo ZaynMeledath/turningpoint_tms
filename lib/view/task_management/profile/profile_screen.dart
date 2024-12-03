@@ -7,7 +7,7 @@ import 'package:turningpoint_tms/constants/app_constants.dart';
 import 'package:turningpoint_tms/controller/app_controller.dart';
 import 'package:turningpoint_tms/controller/user_controller.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
-import 'package:turningpoint_tms/exception/user_exceptions.dart';
+import 'package:turningpoint_tms/exceptions/user_exceptions.dart';
 import 'package:turningpoint_tms/utils/widgets/circular_user_image.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';

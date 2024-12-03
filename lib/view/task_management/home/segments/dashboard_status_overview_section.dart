@@ -148,11 +148,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'Overdue Tasks',
-                        avoidTabBar: true,
-                        tasksListCategory: TasksListCategory.overdue,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'Overdue Tasks',
+                      avoidTabBar: true,
+                      tasksListCategory: TasksListCategory.overdue,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: Status.overdue,
@@ -166,11 +170,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'Open Tasks',
-                        tasksListCategory: TasksListCategory.open,
-                        avoidTabBar: true,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'Open Tasks',
+                      tasksListCategory: TasksListCategory.open,
+                      avoidTabBar: true,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: Status.open,
@@ -184,11 +192,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'In Progress',
-                        tasksListCategory: TasksListCategory.inProgress,
-                        avoidTabBar: true,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'In Progress',
+                      tasksListCategory: TasksListCategory.inProgress,
+                      avoidTabBar: true,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: Status.inProgress,
@@ -212,11 +224,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'Completed Tasks',
-                        tasksListCategory: TasksListCategory.completed,
-                        avoidTabBar: true,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'Completed Tasks',
+                      tasksListCategory: TasksListCategory.completed,
+                      avoidTabBar: true,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: Status.completed,
@@ -230,11 +246,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'On Time Tasks',
-                        tasksListCategory: TasksListCategory.onTime,
-                        avoidTabBar: true,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'On Time Tasks',
+                      tasksListCategory: TasksListCategory.onTime,
+                      avoidTabBar: true,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: 'On Time',
@@ -248,11 +268,15 @@ Widget dashboardStatusOverviewSection({
               InkWell(
                 borderRadius: BorderRadius.circular(12),
                 onTap: () {
-                  Get.to(() => TasksScreen(
-                        title: 'Delayed Tasks',
-                        tasksListCategory: TasksListCategory.delayed,
-                        avoidTabBar: true,
-                      ));
+                  Get.to(
+                    () => TasksScreen(
+                      title: 'Delayed Tasks',
+                      tasksListCategory: TasksListCategory.delayed,
+                      avoidTabBar: true,
+                    ),
+                    transition: Transition.fade,
+                    duration: const Duration(milliseconds: 400),
+                  );
                 },
                 child: dashboardStatusOverviewContainer(
                   status: 'Delayed',
