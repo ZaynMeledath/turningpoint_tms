@@ -3,6 +3,7 @@ part of '../tasks_dashboard.dart';
 Widget categoryWiseTabBarView({
   required TasksController tasksController,
   required TextEditingController categorySearchController,
+  required ScrollController scrollController,
 }) {
   return Obx(() {
     List<AllCategoriesPerformanceReportModel>? performanceReportModelList =
@@ -48,6 +49,7 @@ Widget categoryWiseTabBarView({
                       await tasksController.getAllCategoriesPerformanceReport();
                     },
                     child: ListView.builder(
+                      controller: scrollController,
                       itemCount: performanceReportModelList.length,
                       // physics: const BouncingScrollPhysics(),
                       padding: EdgeInsets.only(

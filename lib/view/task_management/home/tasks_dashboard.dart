@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,21 +45,30 @@ class TasksDashboard extends StatefulWidget {
 }
 
 class _TasksDashboardState extends State<TasksDashboard>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final tasksController = Get.put(TasksController());
   final appController = Get.put(AppController());
   late final TabController tabController;
+  final scrollController = ScrollController();
 
   final staffWiseSearchController = TextEditingController();
   final categoryWiseSearchController = TextEditingController();
   final myReportSearchController = TextEditingController();
   final delegatedSearchController = TextEditingController();
 
+  final GlobalKey _containerKey = GlobalKey();
+  double containerHeight = 0;
+
   UserModel? userModel;
   bool isAdminOrLeader = false;
 
   @override
   void initState() {
+    super.initState();
+    initializeDashboard();
+  }
+
+  void initializeDashboard() {
     tasksController.isDelegatedObs.value = null;
     userModel = getUserModelFromHive();
     isAdminOrLeader =
@@ -66,24 +77,47 @@ class _TasksDashboardState extends State<TasksDashboard>
       length: isAdminOrLeader ? 4 : 1,
       vsync: this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final renderBox =
+          _containerKey.currentContext?.findRenderObject() as RenderBox?;
+      if (renderBox != null) {
+        setState(() {
+          containerHeight = renderBox.size.height;
+        });
+        log('Container Height: $containerHeight');
+      } else {
+        log('RenderBox is null. Ensure the widget exists and is built.');
+      }
+    });
+
     getData();
     tabController.addListener(() {
       tasksController.dashboardTabIndexObs.value = tabController.index;
     });
-    super.initState();
+
+    scrollController.addListener(() {
+      tasksController.dashboardScrollOffsetObs.value = scrollController.offset;
+    });
   }
 
   Future<void> getData() async {
-    await tasksController.getMyTasks();
-    await tasksController.getDelegatedTasks();
-    if (isAdminOrLeader) {
-      await tasksController.getMyPerformanceReport();
-      await tasksController.getDelegatedPerformanceReport();
-      await tasksController.getAllTasks();
-      await tasksController.getAllUsersPerformanceReport();
-      await tasksController.getAllCategoriesPerformanceReport();
-    } else {
-      await tasksController.getMyPerformanceReport();
+    try {
+      await tasksController.getMyTasks();
+      await tasksController.getDelegatedTasks();
+      if (isAdminOrLeader) {
+        await Future.wait([
+          tasksController.getMyPerformanceReport(),
+          tasksController.getDelegatedPerformanceReport(),
+          tasksController.getAllTasks(),
+          tasksController.getAllUsersPerformanceReport(),
+          tasksController.getAllCategoriesPerformanceReport(),
+        ]);
+      } else {
+        await tasksController.getMyPerformanceReport();
+      }
+    } catch (e) {
+      log('Error fetching data: $e');
     }
   }
 
@@ -95,6 +129,7 @@ class _TasksDashboardState extends State<TasksDashboard>
     myReportSearchController.dispose();
     delegatedSearchController.dispose();
     tabController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -112,9 +147,7 @@ class _TasksDashboardState extends State<TasksDashboard>
           trailingIcons: [
             IconButton(
               visualDensity: VisualDensity.compact,
-              onPressed: () {
-                showRemindersListDialog();
-              },
+              onPressed: showRemindersListDialog,
               icon: Icon(
                 Icons.alarm,
                 size: 24.w,
@@ -122,96 +155,143 @@ class _TasksDashboardState extends State<TasksDashboard>
             ),
           ],
         ),
-        body: Column(
+        body: Stack(
           children: [
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: dashboardStatusOverviewSection(
-                tasksController: tasksController,
-                isAdminOrLeader: isAdminOrLeader,
-              ),
-            ),
-            SizedBox(height: 18.h),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 14.w),
-                child: Text(
-                  'Report',
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 9.h),
-            dashboardTabBar(
-              tabController: tabController,
-              isAdminOrLeader: isAdminOrLeader,
-            ),
-            Obx(
-              () => Expanded(
-                child: tasksController.tasksException.value == null
-                    ? isAdminOrLeader
-                        ? TabBarView(
-                            controller: tabController,
-                            children: [
-                              staffWiseTabBarView(
-                                tasksController: tasksController,
-                                staffSearchController:
-                                    staffWiseSearchController,
-                              ),
-                              categoryWiseTabBarView(
-                                tasksController: tasksController,
-                                categorySearchController:
-                                    categoryWiseSearchController,
-                              ),
-                              myReportTabBarView(
-                                tasksController: tasksController,
-                                myReportSearchController:
-                                    myReportSearchController,
-                              ),
-                              delegatedReportTabBarView(
-                                tasksController: tasksController,
-                                delegatedSearchController:
-                                    delegatedSearchController,
-                              ),
-                            ],
-                          )
-                        : TabBarView(
-                            controller: tabController,
-                            children: [
-                              myReportTabBarView(
-                                tasksController: tasksController,
-                                myReportSearchController:
-                                    myReportSearchController,
-                              ),
-                            ],
-                          )
-                    : Column(
-                        children: [
-                          SizedBox(height: 50.h),
-                          serverErrorWidget(
-                            isLoading: appController.isLoadingObs.value,
-                            onRefresh: () async {
-                              try {
-                                appController.isLoadingObs.value = true;
-                                await getData();
-                                appController.isLoadingObs.value = false;
-                              } catch (_) {
-                                appController.isLoadingObs.value = false;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-              ),
-            ),
+            buildDashboardContent(),
+            buildTabBarView(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildDashboardContent() {
+    return Container(
+      key: _containerKey,
+      margin: EdgeInsets.only(top: 10.h),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: dashboardStatusOverviewSection(
+              tasksController: tasksController,
+              isAdminOrLeader: isAdminOrLeader,
+            ),
+          ),
+          SizedBox(height: 18.h),
+          buildReportTitle(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildReportTitle() {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.w),
+        child: Obx(() {
+          final double opacity = (1 -
+                  (tasksController.dashboardScrollOffsetObs.value /
+                      containerHeight))
+              .clamp(0, 1);
+          return Opacity(
+            opacity: opacity,
+            child: Text(
+              'Report',
+              style: TextStyle(
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget buildTabBarView() {
+    return Obx(
+      () {
+        double padding = (containerHeight + 10.h) -
+            tasksController.dashboardScrollOffsetObs.value
+                .clamp(0, (containerHeight + 10.h));
+        return Padding(
+          padding: EdgeInsets.only(top: padding),
+          child: Container(
+            color: AppColors.scaffoldBackgroundColor,
+            child: Column(
+              children: [
+                dashboardTabBar(
+                  tabController: tabController,
+                  isAdminOrLeader: isAdminOrLeader,
+                ),
+                Obx(
+                  () => Expanded(
+                    child: tasksController.tasksException.value == null
+                        ? buildTabViews()
+                        : buildErrorView(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildTabViews() {
+    if (isAdminOrLeader) {
+      return TabBarView(
+        controller: tabController,
+        children: [
+          staffWiseTabBarView(
+            scrollController: scrollController,
+            tasksController: tasksController,
+            staffSearchController: staffWiseSearchController,
+          ),
+          categoryWiseTabBarView(
+            tasksController: tasksController,
+            categorySearchController: categoryWiseSearchController,
+            scrollController: scrollController,
+          ),
+          myReportTabBarView(
+            tasksController: tasksController,
+            myReportSearchController: myReportSearchController,
+            scrollController: scrollController,
+          ),
+          delegatedReportTabBarView(
+            tasksController: tasksController,
+            delegatedSearchController: delegatedSearchController,
+            scrollController: scrollController,
+          ),
+        ],
+      );
+    } else {
+      return TabBarView(
+        controller: tabController,
+        children: [
+          myReportTabBarView(
+            tasksController: tasksController,
+            myReportSearchController: myReportSearchController,
+            scrollController: scrollController,
+          ),
+        ],
+      );
+    }
+  }
+
+  Widget buildErrorView() {
+    return Column(
+      children: [
+        SizedBox(height: 50.h),
+        serverErrorWidget(
+          isLoading: appController.isLoadingObs.value,
+          onRefresh: getData,
+        ),
+      ],
     );
   }
 }

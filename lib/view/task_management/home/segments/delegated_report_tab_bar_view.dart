@@ -3,6 +3,7 @@ part of '../tasks_dashboard.dart';
 Widget delegatedReportTabBarView({
   required TasksController tasksController,
   required TextEditingController delegatedSearchController,
+  required ScrollController scrollController,
 }) {
   final profileImageSize = 34.w;
   return Obx(
@@ -48,6 +49,7 @@ Widget delegatedReportTabBarView({
                         await tasksController.getDelegatedPerformanceReport();
                       },
                       child: ListView.builder(
+                        controller: scrollController,
                         padding: EdgeInsets.only(
                           top: 8.h,
                           bottom: 66.h,

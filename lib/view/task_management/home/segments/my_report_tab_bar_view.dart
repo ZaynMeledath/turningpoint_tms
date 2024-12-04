@@ -3,6 +3,7 @@ part of '../tasks_dashboard.dart';
 Widget myReportTabBarView({
   required TasksController tasksController,
   required TextEditingController myReportSearchController,
+  required ScrollController scrollController,
 }) {
   return Obx(() {
     List<MyPerformanceReportModel>? performanceReportModelList =
@@ -44,6 +45,7 @@ Widget myReportTabBarView({
                       await tasksController.getMyPerformanceReport();
                     },
                     child: ListView.builder(
+                      controller: scrollController,
                       itemCount: performanceReportModelList.length,
                       padding: EdgeInsets.only(
                         top: 8.h,

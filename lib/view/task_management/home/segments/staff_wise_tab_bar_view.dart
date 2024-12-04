@@ -3,6 +3,7 @@ part of '../tasks_dashboard.dart';
 Widget staffWiseTabBarView({
   required TasksController tasksController,
   required TextEditingController staffSearchController,
+  required ScrollController scrollController,
 }) {
   final profileImageSize = 34.w;
   return Obx(
@@ -49,6 +50,7 @@ Widget staffWiseTabBarView({
                         await tasksController.getAllUsersPerformanceReport();
                       },
                       child: ListView.builder(
+                        controller: scrollController,
                         padding: EdgeInsets.only(
                           top: 8.h,
                           bottom: 66.h,
