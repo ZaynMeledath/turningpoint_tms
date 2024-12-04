@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:turningpoint_tms/dialogs/show_generic_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,7 +14,6 @@ Future<void> showEnableNotificationPermissionDialog() {
         try {
           final url = Uri.parse('app-settings:');
           await launchUrl(url);
-          log('Executed');
         } catch (_) {
           rethrow;
         }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +30,6 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   void initState() {
-    log('CURRENT ROUTE : ${widget.currentRoute} ');
     WidgetsBinding.instance.addObserver(this);
     tabController = TabController(
       length: 2,
@@ -93,7 +90,6 @@ class _CameraScreenState extends State<CameraScreen>
 
   void switchCamera() {
     if (cameras[cameraIndex].lensDirection == CameraLensDirection.back) {
-      log('EXECUTED');
       cameraIndex = cameras.indexOf(cameras
           .where((camera) => camera.lensDirection == CameraLensDirection.front)
           .first);
