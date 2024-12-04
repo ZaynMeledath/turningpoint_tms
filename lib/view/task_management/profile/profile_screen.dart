@@ -141,10 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     () => RaiseTicketScreen(),
                     transition: Transition.rightToLeft,
                   );
-                  // Get.snackbar(
-                  //   'Coming Soon...',
-                  //   'Feature will be available shortly',
-                  // );
                 },
                 child: profileOption(title: 'Raise a Ticket'),
               ),
