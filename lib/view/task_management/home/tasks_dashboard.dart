@@ -49,7 +49,11 @@ class _TasksDashboardState extends State<TasksDashboard>
   final tasksController = Get.put(TasksController());
   final appController = Get.put(AppController());
   late final TabController tabController;
-  final scrollController = ScrollController();
+
+  final staffScrollController = ScrollController();
+  final categoryScrollController = ScrollController();
+  final myReportScrollController = ScrollController();
+  final delegatedScrollController = ScrollController();
 
   final staffWiseSearchController = TextEditingController();
   final categoryWiseSearchController = TextEditingController();
@@ -94,10 +98,38 @@ class _TasksDashboardState extends State<TasksDashboard>
     getData();
     tabController.addListener(() {
       tasksController.dashboardTabIndexObs.value = tabController.index;
+
+      staffScrollController
+          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+
+      categoryScrollController
+          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+
+      myReportScrollController
+          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+
+      delegatedScrollController
+          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
     });
 
-    scrollController.addListener(() {
-      tasksController.dashboardScrollOffsetObs.value = scrollController.offset;
+    staffScrollController.addListener(() {
+      tasksController.dashboardScrollOffsetObs.value =
+          staffScrollController.offset;
+    });
+
+    categoryScrollController.addListener(() {
+      tasksController.dashboardScrollOffsetObs.value =
+          categoryScrollController.offset;
+    });
+
+    myReportScrollController.addListener(() {
+      tasksController.dashboardScrollOffsetObs.value =
+          myReportScrollController.offset;
+    });
+
+    delegatedScrollController.addListener(() {
+      tasksController.dashboardScrollOffsetObs.value =
+          delegatedScrollController.offset;
     });
   }
 
@@ -129,7 +161,10 @@ class _TasksDashboardState extends State<TasksDashboard>
     myReportSearchController.dispose();
     delegatedSearchController.dispose();
     tabController.dispose();
-    scrollController.dispose();
+    staffScrollController.dispose();
+    categoryScrollController.dispose();
+    myReportScrollController.dispose();
+    delegatedScrollController.dispose();
     super.dispose();
   }
 
@@ -157,7 +192,18 @@ class _TasksDashboardState extends State<TasksDashboard>
         ),
         body: Stack(
           children: [
-            buildDashboardContent(),
+            Obx(
+              () {
+                double opacity = (1 -
+                        (tasksController.dashboardScrollOffsetObs.value /
+                            containerHeight))
+                    .clamp(0, 1);
+                return Opacity(
+                  opacity: opacity,
+                  child: buildDashboardContent(),
+                );
+              },
+            ),
             buildTabBarView(),
           ],
         ),
@@ -191,22 +237,13 @@ class _TasksDashboardState extends State<TasksDashboard>
       alignment: Alignment.centerLeft,
       child: Padding(
         padding: EdgeInsets.only(left: 16.w),
-        child: Obx(() {
-          final double opacity = (1 -
-                  (tasksController.dashboardScrollOffsetObs.value /
-                      containerHeight))
-              .clamp(0, 1);
-          return Opacity(
-            opacity: opacity,
-            child: Text(
-              'Report',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        }),
+        child: Text(
+          'Report',
+          style: TextStyle(
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
@@ -248,24 +285,24 @@ class _TasksDashboardState extends State<TasksDashboard>
         controller: tabController,
         children: [
           staffWiseTabBarView(
-            scrollController: scrollController,
             tasksController: tasksController,
             staffSearchController: staffWiseSearchController,
+            scrollController: staffScrollController,
           ),
           categoryWiseTabBarView(
             tasksController: tasksController,
             categorySearchController: categoryWiseSearchController,
-            scrollController: scrollController,
+            scrollController: categoryScrollController,
           ),
           myReportTabBarView(
             tasksController: tasksController,
             myReportSearchController: myReportSearchController,
-            scrollController: scrollController,
+            scrollController: myReportScrollController,
           ),
           delegatedReportTabBarView(
             tasksController: tasksController,
             delegatedSearchController: delegatedSearchController,
-            scrollController: scrollController,
+            scrollController: delegatedScrollController,
           ),
         ],
       );
@@ -276,7 +313,7 @@ class _TasksDashboardState extends State<TasksDashboard>
           myReportTabBarView(
             tasksController: tasksController,
             myReportSearchController: myReportSearchController,
-            scrollController: scrollController,
+            scrollController: myReportScrollController,
           ),
         ],
       );
