@@ -41,22 +41,10 @@ Widget taskUpdateSection({
                               (element) => element.type != TaskFileType.audio)
                           .toList();
 
-                      final taskUpdatedBy = userController
-                          .assignTaskUsersList.value
-                          ?.firstWhere(
-                              (element) =>
-                                  element.emailId ==
-                                  statusChangesModel.taskUpdatedBy,
-                              orElse: () => AllUsersModel())
-                          .userName;
-                      final profileImg = userController
-                          .assignTaskUsersList.value
-                          ?.firstWhere(
-                              (element) =>
-                                  element.emailId ==
-                                  statusChangesModel.taskUpdatedBy,
-                              orElse: () => AllUsersModel())
-                          .profileImg;
+                      final userName = statusChangesModel.taskUpdatedByUserName;
+
+                      final profileImg =
+                          statusChangesModel.taskUpdatedByProfileImg;
                       return Container(
                         width: double.maxFinite,
                         padding: EdgeInsets.symmetric(
@@ -87,10 +75,10 @@ Widget taskUpdateSection({
                                     ? circularUserImage(
                                         imageUrl: profileImg,
                                         imageSize: profileImageSize,
-                                        userName: '$taskUpdatedBy',
+                                        userName: '$userName',
                                       )
                                     : nameLetterAvatar(
-                                        name: '$taskUpdatedBy',
+                                        name: '$userName',
                                         circleDiameter: profileImageSize,
                                       ),
                                 SizedBox(width: 8.w),
@@ -100,7 +88,7 @@ Widget taskUpdateSection({
                                     SizedBox(
                                       width: 180.w,
                                       child: Text(
-                                        taskUpdatedBy?.nameFormat() ??
+                                        userName?.nameFormat() ??
                                             statusChangesModel.taskUpdatedBy ??
                                             '-',
                                         overflow: TextOverflow.ellipsis,

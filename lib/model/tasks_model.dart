@@ -344,8 +344,9 @@ class StatusChanges {
   String? id;
   String? status;
   String? note;
-  // TaskUpdatedBy? taskUpdatedBy;
   String? taskUpdatedBy;
+  String? taskUpdatedByProfileImg;
+  String? taskUpdatedByUserName;
   List<Attachment>? changesAttachments;
   String? changedAt;
 
@@ -354,6 +355,8 @@ class StatusChanges {
     this.status,
     this.note,
     this.taskUpdatedBy,
+    this.taskUpdatedByProfileImg,
+    this.taskUpdatedByUserName,
     this.changesAttachments,
     this.changedAt,
   });
@@ -362,10 +365,10 @@ class StatusChanges {
     id = json['_id'];
     status = json['status'];
     note = json['note'];
-    // taskUpdatedBy = json['taskUpdatedBy'] != null
-    //     ? TaskUpdatedBy.fromJson(json['taskUpdatedBy'])
-    //     : null;
+
     taskUpdatedBy = json['taskUpdatedBy'];
+    taskUpdatedByProfileImg = json['taskUpdatedByProfileImg'];
+    taskUpdatedByUserName = json['taskUpdatedByUserName'];
     if (json['changesAttachments'] != null) {
       changesAttachments = [];
       json['changesAttachments'].forEach((item) {
@@ -382,6 +385,8 @@ class StatusChanges {
     data['note'] = note;
     // data['taskUpdatedBy'] = taskUpdatedBy?.toJson();
     data['taskUpdatedBy'] = taskUpdatedBy;
+    data['taskUpdatedByUserName'] = taskUpdatedByUserName;
+    data['taskUpdatedByProfileImg'] = taskUpdatedByProfileImg;
     if (changesAttachments != null) {
       data['changesAttachments'] =
           changesAttachments!.map((item) => item.toJson()).toList();

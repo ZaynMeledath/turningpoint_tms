@@ -112,6 +112,12 @@ Widget assignToDialog({
                                       ? allUsers[index].phone ?? ''
                                       : assignToSearchList[index].phone ?? '';
 
+                              final profileImg =
+                                  assignToSearchController.text.isEmpty &&
+                                          assignToSearchList.isEmpty
+                                      ? allUsers[index].profileImg
+                                      : assignToSearchList[index].profileImg;
+
                               return GestureDetector(
                                 onTap: () {
                                   if (isUpdating) {
@@ -149,17 +155,14 @@ Widget assignToDialog({
                                   margin: EdgeInsets.only(bottom: 16.h),
                                   child: Row(
                                     children: [
-                                      allUsers[index].profileImg != null
+                                      profileImg != null
                                           ? circularUserImage(
-                                              imageUrl:
-                                                  allUsers[index].profileImg!,
+                                              imageUrl: profileImg,
                                               imageSize: 32.w,
-                                              userName: allUsers[index]
-                                                  .userName
-                                                  .toString(),
+                                              userName: name,
                                             )
                                           : nameLetterAvatar(
-                                              name: name.toString(),
+                                              name: name,
                                               circleDiameter: 32.w,
                                             ),
                                       SizedBox(width: 8.w),
