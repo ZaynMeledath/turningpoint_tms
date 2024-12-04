@@ -3,7 +3,7 @@ description: "A Task Management app for Turning Point"
 
 publish_to: 'none' 
 
-version: 1.7.1+21
+version: 1.7.2+22
 
 environment:
   sdk: '>=3.4.3 <4.0.0'

@@ -427,8 +427,6 @@ class TasksController extends GetxController {
     String? groupId,
   }) async {
     try {
-      //if group id is not null group id is passed as id and if it's null, taskId is passed
-
       await tasksRepository.deleteTask(
         taskId: taskId,
         groupId: groupId,
@@ -610,23 +608,6 @@ class TasksController extends GetxController {
       tasksException.value = null;
       taskUpdateAttachmentsFileList.clear();
       taskUpdateAttachmentsMapList.clear();
-      // if (isDelegatedObs.value == true) {
-      //   await getDelegatedTasks();
-      //   unawaited(getMyTasks());
-      //   unawaited(getAllTasks());
-      // } else if (isDelegatedObs.value == false) {
-      //   await getMyTasks();
-      //   unawaited(getDelegatedTasks());
-      //   unawaited(getAllTasks());
-      // } else {
-      //   await getAllTasks();
-      //   unawaited(getMyTasks());
-      //   unawaited(getDelegatedTasks());
-      // }
-      // unawaited(getAllUsersPerformanceReport());
-      // unawaited(getMyPerformanceReport());
-      // unawaited(getDelegatedPerformanceReport());
-      // unawaited(getAllCategoriesPerformanceReport());
     } catch (_) {
       rethrow;
     }
