@@ -62,7 +62,6 @@ class _TasksDashboardState extends State<TasksDashboard>
 
   final GlobalKey _containerKey = GlobalKey();
   double containerHeight = 0;
-  double tabBarViewPadding = 0;
 
   UserModel? userModel;
   bool isAdminOrLeader = false;
@@ -99,6 +98,8 @@ class _TasksDashboardState extends State<TasksDashboard>
     getData();
     tabController.addListener(() {
       tasksController.dashboardTabIndexObs.value = tabController.index;
+
+      tasksController.dashboardScrollOffsetObs.value = 0;
 
       staffScrollController.animateTo(
         0,
@@ -212,8 +213,9 @@ class _TasksDashboardState extends State<TasksDashboard>
                         (tasksController.dashboardScrollOffsetObs.value /
                             containerHeight))
                     .clamp(0, 1);
-                return Opacity(
+                return AnimatedOpacity(
                   opacity: opacity,
+                  duration: const Duration(milliseconds: 250),
                   child: buildDashboardContent(),
                 );
               },
@@ -265,12 +267,15 @@ class _TasksDashboardState extends State<TasksDashboard>
   Widget buildTabBarView() {
     return Obx(
       () {
-        tabBarViewPadding = (containerHeight) -
-            tasksController.dashboardScrollOffsetObs.value
-                .clamp(0, (containerHeight));
+        tasksController.dashboardTabBarViewPaddingObs.value =
+            (containerHeight) -
+                tasksController.dashboardScrollOffsetObs.value
+                    .clamp(0, (containerHeight));
 
-        return Padding(
-          padding: EdgeInsets.only(top: tabBarViewPadding),
+        return AnimatedPadding(
+          padding: EdgeInsets.only(
+              top: tasksController.dashboardTabBarViewPaddingObs.value),
+          duration: const Duration(milliseconds: 300),
           child: Container(
             color: AppColors.scaffoldBackgroundColor,
             padding: EdgeInsets.only(top: 10.h),

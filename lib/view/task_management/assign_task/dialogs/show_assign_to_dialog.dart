@@ -126,6 +126,7 @@ Widget assignToDialog({
                                         name: name,
                                         emailId: email,
                                         phone: phone,
+                                        profileImg: profileImg,
                                       ),
                                     };
                                     Get.back();

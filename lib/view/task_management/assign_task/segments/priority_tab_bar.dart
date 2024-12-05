@@ -4,6 +4,12 @@ Widget priorityTabBar({
   required TabController tabController,
   required AssignTaskController assignTaskController,
 }) {
+  tabController.index =
+      assignTaskController.taskPriority.value == TaskPriority.medium
+          ? 1
+          : assignTaskController.taskPriority.value == TaskPriority.high
+              ? 2
+              : 0;
   return Column(
     children: [
       Row(
@@ -12,12 +18,13 @@ Widget priorityTabBar({
           Obx(
             () => Icon(
               Icons.flag,
-              color: assignTaskController.taskPriority.value == TaskPriority.low
-                  ? Colors.white.withOpacity(.9)
-                  : assignTaskController.taskPriority.value ==
-                          TaskPriority.medium
-                      ? Colors.orange
-                      : Colors.red,
+              color:
+                  assignTaskController.taskPriority.value == TaskPriority.high
+                      ? Colors.red
+                      : assignTaskController.taskPriority.value ==
+                              TaskPriority.medium
+                          ? Colors.orange
+                          : Colors.white.withOpacity(.9),
             ),
           ),
           SizedBox(height: 2.h),

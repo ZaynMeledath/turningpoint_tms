@@ -36,6 +36,7 @@ class TasksController extends GetxController {
   RxList<TaskModel> dashboardTasksListObs = RxList<TaskModel>();
   RxList<TaskModel> tempDashboardTasksListObs = RxList<TaskModel>();
   RxDouble dashboardScrollOffsetObs = RxDouble(0);
+  RxDouble dashboardTabBarViewPaddingObs = RxDouble(0);
 
   Rxn<List<TaskModel>> allTasksListObs = Rxn<List<TaskModel>>();
   Rxn<List<TaskModel>?> tempAllTasksListObs = Rxn<List<TaskModel>>();
