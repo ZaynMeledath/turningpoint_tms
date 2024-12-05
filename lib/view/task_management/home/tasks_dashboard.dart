@@ -100,17 +100,29 @@ class _TasksDashboardState extends State<TasksDashboard>
     tabController.addListener(() {
       tasksController.dashboardTabIndexObs.value = tabController.index;
 
-      staffScrollController
-          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+      staffScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.elasticOut,
+      );
 
-      categoryScrollController
-          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+      categoryScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.elasticOut,
+      );
 
-      myReportScrollController
-          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+      myReportScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 1000),
+        curve: Curves.elasticOut,
+      );
 
-      delegatedScrollController
-          .jumpTo(tasksController.dashboardScrollOffsetObs.value);
+      delegatedScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.elasticOut,
+      );
     });
 
     staffScrollController.addListener(() {
@@ -121,6 +133,7 @@ class _TasksDashboardState extends State<TasksDashboard>
     categoryScrollController.addListener(() {
       tasksController.dashboardScrollOffsetObs.value =
           categoryScrollController.offset;
+      log('EXECUTED CATEGORY SCROLL LISTENER');
     });
 
     myReportScrollController.addListener(() {
