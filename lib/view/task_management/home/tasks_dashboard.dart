@@ -62,6 +62,7 @@ class _TasksDashboardState extends State<TasksDashboard>
 
   final GlobalKey _containerKey = GlobalKey();
   double containerHeight = 0;
+  double tabBarViewPadding = 0;
 
   UserModel? userModel;
   bool isAdminOrLeader = false;
@@ -251,13 +252,15 @@ class _TasksDashboardState extends State<TasksDashboard>
   Widget buildTabBarView() {
     return Obx(
       () {
-        double padding = (containerHeight + 10.h) -
+        tabBarViewPadding = (containerHeight) -
             tasksController.dashboardScrollOffsetObs.value
-                .clamp(0, (containerHeight + 10.h));
+                .clamp(0, (containerHeight));
+
         return Padding(
-          padding: EdgeInsets.only(top: padding),
+          padding: EdgeInsets.only(top: tabBarViewPadding),
           child: Container(
             color: AppColors.scaffoldBackgroundColor,
+            padding: EdgeInsets.only(top: 10.h),
             child: Column(
               children: [
                 dashboardTabBar(
