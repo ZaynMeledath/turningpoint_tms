@@ -134,7 +134,6 @@ class _TasksDashboardState extends State<TasksDashboard>
     categoryScrollController.addListener(() {
       tasksController.dashboardScrollOffsetObs.value =
           categoryScrollController.offset;
-      log('EXECUTED CATEGORY SCROLL LISTENER');
     });
 
     myReportScrollController.addListener(() {
@@ -275,7 +274,7 @@ class _TasksDashboardState extends State<TasksDashboard>
         return AnimatedPadding(
           padding: EdgeInsets.only(
               top: tasksController.dashboardTabBarViewPaddingObs.value),
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 250),
           child: Container(
             color: AppColors.scaffoldBackgroundColor,
             padding: EdgeInsets.only(top: 10.h),
