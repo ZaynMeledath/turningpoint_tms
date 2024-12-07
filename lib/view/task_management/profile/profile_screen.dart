@@ -11,6 +11,7 @@ import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/view/edit_profile/edit_profile_screen.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/privacy_policy/privacy_policy_screen.dart';
 import 'package:turningpoint_tms/view/task_management/profile/profile_picture_view_screen.dart';
 import 'package:turningpoint_tms/view/tickets/my_tickets_screen.dart';
 import 'package:turningpoint_tms/view/tickets/raise_ticket_screen.dart';
@@ -122,6 +123,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   userController: userController,
                 ),
                 child: profileOption(title: 'Change Password'),
+              ),
+              sectionTitleContainer(title: 'Legal'),
+              InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {
+                  Get.to(
+                    () => PrivacyPolicyScreen(),
+                    transition: Transition.rightToLeft,
+                  );
+                },
+                child: profileOption(title: 'Privacy & Policy'),
               ),
               sectionTitleContainer(title: 'Support'),
               InkWell(

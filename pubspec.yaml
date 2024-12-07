@@ -52,6 +52,7 @@ dependencies:
   url_launcher: ^6.3.0
   video_player: ^2.9.2
   web_socket_channel: ^3.0.1
+  webview_flutter: ^4.10.0
 
 
 dev_dependencies:
@@ -75,6 +76,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lotties/
+    - assets/html/
 
   fonts:
   - family: Lufga

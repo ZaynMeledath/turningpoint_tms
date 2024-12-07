@@ -121,7 +121,7 @@ class _TasksDashboardState extends State<TasksDashboard>
 
       delegatedScrollController.animateTo(
         0,
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 1000),
         curve: Curves.elasticOut,
       );
     });
