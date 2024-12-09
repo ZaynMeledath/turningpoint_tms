@@ -200,21 +200,23 @@ class _RemindersListDialogState extends State<RemindersListDialog> {
             'Reminders',
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: EdgeInsets.only(right: 8.w),
-                child: Text(
-                  '<< Swipe the card for options',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.white60,
+          if (tasksController.personalRemindersListObs.value != null &&
+              tasksController.personalRemindersListObs.value!.isNotEmpty)
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 8.w),
+                  child: Text(
+                    '<< Swipe the card for options',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      color: Colors.white60,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );
