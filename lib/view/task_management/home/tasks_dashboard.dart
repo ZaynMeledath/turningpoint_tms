@@ -89,9 +89,6 @@ class _TasksDashboardState extends State<TasksDashboard>
         setState(() {
           containerHeight = renderBox.size.height;
         });
-        log('Container Height: $containerHeight');
-      } else {
-        log('RenderBox is null. Ensure the widget exists and is built.');
       }
     });
 

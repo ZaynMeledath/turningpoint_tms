@@ -3,7 +3,7 @@ description: "A Task Management app for Turning Point"
 
 publish_to: 'none' 
 
-version: 1.8.0+24
+version: 1.8.0+25
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -76,7 +76,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lotties/
-    - assets/html/
+    # - assets/html/
 
   fonts:
   - family: Lufga
