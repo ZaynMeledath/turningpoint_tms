@@ -226,10 +226,8 @@ Widget taskUpdateSection({
                                                       TaskFileType.image
                                                   ? AspectRatio(
                                                       aspectRatio: 16 / 9,
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            changesAttachment
-                                                                .path!,
+                                                      child: Image.network(
+                                                        changesAttachment.path!,
                                                       ),
                                                     )
                                                   : changesAttachment.type ==

@@ -84,71 +84,80 @@ class _TasksHomeState extends State<TasksHome> {
   @override
   Widget build(BuildContext context) {
     // handleNotificationDialog();
-    return Scaffold(
-      extendBody: true,
-      body: activeWidget ?? widgetList[activeIndex],
-      floatingActionButton: SizedBox(
-        width: 50.w,
-        height: 50.w,
-        child: FloatingActionButton(
-          backgroundColor: AppColors.themeGreen,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(100),
-          ),
-          onPressed: () {
-            if (isAdminOrLeader) {
-              Get.to(
-                () => const AssignTaskScreen(),
-                transition: Transition.downToUp,
-              );
-            } else {
-              activeWidget = const TasksDashboard();
-              setState(() {});
-            }
-          },
-          child: Icon(
-            isAdminOrLeader ? Icons.add_task : Icons.dashboard,
-            color: Colors.white.withOpacity(.85),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        setState(() {
+          activeIndex = 0;
+        });
+      },
+      child: Scaffold(
+        extendBody: true,
+        //if role is user, activeWidget will be executed or else widgetList since floatingbutton redirects to AssignTaskScreen
+        body: activeWidget ?? widgetList[activeIndex],
+        floatingActionButton: SizedBox(
+          width: 50.w,
+          height: 50.w,
+          child: FloatingActionButton(
+            backgroundColor: AppColors.themeGreen,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            onPressed: () {
+              if (isAdminOrLeader) {
+                Get.to(
+                  () => const AssignTaskScreen(),
+                  transition: Transition.downToUp,
+                );
+              } else {
+                activeWidget = const TasksDashboard();
+                setState(() {});
+              }
+            },
+            child: Icon(
+              isAdminOrLeader ? Icons.add_task : Icons.dashboard,
+              color: Colors.white.withOpacity(.85),
+            ),
           ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
-        height: 56.w,
-        itemCount: titleIconMap.length,
-        tabBuilder: (index, isActive) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                titleIconMap.values.elementAt(index),
-                color: isActive && activeWidget == null
-                    ? AppColors.themeGreen
-                    : Colors.grey,
-              ),
-              Text(
-                titleIconMap.keys.elementAt(index),
-                style: TextStyle(
-                  fontSize: 12.5.sp,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+          height: 56.w,
+          itemCount: titleIconMap.length,
+          tabBuilder: (index, isActive) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  titleIconMap.values.elementAt(index),
                   color: isActive && activeWidget == null
                       ? AppColors.themeGreen
                       : Colors.grey,
                 ),
-              )
-            ],
-          );
-        },
-        backgroundColor: const Color.fromARGB(255, 23, 29, 32),
-        gapLocation: GapLocation.center,
-        notchSmoothness: NotchSmoothness.verySmoothEdge,
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
-        activeIndex: activeIndex,
-        onTap: (index) {
-          activeWidget = null;
-          activeIndex = index;
-          setState(() {});
-        },
+                Text(
+                  titleIconMap.keys.elementAt(index),
+                  style: TextStyle(
+                    fontSize: 12.5.sp,
+                    color: isActive && activeWidget == null
+                        ? AppColors.themeGreen
+                        : Colors.grey,
+                  ),
+                )
+              ],
+            );
+          },
+          backgroundColor: const Color.fromARGB(255, 23, 29, 32),
+          gapLocation: GapLocation.center,
+          notchSmoothness: NotchSmoothness.verySmoothEdge,
+          leftCornerRadius: 32,
+          rightCornerRadius: 32,
+          activeIndex: activeIndex,
+          onTap: (index) {
+            activeWidget = null;
+            activeIndex = index;
+            setState(() {});
+          },
+        ),
       ),
     );
   }

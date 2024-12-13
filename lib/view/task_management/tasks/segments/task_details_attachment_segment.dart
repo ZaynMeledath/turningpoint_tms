@@ -132,8 +132,8 @@ Widget taskDetailsAttachmentSegment({
                           child: attachmentType == TaskFileType.image
                               ? AspectRatio(
                                   aspectRatio: 4 / 4,
-                                  child: CachedNetworkImage(
-                                    imageUrl: attachmentUrl,
+                                  child: Image.network(
+                                    attachmentUrl,
                                   ),
                                 )
                               : attachmentType == TaskFileType.video

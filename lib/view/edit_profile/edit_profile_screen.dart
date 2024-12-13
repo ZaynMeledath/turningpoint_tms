@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -108,16 +107,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                   child: Center(
                                     child: ClipOval(
-                                      child: CachedNetworkImage(
-                                        imageUrl: userController
+                                      child: Image.network(
+                                        userController
                                             .userObs.value!.profileImg!,
                                         fit: BoxFit.cover,
                                         width: profileImageSize,
                                         height: profileImageSize,
-                                        placeholder: (context, url) => Center(
-                                          child: CupertinoActivityIndicator(
-                                              radius: 14.w),
-                                        ),
+                                        frameBuilder: (context, child, frame,
+                                            wasSynchronouslyLoaded) {
+                                          if (wasSynchronouslyLoaded ||
+                                              frame != null) {
+                                            return child;
+                                          } else {
+                                            return CupertinoActivityIndicator(
+                                              radius: 20.w,
+                                            );
+                                          }
+                                        },
                                       ),
                                     ),
                                   ),
