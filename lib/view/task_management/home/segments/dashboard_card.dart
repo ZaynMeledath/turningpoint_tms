@@ -39,6 +39,7 @@ Widget dashboardCard({
             tasksListCategory: tasksListCategory,
             delegatedUserEmail: userEmail,
             category: category,
+            showTotalTasksCount: false,
           ),
           transition: Transition.fade,
           duration: const Duration(milliseconds: 400),

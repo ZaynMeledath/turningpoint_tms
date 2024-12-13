@@ -21,6 +21,7 @@ class TasksScreen extends StatefulWidget {
   final String? delegatedUserEmail;
   final String? category;
   final bool? avoidTabBar;
+  final bool? showTotalTasksCount;
 
   const TasksScreen({
     required this.title,
@@ -28,6 +29,7 @@ class TasksScreen extends StatefulWidget {
     this.delegatedUserEmail,
     this.category,
     this.avoidTabBar,
+    this.showTotalTasksCount,
     super.key,
   });
 
@@ -445,8 +447,9 @@ class _TasksScreenState extends State<TasksScreen>
           }
           return Scaffold(
             appBar: myAppBar(
-              title:
-                  '${widget.title} - ${tasksController.dashboardTasksListObs.length}',
+              title: widget.showTotalTasksCount != false
+                  ? '${widget.title} - ${tasksController.dashboardTasksListObs.length}'
+                  : widget.title,
               implyLeading: true,
               profileAvatar: true,
               trailingIcons: [

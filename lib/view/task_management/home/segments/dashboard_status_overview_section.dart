@@ -150,7 +150,7 @@ Widget dashboardStatusOverviewSection({
                 onTap: () {
                   Get.to(
                     () => TasksScreen(
-                      title: 'Overdue Tasks',
+                      title: 'Overdue',
                       avoidTabBar: true,
                       tasksListCategory: TasksListCategory.overdue,
                     ),
@@ -172,7 +172,7 @@ Widget dashboardStatusOverviewSection({
                 onTap: () {
                   Get.to(
                     () => TasksScreen(
-                      title: 'Open Tasks',
+                      title: 'Open',
                       tasksListCategory: TasksListCategory.open,
                       avoidTabBar: true,
                     ),
@@ -226,7 +226,7 @@ Widget dashboardStatusOverviewSection({
                 onTap: () {
                   Get.to(
                     () => TasksScreen(
-                      title: 'Completed Tasks',
+                      title: 'Completed',
                       tasksListCategory: TasksListCategory.completed,
                       avoidTabBar: true,
                     ),
@@ -248,7 +248,7 @@ Widget dashboardStatusOverviewSection({
                 onTap: () {
                   Get.to(
                     () => TasksScreen(
-                      title: 'On Time Tasks',
+                      title: 'On Time',
                       tasksListCategory: TasksListCategory.onTime,
                       avoidTabBar: true,
                     ),
@@ -270,7 +270,7 @@ Widget dashboardStatusOverviewSection({
                 onTap: () {
                   Get.to(
                     () => TasksScreen(
-                      title: 'Delayed Tasks',
+                      title: 'Delayed',
                       tasksListCategory: TasksListCategory.delayed,
                       avoidTabBar: true,
                     ),
