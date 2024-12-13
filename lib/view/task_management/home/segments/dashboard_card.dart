@@ -37,13 +37,11 @@ Widget dashboardCard({
                 ? '$title Tasks'
                 : '${title.split(' ').first}\'s Tasks',
             tasksListCategory: tasksListCategory,
-            delegatedUserEmail:
-                tasksListCategory == TasksListCategory.categoryWise ||
-                        tasksListCategory == TasksListCategory.myReport
-                    ? category
-                    : userEmail,
+            delegatedUserEmail: userEmail,
+            category: category,
           ),
-          transition: Transition.zoom,
+          transition: Transition.fade,
+          duration: const Duration(milliseconds: 400),
         );
       },
       child: Container(
