@@ -36,6 +36,7 @@ part 'segments/category_wise_tab_bar_view.dart';
 part 'segments/my_report_tab_bar_view.dart';
 part 'segments/delegated_report_tab_bar_view.dart';
 part 'segments/tasks_status_counter_section.dart';
+part 'segments/dashboard_card.dart';
 
 class TasksDashboard extends StatefulWidget {
   const TasksDashboard({super.key});
