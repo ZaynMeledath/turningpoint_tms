@@ -25,6 +25,7 @@ import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:turningpoint_tms/utils/widgets/name_letter_avatar.dart';
 import 'package:turningpoint_tms/utils/widgets/server_error_widget.dart';
 import 'package:turningpoint_tms/view/login/login_screen.dart';
+import 'package:turningpoint_tms/view/messaging/messages_screen.dart';
 import 'package:turningpoint_tms/view/task_management/home/tasks_screen.dart';
 
 part 'segments/dashboard_status_overview_container.dart';
@@ -192,6 +193,18 @@ class _TasksDashboardState extends State<TasksDashboard>
           implyLeading: false,
           profileAvatar: true,
           trailingIcons: [
+            IconButton(
+              visualDensity: VisualDensity.compact,
+              onPressed: () {
+                Get.to(
+                  () => MessagesScreen(),
+                );
+              },
+              icon: Icon(
+                Icons.message,
+                size: 24.w,
+              ),
+            ),
             IconButton(
               visualDensity: VisualDensity.compact,
               onPressed: showRemindersListDialog,
