@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:turningpoint_tms/model/all_categories_performance_report_model.dart';
 import 'package:turningpoint_tms/model/all_users_performance_report_model.dart';
 import 'package:turningpoint_tms/model/delegated_performance_report_model.dart';
@@ -89,18 +87,6 @@ class TasksRepository {
     } catch (_) {
       rethrow;
     }
-  }
-
-//====================Upload File====================//
-  Future<String> uploadFile({required File file}) async {
-    final response = await ApiService().sendRequest(
-      url: ApiEndpoints.uploadFile,
-      requestMethod: RequestMethod.POST,
-      data: file,
-      fieldNameForFiles: 'attachments',
-      isTokenRequired: true,
-    );
-    return response.first as String;
   }
 
 //====================Assign Task====================//

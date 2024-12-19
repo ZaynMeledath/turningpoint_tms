@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:turningpoint_tms/constants/app_constants.dart';
-import 'package:turningpoint_tms/utils/download_file.dart';
+import 'package:turningpoint_tms/utils/utils.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 import 'package:video_player/video_player.dart';
 
@@ -78,7 +78,7 @@ class _TaskVideoPlayerState extends State<TaskVideoPlayer> {
             trailingIcons: [
               IconButton(
                 onPressed: () {
-                  downloadFile(fileUrl: widget.videoUrl);
+                  Utils.downloadFile(fileUrl: widget.videoUrl);
                 },
                 icon: Icon(
                   Icons.download,

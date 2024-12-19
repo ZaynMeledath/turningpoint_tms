@@ -30,14 +30,14 @@ class _CustomBottomWidgetState extends State<CustomBottomWidget> {
         children: [
           Flexible(
             child: Input(
-              onSendPressed: _handleSendPressed,
+              onSendPressed: messageController.handleSendPressed,
             ),
           ),
           IconButton(
             visualDensity: VisualDensity.compact,
             onPressed: () {},
             icon: Icon(
-              Icons.photo_outlined,
+              Icons.upload_file,
               size: 25.w,
             ),
           ),
@@ -60,24 +60,5 @@ class _CustomBottomWidgetState extends State<CustomBottomWidget> {
         ],
       ),
     );
-  }
-
-  void _handleSendPressed(
-    types.PartialText message,
-  ) {
-    final textMessage = types.TextMessage(
-      author: user2,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      text: message.text,
-      showStatus: true,
-      status: types.Status.delivered,
-    );
-
-    _addMessage(textMessage);
-  }
-
-  void _addMessage(types.Message message) {
-    messageController.messages.insert(0, message);
   }
 }

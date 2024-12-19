@@ -19,6 +19,7 @@ import 'package:turningpoint_tms/model/my_performance_report_model.dart';
 import 'package:turningpoint_tms/model/personal_reminder_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/repository/tasks_repository.dart';
+import 'package:turningpoint_tms/utils/utils.dart';
 
 class TasksController extends GetxController {
   TasksController() {
@@ -495,7 +496,7 @@ class TasksController extends GetxController {
               ? TaskFileType.image
               : TaskFileType.others;
 
-      final url = await tasksRepository.uploadFile(file: mediaFile);
+      final url = await Utils.uploadFile(file: mediaFile);
       taskUpdateAttachmentsMapList.add({
         'path': url,
         'type': fileType,
@@ -514,7 +515,7 @@ class TasksController extends GetxController {
       if (result != null) {
         File file = File(result.files.single.path!);
         appController.isLoadingObs.value = true;
-        final url = await tasksRepository.uploadFile(file: file);
+        final url = await Utils.uploadFile(file: file);
         final fileExtension = path.extension(file.path);
         final fileType = fileExtension == '.mp4' ||
                 fileExtension == '.mkv' ||
@@ -550,8 +551,8 @@ class TasksController extends GetxController {
         isRecordingObs.value = false;
         appController.isLoadingObs.value = true;
 
-        final audioUrl = await tasksRepository.uploadFile(
-            file: File(voiceRecordPathObs.value));
+        final audioUrl =
+            await Utils.uploadFile(file: File(voiceRecordPathObs.value));
 
         taskUpdateAttachmentsMapList.add({
           'path': audioUrl,

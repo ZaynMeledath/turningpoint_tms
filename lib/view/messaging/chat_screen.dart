@@ -34,13 +34,22 @@ class _ChatScreenState extends State<ChatScreen> {
             messages: messages,
             scrollPhysics: BouncingScrollPhysics(),
             onSendPressed: (types.PartialText message) {},
+            // onAttachmentPressed: () {},
             slidableMessageBuilder: _buildSlidableMessageBuilder,
             user: user1,
             customBottomWidget: CustomBottomWidget(),
             theme: DarkChatTheme(
               backgroundColor: AppColors.scaffoldBackgroundColor,
+              // attachmentButtonIcon: ,
+              // attachmentButtonMargin: EdgeInsets.zero,
               inputBackgroundColor: AppColors.textFieldColor,
               inputBorderRadius: BorderRadius.circular(16),
+              // inputMargin: EdgeInsets.only(
+              //   left: 12.w,
+              //   right: 12.w,
+              //   bottom: 14.h,
+              //   top: 2.h,
+              // ),
               inputPadding: EdgeInsets.symmetric(
                 horizontal: 12.w,
                 vertical: 14.w,

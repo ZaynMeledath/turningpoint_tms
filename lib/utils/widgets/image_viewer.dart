@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:turningpoint_tms/utils/download_file.dart';
+import 'package:turningpoint_tms/utils/utils.dart';
 import 'package:turningpoint_tms/utils/widgets/my_app_bar.dart';
 
 class ImageViewer extends StatelessWidget {
@@ -19,7 +19,7 @@ class ImageViewer extends StatelessWidget {
         trailingIcons: [
           IconButton(
             onPressed: () {
-              downloadFile(fileUrl: imageUrl);
+              Utils.downloadFile(fileUrl: imageUrl);
             },
             icon: Icon(
               Icons.download,

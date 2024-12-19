@@ -14,6 +14,7 @@ import 'package:turningpoint_tms/model/all_users_model.dart';
 import 'package:turningpoint_tms/model/tasks_model.dart';
 import 'package:turningpoint_tms/repository/tasks_repository.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:turningpoint_tms/utils/utils.dart';
 
 class AssignTaskController extends GetxController {
   final tasksRepository = TasksRepository();
@@ -218,7 +219,7 @@ class AssignTaskController extends GetxController {
         attachmentsListObs
             .add(Attachment()); //Used of show the loader on the attachment
         appController.isLoadingObs.value = true;
-        final url = await tasksRepository.uploadFile(file: file);
+        final url = await Utils.uploadFile(file: file);
         attachmentsListObs
             .removeLast(); //The one used for the loader is removed
         final fileExtension = file.path.split('.').last;
@@ -264,8 +265,8 @@ class AssignTaskController extends GetxController {
         voiceRecordPathObs.value = await recorder.stop() ?? '';
         isRecordingObs.value = false;
         appController.isLoadingObs.value = true;
-        voiceRecordUrlObs.value = await tasksRepository.uploadFile(
-            file: File(voiceRecordPathObs.value));
+        voiceRecordUrlObs.value =
+            await Utils.uploadFile(file: File(voiceRecordPathObs.value));
         appController.isLoadingObs.value = false;
       } else {
         if (await recorder.hasPermission()) {

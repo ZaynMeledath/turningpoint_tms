@@ -115,7 +115,7 @@ Widget taskDetailsAttachmentSegment({
                             transition: Transition.zoom,
                           );
                         } else {
-                          await downloadFile(fileUrl: attachmentUrl);
+                          await Utils.downloadFile(fileUrl: attachmentUrl);
                         }
                       },
                       child: Container(
